@@ -1,0 +1,48 @@
+[
+  {
+    "id": "492294",
+    "track": "iot",
+    "level": "beginner",
+    "type": "projectreport",
+    "date": "2015-03-24",
+    "start": "2015-03-24T14:00:00",
+    "end": "2015-03-24T14:45:00",
+    "location": "Quantum 3",
+    "title": "Tweet4Beer! Beertap Powered by Java Goes Internet of Things and JavaFX",
+    "speakers": [
+      {
+        "name": "Bruno Borges",
+        "company": "Oracle",
+        "defaultSpeaker": true
+      }
+    ],
+    "abstract": "Be warned! In this session, attendees over 21 might get drunk. It demonstrates, end-to-end, how to DIY a Java-powered beer tap. The presentation shows you a visual Java SE 8 JavaFX application running on a Raspberry Pi, a Java EE 7 application to process Twitter data and communicate with the Raspberry Pi, and the use of complex event processing in the embedded device to warn users if they are drinking too much. Perhaps you will want to bring your beer mug!",
+    "language": "en",
+    "demo": true
+  },
+  {
+    "id": "491662",
+    "track": "jvmlang",
+    "level": "advanced",
+    "type": "newfeatures",
+    "date": "2015-03-25",
+    "start": "2015-03-25T16:00:00",
+    "end": "2015-03-25T16:45:00",
+    "location": "Rotunde",
+    "title": "Avatar.js und Project Avatar - quo vadis?",
+    "speakers": [
+      {
+        "name": "Niko Köbler",
+        "company": "Freelancer",
+        "email": "niko@n-k.de",
+        "website": "http://www.n-k.de",
+        "twitter": "@dasniko",
+        "bio": "",
+        "defaultSpeaker": true
+      }
+    ],
+    "abstract": "Avatar 2.0 ist die logische Weiterentwicklung von Avatar.js und Project Avatar - den Node.js-Implementierungen für die JVM. Die Abhängigkeit zu einem Java EE Application Server besteht nicht mehr, Avatar läuft jetzt in einer eigenen JVM. Der Fokus liegt auf mehreren parallelen Node.js Event-Loops, jede in einem eigenen Thread. Eine Inter-Thread-Kommunikation ist über ShardState (mittels JCache/Coherence auch verteilt über mehrere Knoten) und einen internen Event Bus möglich. Ein weiteres Highlight ist die \"Avatar Persistence\", mit der es möglich ist, JSON-Objekte in 1:1, 1:n oder n:m Relationen über einen JPA/JDBC-Layer zu persistieren - relational und nicht-relational (No-SQL). Avatar 2.0 bringt zusammen, was zusammengehört: JavaScript auf der JVM!",
+    "language": "de",
+    "demo": true
+  }
+]

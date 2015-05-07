@@ -1,0 +1,25 @@
+#%RAML 0.8
+---
+title: "Duke Conference App"
+version: "1.0.0"
+baseUri: "http://dukecon.org"
+
+/talks:
+  get:
+    description: "Receive all talks"
+    responses:
+      200:
+        description: "Success"
+        body:
+          application/json:
+            schema: !include talks_schema.json
+            example: !include talks_example.json
+
+/meta:
+  get:
+    description: "Receive Meta information"
+    responses:
+      200:
+        description: "Success"
+        body:
+          application/json
