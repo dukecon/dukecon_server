@@ -80,6 +80,16 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!--
+			Disabled for now ... no need to force you to require Flex & Flash stuff :-)
+		-->
+		<!--dependency>
+			<groupId>org.dukecon</groupId>
+			<artifactId>dukecon-flex-core</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<type>swf</type>
+		</dependency-->
 	</dependencies>
 
 	<build>
@@ -112,6 +122,34 @@
 				<version>2.9.1-01</version>
 				<extensions>true</extensions>
 			</plugin>
+			<!--
+				Flexmojos copy-flex-resources goal will make sure all flex related
+				resources are copied into the war in the required structure.
+			-->
+			<!--
+				Disabled for now ... no need to force you to require Flex & Flash stuff :-)
+			-->
+			<!--plugin>
+				<groupId>net.flexmojos.oss</groupId>
+				<artifactId>flexmojos-maven-plugin</artifactId>
+				<version>7.1.0-SNAPSHOT</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<goals>
+							<goal>copy-flex-resources</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.flex</groupId>
+						<artifactId>compiler</artifactId>
+						<version>4.14.1</version>
+						<type>pom</type>
+					</dependency>
+				</dependencies>
+			</plugin-->
 		</plugins>
 	</build>
 
