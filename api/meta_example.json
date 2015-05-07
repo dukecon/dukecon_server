@@ -1,0 +1,66 @@
+{
+  "conference": {
+    "name": "JavaLand",
+    "url": "http://javaland.eu"
+  },
+  "tracks": [
+    {
+      "key": "iot",
+      "values": {
+        "de": "Internet of Things",
+        "en": "Internet of Things"
+      }
+    },
+    {
+      "key": "iot",
+      "values": {
+        "de": "Internet of Things",
+        "en": "Internet of Things"
+      }
+    },
+    {
+      "key": "jvmlang",
+      "values": {
+        "de": "JVM Sprachen",
+        "en": "JVM languages"
+      }
+    }
+  ],
+  "levels": [
+    {
+      "key": "beginner",
+      "value": {
+        "de": "Einsteiger",
+        "en": "Beginner"
+      }
+    },
+    {
+      "key": "advanced",
+      "value": {
+        "de": "Fortgeschritten",
+        "en": "Advanced"
+      }
+    },
+    {
+      "key": "expert",
+      "value": {
+        "de": "Experte",
+        "en": "Expert"
+      }
+    }
+  ],
+  "types": [
+    {
+      "key": "projectreport",
+      "value": {
+        "de": "Projektbericht",
+        "en": "Project Report"
+      },
+      "key": "newfeatures",
+      "value": {
+        "de": "Neue Features",
+        "en": "New Features"
+      }
+    }
+  ]
+}
