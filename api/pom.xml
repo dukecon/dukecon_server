@@ -51,7 +51,7 @@
                     <!-- Replace with your package name -->
                     <basePackageName>org.dukecon.server.api</basePackageName>
                     <!-- Valid values: 1.1 2.0 -->
-                    <JAX-RSVersion>1.1</JAX-RSVersion>
+                    <JAX-RSVersion>2.0</JAX-RSVersion>
                     <useJsr303Annotations>false</useJsr303Annotations>
                     <!-- Valid values: jackson1 jackson2 gson none -->
                     <jsonMapper>jackson2</jsonMapper>
