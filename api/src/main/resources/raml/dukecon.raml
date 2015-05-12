@@ -4,6 +4,10 @@ title: "Duke Conference App"
 version: "1.0.0"
 baseUri: "http://dukecon.org"
 
+schemas:
+  - Talks: !include talks_schema.json
+  - MetaData: !include meta_schema.json
+
 /talks:
   get:
     description: "Receive all talks"
@@ -12,7 +16,7 @@ baseUri: "http://dukecon.org"
         description: "Success"
         body:
           application/json:
-            schema: !include talks_schema.json
+            schema: "Talks"
             example: !include talks_example.json
 
 /meta:
@@ -23,5 +27,5 @@ baseUri: "http://dukecon.org"
         description: "Success"
         body:
           application/json:
-            schema: !include meta_schema.json
+            schema: "MetaData"
             example: !include meta_example.json

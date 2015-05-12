@@ -8,7 +8,6 @@
   "definitions": {
     "talk": {
       "type": "object",
-      "javaType": "org.dukecon.server.api.model.TalkData",
       "properties": {
         "id": {
           "type": "string"
