@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "DukeCon Meta Schema",
+  "javaType": "org.dukecon.server.api.model.MetaData",
   "type": "object",
   "properties": {
     "conference": {
