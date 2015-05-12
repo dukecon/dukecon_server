@@ -10,6 +10,10 @@
 
     <name>DukeCon Server API</name>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
     <pluginRepositories>
         <!-- Find the snapshot version of the raml-to-jax-rs Maven plugin -->
         <pluginRepository>
