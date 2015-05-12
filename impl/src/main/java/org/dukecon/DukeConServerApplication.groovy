@@ -2,8 +2,10 @@ package org.dukecon
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication
+@ComponentScan ("org.dukecon.server.impl")
 class DukeConServerApplication {
 
     static void main(String[] args) {
