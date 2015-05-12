@@ -11,18 +11,12 @@
 	<name>DukeCon Server</name>
 	<description>reference implementation for a conference planner</description>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.2.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<modules>
+        <module>api</module>
 		<module>impl</module>
 	</modules>
 
