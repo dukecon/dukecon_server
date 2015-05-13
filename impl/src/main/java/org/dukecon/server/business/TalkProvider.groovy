@@ -6,6 +6,9 @@ import groovy.transform.TypeCheckingMode
 
 import org.dukecon.model.Speaker
 import org.dukecon.model.Talk
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -16,17 +19,28 @@ import com.fasterxml.jackson.databind.ObjectMapper
 @Component
 @TypeChecked
 class TalkProvider {
+	private static final Logger log = LoggerFactory.getLogger(TalkProvider) 
+	
+	@Value("\${workLocal:false}")
+	private boolean workLocal
+	
+	private String javalandTalksURL = 'https://www.javaland.eu/api/schedule/JavaLand2015/jl.php?key=TestJL'
 
     private List<Talk> talks = []
 
     List<Talk> getAllTalks() {
         if (talks.isEmpty()) {
-            return readJavalandFile()
+			if (workLocal) {
+				readDemoFile()
+			} else {
+            	readJavalandFile()
+			}
         }
         return talks
     }
 
     private void readDemoFile() {
+		log.info ("Reading JSON data from local file")
         ObjectMapper mapper = new ObjectMapper()
         InputStream is = this.getClass().getResourceAsStream('/demotalks.json')
         JsonSlurper slurper = new JsonSlurper()
@@ -37,8 +51,9 @@ class TalkProvider {
     }
 
 	@TypeChecked(TypeCheckingMode.SKIP)
-    private List<Talk> readJavalandFile() {
-        URL javaland = new URL('https://www.javaland.eu/api/schedule/JavaLand2015/jl.php?key=TestJL')
+    private void readJavalandFile() {
+		log.info ("Reading JSON data from remote '{}'", javalandTalksURL)
+        URL javaland = new URL(javalandTalksURL)
         JsonSlurper slurper = new JsonSlurper()
         def json = slurper.parse(javaland)
         json.hits.hits.each {
