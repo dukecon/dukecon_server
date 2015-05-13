@@ -9,9 +9,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-	<groupId>org.dukecon</groupId>
 	<artifactId>dukecon-server-springboot</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>DukeCon Server Implementation</name>
