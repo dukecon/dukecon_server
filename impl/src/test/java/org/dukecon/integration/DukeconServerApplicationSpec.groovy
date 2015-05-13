@@ -1,5 +1,6 @@
-package org.dukecon
+package org.dukecon.integration
 
+import org.dukecon.DukeConServerApplication
 import org.dukecon.server.business.TalkProvider
 import org.junit.Test
 import org.junit.runner.RunWith

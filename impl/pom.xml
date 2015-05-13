@@ -58,8 +58,8 @@
             <groupId>org.spockframework</groupId>
             <artifactId>spock-spring</artifactId>
             <version>1.0-groovy-2.3</version>
-            <scope>test</scope>
-        </dependency>
+			<scope>test</scope>
+		</dependency>
 
 		<!--
 			Disabled for now ... no need to force you to require Flex & Flash stuff :-)
@@ -110,6 +110,17 @@
 				<artifactId>groovy-eclipse-compiler</artifactId>
 				<version>2.9.2-01</version>
 				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<useFile>false</useFile>
+					<includes>
+						<include>**/*Spec.java</include>
+						<include>**/*Test*.java</include>
+						<include>**/*Test*.groovy</include>
+					</includes>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.sebastian-daschner</groupId>
