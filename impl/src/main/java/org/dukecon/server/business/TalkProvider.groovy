@@ -1,38 +1,45 @@
 package org.dukecon.server.business
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.json.JsonSlurper
+import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
+
 import org.dukecon.model.Speaker
 import org.dukecon.model.Talk
 import org.springframework.stereotype.Component
+
+import com.fasterxml.jackson.databind.ObjectMapper
 
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  */
 @Component
+@TypeChecked
 class TalkProvider {
 
-    private def talks = []
+    private List<Talk> talks = []
 
-    def List<Talk> getAllTalks() {
-        if (talks.isEmpty())
-            readJavalandFile() as List<Talk>
-        talks
+    List<Talk> getAllTalks() {
+        if (talks.isEmpty()) {
+            return readJavalandFile()
+        }
+        return talks
     }
 
-    private def readDemoFile() {
-        def mapper = new ObjectMapper()
-        def is = this.getClass().getResourceAsStream('/demotalks.json')
-        def slurper = new JsonSlurper()
+    private void readDemoFile() {
+        ObjectMapper mapper = new ObjectMapper()
+        InputStream is = this.getClass().getResourceAsStream('/demotalks.json')
+        JsonSlurper slurper = new JsonSlurper()
         def json = slurper.parse(is)
         json.each {
             talks.add(mapper.convertValue(it, Talk.class))
         }
     }
 
-    private def readJavalandFile() {
-        def javaland = new URL('https://www.javaland.eu/api/schedule/JavaLand2015/jl.php?key=TestJL')
-        def slurper = new JsonSlurper()
+	@TypeChecked(TypeCheckingMode.SKIP)
+    private List<Talk> readJavalandFile() {
+        URL javaland = new URL('https://www.javaland.eu/api/schedule/JavaLand2015/jl.php?key=TestJL')
+        JsonSlurper slurper = new JsonSlurper()
         def json = slurper.parse(javaland)
         json.hits.hits.each {
             def t = it._source
