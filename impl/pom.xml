@@ -4,10 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.2.3.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>org.dukecon</groupId>
+        <artifactId>dukecon-server</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
 	<groupId>org.dukecon</groupId>
@@ -23,7 +22,12 @@
 	</properties>
 
 	<dependencies>
-        <dependency>
+		<dependency>
+			<groupId>org.dukecon</groupId>
+			<artifactId>dukecon-server-api</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jersey</artifactId>
         </dependency>
@@ -58,12 +62,6 @@
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.4</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -128,7 +126,7 @@
 					<dependency>
 						<groupId>org.projectlombok</groupId>
 						<artifactId>lombok</artifactId>
-						<version>1.16.2</version>
+						<version>${lombok.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -148,9 +146,8 @@
 							<goal>analyze-jaxrs</goal>
 						</goals>
 						<configuration>
-							<!-- Available backends, defaults to plaintext -->
-							<!-- <backend>plaintext</backend> -->
 							<backend>swagger</backend>
+							<buildDirectory>${basedir}/../api/target</buildDirectory>
 						</configuration>
 					</execution>
 				</executions>

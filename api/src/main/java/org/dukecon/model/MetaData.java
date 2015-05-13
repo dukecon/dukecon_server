@@ -1,6 +1,6 @@
 package org.dukecon.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,9 +11,8 @@ import lombok.Data;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Conference {
+public class MetaData {
 
-    private String name;
-    private String url;
+    private Conference conference;
 
 }

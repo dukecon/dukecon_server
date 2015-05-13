@@ -3,6 +3,12 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.dukecon</groupId>
+        <artifactId>dukecon-server</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
     <groupId>org.dukecon</groupId>
     <artifactId>dukecon-server-api</artifactId>
     <version>1.0.0-SNAPSHOT</version>
@@ -11,59 +17,15 @@
     <name>DukeCon Server API</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <fasterxml.version>2.5.3</fasterxml.version>
     </properties>
     
-    <pluginRepositories>
-        <!-- Find the snapshot version of the raml-to-jax-rs Maven plugin -->
-        <pluginRepository>
-            <id>mulesoft snapshots</id>
-            <url>https://repository-master.mulesoft.org/nexus/content/repositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-            <layout>default</layout>
-        </pluginRepository>
-    </pluginRepositories>
-
     <dependencies>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.0.1</version>
-        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
-            <version>2.5.3</version>
+            <version>${fasterxml.version}</version>
         </dependency>
     </dependencies>
 
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.raml.plugins</groupId>
-                <artifactId>raml-jaxrs-maven-plugin</artifactId>
-                <version>1.3.3</version>
-                <configuration>
-                    <sourceDirectory>${basedir}/src/main/resources/raml</sourceDirectory>
-                    <basePackageName>org.dukecon.server.api</basePackageName>
-                    <jaxrsVersion>2.0</jaxrsVersion>
-                    <useJsr303Annotations>false</useJsr303Annotations>
-                    <jsonMapper>jackson2</jsonMapper>
-                    <removeOldOutput>true</removeOldOutput>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>
