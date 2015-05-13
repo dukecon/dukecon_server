@@ -138,6 +138,23 @@
 				<version>2.9.2-01</version>
 				<extensions>true</extensions>
 			</plugin>
+			<plugin>
+				<groupId>com.sebastian-daschner</groupId>
+				<artifactId>jaxrs-analyzer-maven-plugin</artifactId>
+				<version>0.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>analyze-jaxrs</goal>
+						</goals>
+						<configuration>
+							<!-- Available backends, defaults to plaintext -->
+							<!-- <backend>plaintext</backend> -->
+							<backend>swagger</backend>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<!--
 				Flexmojos copy-flex-resources goal will make sure all flex related
 				resources are copied into the war in the required structure.
