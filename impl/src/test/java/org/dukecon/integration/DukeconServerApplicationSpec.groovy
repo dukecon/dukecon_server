@@ -11,6 +11,7 @@ import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
+import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.inject.Inject
@@ -28,6 +29,7 @@ class DukeconServerApplicationSpec extends Specification {
     TalkProvider talkProvider
 
     @Test
+    @Ignore
     void "Should return 2 local talks"() {
         when:
         talkProvider.workLocal = true
