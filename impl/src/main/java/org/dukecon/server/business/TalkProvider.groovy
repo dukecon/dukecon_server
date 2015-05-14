@@ -64,7 +64,7 @@ class TalkProvider {
                     .end(t.DATUM_ES_EN + 'T' + t.ENDE)
                     .location(t.RAUMNAME)
                     .title(t.TITEL)
-                    ._abstract(t.ABSTRACT_TEXT)
+                    .abstractText(t.ABSTRACT_TEXT)
                     .language(t.SPRACHE)
                     .demo(t.DEMO != null && t.DEMO.equalsIgnoreCase('ja'))
                     .speakers([speaker, speaker2])

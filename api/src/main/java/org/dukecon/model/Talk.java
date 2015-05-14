@@ -29,7 +29,7 @@ public class Talk {
     private String location;
     private String title;
     private List<Speaker> speakers = new ArrayList<>();
-    private String _abstract;
+    private String abstractText;
     private String language;
     private boolean demo;
 
