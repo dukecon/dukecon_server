@@ -18,7 +18,6 @@ import javax.inject.Inject
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
-@RunWith(SpringJUnit4ClassRunner)
 @ContextConfiguration(loader = SpringApplicationContextLoader, classes = DukeConServerApplication)
 @WebAppConfiguration
 @IntegrationTest
@@ -33,6 +32,7 @@ class DukeconServerApplicationSpec extends Specification {
         when:
         talkProvider.workLocal = true
         List<Talk> talks = talkProvider.allTalks
+
         then:
         assert talks.size() == 2
     }
@@ -41,6 +41,7 @@ class DukeconServerApplicationSpec extends Specification {
     void "Should return 105 talks"() {
         when:
         List<Talk> talks = talkProvider.allTalks
+
         then:
         assert talks.size() == 105
     }

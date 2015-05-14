@@ -54,6 +54,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.spockframework</groupId>
+			<artifactId>spock-core</artifactId>
+			<version>1.0-groovy-2.3</version>
+			<scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-spring</artifactId>
@@ -117,6 +123,7 @@
 					<useFile>false</useFile>
 					<includes>
 						<include>**/*Spec.java</include>
+						<include>**/*Spec.groovy</include>
 						<include>**/*Test*.java</include>
 						<include>**/*Test*.groovy</include>
 					</includes>
