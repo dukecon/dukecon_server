@@ -1,26 +1,21 @@
 package org.dukecon.server.business
-
+import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.json.JsonSlurper
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
-
+import groovy.util.logging.Slf4j
 import org.dukecon.model.Speaker
 import org.dukecon.model.Talk
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-
-import com.fasterxml.jackson.databind.ObjectMapper
-
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  */
+@Slf4j
 @Component
 @TypeChecked
 class TalkProvider {
-	private static final Logger log = LoggerFactory.getLogger(TalkProvider) 
-	
+
 	@Value("\${workLocal:false}")
 	private boolean workLocal
 	
