@@ -15,7 +15,7 @@
         "defaultSpeaker": true
       }
     ],
-    "_abstract": "Be warned! In this session, attendees over 21 might get drunk. It demonstrates, end-to-end, how to DIY a Java-powered beer tap. The presentation shows you a visual Java SE 8 JavaFX application running on a Raspberry Pi, a Java EE 7 application to process Twitter data and communicate with the Raspberry Pi, and the use of complex event processing in the embedded device to warn users if they are drinking too much. Perhaps you will want to bring your beer mug!",
+    "abstractText": "Be warned! In this session, attendees over 21 might get drunk. It demonstrates, end-to-end, how to DIY a Java-powered beer tap. The presentation shows you a visual Java SE 8 JavaFX application running on a Raspberry Pi, a Java EE 7 application to process Twitter data and communicate with the Raspberry Pi, and the use of complex event processing in the embedded device to warn users if they are drinking too much. Perhaps you will want to bring your beer mug!",
     "language": "en",
     "demo": true
   },
@@ -39,7 +39,7 @@
         "defaultSpeaker": true
       }
     ],
-    "_abstract": "Avatar 2.0 ist die logische Weiterentwicklung von Avatar.js und Project Avatar - den Node.js-Implementierungen für die JVM. Die Abhängigkeit zu einem Java EE Application Server besteht nicht mehr, Avatar läuft jetzt in einer eigenen JVM. Der Fokus liegt auf mehreren parallelen Node.js Event-Loops, jede in einem eigenen Thread. Eine Inter-Thread-Kommunikation ist über ShardState (mittels JCache/Coherence auch verteilt über mehrere Knoten) und einen internen Event Bus möglich. Ein weiteres Highlight ist die \"Avatar Persistence\", mit der es möglich ist, JSON-Objekte in 1:1, 1:n oder n:m Relationen über einen JPA/JDBC-Layer zu persistieren - relational und nicht-relational (No-SQL). Avatar 2.0 bringt zusammen, was zusammengehört: JavaScript auf der JVM!",
+    "abstractText": "Avatar 2.0 ist die logische Weiterentwicklung von Avatar.js und Project Avatar - den Node.js-Implementierungen für die JVM. Die Abhängigkeit zu einem Java EE Application Server besteht nicht mehr, Avatar läuft jetzt in einer eigenen JVM. Der Fokus liegt auf mehreren parallelen Node.js Event-Loops, jede in einem eigenen Thread. Eine Inter-Thread-Kommunikation ist über ShardState (mittels JCache/Coherence auch verteilt über mehrere Knoten) und einen internen Event Bus möglich. Ein weiteres Highlight ist die \"Avatar Persistence\", mit der es möglich ist, JSON-Objekte in 1:1, 1:n oder n:m Relationen über einen JPA/JDBC-Layer zu persistieren - relational und nicht-relational (No-SQL). Avatar 2.0 bringt zusammen, was zusammengehört: JavaScript auf der JVM!",
     "language": "de",
     "demo": true
   }

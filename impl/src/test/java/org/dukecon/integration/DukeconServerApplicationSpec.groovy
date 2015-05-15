@@ -4,14 +4,10 @@ import groovy.transform.TypeChecked
 import org.dukecon.DukeConServerApplication
 import org.dukecon.model.Talk
 import org.dukecon.server.business.TalkProvider
-import org.junit.Test
-import org.junit.runner.RunWith
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.inject.Inject
@@ -28,8 +24,11 @@ class DukeconServerApplicationSpec extends Specification {
     @Inject
     TalkProvider talkProvider
 
-    @Test
-    @Ignore
+    def cleanup() {
+        talkProvider.workLocal = false
+        talkProvider.talks = []
+    }
+
     void "Should return 2 local talks"() {
         when:
         talkProvider.workLocal = true
@@ -39,7 +38,6 @@ class DukeconServerApplicationSpec extends Specification {
         assert talks.size() == 2
     }
 
-    @Test
     void "Should return 105 talks"() {
         when:
         List<Talk> talks = talkProvider.allTalks
