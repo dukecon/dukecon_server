@@ -9,6 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
@@ -27,5 +29,13 @@ public class MetaService {
         MetaData metaData = MetaData.builder().conference(conference).build();
 
         return Response.ok().entity(metaData).build();
+    }
+
+    @GET
+    @Path("ping")
+    public Response ping() {
+        Map<String, String> m = new HashMap<>(1);
+        m.put("last_updated", "2015-05-19T16:20:11");
+        return Response.ok().entity(m).build();
     }
 }
