@@ -132,7 +132,7 @@
 			<plugin>
 				<groupId>com.sebastian-daschner</groupId>
 				<artifactId>jaxrs-analyzer-maven-plugin</artifactId>
-				<version>0.3</version>
+				<version>0.4</version>
 				<executions>
 					<execution>
 						<goals>
@@ -141,6 +141,7 @@
 						<configuration>
 							<backend>swagger</backend>
 							<buildDirectory>${basedir}/../api/target</buildDirectory>
+							<deployedDomain>dukecon.org</deployedDomain>
 						</configuration>
 					</execution>
 				</executions>
