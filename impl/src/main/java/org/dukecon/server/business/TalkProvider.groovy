@@ -50,7 +50,7 @@ class TalkProvider {
 		log.info ("Reading JSON data from remote '{}'", javalandTalksURL)
         URL javaland = new URL(javalandTalksURL)
         JsonSlurper slurper = new JsonSlurper()
-        def json = slurper.parse(javaland)
+        def json = slurper.parse(javaland, "ISO-8859-1")
         json.hits.hits.each {
             def t = it._source
             Speaker speaker = Speaker.builder().name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).defaultSpeaker(true).build()
