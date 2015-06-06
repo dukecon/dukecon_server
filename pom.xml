@@ -23,7 +23,46 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<lombok.version>1.16.4</lombok.version>
-	</properties>
+        <!-- Set this to localhost if you would like to test upload server -->
+        <nexus.repository.host>dev.dukecon.org</nexus.repository.host>
+        <nexus.repository.port>:8081</nexus.repository.port>
+        <nexus.repository.base></nexus.repository.base>
+    </properties>
+    
+    <repositories>
+        <repository>
+            <id>dukecon</id>
+            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>dukecon</id>
+            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>dukecon</id>
+            <name>DukeCon Snapshots</name>
+            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/snapshots</url>
+        </repository>
+    </distributionManagement>
+    
 
 	<dependencies>
 		<dependency>
