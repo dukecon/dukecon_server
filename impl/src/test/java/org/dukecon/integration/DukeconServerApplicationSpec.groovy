@@ -45,6 +45,6 @@ class DukeconServerApplicationSpec extends Specification {
         List<Talk> talks = talkProvider.allTalks
 
         then:
-        assert talks.size() == 105
+        assert talks.size() == 104
     }
 }
