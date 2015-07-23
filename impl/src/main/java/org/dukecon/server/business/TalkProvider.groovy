@@ -16,17 +16,16 @@ import org.springframework.stereotype.Component
 @TypeChecked
 class TalkProvider {
 
-	@Value("\${workLocal:false}")
-	private boolean workLocal
-	
-	private String javalandTalksURL = 'https://www.javaland.eu/api/schedule/JavaLand2015/jl.php?key=TestJL'
+    @Value("\${talks.uri:https://www.javaland.eu/api/schedule/JavaLand2015/jl.php?key=TestJL}")
+	protected String talksUri
 
-    private List<Talk> talks = []
+    protected List<Talk> talks = []
 
     List<Talk> getAllTalks() {
+        log.debug("Reading talks from '{}'", talksUri)
         if (talks.isEmpty()) {
-			if (workLocal) {
-				readDemoFile()
+			if (talksUri.startsWith("resource:")) {
+				readResource()
 			} else {
             	readJavalandFile()
 			}
@@ -34,24 +33,34 @@ class TalkProvider {
         return talks
     }
 
-    private void readDemoFile() {
+    private void readResource() {
 		log.info ("Reading JSON data from local file")
-        ObjectMapper mapper = new ObjectMapper()
-        InputStream is = this.getClass().getResourceAsStream('/demotalks.json')
+        String[] resourceParts = talksUri.split(":")
+        InputStream is = this.getClass().getResourceAsStream(resourceParts[1])
         JsonSlurper slurper = new JsonSlurper()
-        def json = slurper.parse(is)
-        json.each {
-            talks.add(mapper.convertValue(it, Talk.class))
+        if (talksUri.endsWith(".raw")) {
+            def rawJson = slurper.parse(is, "ISO-8859-1")
+            convertFromRaw(rawJson)
+        } else {
+            def json = slurper.parse(is)
+            ObjectMapper mapper = new ObjectMapper()
+            json.each {
+                talks.add(mapper.convertValue(it, Talk.class))
+            }
         }
     }
 
-	@TypeChecked(TypeCheckingMode.SKIP)
     private void readJavalandFile() {
-		log.info ("Reading JSON data from remote '{}'", javalandTalksURL)
-        URL javaland = new URL(javalandTalksURL)
+		log.info ("Reading JSON data from remote '{}'", talksUri)
+        URL javaland = new URL(talksUri)
         JsonSlurper slurper = new JsonSlurper()
-        def json = slurper.parse(javaland, "ISO-8859-1")
-        json.hits.hits.each {
+        def rawJson = slurper.parse(javaland, "ISO-8859-1")
+        convertFromRaw(rawJson)
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    private Object convertFromRaw(rawJson) {
+        rawJson.hits.hits.each {
             def t = it._source
             Speaker speaker = Speaker.builder().name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).defaultSpeaker(true).build()
             Speaker speaker2 = t.COREFERENT_NAME == null ? null : Speaker.builder().name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).build()
