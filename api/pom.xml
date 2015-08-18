@@ -15,14 +15,18 @@
     <name>DukeCon Server API</name>
 
     <properties>
-        <fasterxml.version>2.5.4</fasterxml.version>
+        <!-- Make sure this version is compatible to the jackson.version as 
+             provided by Spring Boot, e.g. 
+             - Spring Boot 1.2.5 requires jackson.core 2.4.6
+             - jackson.jaxrs 2.5.4 is also based on jackson.core 2.4.6 -->
+        <jackson.jaxrs.providers.version>2.5.4</jackson.jaxrs.providers.version>
     </properties>
     
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
-            <version>${fasterxml.version}</version>
+            <version>${jackson.jaxrs.providers.version}</version>
         </dependency>
     </dependencies>
 
