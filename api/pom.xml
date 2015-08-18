@@ -15,7 +15,7 @@
     <name>DukeCon Server API</name>
 
     <properties>
-        <fasterxml.version>2.6.0</fasterxml.version>
+        <fasterxml.version>2.5.4</fasterxml.version>
     </properties>
     
     <dependencies>
