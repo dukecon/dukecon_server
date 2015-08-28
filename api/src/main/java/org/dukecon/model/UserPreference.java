@@ -3,6 +3,7 @@ package org.dukecon.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 /**
@@ -10,6 +11,8 @@ import lombok.NonNull;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserPreference {
     @NonNull private String talkId;
     private int version;
