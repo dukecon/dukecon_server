@@ -56,9 +56,6 @@ class PreferencesService {
 
         log.debug ("Retrieving preferences for '{}'", principalId)
         Collection<Preference> preferences = preferencesRepository.findByPrincipalId (principalId)
-        if (preferences.size() == 0) {
-            return Response.noContent().build()
-        }
 
         Collection<UserPreference> result = []
         preferences.each {Preference p ->

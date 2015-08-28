@@ -55,7 +55,9 @@ class PreferencesServiceSpec extends Specification {
             Response response = preferencesService.getPreferences()
             log.debug ("Response: {}", response)
         then:
-            assert Response.Status.NO_CONTENT == response.getStatusInfo()
+            assert Response.Status.OK == response.getStatusInfo()
+            List<UserPreference> result = response.entity as List<UserPreference>
+            assert 3 == result.size()
     }
 
     void "test set simple preferences" () {
