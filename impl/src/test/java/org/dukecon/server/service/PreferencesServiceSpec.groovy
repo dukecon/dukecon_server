@@ -57,7 +57,7 @@ class PreferencesServiceSpec extends Specification {
         then:
             assert Response.Status.OK == response.getStatusInfo()
             List<UserPreference> result = response.entity as List<UserPreference>
-            assert 3 == result.size()
+            assert 0 == result.size()
     }
 
     void "test set simple preferences" () {
