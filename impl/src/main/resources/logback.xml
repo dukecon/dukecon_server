@@ -24,4 +24,6 @@
         <appender-ref ref="console"/>
         <appender-ref ref="logfile"/>
     </root>
+
+    <logger name="org.dukecon" level="${logger.org.dukecon.level}" />
 </configuration>
