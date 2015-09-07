@@ -1,6 +1,7 @@
 package org.dukecon.server.security
 
 import groovy.transform.TypeChecked
+import groovy.util.logging.Slf4j
 
 import java.security.Principal
 
@@ -16,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority
  * 
  * @author iulia
  */
+@Slf4j
 @TypeChecked
 public class KeycloakAuthentication implements Authentication {
 	private boolean authenticated
@@ -64,6 +66,7 @@ public class KeycloakAuthentication implements Authentication {
 
 		public static KeycloakAuthentication buildAuthentication(HttpServletRequest request) {
 			Principal principal = request?.userPrincipal
+			log.debug ("New session for '{}'", principal)
 			if(principal){
 				return new KeycloakAuthentication(principal)
 			} else {
