@@ -33,7 +33,7 @@ class DukeconServerApplicationSpec extends Specification {
     void "Should return 2 local talks"() {
         when:
         talkProvider.talksUri = "resource:/demotalks.json"
-        List<Talk> talks = talkProvider.allTalks
+        Collection<Talk> talks = talkProvider.allTalks
 
         then:
         assert talks.size() == 2
@@ -42,7 +42,7 @@ class DukeconServerApplicationSpec extends Specification {
     void "Should return 104 talks"() {
         when:
         talkProvider.talksUri = "resource:/javaland-2015.raw"
-        List<Talk> talks = talkProvider.allTalks
+        Collection<Talk> talks = talkProvider.allTalks
 
         then:
         assert talks.size() == 104
