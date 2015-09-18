@@ -64,6 +64,10 @@ class TalkProvider {
             def t = it._source
             Speaker speaker = Speaker.builder().name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).defaultSpeaker(true).build()
             Speaker speaker2 = t.COREFERENT_NAME == null ? null : Speaker.builder().name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).build()
+			List<Speaker> speakers = [speaker]
+			if (speaker2) {
+				speakers.add (speaker2)
+			}
             Talk talk = Talk.builder()
                     .id(t.ID.toString())
                     .track(t.TRACK)
@@ -76,7 +80,7 @@ class TalkProvider {
                     .abstractText(t.ABSTRACT_TEXT)
                     .language(t.SPRACHE)
                     .demo(t.DEMO != null && t.DEMO.equalsIgnoreCase('ja'))
-                    .speakers([speaker, speaker2])
+                    .speakers(speakers)
                     .build()
             talks.add(talk)
         }
