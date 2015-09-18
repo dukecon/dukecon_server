@@ -27,7 +27,7 @@ class DukeconServerApplicationSpec extends Specification {
     TalkProvider talkProvider
 
     def cleanup() {
-        talkProvider.talks = []
+        talkProvider.talks = [:]
     }
 
     void "Should return 2 local talks"() {
