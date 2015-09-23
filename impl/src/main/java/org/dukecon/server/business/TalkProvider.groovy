@@ -10,6 +10,12 @@ import org.dukecon.model.Talk
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.temporal.ChronoUnit
+import java.time.temporal.TemporalField
+
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  */
@@ -19,20 +25,39 @@ import org.springframework.stereotype.Component
 class TalkProvider {
 
 	@Value("\${talks.uri:https://www.javaland.eu/api/schedule/JavaLand2015/jl.php?key=TestJL}")
-	protected String talksUri
+	String talksUri
 
-	protected Map<String, Talk> talks = [:]
+	@Value("\${talks.cache.expires:3600}")
+	Integer cacheExpiresAfterSeconds
+
+	private Instant cacheLastUpdated
+
+	Map<String, Talk> talks = [:]
 
 	Collection<Talk> getAllTalks() {
 		log.debug("Reading talks from '{}'", talksUri)
-		if (talks.isEmpty()) {
-			if (talksUri.startsWith("resource:")) {
-				readResource()
-			} else {
-				readJavalandFile()
-			}
+		if (talks.isEmpty() || isCacheExpired()) {
+			cacheLastUpdated = Instant.now()
+			log.info("Reread talks from '{}'", talksUri)
+			readTalks()
 		}
 		return talks.values()
+	}
+
+	protected void readTalks() {
+		if (talksUri.startsWith("resource:")) {
+			readResource()
+		} else {
+			readJavalandFile()
+		}
+	}
+
+	private boolean isCacheExpired() {
+		if(!cacheExpiresAfterSeconds) {
+			return true
+		}
+
+		return cacheLastUpdated.plusSeconds(cacheExpiresAfterSeconds).isBefore(Instant.now())
 	}
 
 	private void readResource() {
