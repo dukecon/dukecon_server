@@ -1,5 +1,6 @@
 package org.dukecon.server.business
 
+import org.dukecon.model.Talk
 import spock.lang.Specification
 
 import java.time.Instant
@@ -11,34 +12,95 @@ import java.time.LocalTime
  */
 class TalkProviderSpec extends Specification {
     def "test cache is always expired"() {
-        given:
-        TalkProvider provider = new TalkProvider()
         when:
-        boolean result1 = provider.isCacheExpired(Instant.now(), 0)
-        boolean result2 = provider.isCacheExpired(Instant.EPOCH, 0)
-        boolean result3 = provider.isCacheExpired(Instant.MAX, 0)
+        TalkProvider provider = new TalkProvider(cacheLastUpdated: Instant.now(), cacheExpiresAfterSeconds: 0)
+        boolean result = provider.isCacheExpired()
         then:
-        assert result1 && result2 && result3
-    }
-
-    def "test cache is expired"() {
-        given:
-        TalkProvider provider = new TalkProvider()
-        Instant now = Instant.now()
+        assert result
         when:
-        boolean result = provider.isCacheExpired(now.minusSeconds(12), 10)
+        provider = new TalkProvider(cacheLastUpdated: Instant.EPOCH, cacheExpiresAfterSeconds: 0)
+        result = provider.isCacheExpired()
+        then:
+        assert result
+        when:
+        provider = new TalkProvider(cacheLastUpdated: Instant.MAX, cacheExpiresAfterSeconds: 0)
+        result = provider.isCacheExpired()
         then:
         assert result
     }
 
-    def "test cache is not expired"() {
+    def "test cache is expired"() {
         given:
-        TalkProvider provider = new TalkProvider()
-        Instant now = Instant.now()
+        TalkProvider provider = new TalkProvider(cacheLastUpdated: Instant.now().minusSeconds(12), cacheExpiresAfterSeconds: 10)
         when:
-        boolean result = provider.isCacheExpired(now.minusSeconds(9), 10)
+        boolean result = provider.isCacheExpired()
+        then:
+        assert result
+    }
+
+    def "test cache is not expired when exactly valid until now"() {
+        given:
+        TalkProvider provider = new TalkProvider(cacheLastUpdated: Instant.now().minusSeconds(10), cacheExpiresAfterSeconds: 10)
+        when:
+        boolean result = provider.isCacheExpired()
         then:
         assert !result
+    }
+
+    def "test cache is not expired when valid until is in future"() {
+        given:
+        TalkProvider provider = new TalkProvider(cacheLastUpdated: Instant.now().minusSeconds(9), cacheExpiresAfterSeconds: 10)
+        when:
+        boolean result = provider.isCacheExpired()
+        then:
+        assert !result
+    }
+
+
+    class MockTalkProvider extends TalkProvider {
+        boolean hasReread = false
+
+        void resetHasReread() {
+            hasReread = false
+        }
+
+        protected void readTalks() {
+            hasReread = true
+            talks = ['talk1':null]
+        }
+    }
+
+    void "Should reread talks"() {
+        given:
+        TalkProvider talkProvider = new MockTalkProvider()
+        when:
+        def talks = talkProvider.allTalks
+        then:
+        assert talkProvider.hasReread
+        assert talkProvider.talks
+        when:
+        talkProvider.resetHasReread()
+        talks = talkProvider.allTalks
+        then:
+        assert talkProvider.hasReread
+        assert talkProvider.talks
+    }
+
+    void "Should not reread talks"() {
+        given:
+        TalkProvider talkProvider = new MockTalkProvider()
+        talkProvider.cacheExpiresAfterSeconds = 10
+        when:
+        def talks = talkProvider.allTalks
+        then:
+        assert talkProvider.hasReread
+        assert talkProvider.talks
+        when:
+        talkProvider.resetHasReread()
+        talks = talkProvider.allTalks
+        then:
+        assert !talkProvider.hasReread
+        assert talkProvider.talks
     }
 
 }
