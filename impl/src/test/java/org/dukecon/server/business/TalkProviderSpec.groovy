@@ -38,15 +38,6 @@ class TalkProviderSpec extends Specification {
         assert result
     }
 
-    def "test cache is not expired when exactly valid until now"() {
-        given:
-        TalkProvider provider = new TalkProvider(cacheLastUpdated: Instant.now().minusSeconds(10), cacheExpiresAfterSeconds: 10)
-        when:
-        boolean result = provider.isCacheExpired()
-        then:
-        assert !result
-    }
-
     def "test cache is not expired when valid until is in future"() {
         given:
         TalkProvider provider = new TalkProvider(cacheLastUpdated: Instant.now().minusSeconds(9), cacheExpiresAfterSeconds: 10)
