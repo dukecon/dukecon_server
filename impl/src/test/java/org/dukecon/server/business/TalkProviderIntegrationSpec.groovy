@@ -1,18 +1,18 @@
-package org.dukecon.integration
+package org.dukecon.server.business
 
 import groovy.transform.TypeChecked
-
-import javax.inject.Inject
-
+import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication
 import org.dukecon.model.Talk
-import org.dukecon.server.business.TalkProvider
+import org.dukecon.server.model.Preference
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.web.WebAppConfiguration
-
 import spock.lang.Specification
+
+import javax.inject.Inject
+
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -20,9 +20,9 @@ import spock.lang.Specification
 @ContextConfiguration(loader = SpringApplicationContextLoader, classes = DukeConServerApplication)
 @WebAppConfiguration
 @IntegrationTest(["server.port=0"])
+@Slf4j
 @TypeChecked
-class DukeconServerApplicationSpec extends Specification {
-
+class TalkProviderIntegrationSpec extends Specification {
     @Inject
     TalkProvider talkProvider
 
@@ -47,4 +47,5 @@ class DukeconServerApplicationSpec extends Specification {
         then:
         assert talks.size() == 104
     }
+
 }
