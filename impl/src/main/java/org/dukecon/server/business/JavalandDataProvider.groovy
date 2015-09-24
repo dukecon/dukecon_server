@@ -21,7 +21,7 @@ import java.time.Instant
 @TypeChecked
 class JavalandDataProvider {
 
-	@Value("\${talks.uri:https://www.javaland.eu/api/schedule/JavaLand2015/jl.php?key=TestJL}")
+	@Value("\${talks.uri:https://www.javaland.eu/api/schedule/JavaLand2016/jl.php?key=TestJL}")
 	String talksUri
 
 	@Value("\${talks.cache.expires:3600}")
