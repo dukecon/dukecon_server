@@ -5,16 +5,13 @@ import groovy.json.JsonSlurper
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import groovy.util.logging.Slf4j
+import org.dukecon.model.MetaData
 import org.dukecon.model.Speaker
 import org.dukecon.model.Talk
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.temporal.ChronoUnit
-import java.time.temporal.TemporalField
 
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
@@ -22,7 +19,7 @@ import java.time.temporal.TemporalField
 @Slf4j
 @Component
 @TypeChecked
-class TalkProvider {
+class JavalandDataProvider {
 
 	@Value("\${talks.uri:https://www.javaland.eu/api/schedule/JavaLand2015/jl.php?key=TestJL}")
 	String talksUri
@@ -33,15 +30,24 @@ class TalkProvider {
 	private Instant cacheLastUpdated
 
 	Map<String, Talk> talks = [:]
+	MetaData metaData
+
+	MetaData getMetaData() {
+		checkCache()
+		return metaData
+	}
 
 	Collection<Talk> getAllTalks() {
-		log.debug("Reading talks from '{}'", talksUri)
-		if (talks.isEmpty() || isCacheExpired()) {
+		checkCache()
+		return talks.values()
+	}
+
+	private void checkCache() {
+		if (talks.isEmpty() || !metaData || isCacheExpired()) {
 			cacheLastUpdated = Instant.now()
 			log.info("Reread talks from '{}'", talksUri)
 			readTalks()
 		}
-		return talks.values()
 	}
 
 	protected void readTalks() {
@@ -92,6 +98,7 @@ class TalkProvider {
 
 	@TypeChecked(TypeCheckingMode.SKIP)
 	private Object convertFromRaw(rawJson) {
+		metaData = createMetaData(rawJson.hits.hits._source)
 		rawJson.hits.hits.each {
 			def t = it._source
 			String id = t.ID.toString()
@@ -121,5 +128,14 @@ class TalkProvider {
 				talks[id] = talk
 			}
 		}
+	}
+
+	MetaData createMetaData(rawJson) {
+		MetaDataExtractor extractor = new MetaDataExtractor(talksJson: rawJson)
+		return MetaData.builder().rooms(extractor.rooms).tracks(extractor.tracks).languages(extractor.languages).defaultLanguage(extractor.defaultLanguage).audiences(extractor.audiences).build()
+	}
+
+	private String camelCaseOf(String input) {
+		input.replaceAll(/\s+(\b)/, '$1')
 	}
 }
