@@ -5,15 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- *
- * @author Niko Köbler, http://www.n-k.de, @dasniko
+ * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Conference {
-    private Long id;
+public class Room {
+    private Integer number;
     private String name;
-    private String url;
-
 }
