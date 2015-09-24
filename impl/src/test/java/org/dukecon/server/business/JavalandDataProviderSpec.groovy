@@ -47,16 +47,16 @@ class JavalandDataProviderSpec extends Specification {
         assert talks.size() == 104
     }
 
-    void "Should return 109 talks (2016)"() {
+    void "Should return 110 talks (2016)"() {
         when:
         dataProvider.talksUri = "resource:/javaland-2016.raw"
         Collection<Talk> talks = dataProvider.allTalks
 
         then:
-        assert talks.size() == 109
+        assert talks.size() == 110
         assert dataProvider.metaData
         assert dataProvider.metaData.rooms.size() == 7
-        assert dataProvider.metaData.rooms.number.join('') == "1" * 7
+        assert dataProvider.metaData.rooms.number.join('') == ('1'..'7').join('')
         assert dataProvider.metaData.tracks.size() == 8
         assert dataProvider.metaData.defaultLanguage.code == 'de'
         assert dataProvider.metaData.languages.size() == 2

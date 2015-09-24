@@ -38,7 +38,7 @@ class MetaDataExtractor {
 
     List<Room> getRooms() {
         return talksJson.collect {[it.RAUM_NR, it.RAUMNAME]}.unique().sort {it.first()}.collect {
-            Room.builder().number(it.first().toInteger()).name(it.last()).build()
+            Room.builder().number(it.first()?.toInteger()).name(it.last()).build()
         }
     }
 }
