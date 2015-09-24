@@ -2,8 +2,10 @@ package org.dukecon.server.service;
 
 import org.dukecon.model.Conference;
 import org.dukecon.model.MetaData;
+import org.dukecon.server.business.JavalandDataProvider;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -18,16 +20,18 @@ import java.util.Map;
 @Component
 @Path("meta")
 public class MetaService {
+    @Inject
+    JavalandDataProvider talkProvider;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMeta() {
         Conference conference = Conference.builder()
-                .name("DukeCon Demo Workshop")
-                .url("http://dukecon.org/demo")
+                .name("Javaland 2016")
+                .url("http://dukecon.org/javaland")
                 .build();
-        MetaData metaData = MetaData.builder().conference(conference).build();
-
+        MetaData metaData = talkProvider.getMetaData();
+        metaData.setConference(conference);
         return Response.ok().entity(metaData).build();
     }
 
