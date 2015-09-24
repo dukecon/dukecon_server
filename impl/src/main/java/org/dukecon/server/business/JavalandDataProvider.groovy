@@ -27,6 +27,12 @@ class JavalandDataProvider {
 	@Value("\${talks.cache.expires:3600}")
 	Integer cacheExpiresAfterSeconds
 
+	@Value("\${conference.url:http://dukecon.org}")
+	String conferenceUrl
+
+	@Value("\${conference.name:DukeCon Conference}")
+	String conferenceName
+
 	private Instant cacheLastUpdated
 
 	Map<String, Talk> talks = [:]
@@ -131,11 +137,7 @@ class JavalandDataProvider {
 	}
 
 	MetaData createMetaData(rawJson) {
-		MetaDataExtractor extractor = new MetaDataExtractor(talksJson: rawJson)
-		return MetaData.builder().rooms(extractor.rooms).tracks(extractor.tracks).languages(extractor.languages).defaultLanguage(extractor.defaultLanguage).audiences(extractor.audiences).build()
-	}
-
-	private String camelCaseOf(String input) {
-		input.replaceAll(/\s+(\b)/, '$1')
+		MetaDataExtractor extractor = new MetaDataExtractor(talksJson: rawJson, conferenceName: conferenceName, conferenceUrl: conferenceUrl)
+		return MetaData.builder().conference(extractor.conference).rooms(extractor.rooms).tracks(extractor.tracks).languages(extractor.languages).defaultLanguage(extractor.defaultLanguage).audiences(extractor.audiences).build()
 	}
 }

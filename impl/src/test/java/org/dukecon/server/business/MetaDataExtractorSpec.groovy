@@ -2,6 +2,7 @@ package org.dukecon.server.business
 
 import groovy.json.JsonSlurper
 import org.dukecon.model.Audience
+import org.dukecon.model.Conference
 import org.dukecon.model.Language
 import org.dukecon.model.MetaData
 import org.dukecon.model.Room
@@ -29,35 +30,27 @@ class MetaDataExtractorSpec extends Specification {
         assert tracks.size() == 8
 
         assert tracks[0].names["de"] == "Container & Microservices"
-        assert tracks[0].code == 1
         assert tracks[0].order == 1
 
         assert tracks[1].names["de"] == "Core Java & JVM basierte Sprachen"
-        assert tracks[1].code == 1
         assert tracks[1].order == 2
 
         assert tracks[2].names["de"] == "Enterprise Java & Cloud"
-        assert tracks[2].code == 2
         assert tracks[2].order == 3
 
         assert tracks[3].names["de"] == "Frontend & Mobile"
-        assert tracks[3].code == 3
         assert tracks[3].order == 4
 
         assert tracks[4].names["de"] == "IDEs & Tools"
-        assert tracks[4].code == 4
         assert tracks[4].order == 5
 
         assert tracks[5].names["de"] == "Internet der Dinge"
-        assert tracks[5].code == 5
         assert tracks[5].order == 6
 
         assert tracks[6].names["de"] == "Architektur & Sicherheit"
-        assert tracks[6].code == 6
         assert tracks[6].order == 7
 
         assert tracks[7].names["de"] == "Newcomer"
-        assert tracks[7].code == 7
         assert tracks[7].order == 8
     }
 
@@ -107,7 +100,7 @@ class MetaDataExtractorSpec extends Specification {
         then:
         assert metaData
         assert metaData.rooms.size() == 7
-        assert metaData.rooms.number.join('') == ('1'..'7').join('')
+        assert metaData.rooms.order.join('') == ('1'..'7').join('')
         assert metaData.rooms.name.join(', ') == 'Wintergarten, Schauspielhaus, Quantum 1+2, Quantum 3, Quantum 4, Lilaque, Neptun'
         assert metaData.tracks.size() == 8
         assert metaData.tracks.names['de'].join(', ') == 'Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer'
@@ -117,5 +110,14 @@ class MetaDataExtractorSpec extends Specification {
         assert metaData.audiences.size() == 2
         assert metaData.audiences.names['de'].join(', ') == 'Anfänger, Fortgeschrittene'
         assert metaData.audiences.names['en'].join(', ') == 'beginners, advanced'
+    }
+
+    void "should get conference infos"() {
+        when:
+        def conference = extractor.conference
+        then:
+        assert conference.id == 499959
+        assert conference.name == 'DukeCon Conference'
+        assert conference.url == 'http://dukecon.org'
     }
 }

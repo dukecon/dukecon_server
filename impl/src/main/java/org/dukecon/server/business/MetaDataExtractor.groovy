@@ -1,6 +1,7 @@
 package org.dukecon.server.business
 
 import org.dukecon.model.Audience
+import org.dukecon.model.Conference
 import org.dukecon.model.Language
 import org.dukecon.model.Room
 import org.dukecon.model.Track
@@ -10,15 +11,24 @@ import org.dukecon.model.Track
  */
 class MetaDataExtractor {
     def talksJson
+    String conferenceUrl = 'http://dukecon.org'
+    String conferenceName = 'DukeCon Conference'
 
     private static Language en = Language.builder().code("en").name("English").build()
     private static Language de = Language.builder().code("de").name("Deutsch").build()
 
     List<Track> getTracks() {
-        int i = 1
         return talksJson.collect {[it.ORDERT, it.TRACK, it.TRACK_EN]}.unique().sort {it.first()}.collect {
-            Track.builder().code(it.first()).order(i++).names([de:it[1], en:it[2]]).build()
+            Track.builder().order(it.first()).names([de:it[1], en:it[2]]).build()
         }
+    }
+
+    Conference getConference() {
+        Conference conference = Conference.builder()
+                .id(talksJson.ID_KONGRESS.unique().first())
+                .name(conferenceName)
+                .url(conferenceUrl)
+                .build();
     }
 
     List<Language> getLanguages() {
@@ -38,7 +48,7 @@ class MetaDataExtractor {
 
     List<Room> getRooms() {
         return talksJson.collect {[it.RAUM_NR, it.RAUMNAME]}.unique().sort {it.first()}.collect {
-            Room.builder().number(it.first()?.toInteger()).name(it.last()).build()
+            Room.builder().order(it.first()?.toInteger()).name(it.last()).build()
         }
     }
 }

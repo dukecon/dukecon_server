@@ -26,13 +26,7 @@ public class MetaService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMeta() {
-        Conference conference = Conference.builder()
-                .name("Javaland 2016")
-                .url("http://dukecon.org/javaland")
-                .build();
-        MetaData metaData = talkProvider.getMetaData();
-        metaData.setConference(conference);
-        return Response.ok().entity(metaData).build();
+        return Response.ok().entity(talkProvider.getMetaData()).build();
     }
 
     @GET

@@ -12,11 +12,10 @@ import java.util.Map;
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Data
-@EqualsAndHashCode(of = "code")
+@EqualsAndHashCode(of = "order")
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Track {
     private Integer order;
-    private Integer code;
     private Map<Language, String> names = new HashMap<>();
 }

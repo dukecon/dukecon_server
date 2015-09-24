@@ -56,18 +56,11 @@ class JavalandDataProviderSpec extends Specification {
         assert talks.size() == 110
         assert dataProvider.metaData
         assert dataProvider.metaData.rooms.size() == 7
-        assert dataProvider.metaData.rooms.number.join('') == ('1'..'7').join('')
+        assert dataProvider.metaData.rooms.order.join('') == ('1'..'7').join('')
         assert dataProvider.metaData.tracks.size() == 8
         assert dataProvider.metaData.defaultLanguage.code == 'de'
         assert dataProvider.metaData.languages.size() == 2
         assert dataProvider.metaData.audiences.size() == 2
-    }
-
-    void "should CamelCase input"() {
-        when:
-        String result = dataProvider.camelCaseOf('Internet der Dinge')
-        then:
-        assert 'InternetderDinge' == result
     }
 
     void "Should reread talks"() {
