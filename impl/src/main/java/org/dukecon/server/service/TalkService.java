@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.dukecon.model.Talk;
-import org.dukecon.server.business.TalkProvider;
+import org.dukecon.server.business.JavalandDataProvider;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,12 +21,20 @@ import org.springframework.stereotype.Component;
 public class TalkService {
 
     @Inject
-    TalkProvider talkProvider;
+    JavalandDataProvider talkProvider;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTalks() {
         Collection<Talk> talks = talkProvider.getAllTalks();
+        return Response.ok().entity(talks).build();
+    }
+
+    @GET
+    @Path("v2")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTalks2() {
+        Collection<Talk> talks = talkProvider.getAllTalksWithReplaceMetaData();
         return Response.ok().entity(talks).build();
     }
 }

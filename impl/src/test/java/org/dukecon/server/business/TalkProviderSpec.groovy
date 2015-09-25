@@ -1,11 +1,10 @@
 package org.dukecon.server.business
 
+import org.dukecon.model.MetaData
 import org.dukecon.model.Talk
 import spock.lang.Specification
 
 import java.time.Instant
-import java.time.LocalTime
-
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -13,17 +12,17 @@ import java.time.LocalTime
 class TalkProviderSpec extends Specification {
     def "test cache is always expired"() {
         when:
-        TalkProvider provider = new TalkProvider(cacheLastUpdated: Instant.now(), cacheExpiresAfterSeconds: 0)
+        JavalandDataProvider provider = new JavalandDataProvider(cacheLastUpdated: Instant.now(), cacheExpiresAfterSeconds: 0)
         boolean result = provider.isCacheExpired()
         then:
         assert result
         when:
-        provider = new TalkProvider(cacheLastUpdated: Instant.EPOCH, cacheExpiresAfterSeconds: 0)
+        provider = new JavalandDataProvider(cacheLastUpdated: Instant.EPOCH, cacheExpiresAfterSeconds: 0)
         result = provider.isCacheExpired()
         then:
         assert result
         when:
-        provider = new TalkProvider(cacheLastUpdated: Instant.MAX, cacheExpiresAfterSeconds: 0)
+        provider = new JavalandDataProvider(cacheLastUpdated: Instant.MAX, cacheExpiresAfterSeconds: 0)
         result = provider.isCacheExpired()
         then:
         assert result
@@ -31,7 +30,7 @@ class TalkProviderSpec extends Specification {
 
     def "test cache is expired"() {
         given:
-        TalkProvider provider = new TalkProvider(cacheLastUpdated: Instant.now().minusSeconds(12), cacheExpiresAfterSeconds: 10)
+        JavalandDataProvider provider = new JavalandDataProvider(cacheLastUpdated: Instant.now().minusSeconds(12), cacheExpiresAfterSeconds: 10)
         when:
         boolean result = provider.isCacheExpired()
         then:
@@ -40,7 +39,7 @@ class TalkProviderSpec extends Specification {
 
     def "test cache is not expired when valid until is in future"() {
         given:
-        TalkProvider provider = new TalkProvider(cacheLastUpdated: Instant.now().minusSeconds(9), cacheExpiresAfterSeconds: 10)
+        JavalandDataProvider provider = new JavalandDataProvider(cacheLastUpdated: Instant.now().minusSeconds(9), cacheExpiresAfterSeconds: 10)
         when:
         boolean result = provider.isCacheExpired()
         then:
@@ -48,22 +47,24 @@ class TalkProviderSpec extends Specification {
     }
 
 
-    class MockTalkProvider extends TalkProvider {
+    class MockTalkProvider extends JavalandDataProvider {
         boolean hasReread = false
 
         void resetHasReread() {
             hasReread = false
         }
 
+        @Override
         protected void readTalks() {
             hasReread = true
-            talks = ['talk1':null]
+            talks = [Talk.builder().build()]
+            metaData = MetaData.builder().build()
         }
     }
 
     void "Should reread talks"() {
         given:
-        TalkProvider talkProvider = new MockTalkProvider()
+        JavalandDataProvider talkProvider = new MockTalkProvider()
         when:
         def talks = talkProvider.allTalks
         then:
@@ -79,7 +80,7 @@ class TalkProviderSpec extends Specification {
 
     void "Should not reread talks"() {
         given:
-        TalkProvider talkProvider = new MockTalkProvider()
+        JavalandDataProvider talkProvider = new MockTalkProvider()
         talkProvider.cacheExpiresAfterSeconds = 10
         when:
         def talks = talkProvider.allTalks

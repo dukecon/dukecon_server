@@ -4,17 +4,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- *
- * @author Niko Köbler, http://www.n-k.de, @dasniko
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Conference {
-    private Long id;
-    private String name;
-    private String url;
-
+public class TalkType implements OrderAndNamable {
+    private Integer order;
+    private Map<Language, String> names = new HashMap<>();
 }
