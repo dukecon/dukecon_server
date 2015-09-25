@@ -15,7 +15,7 @@ import java.util.Map;
 @EqualsAndHashCode(of = "order")
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Track {
+public class Track implements OrderAndNamable {
     private Integer order;
     private Map<Language, String> names = new HashMap<>();
 }

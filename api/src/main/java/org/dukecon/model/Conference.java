@@ -7,6 +7,7 @@ import lombok.Data;
 /**
  *
  * @author Niko Köbler, http://www.n-k.de, @dasniko
+ * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Data
 @Builder

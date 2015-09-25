@@ -29,4 +29,12 @@ public class TalkService {
         Collection<Talk> talks = talkProvider.getAllTalks();
         return Response.ok().entity(talks).build();
     }
+
+    @GET
+    @Path("v2")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTalks2() {
+        Collection<Talk> talks = talkProvider.getAllTalksWithReplaceMetaData();
+        return Response.ok().entity(talks).build();
+    }
 }

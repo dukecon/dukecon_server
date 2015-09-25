@@ -1,6 +1,7 @@
 package org.dukecon.server.business
 
 import org.dukecon.model.MetaData
+import org.dukecon.model.Talk
 import spock.lang.Specification
 
 import java.time.Instant
@@ -56,7 +57,7 @@ class TalkProviderSpec extends Specification {
         @Override
         protected void readTalks() {
             hasReread = true
-            talks = ['talk1':null]
+            talks = [Talk.builder().build()]
             metaData = MetaData.builder().build()
         }
     }

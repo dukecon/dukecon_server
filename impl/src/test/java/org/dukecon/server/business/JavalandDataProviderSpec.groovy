@@ -26,16 +26,7 @@ class JavalandDataProviderSpec extends Specification {
     JavalandDataProvider dataProvider
 
     def cleanup() {
-        dataProvider.talks = [:]
-    }
-
-    void "Should return 2 local talks"() {
-        when:
-        dataProvider.talksUri = "resource:/demotalks.json"
-        Collection<Talk> talks = dataProvider.allTalks
-
-        then:
-        assert talks.size() == 2
+        dataProvider.clearCache()
     }
 
     void "Should return 104 talks (2015)"() {
@@ -45,6 +36,12 @@ class JavalandDataProviderSpec extends Specification {
 
         then:
         assert talks.size() == 104
+        assert dataProvider.metaData
+        assert dataProvider.metaData.rooms.size() == 7
+        assert dataProvider.metaData.tracks.size() == 10
+        assert dataProvider.metaData.defaultLanguage.code == 'de'
+        assert dataProvider.metaData.languages.size() == 2
+        assert dataProvider.metaData.audiences.size() == 2
     }
 
     void "Should return 110 talks (2016)"() {
@@ -61,24 +58,5 @@ class JavalandDataProviderSpec extends Specification {
         assert dataProvider.metaData.defaultLanguage.code == 'de'
         assert dataProvider.metaData.languages.size() == 2
         assert dataProvider.metaData.audiences.size() == 2
-    }
-
-    void "Should reread talks"() {
-        given:
-        dataProvider.talksUri = 'resource:/demotalks.json'
-        dataProvider.allTalks
-        boolean hasReread = false
-        dataProvider.metaClass.invokeMethod = {name, instance ->
-            println "invokeMethod $name"
-        }
-        when:
-        dataProvider.allTalks
-        then:
-        assert !hasReread
-    }
-
-    @After
-    void finish() {
-        dataProvider.metaClass = null
     }
 }

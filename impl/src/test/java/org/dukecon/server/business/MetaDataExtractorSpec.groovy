@@ -120,4 +120,14 @@ class MetaDataExtractorSpec extends Specification {
         assert conference.name == 'DukeCon Conference'
         assert conference.url == 'http://dukecon.org'
     }
+
+    void "should get talk types"() {
+        when:
+        def talkTypes = extractor.talkTypes
+        then:
+        assert talkTypes.size() == 5
+        assert talkTypes.order.join('') == ('1'..'5').join('')
+        assert talkTypes.names.de.join(', ') == 'Best Practices, Keynote, Neuerscheinungen oder Features, Projektbericht, Tipps & Tricks'
+        assert talkTypes.names.en.join(', ') == 'best practices, keynote, new releases or features , project report, tips & tricks'
+    }
 }
