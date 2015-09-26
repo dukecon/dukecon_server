@@ -13,7 +13,7 @@ import java.util.Map;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TalkType implements OrderAndNamable {
+public class TalkType {
     private Integer order;
     private Map<Language, String> names = new HashMap<>();
 }
