@@ -59,4 +59,14 @@ class JavalandDataProviderSpec extends Specification {
         assert dataProvider.metaData.languages.size() == 2
         assert dataProvider.metaData.audiences.size() == 2
     }
+
+    void "Should return 110 talks (2016) v2"() {
+        when:
+        dataProvider.talksUri = "resource:/javaland-2016.raw"
+        Collection<Talk> talks = dataProvider.allTalksWithReplaceMetaData
+
+        then:
+        assert talks.size() == 110
+        assert talks.roomNumber.unique().sort().join(', ') == (1..7).join(', ')
+    }
 }

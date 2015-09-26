@@ -95,7 +95,7 @@ class MetaDataExtractorSpec extends Specification {
 
     void "should extract all meta data"() {
         when:
-        def metaData = MetaData.builder().rooms(extractor.rooms).tracks(extractor.tracks).languages(extractor.languages).defaultLanguage(extractor.defaultLanguage).audiences(extractor.audiences).build()
+        def metaData = extractor.buildMetaData()
 
         then:
         assert metaData

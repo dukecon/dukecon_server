@@ -13,7 +13,7 @@ import java.util.Map;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Audience implements OrderAndNamable {
+public class Audience {
     private Integer order;
     private Map<Language, String> names = new HashMap<>();
 }

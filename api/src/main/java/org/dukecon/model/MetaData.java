@@ -23,29 +23,4 @@ public class MetaData {
     private List<Track> tracks = new ArrayList<>();
     private List<Audience> audiences = new ArrayList<>();
     private List<TalkType> talkTypes = new ArrayList<>();
-
-    public Integer getOrderFromTrackName(String name) {
-        return getOrderForName(name, this.tracks);
-    }
-
-    public Integer getOrderFromAudienceName(String name) {
-        return getOrderForName(name, this.audiences);
-    }
-
-    public Integer getOrderFromRoomName(String name) {
-        return getOrderForName(name, this.rooms);
-    }
-
-    public Integer getOrderFromTalkTypeName(String name) {
-        return getOrderForName(name, this.talkTypes);
-    }
-
-    private Integer getOrderForName(String name, List<? extends OrderAndNamable> namables) {
-        return namables.stream()
-                .filter(namable -> {
-                    return name.equals(namable.getName("de"));
-                }).map(namable -> namable.getOrder())
-                .findFirst()
-                .orElse(0);
-    }
 }

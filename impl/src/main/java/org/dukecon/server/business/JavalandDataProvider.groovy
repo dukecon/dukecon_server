@@ -37,6 +37,7 @@ class JavalandDataProvider {
 	List<Talk> talks = []
 	List<Talk> talksV2 = []
 	MetaData metaData
+    MetaDataLookup metaDataLookup
 
 	MetaData getMetaData() {
 		checkCache()
@@ -81,6 +82,7 @@ class JavalandDataProvider {
 		JsonSlurper slurper = new JsonSlurper()
 		def rawTalksJson = slurper.parse(input, "ISO-8859-1").hits.hits._source
 		metaData = createMetaData(rawTalksJson)
+        metaDataLookup = new MetaDataLookup(metaData)
 		talks = convertFromRaw(rawTalksJson)
 		talksV2 = convertFromRaw(rawTalksJson, true)
 	}
@@ -120,16 +122,15 @@ class JavalandDataProvider {
 					.language(t.SPRACHE)
 					.demo(t.DEMO != null && t.DEMO.equalsIgnoreCase('ja'))
 					.speakers(speakers)
+				    .track(t.TRACK)
+					.level(t.AUDIENCE)
+					.type(t.VORTRAGSTYP)
+					.location(t.RAUMNAME)
 			if (v2) {
-				builder.trackNumber(metaData.getOrderFromTrackName(t.TRACK ?: ''))
-                builder.roomNumber(metaData.getOrderFromRoomName(t.RAUMNAME ?: ''))
-                builder.levelNumber(metaData.getOrderFromAudienceName(t.AUDIENCE ?: ''))
-                builder.typeNumber(metaData.getOrderFromTalkTypeName(t.VORTRAGSTYP ?: ''))
-			} else {
-				builder.track(t.TRACK)
-						.level(t.AUDIENCE)
-						.type(t.VORTRAGSTYP)
-						.location(t.RAUMNAME)
+				builder.trackNumber(metaDataLookup.tracks[t.TRACK])
+                    .roomNumber(metaDataLookup.rooms[t.RAUMNAME])
+                    .levelNumber(metaDataLookup.audiences[t.AUDIENCE])
+                    .typeNumber(metaDataLookup.talkTypes[t.VORTRAGSTYP])
 			}
 			return builder.build()
 		}
@@ -137,6 +138,6 @@ class JavalandDataProvider {
 
 	MetaData createMetaData(rawJson) {
 		MetaDataExtractor extractor = new MetaDataExtractor(talksJson: rawJson, conferenceName: conferenceName, conferenceUrl: conferenceUrl)
-		return MetaData.builder().conference(extractor.conference).rooms(extractor.rooms).tracks(extractor.tracks).languages(extractor.languages).defaultLanguage(extractor.defaultLanguage).audiences(extractor.audiences).talkTypes(extractor.talkTypes).build()
+		return extractor.buildMetaData()
 	}
 }
