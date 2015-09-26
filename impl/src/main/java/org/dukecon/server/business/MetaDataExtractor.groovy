@@ -3,6 +3,7 @@ package org.dukecon.server.business
 import org.dukecon.model.Audience
 import org.dukecon.model.Conference
 import org.dukecon.model.Language
+import org.dukecon.model.MetaData
 import org.dukecon.model.Room
 import org.dukecon.model.TalkType
 import org.dukecon.model.Track
@@ -17,6 +18,10 @@ class MetaDataExtractor {
 
     private static Language en = Language.builder().code("en").name("English").build()
     private static Language de = Language.builder().code("de").name("Deutsch").build()
+
+    MetaData buildMetaData() {
+        MetaData.builder().conference(this.conference).rooms(this.rooms).tracks(this.tracks).languages(this.languages).defaultLanguage(this.defaultLanguage).audiences(this.audiences).talkTypes(this.talkTypes).build()
+    }
 
     Conference getConference() {
         Conference conference = Conference.builder()
