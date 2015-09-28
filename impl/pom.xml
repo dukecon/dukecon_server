@@ -200,6 +200,11 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>3.2.1</version>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>codenarc-maven-plugin</artifactId>
+				<version>0.22-1</version>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 		    <plugins>
