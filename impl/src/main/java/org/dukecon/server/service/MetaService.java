@@ -26,7 +26,7 @@ public class MetaService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMeta() {
-        return Response.ok().entity(talkProvider.getMetaData()).build();
+        return Response.ok().entity(talkProvider.getConference().getMetaData()).build();
     }
 
     @GET

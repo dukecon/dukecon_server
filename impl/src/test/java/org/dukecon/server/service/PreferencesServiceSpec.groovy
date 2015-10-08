@@ -3,7 +3,7 @@ package org.dukecon.server.service
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication
-import org.dukecon.model.UserPreference
+import org.dukecon.model.user.UserPreference
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.security.core.Authentication

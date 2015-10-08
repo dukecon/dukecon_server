@@ -14,6 +14,7 @@ import java.util.Map;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TalkType {
+    private String id;
     private Integer order;
     private Map<Language, String> names = new HashMap<>();
 }

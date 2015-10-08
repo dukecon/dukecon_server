@@ -2,7 +2,7 @@ package org.dukecon.server.service
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
-import org.dukecon.model.UserPreference
+import org.dukecon.model.user.UserPreference
 import org.dukecon.server.business.PreferencesRepository
 import org.dukecon.server.model.Preference
 import org.springframework.stereotype.Component

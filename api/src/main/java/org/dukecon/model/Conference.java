@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  *
  * @author Niko Köbler, http://www.n-k.de, @dasniko
@@ -13,8 +15,12 @@ import lombok.Data;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Conference {
-    private Long id;
+    private String id;
     private String name;
     private String url;
-
+    private MetaData metaData;
+    private List<Track> tracks;
+    private List<Room> rooms;
+    private List<Talk> talks;
+    private List<Speaker> speakers;
 }

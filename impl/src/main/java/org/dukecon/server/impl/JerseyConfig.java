@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
+        register(ConferenceService.class);
         register(MetaService.class);
         register(TalkService.class);
         register(PreferencesService.class);

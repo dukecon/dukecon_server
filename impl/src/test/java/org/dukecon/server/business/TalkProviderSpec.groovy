@@ -1,5 +1,6 @@
 package org.dukecon.server.business
 
+import org.dukecon.model.Conference
 import org.dukecon.model.MetaData
 import org.dukecon.model.Talk
 import spock.lang.Specification
@@ -55,10 +56,10 @@ class TalkProviderSpec extends Specification {
         }
 
         @Override
-        protected void readTalks() {
+        protected void readData() {
             hasReread = true
             talks = [Talk.builder().build()]
-            metaData = MetaData.builder().build()
+            conference = Conference.builder().build()
         }
     }
 

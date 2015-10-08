@@ -4,9 +4,10 @@ import groovy.json.JsonSlurper
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import groovy.util.logging.Slf4j
-import org.dukecon.model.MetaData
+import org.dukecon.model.Conference
 import org.dukecon.model.Speaker
 import org.dukecon.model.Talk
+import org.dukecon.model.TalkOld
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
@@ -14,130 +15,116 @@ import java.time.Instant
 
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
+ * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Slf4j
 @Component
 @TypeChecked
 class JavalandDataProvider {
 
-	@Value("\${talks.uri:https://www.javaland.eu/api/schedule/JavaLand2016/jl.php?key=TestJL}")
-	String talksUri
+    @Value("\${talks.uri:https://www.javaland.eu/api/schedule/JavaLand2016/jl.php?key=TestJL}")
+    String talksUri
 
-	@Value("\${talks.cache.expires:3600}")
-	Integer cacheExpiresAfterSeconds
+    @Value("\${talks.cache.expires:3600}")
+    Integer cacheExpiresAfterSeconds
 
-	@Value("\${conference.url:http://dukecon.org}")
-	String conferenceUrl
+    @Value("\${conference.url:http://dukecon.org}")
+    String conferenceUrl
 
-	@Value("\${conference.name:DukeCon Conference}")
-	String conferenceName
+    @Value("\${conference.name:DukeCon Conference}")
+    String conferenceName
 
-	private Instant cacheLastUpdated
+    private Instant cacheLastUpdated
 
-	List<Talk> talks = []
-	List<Talk> talksV2 = []
-	MetaData metaData
-    MetaDataLookup metaDataLookup
+    List<TalkOld> talks = []
+    Conference conference
 
-	MetaData getMetaData() {
-		checkCache()
-		return metaData
-	}
+    Conference getConference() {
+        checkCache()
+        return conference
+    }
 
-	Collection<Talk> getAllTalksWithReplaceMetaData() {
-		checkCache()
-		return talksV2
-	}
+    Collection<TalkOld> getAllTalks() {
+        checkCache()
+        return talks
+    }
 
-	Collection<Talk> getAllTalks() {
-		checkCache()
-		return talks
-	}
-
-	private void checkCache() {
-		if (talks.isEmpty() || !metaData || isCacheExpired()) {
+    private void checkCache() {
+        if (talks.isEmpty() || !conference || isCacheExpired()) {
             clearCache()
-			cacheLastUpdated = Instant.now()
-			log.info("Reread talks from '{}'", talksUri)
-			readTalks()
-		}
-	}
+            cacheLastUpdated = Instant.now()
+            log.info("Reread data from '{}'", talksUri)
+            readData()
+        }
+    }
 
     public void clearCache() {
         this.talks = []
-        this.talksV2 = []
-        this.metaData = null
     }
 
-	private boolean isCacheExpired() {
-		if(!cacheExpiresAfterSeconds) {
-			return true
-		}
-		return cacheLastUpdated.plusSeconds(cacheExpiresAfterSeconds).isBefore(Instant.now())
-	}
+    private boolean isCacheExpired() {
+        if (!cacheExpiresAfterSeconds) {
+            return true
+        }
+        return cacheLastUpdated.plusSeconds(cacheExpiresAfterSeconds).isBefore(Instant.now())
+    }
 
-	@TypeChecked(TypeCheckingMode.SKIP)
-	protected void readTalks() {
-		def input = talksUri.startsWith("resource:") ? readResource() : readJavalandFile()
-		JsonSlurper slurper = new JsonSlurper()
-		def rawTalksJson = slurper.parse(input, "ISO-8859-1").hits.hits._source
-		metaData = createMetaData(rawTalksJson)
-        metaDataLookup = new MetaDataLookup(metaData)
-		talks = convertFromRaw(rawTalksJson)
-		talksV2 = convertFromRaw(rawTalksJson, true)
-	}
+    @TypeChecked(TypeCheckingMode.SKIP)
+    protected void readData() {
+        def rawTalksJson = new JsonSlurper().parse(getInputData(), "ISO-8859-1").hits.hits._source
+        conference = createConference(rawTalksJson)
+        talks = convertFromRaw(rawTalksJson)
+    }
 
-	private InputStream readResource() {
-		log.info ("Reading JSON data from local file")
-		String[] resourceParts = talksUri.split(":")
-		return this.getClass().getResourceAsStream(resourceParts[1])
-	}
+    private Object getInputData() {
+        talksUri.startsWith("resource:") ? readResource() : readJavalandFile()
+    }
 
-	private URL readJavalandFile() {
-		log.info ("Reading JSON data from remote '{}'", talksUri)
-		return new URL(talksUri)
-	}
+    private InputStream readResource() {
+        log.info("Reading JSON data from local file")
+        String[] resourceParts = talksUri.split(":")
+        return this.getClass().getResourceAsStream(resourceParts[1])
+    }
 
-	@TypeChecked(TypeCheckingMode.SKIP)
-	private List<Talk> convertFromRaw(List talks, boolean v2 = false) {
-		Set<String> talkIds = new HashSet<>()
-		return talks.collect { t ->
-			String id = t.ID.toString()
-			if (talkIds.contains(id)) {
-				log.error("Duplicate Talk ID '{}' in raw data!", id)
-				return
-			}
-			Speaker speaker = Speaker.builder().name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).defaultSpeaker(true).build()
-			Speaker speaker2 = t.COREFERENT_NAME == null ? null : Speaker.builder().name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).build()
-			List<Speaker> speakers = [speaker]
-			if (speaker2) {
-				speakers.add(speaker2)
-			}
-			def builder = Talk.builder()
-					.id(id)
-					.start(t.DATUM_ES_EN + 'T' + t.BEGINN)
-					.end(t.DATUM_ES_EN + 'T' + t.ENDE)
-					.title(t.TITEL)
-					.abstractText(t.ABSTRACT_TEXT?.replaceAll("&quot;", "\""))
-					.language(t.SPRACHE)
-					.demo(t.DEMO != null && t.DEMO.equalsIgnoreCase('ja'))
-					.speakers(speakers)
-				    .track(t.TRACK)
-					.level(t.AUDIENCE)
-					.type(t.VORTRAGSTYP)
-					.location(t.RAUMNAME)
-			if (v2) {
-				builder.trackNumber(metaDataLookup.tracks[t.TRACK])
-                    .roomNumber(metaDataLookup.rooms[t.RAUMNAME])
-                    .levelNumber(metaDataLookup.audiences[t.AUDIENCE])
-                    .typeNumber(metaDataLookup.talkTypes[t.VORTRAGSTYP])
-			}
-			return builder.build()
-		}
-	}
+    private URL readJavalandFile() {
+        log.info("Reading JSON data from remote '{}'", talksUri)
+        return new URL(talksUri)
+    }
 
-	MetaData createMetaData(rawJson) {
-		MetaDataExtractor extractor = new MetaDataExtractor(talksJson: rawJson, conferenceName: conferenceName, conferenceUrl: conferenceUrl)
-		return extractor.buildMetaData()
-	}
+    @TypeChecked(TypeCheckingMode.SKIP)
+    private List<Talk> convertFromRaw(List talks) {
+        Set<String> talkIds = new HashSet<>()
+        return talks.collect { t ->
+            String id = t.ID.toString()
+            if (talkIds.contains(id)) {
+                log.error("Duplicate Talk ID '{}' in raw data!", id)
+                return
+            }
+            Speaker speaker = Speaker.builder().name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).defaultSpeaker(true).build()
+            Speaker speaker2 = t.COREFERENT_NAME == null ? null : Speaker.builder().name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).build()
+            List<Speaker> speakers = [speaker]
+            if (speaker2) {
+                speakers.add(speaker2)
+            }
+            def builder = TalkOld.builder()
+                    .id(id)
+                    .start(t.DATUM_ES_EN + 'T' + t.BEGINN)
+                    .end(t.DATUM_ES_EN + 'T' + t.ENDE)
+                    .title(t.TITEL)
+                    .abstractText(t.ABSTRACT_TEXT?.replaceAll("&quot;", "\""))
+                    .language(t.SPRACHE)
+                    .demo(t.DEMO != null && t.DEMO.equalsIgnoreCase('ja'))
+                    .speakers(speakers)
+                    .track(t.TRACK)
+                    .level(t.AUDIENCE)
+                    .type(t.VORTRAGSTYP)
+                    .location(t.RAUMNAME)
+            return builder.build()
+        }
+    }
+
+    Conference createConference(rawJson) {
+        JavalandDataExtractor extractor = new JavalandDataExtractor(talksJson: rawJson, conferenceName: conferenceName, conferenceUrl: conferenceUrl)
+        return extractor.buildConference()
+    }
 }

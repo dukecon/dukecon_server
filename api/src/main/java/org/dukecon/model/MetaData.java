@@ -1,6 +1,6 @@
 package org.dukecon.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,11 +16,12 @@ import java.util.List;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MetaData {
-    private Conference conference;
-    private List<Room> rooms = new ArrayList<>();
-    private List<Language> languages = new ArrayList<>();
-    private Language defaultLanguage;
-    private List<Track> tracks = new ArrayList<>();
+//    @JsonProperty(value = "conferenceId")
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//    @JsonIdentityReference(alwaysAsId = true)
+//    private Conference conference;
     private List<Audience> audiences = new ArrayList<>();
     private List<TalkType> talkTypes = new ArrayList<>();
+    private List<Language> languages = new ArrayList<>();
+    private Language defaultLanguage;
 }
