@@ -1,4 +1,4 @@
-package org.dukecon.model;
+package org.dukecon.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

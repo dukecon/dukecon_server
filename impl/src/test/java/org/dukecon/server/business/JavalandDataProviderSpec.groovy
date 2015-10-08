@@ -29,21 +29,6 @@ class JavalandDataProviderSpec extends Specification {
         dataProvider.clearCache()
     }
 
-    void "Should return 104 talks (2015)"() {
-        when:
-        dataProvider.talksUri = "resource:/javaland-2015.raw"
-        Collection<Talk> talks = dataProvider.allTalks
-
-        then:
-        assert talks.size() == 104
-        assert dataProvider.metaData
-        assert dataProvider.metaData.rooms.size() == 7
-        assert dataProvider.metaData.tracks.size() == 10
-        assert dataProvider.metaData.defaultLanguage.code == 'de'
-        assert dataProvider.metaData.languages.size() == 2
-        assert dataProvider.metaData.audiences.size() == 2
-    }
-
     void "Should return 110 talks (2016)"() {
         when:
         dataProvider.talksUri = "resource:/javaland-2016.raw"
@@ -51,22 +36,22 @@ class JavalandDataProviderSpec extends Specification {
 
         then:
         assert talks.size() == 110
-        assert dataProvider.metaData
-        assert dataProvider.metaData.rooms.size() == 7
-        assert dataProvider.metaData.rooms.order.join('') == ('1'..'7').join('')
-        assert dataProvider.metaData.tracks.size() == 8
-        assert dataProvider.metaData.defaultLanguage.code == 'de'
-        assert dataProvider.metaData.languages.size() == 2
-        assert dataProvider.metaData.audiences.size() == 2
+        assert dataProvider.conference
+        assert dataProvider.conference.rooms.size() == 7
+        assert dataProvider.conference.rooms.order.join('') == ('1'..'7').join('')
+        assert dataProvider.conference.tracks.size() == 8
+        assert dataProvider.conference.metaData.defaultLanguage.id == 'de'
+        assert dataProvider.conference.metaData.languages.size() == 2
+        assert dataProvider.conference.metaData.audiences.size() == 2
     }
 
     void "Should return 110 talks (2016) v2"() {
         when:
         dataProvider.talksUri = "resource:/javaland-2016.raw"
-        Collection<Talk> talks = dataProvider.allTalksWithReplaceMetaData
+        Collection<Talk> talks = dataProvider.conference.talks
 
         then:
         assert talks.size() == 110
-        assert talks.roomNumber.unique().sort().join(', ') == (1..7).join(', ')
+        assert talks.room.order.unique().sort().join(', ') == (1..7).join(', ')
     }
 }

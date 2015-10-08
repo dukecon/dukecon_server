@@ -11,6 +11,7 @@ import lombok.Data;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Room {
+    private String id;
     private Integer order;
     private String name;
 }
