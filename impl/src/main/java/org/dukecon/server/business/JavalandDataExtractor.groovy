@@ -17,8 +17,6 @@ class JavalandDataExtractor {
                 .id(talksJson.ID_KONGRESS.unique().first()?.toString())
                 .name(conferenceName)
                 .url(conferenceUrl)
-                .rooms(this.rooms)
-                .tracks(this.tracks)
                 .talks(this.talks)
                 .metaData(metaData)
                 .build()
@@ -27,7 +25,7 @@ class JavalandDataExtractor {
     }
 
     private MetaData getMetaData() {
-        MetaData.builder().languages(this.languages).defaultLanguage(this.defaultLanguage).audiences(this.audiences).talkTypes(this.talkTypes).build()
+        MetaData.builder().rooms(this.rooms).tracks(this.tracks).languages(this.languages).defaultLanguage(this.defaultLanguage).audiences(this.audiences).talkTypes(this.talkTypes).build()
     }
 
     List<Track> getTracks() {

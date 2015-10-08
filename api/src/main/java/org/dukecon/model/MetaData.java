@@ -24,4 +24,6 @@ public class MetaData {
     private List<TalkType> talkTypes = new ArrayList<>();
     private List<Language> languages = new ArrayList<>();
     private Language defaultLanguage;
+    private List<Track> tracks;
+    private List<Room> rooms;
 }
