@@ -122,6 +122,7 @@ class JavalandDataExtractorSpec extends Specification {
         def talkTypes = extractor.talkTypes
         then:
         assert talkTypes.size() == 5
+        assert talkTypes.id.join('') == ('1'..'5').join('')
         assert talkTypes.order.join('') == ('1'..'5').join('')
         assert talkTypes.names.de.join(', ') == 'Best Practices, Keynote, Neuerscheinungen oder Features, Projektbericht, Tipps & Tricks'
         assert talkTypes.names.en.join(', ') == 'best practices, keynote, new releases or features , project report, tips & tricks'

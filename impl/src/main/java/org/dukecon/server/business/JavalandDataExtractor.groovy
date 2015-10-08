@@ -78,7 +78,7 @@ class JavalandDataExtractor {
         return talksJson.findAll { it.VORTRAGSTYP }.collect { [it.VORTRAGSTYP, it.VORTRAGSTYP_EN] }.unique().sort {
             it.first()
         }.collect {
-            TalkType.builder().names(de: it[0], en: it[1]).order(i++).build()
+            TalkType.builder().id(i.toString()).order(i++).names(de: it[0], en: it[1]).build()
         }
     }
 
