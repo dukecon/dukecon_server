@@ -42,6 +42,9 @@ public class Talk {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private String end;
     private String title;
+    @JsonProperty(value = "speakerIds")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private List<Speaker> speakers = new ArrayList<>();
     private String abstractText;
     @JsonProperty(value = "languageId")

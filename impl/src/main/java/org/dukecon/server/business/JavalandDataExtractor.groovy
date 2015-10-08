@@ -17,6 +17,7 @@ class JavalandDataExtractor {
                 .id(talksJson.ID_KONGRESS.unique().first()?.toString())
                 .name(conferenceName)
                 .url(conferenceUrl)
+                .speakers(this.speakers)
                 .talks(this.talks)
                 .metaData(metaData)
                 .build()
@@ -80,41 +81,33 @@ class JavalandDataExtractor {
         }
     }
 
-    private List<Talk> getTalks(boolean v2 = false) {
-        Set<String> talkIds = new HashSet<>()
+    private List<Speaker> getSpeakers() {
+        def x = talksJson.findAll {it.ID_PERSON}.collect {t ->
+            Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).build()
+        } << talksJson.findAll {it.ID_PERSON_COREF}.collect {t ->
+            Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).build()
+        } << talksJson.findAll {it.ID_PERSON_COCOREF}.collect {t ->
+            Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).company(t.COCOREFERENT_FIRMA).build()
+        }
+        x.flatten().unique{it.id}
+    }
+
+    private List<Talk> getTalks(Map<String, Speaker> speakerLookup = speakers.collectEntries{[it.id, it]}) {
         return talksJson.collect { t ->
-            String id = t.ID.toString()
-            if (talkIds.contains(id)) {
-                log.error("Duplicate Talk ID '{}' in raw data!", id)
-                return
-            }
-            Speaker speaker = Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).defaultSpeaker(true).build()
-            Speaker speaker2 = t.COREFERENT_NAME == null ? null : Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).build()
-            List<Speaker> speakers = [speaker]
-            if (speaker2) {
-                speakers.add(speaker2)
-            }
-            def builder = Talk.builder()
-                    .id(id)
+            return Talk.builder()
+                    .id(t.ID.toString())
                     .start(t.DATUM_ES_EN + 'T' + t.BEGINN)
                     .end(t.DATUM_ES_EN + 'T' + t.ENDE)
                     .title(t.TITEL)
                     .abstractText(t.ABSTRACT_TEXT?.replaceAll("&quot;", "\""))
                     .language(getLanguage(t.SPRACHE_EN))
                     .demo(t.DEMO != null && t.DEMO.equalsIgnoreCase('ja'))
-                    .speakers(speakers)
                     .track(tracks.find{t.ORDERT == it.order})
                     .audience(audiences.find {t.AUDIENCE_EN == it.names.en})
                     .type(talkTypes.find {t.VORTRAGSTYP_EN == it.names.en})
                     .room(rooms.find {t.RAUM_NR == it.id})
-            if (v2) {
-                builder.trackNumber(metaDataLookup.tracks[t.TRACK])
-                        .roomNumber(metaDataLookup.rooms[t.RAUMNAME])
-                        .levelNumber(metaDataLookup.audiences[t.AUDIENCE])
-                        .typecNumber(metaDataLookup.talkTypes[t.VORTRAGSTYP])
-            }
-            return builder.build()
+                    .speakers([speakerLookup[t.ID_PERSON?.toString()], speakerLookup[t.ID_PERSON_COREF?.toString()], speakerLookup[t.ID_PERSON_COCOREF?.toString()]].findAll {it})
+                    .build()
         }
     }
-
 }
