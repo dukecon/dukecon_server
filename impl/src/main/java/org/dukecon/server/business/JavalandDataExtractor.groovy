@@ -90,8 +90,8 @@ class JavalandDataExtractor {
                 log.error("Duplicate Talk ID '{}' in raw data!", id)
                 return
             }
-            Speaker speaker = Speaker.builder().name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).defaultSpeaker(true).build()
-            Speaker speaker2 = t.COREFERENT_NAME == null ? null : Speaker.builder().name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).build()
+            Speaker speaker = Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).defaultSpeaker(true).build()
+            Speaker speaker2 = t.COREFERENT_NAME == null ? null : Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).build()
             List<Speaker> speakers = [speaker]
             if (speaker2) {
                 speakers.add(speaker2)
@@ -105,7 +105,7 @@ class JavalandDataExtractor {
                     .language(getLanguage(t.SPRACHE_EN))
                     .demo(t.DEMO != null && t.DEMO.equalsIgnoreCase('ja'))
                     .speakers(speakers)
-                    .track(tracks.find{t.ORDERT == it.id})
+                    .track(tracks.find{t.ORDERT == it.order})
                     .audience(audiences.find {t.AUDIENCE_EN == it.names.en})
                     .type(talkTypes.find {t.VORTRAGSTYP_EN == it.names.en})
                     .room(rooms.find {t.RAUM_NR == it.id})
