@@ -15,13 +15,31 @@ import javax.ws.rs.core.Response
  */
 @Component
 @Path("conference")
+@Produces(MediaType.APPLICATION_JSON)
 class ConferenceService {
     @Inject
     JavalandDataProvider talkProvider;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getConference() {
         return Response.ok().entity(talkProvider.conference).build();
+    }
+
+    @GET
+    @Path("speakers")
+    public Response getSpeakers() {
+        return Response.ok().entity(talkProvider.conference.speakers).build();
+    }
+
+    @GET
+    @Path("talks")
+    public Response getTalks() {
+        return Response.ok().entity(talkProvider.conference.talks).build();
+    }
+
+    @GET
+    @Path("metadata")
+    public Response getMeta() {
+        return Response.ok().entity(talkProvider.conference.metaData).build();
     }
 }

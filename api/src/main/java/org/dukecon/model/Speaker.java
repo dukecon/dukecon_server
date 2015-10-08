@@ -24,6 +24,9 @@ public class Speaker {
     private String twitter;
     private String gplus;
     private String bio;
+    /**
+     * @deprecated will be removed in v2 as we only need a speaker order per talk
+     */
+    @Deprecated
     private boolean defaultSpeaker;
-
 }
