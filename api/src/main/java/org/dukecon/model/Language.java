@@ -16,5 +16,5 @@ import java.util.Map;
 public class Language {
     private String id;
     private Integer order;
-    private Map<Language, String> names = new HashMap<>();
+    private Map<String, String> names = new HashMap<>();
 }
