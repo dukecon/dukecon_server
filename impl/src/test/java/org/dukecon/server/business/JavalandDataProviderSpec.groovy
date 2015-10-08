@@ -37,9 +37,9 @@ class JavalandDataProviderSpec extends Specification {
         then:
         assert talks.size() == 110
         assert dataProvider.conference
-        assert dataProvider.conference.rooms.size() == 7
-        assert dataProvider.conference.rooms.order.join('') == ('1'..'7').join('')
-        assert dataProvider.conference.tracks.size() == 8
+        assert dataProvider.conference.metaData.rooms.size() == 7
+        assert dataProvider.conference.metaData.rooms.order.join('') == ('1'..'7').join('')
+        assert dataProvider.conference.metaData.tracks.size() == 8
         assert dataProvider.conference.metaData.defaultLanguage.id == 'de'
         assert dataProvider.conference.metaData.languages.size() == 2
         assert dataProvider.conference.metaData.audiences.size() == 2
