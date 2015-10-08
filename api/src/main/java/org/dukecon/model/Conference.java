@@ -19,8 +19,6 @@ public class Conference {
     private String name;
     private String url;
     private MetaData metaData;
-    private List<Track> tracks;
-    private List<Room> rooms;
     private List<Talk> talks;
     private List<Speaker> speakers;
 }

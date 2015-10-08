@@ -12,12 +12,14 @@ import java.util.List;
 
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
+ * @deprecated will be removed in favor of Talk
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class TalkOld {
     private String id;
     private String track;

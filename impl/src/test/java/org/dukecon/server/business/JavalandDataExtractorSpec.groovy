@@ -94,11 +94,11 @@ class JavalandDataExtractorSpec extends Specification {
 
         then:
         assert conference
-        assert conference.rooms.size() == 7
-        assert conference.rooms.order.join('') == ('1'..'7').join('')
-        assert conference.rooms.name.join(', ') == 'Wintergarten, Schauspielhaus, Quantum 1+2, Quantum 3, Quantum 4, Lilaque, Neptun'
-        assert conference.tracks.size() == 8
-        assert conference.tracks.names['de'].join(', ') == 'Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer'
+        assert conference.metaData.rooms.size() == 7
+        assert conference.metaData.rooms.order.join('') == ('1'..'7').join('')
+        assert conference.metaData.rooms.name.join(', ') == 'Wintergarten, Schauspielhaus, Quantum 1+2, Quantum 3, Quantum 4, Lilaque, Neptun'
+        assert conference.metaData.tracks.size() == 8
+        assert conference.metaData.tracks.names['de'].join(', ') == 'Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer'
         assert conference.metaData.defaultLanguage.id == 'de'
         assert conference.metaData.languages.size() == 2
         assert conference.metaData.languages.names.de.join(', ') == 'Deutsch, Englisch'
@@ -122,6 +122,7 @@ class JavalandDataExtractorSpec extends Specification {
         def talkTypes = extractor.talkTypes
         then:
         assert talkTypes.size() == 5
+        assert talkTypes.id.join('') == ('1'..'5').join('')
         assert talkTypes.order.join('') == ('1'..'5').join('')
         assert talkTypes.names.de.join(', ') == 'Best Practices, Keynote, Neuerscheinungen oder Features, Projektbericht, Tipps & Tricks'
         assert talkTypes.names.en.join(', ') == 'best practices, keynote, new releases or features , project report, tips & tricks'

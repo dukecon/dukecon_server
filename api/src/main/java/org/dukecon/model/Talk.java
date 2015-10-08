@@ -1,7 +1,6 @@
 package org.dukecon.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,9 +21,21 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Talk {
     private String id;
+    @JsonProperty(value = "trackId")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Track track;
+    @JsonProperty(value = "audienceId")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Audience audience;
+    @JsonProperty(value = "typeId")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private TalkType type;
+    @JsonProperty(value = "roomId")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Room room;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private String start;
@@ -33,6 +44,9 @@ public class Talk {
     private String title;
     private List<Speaker> speakers = new ArrayList<>();
     private String abstractText;
+    @JsonProperty(value = "languageId")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Language language;
     private boolean demo;
 
