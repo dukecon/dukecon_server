@@ -1,10 +1,7 @@
 package org.dukecon.model;
 
 import com.fasterxml.jackson.annotation.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Data
+@ToString(of={"id", "title"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -17,11 +17,12 @@ class JavalandDataExtractor {
                 .id(talksJson.ID_KONGRESS.unique().first()?.toString())
                 .name(conferenceName)
                 .url(conferenceUrl)
+                .metaData(metaData)
                 .speakers(this.speakers)
                 .talks(this.talks)
-                .metaData(metaData)
                 .build()
 //        conf.metaData.conference = conf
+        conf.speakers = getSpeakersWithTalks()
         return conf
     }
 
@@ -82,14 +83,39 @@ class JavalandDataExtractor {
     }
 
     private List<Speaker> getSpeakers() {
-        def x = talksJson.findAll {it.ID_PERSON}.collect {t ->
+        def result = talksJson.findAll {it.ID_PERSON}.collect {t ->
             Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).build()
-        } << talksJson.findAll {it.ID_PERSON_COREF}.collect {t ->
+        } + talksJson.findAll {it.ID_PERSON_COREF}.collect {t ->
             Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).build()
-        } << talksJson.findAll {it.ID_PERSON_COCOREF}.collect {t ->
+        } + talksJson.findAll {it.ID_PERSON_COCOREF}.collect {t ->
             Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).company(t.COCOREFERENT_FIRMA).build()
         }
-        x.flatten().unique{it.id}
+        result.flatten().unique{it.id}
+    }
+
+    /**
+     * @param talkLookup
+     * @return list of speakers with their talks assigned
+     */
+    private List<Speaker> getSpeakersWithTalks(Map<String, List<Talk>> talkLookup = getSpeakerIdToTalks()) {
+        speakers.collect {Speaker s ->
+            s.talks = ([] + talkLookup[s.id]).flatten()
+            s
+        }
+    }
+
+    /**
+     * @return map with speaker ids as key and a list all talks of this speaker as value
+     */
+    private Map<String, List<Talk>> getSpeakerIdToTalks() {
+        (talks.collect{[it.speakers.first().id, it]} + talks.collect{[it.speakers[1]?.id, it]})
+                .inject([:]){map, list ->
+                    if(!map[list.first()]) {
+                        map[list.first()] = []
+                    }
+                    map[list.first()] << list[1]
+                    return map
+                }.findAll {k,v -> k}
     }
 
     private List<Talk> getTalks(Map<String, Speaker> speakerLookup = speakers.collectEntries{[it.id, it]}) {

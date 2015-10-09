@@ -1,13 +1,15 @@
 package org.dukecon.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  */
 @Data
@@ -29,4 +31,9 @@ public class Speaker {
      */
     @Deprecated
     private boolean defaultSpeaker;
+
+    @JsonProperty(value = "talkIds")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    private List<Talk> talks = new ArrayList<>();
 }
