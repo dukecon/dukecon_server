@@ -92,7 +92,7 @@ abstract class AbstractPreferencesService {
         log.debug ("Adding preferences for '{}'", principalId)
 
         // Check if this preference was already created.
-        Collection<Preference> preferences = preferencesRepository.findByPrincipalIdAndTalkId(
+        Collection<Preference> preferences = preferencesRepository.findByPrincipalIdAndEventId(
                 principalId, userPreference.eventId)
         // If it doesn't exist yet, add it.
         if((preferences == null) || preferences.empty) {
@@ -120,7 +120,7 @@ abstract class AbstractPreferencesService {
 
         // Actually this should only return max one element, but I
         // don't quite understand the mechanisms behind this service.
-        Collection<Preference> preferences = preferencesRepository.findByPrincipalIdAndTalkId(
+        Collection<Preference> preferences = preferencesRepository.findByPrincipalIdAndEventId(
                 principalId, userPreference.eventId)
         if((preferences != null) && !preferences.empty) {
             preferences.each { Preference preference ->
