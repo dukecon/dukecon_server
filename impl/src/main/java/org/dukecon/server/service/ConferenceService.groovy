@@ -40,7 +40,7 @@ class ConferenceService {
 
     @GET
     @Path("{id}/events")
-    public Response getTalks(@PathParam("id") String id) {
+    public Response getEvents(@PathParam("id") String id) {
         return Response.ok().entity(talkProvider.conference.talks).build();
     }
 

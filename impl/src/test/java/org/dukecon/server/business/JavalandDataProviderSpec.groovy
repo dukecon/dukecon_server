@@ -2,7 +2,7 @@ package org.dukecon.server.business
 
 import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication
-import org.dukecon.model.Talk
+import org.dukecon.model.Event
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
@@ -28,13 +28,13 @@ class JavalandDataProviderSpec extends Specification {
         dataProvider.clearCache()
     }
 
-    void "Should return 110 talks (2016)"() {
+    void "Should return 110 events (2016)"() {
         when:
         dataProvider.talksUri = "resource:/javaland-2016.raw"
-        Collection<Talk> talks = dataProvider.allTalks
+        Collection<Event> events = dataProvider.allTalks
 
         then:
-        assert talks.size() == 110
+        assert events.size() == 110
         assert dataProvider.conference
         assert dataProvider.conference.metaData.locations.size() == 7
         assert dataProvider.conference.metaData.locations.order.join('') == ('1'..'7').join('')
@@ -44,13 +44,13 @@ class JavalandDataProviderSpec extends Specification {
         assert dataProvider.conference.metaData.audiences.size() == 2
     }
 
-    void "Should return 110 talks (2016) v2"() {
+    void "Should return 110 events (2016) v2"() {
         when:
         dataProvider.talksUri = "resource:/javaland-2016.raw"
-        Collection<Talk> talks = dataProvider.conference.talks
+        Collection<Event> events = dataProvider.conference.events
 
         then:
-        assert talks.size() == 110
-        assert talks.location.order.unique().sort().join(', ') == (1..7).join(', ')
+        assert events.size() == 110
+        assert events.location.order.unique().sort().join(', ') == (1..7).join(', ')
     }
 }

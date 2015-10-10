@@ -6,7 +6,7 @@ import groovy.transform.TypeCheckingMode
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
 import org.dukecon.model.Speaker
-import org.dukecon.model.Talk
+import org.dukecon.model.Event
 import org.dukecon.model.TalkOld
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -92,7 +92,7 @@ class JavalandDataProvider {
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    private List<Talk> convertFromRaw(List talks) {
+    private List<Event> convertFromRaw(List talks) {
         Set<String> talkIds = new HashSet<>()
         return talks.collect { t ->
             String id = t.ID.toString()

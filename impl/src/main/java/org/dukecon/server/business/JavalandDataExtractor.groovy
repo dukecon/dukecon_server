@@ -19,10 +19,10 @@ class JavalandDataExtractor {
                 .url(conferenceUrl)
                 .metaData(metaData)
                 .speakers(this.speakers)
-                .talks(this.talks)
+                .events(this.events)
                 .build()
         conf.metaData.conference = conf
-        conf.speakers = getSpeakersWithTalks()
+        conf.speakers = getSpeakersWithEvents()
         return conf
     }
 
@@ -95,20 +95,20 @@ class JavalandDataExtractor {
 
     /**
      * @param talkLookup
-     * @return list of speakers with their talks assigned
+     * @return list of speakers with their events assigned
      */
-    private List<Speaker> getSpeakersWithTalks(Map<String, List<Talk>> talkLookup = getSpeakerIdToTalks()) {
+    private List<Speaker> getSpeakersWithEvents(Map<String, List<Event>> talkLookup = getSpeakerIdToEvents()) {
         speakers.collect {Speaker s ->
-            s.talks = ([] + talkLookup[s.id]).flatten()
+            s.events = ([] + talkLookup[s.id]).flatten()
             s
         }
     }
 
     /**
-     * @return map with speaker ids as key and a list all talks of this speaker as value
+     * @return map with speaker ids as key and a list all events of this speaker as value
      */
-    private Map<String, List<Talk>> getSpeakerIdToTalks() {
-        (talks.findAll{it.speakers}.collect{[it.speakers.first().id, it]} + talks.collect{[it.speakers[1]?.id, it]})
+    private Map<String, List<Event>> getSpeakerIdToEvents() {
+        (events.findAll{it.speakers}.collect{[it.speakers.first().id, it]} + events.collect{[it.speakers[1]?.id, it]})
                 .inject([:]){map, list ->
                     if(!map[list.first()]) {
                         map[list.first()] = []
@@ -118,9 +118,9 @@ class JavalandDataExtractor {
                 }.findAll {k,v -> k}
     }
 
-    private List<Talk> getTalks(Map<String, Speaker> speakerLookup = speakers.collectEntries{[it.id, it]}) {
+    private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries{[it.id, it]}) {
         return talksJson.collect { t ->
-            return Talk.builder()
+            return Event.builder()
                     .id(t.ID.toString())
                     .start(t.DATUM_ES_EN + 'T' + t.BEGINN)
                     .end(t.DATUM_ES_EN + 'T' + t.ENDE)

@@ -1,8 +1,7 @@
 package org.dukecon.server.business
 
 import org.dukecon.model.Conference
-import org.dukecon.model.MetaData
-import org.dukecon.model.Talk
+import org.dukecon.model.Event
 import spock.lang.Specification
 
 import java.time.Instant
@@ -58,12 +57,12 @@ class TalkProviderSpec extends Specification {
         @Override
         protected void readData() {
             hasReread = true
-            talks = [Talk.builder().build()]
+            talks = [Event.builder().build()]
             conference = Conference.builder().build()
         }
     }
 
-    void "Should reread talks"() {
+    void "Should reread events"() {
         given:
         JavalandDataProvider talkProvider = new MockTalkProvider()
         when:
@@ -79,7 +78,7 @@ class TalkProviderSpec extends Specification {
         assert talkProvider.talks
     }
 
-    void "Should not reread talks"() {
+    void "Should not reread events"() {
         given:
         JavalandDataProvider talkProvider = new MockTalkProvider()
         talkProvider.cacheExpiresAfterSeconds = 10
