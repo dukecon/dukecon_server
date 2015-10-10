@@ -120,7 +120,7 @@ abstract class AbstractPreferencesService {
 
         // Actually this should only return max one element, but I
         // don't quite understand the mechanisms behind this service.
-        Collection<Preference> preferences = preferencesRepository.findByPrincipalIdAndTalkId(
+        Collection<Preference> preferences = preferencesRepository.findByPrincipalIdAndEventId(
                 principalId, userPreference.eventId)
         if((preferences != null) && !preferences.empty) {
             preferences.each { Preference preference ->
