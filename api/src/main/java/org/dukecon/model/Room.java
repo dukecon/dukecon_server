@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
@@ -13,5 +16,5 @@ import lombok.Data;
 public class Room {
     private String id;
     private Integer order;
-    private String name;
+    private Map<String, String> names = new HashMap<>();
 }
