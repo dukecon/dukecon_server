@@ -3,7 +3,7 @@ package org.dukecon.server.business
 import groovy.json.JsonSlurper
 import org.dukecon.model.Audience
 import org.dukecon.model.Language
-import org.dukecon.model.Room
+import org.dukecon.model.Location
 import org.dukecon.model.Talk
 import spock.lang.Specification
 
@@ -83,14 +83,14 @@ class JavalandDataExtractorSpec extends Specification {
         assert audiences[2].names.en == 'all'
     }
 
-    void "should list 7 rooms"() {
+    void "should list 7 locations"() {
         when:
-        List<Room> rooms = extractor.rooms
+        List<Location> locations = extractor.locations
         then:
-        assert rooms.size() == 11
-        assert rooms.id.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
-        assert rooms.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
-        assert rooms.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
+        assert locations.size() == 11
+        assert locations.id.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
+        assert locations.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
+        assert locations.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
     }
 
     void "should extract all meta data"() {
@@ -99,9 +99,9 @@ class JavalandDataExtractorSpec extends Specification {
 
         then:
         assert conference
-        assert conference.metaData.rooms.size() == 11
-        assert conference.metaData.rooms.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
-        assert conference.metaData.rooms.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
+        assert conference.metaData.locations.size() == 11
+        assert conference.metaData.locations.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
+        assert conference.metaData.locations.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
         assert conference.metaData.tracks.size() == 9
         assert conference.metaData.tracks.names['de'].join(', ') == 'Community, Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer'
         assert conference.metaData.defaultLanguage.id == 'de'
@@ -139,7 +139,7 @@ class JavalandDataExtractorSpec extends Specification {
         then:
         assert talks.size() == 121
         assert talks.first().title == 'Community Testeintrag'
-        assert talks.first().room.names.de == 'Wintergarten'
+        assert talks.first().location.names.de == 'Wintergarten'
     }
 
     void "should get all speakers"() {
@@ -204,9 +204,9 @@ class JavalandDataExtractorSpec extends Specification {
         assert talks.size() == 1
         assert talks.first().audience.names.de == 'Fortgeschrittene'
         assert talks.first().language.id == "de"
-        assert talks.first().room.id == '1'
-        assert talks.first().room.order == 1
-        assert talks.first().room.names.de == "Wintergarten"
+        assert talks.first().location.id == '1'
+        assert talks.first().location.order == 1
+        assert talks.first().location.names.de == "Wintergarten"
         assert talks.first().track.names.de == 'Core Java & JVM basierte Sprachen'
         assert talks.first().track.order == 2
         assert talks.first().track.id == '2'

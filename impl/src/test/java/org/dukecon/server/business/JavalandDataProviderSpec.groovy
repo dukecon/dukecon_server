@@ -3,7 +3,6 @@ package org.dukecon.server.business
 import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication
 import org.dukecon.model.Talk
-import org.junit.After
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
@@ -37,8 +36,8 @@ class JavalandDataProviderSpec extends Specification {
         then:
         assert talks.size() == 110
         assert dataProvider.conference
-        assert dataProvider.conference.metaData.rooms.size() == 7
-        assert dataProvider.conference.metaData.rooms.order.join('') == ('1'..'7').join('')
+        assert dataProvider.conference.metaData.locations.size() == 7
+        assert dataProvider.conference.metaData.locations.order.join('') == ('1'..'7').join('')
         assert dataProvider.conference.metaData.tracks.size() == 8
         assert dataProvider.conference.metaData.defaultLanguage.id == 'de'
         assert dataProvider.conference.metaData.languages.size() == 2
@@ -52,6 +51,6 @@ class JavalandDataProviderSpec extends Specification {
 
         then:
         assert talks.size() == 110
-        assert talks.room.order.unique().sort().join(', ') == (1..7).join(', ')
+        assert talks.location.order.unique().sort().join(', ') == (1..7).join(', ')
     }
 }

@@ -3,7 +3,6 @@ package org.dukecon.model;
 import com.fasterxml.jackson.annotation.*;
 import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,5 +25,5 @@ public class MetaData {
     private List<Language> languages = new ArrayList<>();
     private Language defaultLanguage;
     private List<Track> tracks;
-    private List<Room> rooms;
+    private List<Location> locations;
 }

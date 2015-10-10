@@ -36,5 +36,5 @@ class Filters {
     private List<String> tracks = []
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> rooms = []
+    private List<String> locations = []
 }
