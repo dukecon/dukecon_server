@@ -3,8 +3,8 @@ package org.dukecon.server.business
 import groovy.json.JsonSlurper
 import org.dukecon.model.Audience
 import org.dukecon.model.Language
-import org.dukecon.model.Room
-import org.dukecon.model.Talk
+import org.dukecon.model.Location
+import org.dukecon.model.Event
 import spock.lang.Specification
 
 
@@ -83,14 +83,14 @@ class JavalandDataExtractorSpec extends Specification {
         assert audiences[2].names.en == 'all'
     }
 
-    void "should list 7 rooms"() {
+    void "should list 7 locations"() {
         when:
-        List<Room> rooms = extractor.rooms
+        List<Location> locations = extractor.locations
         then:
-        assert rooms.size() == 11
-        assert rooms.id.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
-        assert rooms.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
-        assert rooms.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
+        assert locations.size() == 11
+        assert locations.id.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
+        assert locations.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
+        assert locations.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
     }
 
     void "should extract all meta data"() {
@@ -99,9 +99,9 @@ class JavalandDataExtractorSpec extends Specification {
 
         then:
         assert conference
-        assert conference.metaData.rooms.size() == 11
-        assert conference.metaData.rooms.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
-        assert conference.metaData.rooms.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
+        assert conference.metaData.locations.size() == 11
+        assert conference.metaData.locations.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
+        assert conference.metaData.locations.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
         assert conference.metaData.tracks.size() == 9
         assert conference.metaData.tracks.names['de'].join(', ') == 'Community, Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer'
         assert conference.metaData.defaultLanguage.id == 'de'
@@ -124,22 +124,22 @@ class JavalandDataExtractorSpec extends Specification {
 
     void "should get talk types"() {
         when:
-        def talkTypes = extractor.talkTypes
+        def eventTypes = extractor.eventTypes
         then:
-        assert talkTypes.size() == 7
-        assert talkTypes.id.join('') == ('1'..'7').join('')
-        assert talkTypes.order.join('') == ('1'..'7').join('')
-        assert talkTypes.names.de.join(', ') == 'Best Practices, Community, Keynote, Neuerscheinungen oder Features, Projektbericht, Schulungstag, Tipps & Tricks'
-        assert talkTypes.names.en.join(', ') == 'best practices, Community, keynote, new releases or features , project report, training day, tips & tricks'
+        assert eventTypes.size() == 7
+        assert eventTypes.id.join('') == ('1'..'7').join('')
+        assert eventTypes.order.join('') == ('1'..'7').join('')
+        assert eventTypes.names.de.join(', ') == 'Best Practices, Community, Keynote, Neuerscheinungen oder Features, Projektbericht, Schulungstag, Tipps & Tricks'
+        assert eventTypes.names.en.join(', ') == 'best practices, Community, keynote, new releases or features , project report, training day, tips & tricks'
     }
 
-    void "should get talks"() {
+    void "should get events"() {
         when:
-        def talks = extractor.talks.sort {it.id}
+        def events = extractor.events.sort {it.id}
         then:
-        assert talks.size() == 121
-        assert talks.first().title == 'Community Testeintrag'
-        assert talks.first().room.names.de == 'Wintergarten'
+        assert events.size() == 121
+        assert events.first().title == 'Community Testeintrag'
+        assert events.first().location.names.de == 'Wintergarten'
     }
 
     void "should get all speakers"() {
@@ -150,24 +150,24 @@ class JavalandDataExtractorSpec extends Specification {
         assert speakers.first().name == 'Fried Saacke'
         assert speakers.first().company == 'DOAG Dienstleistungen GmbH'
         assert speakers.first().id == '136700'
-        assert !speakers.first().talks
+        assert !speakers.first().events
     }
 
-    void "should get all speakers with their talks"() {
+    void "should get all speakers with their events"() {
         when:
-        def speakers = extractor.speakersWithTalks.sort {it.id}
+        def speakers = extractor.speakersWithEvents.sort {it.id}
         then:
         assert speakers.size() == 123
         assert speakers.first().name == 'Fried Saacke'
         assert speakers.first().company == 'DOAG Dienstleistungen GmbH'
         assert speakers.first().id == '136700'
-        assert speakers.first().talks.size() == 1
-        assert speakers.first().talks.first().class == Talk
-        assert speakers.find {it.name == 'Roel Spilker'}.talks.size() == 2
-        assert speakers.find {it.name == 'Thorben Janssen'}.talks.size() == 2
+        assert speakers.first().events.size() == 1
+        assert speakers.first().events.first().class == Event
+        assert speakers.find {it.name == 'Roel Spilker'}.events.size() == 2
+        assert speakers.find {it.name == 'Thorben Janssen'}.events.size() == 2
     }
 
-    void "should get a map of speaker ids to talks held from this speaker"() {
+    void "should get a map of speaker ids to events held from this speaker"() {
         when:
         def json = new JsonSlurper().parseText('''{ "hits" : { "hits" : [
             {"_source":{"ID_KONGRESS":499959,"ID":509570,"ID_SEMINAR":"509570","FARBCODE":335744,"TRACK":"Internet der Dinge","TRACK_EN":"internet of things","ORDERT":6,"AUDIENCE":"Fortgeschrittene","AUDIENCE_EN":"advanced","DATUM":"2016-03-09T00:00:00.000+01:00","SIMULTAN":"0","DATUM_ES_EN":"2016-03-09","DATUM_ES":"09.03.2016","BEGINN":"12:00","ENDE":"12:40","TIMESTAMP":"0016-03-07T11:53:28.000+00:53:28","TIMESTAMP_ENDE":"0016-03-07T12:33:28.000+00:53:28","SEMINAR_NR":"51","RAUM_NR":"7","RAUMNAME":"Neptun","AREAID":"7/N","TITEL":"Active Glass","TITEL_EN":null,"ABSTRACT_EN":null,"REFERENT_NAME":"Matthias Faix","KEYWORDS":",Arduino (Einplatinencomputer),Augmented Reality","REFERENT_NACHNAME":"Faix","REFERENT_FIRMA":"IPM K�ln","ID_PERSON":146723,"ID_PERSON_COREF":null,"ID_PERSON_COCOREF":null,"VORTRAGSTYP":"Projektbericht","VORTRAGSTYP_EN":"project report","COREFERENT_NAME":null,"COCOREFERENT_NAME":null,"COREFERENT_FIRMA":null,"COCOREFERENT_FIRMA":null,"ABSTRACT_TEXT":"Wir haben die Idee, Steuerungen von Robotern per Nano Arduino durchzuf�hren. Ein Nano Arduino wurde in ein kleines Geh�use gebaut, welches an eine Brille befestigt wurde. Das Geh�use wurde abgeleitet von einer kleinen Taschenlampe, die an einer Brille befestigt werden kann. In dem Geh�use befindet sich ein Arduino (Nano) und ein Gyroskop und eine kleine Kamera. Wir experimentieren mit folgenden Anwendungen und programmieren darauf den Nano Arduino:\\r\\n\\r\\n- Steuerungen durch Neigung des Kopfes. Man kann XMBC durch Neigung des Kopfes steuern. Also Musikauswahl durch Kopfbewegungen. Fernidee: Schwerbedinderte Menschen k�nnen am Leben teilhaben\\r\\n- Erkennung von GS1 Codes. Bei Erkennung von bestimmten Codes vibriert die Brille. Man k�nnte diese Technik zur  Optimierung von Lagerarbeiten nutzen.\\r\\n\\r\\nBeispiel: Es sollen 10 Dinge in einen Karton gepackt werden. Die Kontrolle erfolgt per Kopplung GS1/Erfassung per Brille. Sobald ein falscher Artikel im Karton gepackt wird, vibriert die Brille.","SPRACHE":"Deutsch","DEMO":"Ja","KEYWORDS_EN":",Arduino (single board computer),Augmented Reality","SPRACHE_EN":"German","DEMO_EN":"yes","BEGINN_EN":null,"ENDE_EN":null}},
@@ -177,49 +177,49 @@ class JavalandDataExtractorSpec extends Specification {
             {"_source":{"ID_KONGRESS":499959,"ID":509672,"ID_SEMINAR":"509672","FARBCODE":335744,"TRACK":"Enterprise Java & Cloud","TRACK_EN":"enterprise Java & cloud","ORDERT":3,"AUDIENCE":"Fortgeschrittene","AUDIENCE_EN":"advanced","DATUM":"2016-03-08T00:00:00.000+01:00","SIMULTAN":"0","DATUM_ES_EN":"2016-03-08","DATUM_ES":"08.03.2016","BEGINN":"17:00","ENDE":"17:40","TIMESTAMP":"0016-03-06T16:53:28.000+00:53:28","TIMESTAMP_ENDE":"0016-03-06T17:33:28.000+00:53:28","SEMINAR_NR":"72","RAUM_NR":"2","RAUMNAME":"Schauspielhaus","AREAID":"2/S","TITEL":"Effiziente Datenpersistierung mit JPA 2.1 und Hibernate","TITEL_EN":null,"ABSTRACT_EN":null,"REFERENT_NAME":"Thorben Janssen","KEYWORDS":",Datenbank,Java Enterprise Edition (Java EE),Wildfly (Anwendungsserver)","REFERENT_NACHNAME":"Janssen","REFERENT_FIRMA":null,"ID_PERSON":369887,"ID_PERSON_COREF":null,"ID_PERSON_COCOREF":null,"VORTRAGSTYP":"Best Practices","VORTRAGSTYP_EN":"best practices","COREFERENT_NAME":null,"COCOREFERENT_NAME":null,"COREFERENT_FIRMA":null,"COCOREFERENT_FIRMA":null,"ABSTRACT_TEXT":"Daten mit Hilfe der Java Persistence API (JPA) in der Datenbank zu speichern, stellt den Standard f�r Java-Enterprise-Anwendungen dar. Der Applikationsserver stellt alle daf�r ben�tigten Bibliotheken bereits zur Verf�gung, und die Verwendung ist so einfach, dass sie innerhalb k�rzester Zeit erlernt werden kann. Spannend wird es immer erst dann, wenn die Anforderungen steigen, z.B. weil die Datenmenge besonders gro� ist oder die geforderten Antwortzeiten sehr kurz sind. Auch hierf�r bietet JPA in der Regel gute L�sungen, und wenn das nicht ausreicht, k�nnen wir immer noch auf Hibernate-spezifische Features zur�ckgreifen. Dazu sind allerdings deutlich detailliertere Kenntnisse erforderlich. Einige Beispiele daf�r sind die Wahl der richtigen Fetching-Strategie, die Verwendung von Caches und der Einsatz von Bulk-Operationen. \r\n\r\nWir werden uns einen �berblick dar�ber verschaffen, wie wir diese und andere Features nutzen k�nnen, um auch anspruchsvollere Performanceanforderungen umzusetzen. Es werden Kenntnisse in der Verwendung von JPA und Hibernate vorausgesetzt.","SPRACHE":"Deutsch","DEMO":"Ja","KEYWORDS_EN":",Database,Java Enterprise Edition (Java EE),Wildfly (Application Server)","SPRACHE_EN":"German","DEMO_EN":"yes","BEGINN_EN":null,"ENDE_EN":null}}
         ]}}''')
         extractor = new JavalandDataExtractor(talksJson: json.hits.hits._source)
-        def speakerIdToTalks = extractor.getSpeakerIdToTalks()
+        def speakerIdToEvents = extractor.getSpeakerIdToEvents()
         then:
-        assert speakerIdToTalks.size() == 5
+        assert speakerIdToEvents.size() == 5
 
-        assert speakerIdToTalks['146723'].size() == 1
-        assert speakerIdToTalks['146723'].title.join(', ') == 'Active Glass'
+        assert speakerIdToEvents['146723'].size() == 1
+        assert speakerIdToEvents['146723'].title.join(', ') == 'Active Glass'
 
-        assert speakerIdToTalks['371581'].size() == 2
-        assert speakerIdToTalks['371581'].title.join('; ') == 'Lombok: The Boilerplate Buster. It\'s a Kind of Magic!; ToTP or Not ToTP, That Is the Question!'
-        assert speakerIdToTalks['371991'].size() == 2
-        assert speakerIdToTalks['371991'].title.join('; ') == 'Lombok: The Boilerplate Buster. It\'s a Kind of Magic!; ToTP or Not ToTP, That Is the Question!'
+        assert speakerIdToEvents['371581'].size() == 2
+        assert speakerIdToEvents['371581'].title.join('; ') == 'Lombok: The Boilerplate Buster. It\'s a Kind of Magic!; ToTP or Not ToTP, That Is the Question!'
+        assert speakerIdToEvents['371991'].size() == 2
+        assert speakerIdToEvents['371991'].title.join('; ') == 'Lombok: The Boilerplate Buster. It\'s a Kind of Magic!; ToTP or Not ToTP, That Is the Question!'
 
-        assert speakerIdToTalks['369887'].size() == 2
-        assert speakerIdToTalks['369887'].title.join('; ') == 'Effiziente Datenpersistierung mit JPA 2.1 und Hibernate; CDI 2.0 Deep Dive'
-        assert speakerIdToTalks['368634'].size() == 1
-        assert speakerIdToTalks['368634'].title.join('; ') == 'CDI 2.0 Deep Dive'
+        assert speakerIdToEvents['369887'].size() == 2
+        assert speakerIdToEvents['369887'].title.join('; ') == 'Effiziente Datenpersistierung mit JPA 2.1 und Hibernate; CDI 2.0 Deep Dive'
+        assert speakerIdToEvents['368634'].size() == 1
+        assert speakerIdToEvents['368634'].title.join('; ') == 'CDI 2.0 Deep Dive'
     }
 
     void "should map one talk field by field"() {
         when:
         def json = new JsonSlurper().parseText('{ "hits" : { "hits" : [ {"_source":{"ID_KONGRESS":499959,"ID":509632,"ID_SEMINAR":"509632","FARBCODE":335744,"TRACK":"Core Java & JVM basierte Sprachen","TRACK_EN":"Core Java & JVM based languages","ORDERT":2,"AUDIENCE":"Fortgeschrittene","AUDIENCE_EN":"advanced","DATUM":"2016-03-09T00:00:00.000+01:00","SIMULTAN":"0","DATUM_ES_EN":"2016-03-09","DATUM_ES":"09.03.2016","BEGINN":"09:00","ENDE":"09:40","TIMESTAMP":"0016-03-07T08:53:28.000+00:53:28","TIMESTAMP_ENDE":"0016-03-07T09:33:28.000+00:53:28","SEMINAR_NR":"63","RAUM_NR":"1","RAUMNAME":"Wintergarten","AREAID":"1/W","TITEL":"Java\'s Next Big Thing: Value Objects","TITEL_EN":null,"ABSTRACT_EN":null,"REFERENT_NAME":"Henning Schwentner","KEYWORDS":null,"REFERENT_NACHNAME":"Schwentner","REFERENT_FIRMA":"WPS - Workplace Solutions GmbH","ID_PERSON":370942,"ID_PERSON_COREF":null,"ID_PERSON_COCOREF":null,"VORTRAGSTYP":"Neuerscheinungen oder Features","VORTRAGSTYP_EN":"new releases or features ","COREFERENT_NAME":null,"COCOREFERENT_NAME":null,"COREFERENT_FIRMA":null,"COCOREFERENT_FIRMA":null,"ABSTRACT_TEXT":"Nach Lambdas und Co. mit Java 8 ist das \\"Next Big Thing\\" f�r Java die Unterst�tzung von Value Types direkt in der Programmiersprache. Damit bekommt Java ein Feature, das andere Programmiersprachen schon l�nger haben.\\r\\n\\r\\nIn diesem Vortrag schauen wir uns genau an:\\r\\n\\r\\n* was hinter dem Schlachtruf \\"Codes like a class, works like an int\\" steckt\\r\\n* warum value types gleichzeitig effizienteren wie auch besser lesbaren Code erm�glichen\\r\\n* wie der Stand des zugeh�rigen JEP 169 ist\\r\\n* den Unterschied zwischen Reference Types und Value Types\\r\\n* wie Value Types in anderen Sprachen (insbesondere C# und Swift) schon umgesetzt sind\\r\\n* was Vererbung f�r Value Types bedeutet\\r\\n* was die Vorteile von Speicherung auf dem Stack versus Speicherung auf dem Heap sind\\r\\n\\r\\nDer Vortrag wird im \\"Lessig-Style\\" gehalten werden. (https://www.youtube.com/watch?v=RrpajcAgR1E)","SPRACHE":"Deutsch","DEMO":"Nein","KEYWORDS_EN":null,"SPRACHE_EN":"German","DEMO_EN":"no","BEGINN_EN":null,"ENDE_EN":null}}]}}')
         extractor = new JavalandDataExtractor(talksJson: json.hits.hits._source)
-        def talks = extractor.talks.sort {it.id}
+        def events = extractor.events.sort {it.id}
         then:
-        assert talks.size() == 1
-        assert talks.first().audience.names.de == 'Fortgeschrittene'
-        assert talks.first().language.id == "de"
-        assert talks.first().room.id == '1'
-        assert talks.first().room.order == 1
-        assert talks.first().room.names.de == "Wintergarten"
-        assert talks.first().track.names.de == 'Core Java & JVM basierte Sprachen'
-        assert talks.first().track.order == 2
-        assert talks.first().track.id == '2'
-        assert talks.first().title == 'Java\'s Next Big Thing: Value Objects'
-        assert talks.first().id == '509632'
-        assert talks.first().start == '2016-03-09T09:00'
-        assert talks.first().end == '2016-03-09T09:40'
-        assert talks.first().speakers.size() == 1
-        assert talks.first().speakers.first().name == 'Henning Schwentner'
-        assert talks.first().speakers.first().company == 'WPS - Workplace Solutions GmbH'
-        assert !talks.first().speakers.first().defaultSpeaker
-        assert talks.first().speakers.first().id == '370942'
-        assert talks.first().type.names.de == 'Neuerscheinungen oder Features'
-        assert !talks.first().demo
+        assert events.size() == 1
+        assert events.first().audience.names.de == 'Fortgeschrittene'
+        assert events.first().language.id == "de"
+        assert events.first().location.id == '1'
+        assert events.first().location.order == 1
+        assert events.first().location.names.de == "Wintergarten"
+        assert events.first().track.names.de == 'Core Java & JVM basierte Sprachen'
+        assert events.first().track.order == 2
+        assert events.first().track.id == '2'
+        assert events.first().title == 'Java\'s Next Big Thing: Value Objects'
+        assert events.first().id == '509632'
+        assert events.first().start == '2016-03-09T09:00'
+        assert events.first().end == '2016-03-09T09:40'
+        assert events.first().speakers.size() == 1
+        assert events.first().speakers.first().name == 'Henning Schwentner'
+        assert events.first().speakers.first().company == 'WPS - Workplace Solutions GmbH'
+        assert !events.first().speakers.first().defaultSpeaker
+        assert events.first().speakers.first().id == '370942'
+        assert events.first().type.names.de == 'Neuerscheinungen oder Features'
+        assert !events.first().demo
     }
 }

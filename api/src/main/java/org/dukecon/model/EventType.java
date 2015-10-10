@@ -13,7 +13,7 @@ import java.util.Map;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TalkType {
+public class EventType {
     private String id;
     private Integer order;
     private Map<String, String> names = new HashMap<>();

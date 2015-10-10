@@ -19,15 +19,15 @@ class JavalandDataExtractor {
                 .url(conferenceUrl)
                 .metaData(metaData)
                 .speakers(this.speakers)
-                .talks(this.talks)
+                .events(this.events)
                 .build()
         conf.metaData.conference = conf
-        conf.speakers = getSpeakersWithTalks()
+        conf.speakers = getSpeakersWithEvents()
         return conf
     }
 
     private MetaData getMetaData() {
-        MetaData.builder().rooms(this.rooms).tracks(this.tracks).languages(this.languages).defaultLanguage(this.defaultLanguage).audiences(this.audiences).talkTypes(this.talkTypes).build()
+        MetaData.builder().locations(this.locations).tracks(this.tracks).languages(this.languages).defaultLanguage(this.defaultLanguage).audiences(this.audiences).eventTypes(this.eventTypes).build()
     }
 
     List<Track> getTracks() {
@@ -65,20 +65,20 @@ class JavalandDataExtractor {
         }
     }
 
-    List<Room> getRooms() {
+    List<Location> getLocations() {
         return talksJson.findAll { it.RAUMNAME }.collect { [it.RAUM_NR, it.RAUMNAME] }.unique().sort {
             it.first()
         }.collect {
-            Room.builder().id(it.first()?.toString()).order(it.first()?.toInteger()).names(de: it[1], en: it[1]).build()
+            Location.builder().id(it.first()?.toString()).order(it.first()?.toInteger()).names(de: it[1], en: it[1]).build()
         }
     }
 
-    List<TalkType> getTalkTypes() {
+    List<EventType> getEventTypes() {
         int i = 1
         return talksJson.findAll { it.VORTRAGSTYP }.collect { [it.VORTRAGSTYP, it.VORTRAGSTYP_EN] }.unique().sort {
             it.first()
         }.collect {
-            TalkType.builder().id(i.toString()).order(i++).names(de: it[0], en: it[1]).build()
+            EventType.builder().id(i.toString()).order(i++).names(de: it[0], en: it[1]).build()
         }
     }
 
@@ -95,20 +95,20 @@ class JavalandDataExtractor {
 
     /**
      * @param talkLookup
-     * @return list of speakers with their talks assigned
+     * @return list of speakers with their events assigned
      */
-    private List<Speaker> getSpeakersWithTalks(Map<String, List<Talk>> talkLookup = getSpeakerIdToTalks()) {
+    private List<Speaker> getSpeakersWithEvents(Map<String, List<Event>> talkLookup = getSpeakerIdToEvents()) {
         speakers.collect {Speaker s ->
-            s.talks = ([] + talkLookup[s.id]).flatten()
+            s.events = ([] + talkLookup[s.id]).flatten()
             s
         }
     }
 
     /**
-     * @return map with speaker ids as key and a list all talks of this speaker as value
+     * @return map with speaker ids as key and a list all events of this speaker as value
      */
-    private Map<String, List<Talk>> getSpeakerIdToTalks() {
-        (talks.findAll{it.speakers}.collect{[it.speakers.first().id, it]} + talks.collect{[it.speakers[1]?.id, it]})
+    private Map<String, List<Event>> getSpeakerIdToEvents() {
+        (events.findAll{it.speakers}.collect{[it.speakers.first().id, it]} + events.collect{[it.speakers[1]?.id, it]})
                 .inject([:]){map, list ->
                     if(!map[list.first()]) {
                         map[list.first()] = []
@@ -118,9 +118,9 @@ class JavalandDataExtractor {
                 }.findAll {k,v -> k}
     }
 
-    private List<Talk> getTalks(Map<String, Speaker> speakerLookup = speakers.collectEntries{[it.id, it]}) {
+    private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries{[it.id, it]}) {
         return talksJson.collect { t ->
-            return Talk.builder()
+            return Event.builder()
                     .id(t.ID.toString())
                     .start(t.DATUM_ES_EN + 'T' + t.BEGINN)
                     .end(t.DATUM_ES_EN + 'T' + t.ENDE)
@@ -130,8 +130,8 @@ class JavalandDataExtractor {
                     .demo(t.DEMO != null && t.DEMO.equalsIgnoreCase('ja'))
                     .track(tracks.find{t.ORDERT == it.order})
                     .audience(audiences.find {t.AUDIENCE_EN == it.names.en})
-                    .type(talkTypes.find {t.VORTRAGSTYP_EN == it.names.en})
-                    .room(rooms.find {t.RAUM_NR == it.id})
+                    .type(eventTypes.find {t.VORTRAGSTYP_EN == it.names.en})
+                    .location(locations.find {t.RAUM_NR == it.id})
                     .speakers([speakerLookup[t.ID_PERSON?.toString()], speakerLookup[t.ID_PERSON_COREF?.toString()], speakerLookup[t.ID_PERSON_COCOREF?.toString()]].findAll {it})
                     .build()
         }

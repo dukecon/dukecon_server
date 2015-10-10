@@ -48,7 +48,7 @@ class PreferencesServiceSpec extends Specification {
     }
 
     void "test get no preferences" () {
-        Principal dummyPrincipal = [ toString : {"id has no talks"} ] as Principal
+        Principal dummyPrincipal = [ toString : {"id has no events"} ] as Principal
         Authentication dummyAuthentication = [ getPrincipal : { dummyPrincipal } ] as Authentication
         SecurityContextHolder.getContext().authentication = dummyAuthentication
         when:

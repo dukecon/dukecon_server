@@ -3,7 +3,6 @@ package org.dukecon.model;
 import com.fasterxml.jackson.annotation.*;
 import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +21,9 @@ public class MetaData {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Conference conference;
     private List<Audience> audiences = new ArrayList<>();
-    private List<TalkType> talkTypes = new ArrayList<>();
+    private List<EventType> eventTypes = new ArrayList<>();
     private List<Language> languages = new ArrayList<>();
     private Language defaultLanguage;
     private List<Track> tracks;
-    private List<Room> rooms;
+    private List<Location> locations;
 }

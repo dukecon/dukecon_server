@@ -22,7 +22,7 @@
   * PUT
   * http://localhost:8080/rest/filters
   * Content-Type: application/json
-  * {"favourites":true,"levels":["Fortgeschritten"],"languages":["Englisch"],"tracks":["IDEs & Tools"],"rooms":["Wintergarten", "Schauspielhaus"]}
+  * {"favourites":true,"levels":["Fortgeschritten"],"languages":["Englisch"],"tracks":["IDEs & Tools"],"locations":["Wintergarten", "Schauspielhaus"]}
 * Lesen:
   * GET
   * http://localhost:8080/rest/filters

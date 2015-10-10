@@ -36,4 +36,5 @@ public class Speaker {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private List<Talk> talks = new ArrayList<>();
+    private List<Event> events = new ArrayList<>();
 }

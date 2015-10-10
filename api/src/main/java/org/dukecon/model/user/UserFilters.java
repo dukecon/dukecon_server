@@ -20,5 +20,5 @@ public class UserFilters {
     private List<String> levels = new ArrayList<>();
     private List<String> languages = new ArrayList<>();
     private List<String> tracks = new ArrayList<>();
-    private List<String> rooms = new ArrayList<>();
+    private List<String> locations = new ArrayList<>();
 }

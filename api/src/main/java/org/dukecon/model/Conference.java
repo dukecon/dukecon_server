@@ -21,6 +21,6 @@ public class Conference {
     private String name;
     private String url;
     private MetaData metaData;
-    private List<Talk> talks;
+    private List<Event> events;
     private List<Speaker> speakers;
 }

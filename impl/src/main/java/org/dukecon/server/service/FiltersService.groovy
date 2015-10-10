@@ -52,7 +52,7 @@ class FiltersService {
         }
         filters.favourites = userFilters.favourites
         filters.tracks = userFilters.tracks
-        filters.rooms = userFilters.rooms
+        filters.locations = userFilters.locations
         filters.languages = userFilters.languages
         filters.levels = userFilters.levels
         return Response.status(responseStatus).build()
@@ -68,7 +68,7 @@ class FiltersService {
         log.debug("Retrieving filters for '{}'", authenticatedPrincipalId)
         Filters filters = repository.findByPrincipalId(authenticatedPrincipalId)
 
-        def result = filters ? UserFilters.builder().favourites(filters.favourites).rooms(filters.rooms).tracks(filters.tracks).languages(filters.languages).levels(filters.levels).build() : new UserFilters()
+        def result = filters ? UserFilters.builder().favourites(filters.favourites).locations(filters.locations).tracks(filters.tracks).languages(filters.languages).levels(filters.levels).build() : new UserFilters()
 
         return Response.ok(result).build()
     }
