@@ -41,7 +41,7 @@ class ConferenceService {
     @GET
     @Path("{id}/events")
     public Response getEvents(@PathParam("id") String id) {
-        return Response.ok().entity(talkProvider.conference.talks).build();
+        return Response.ok().entity(talkProvider.conference.events).build();
     }
 
     @GET
