@@ -178,6 +178,7 @@
                     </includes>
                 </configuration>
             </plugin>
+            <!--
             <plugin>
                 <groupId>com.sebastian-daschner</groupId>
                 <artifactId>jaxrs-analyzer-maven-plugin</artifactId>
@@ -195,6 +196,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
