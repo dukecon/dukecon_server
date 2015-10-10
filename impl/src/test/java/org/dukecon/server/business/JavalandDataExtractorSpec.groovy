@@ -20,20 +20,20 @@ class JavalandDataExtractorSpec extends Specification {
     }
 
     private readJson() {
-        InputStream is = JavalandDataExtractorSpec.class.getResourceAsStream('/javaland-2016.raw')
+        InputStream is = JavalandDataExtractorSpec.class.getResourceAsStream('/javaland-2016.raw_community')
         JsonSlurper slurper = new JsonSlurper()
         slurper.parse(is, "ISO-8859-1")
     }
 
-    void "should get 8 tracks"(){
+    void "should get 9 tracks"(){
         when:
         def tracks = extractor.tracks
         then:
-        assert tracks.size() == 8
-        assert tracks.order == 1..8
-        assert tracks.id == "1".."8"
-        assert tracks.names["de"].join(", ") == "Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer"
-        assert tracks.names["en"].join(", ") == "container & microservices, Core Java & JVM based languages, enterprise Java & cloud, frontend & mobile, IDEs & tools, internet of things, architecture & security, newcomer"
+        assert tracks.size() == 9
+        assert tracks.order == [1] + (1..8)
+        assert tracks.id == ["1"] + ("1".."8")
+        assert tracks.names["de"].join(", ") == "Community, Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer"
+        assert tracks.names["en"].join(", ") == "Community, container & microservices, Core Java & JVM based languages, enterprise Java & cloud, frontend & mobile, IDEs & tools, internet of things, architecture & security, newcomer"
     }
 
     void "should default language be 'de'"() {
@@ -68,7 +68,7 @@ class JavalandDataExtractorSpec extends Specification {
         when:
         List<Audience> audiences = extractor.audiences
         then:
-        assert audiences.size() == 2
+        assert audiences.size() == 3
         assert audiences[0].id == "1"
         assert audiences[0].order == 1
         assert audiences[0].names.de == 'Anfänger'
@@ -77,16 +77,20 @@ class JavalandDataExtractorSpec extends Specification {
         assert audiences[1].order == 2
         assert audiences[1].names.de == 'Fortgeschrittene'
         assert audiences[1].names.en == 'advanced'
+        assert audiences[2].id == "3"
+        assert audiences[2].order == 3
+        assert audiences[2].names.de == 'alle'
+        assert audiences[2].names.en == 'all'
     }
 
     void "should list 7 rooms"() {
         when:
         List<Room> rooms = extractor.rooms
         then:
-        assert rooms.size() == 7
-        assert rooms.id == '1'..'7'
-        assert rooms.order == 1..7
-        assert rooms.name.join(', ') == 'Wintergarten, Schauspielhaus, Quantum 1+2, Quantum 3, Quantum 4, Lilaque, Neptun'
+        assert rooms.size() == 11
+        assert rooms.id.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
+        assert rooms.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
+        assert rooms.name.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
     }
 
     void "should extract all meta data"() {
@@ -95,18 +99,18 @@ class JavalandDataExtractorSpec extends Specification {
 
         then:
         assert conference
-        assert conference.metaData.rooms.size() == 7
-        assert conference.metaData.rooms.order.join('') == ('1'..'7').join('')
-        assert conference.metaData.rooms.name.join(', ') == 'Wintergarten, Schauspielhaus, Quantum 1+2, Quantum 3, Quantum 4, Lilaque, Neptun'
-        assert conference.metaData.tracks.size() == 8
-        assert conference.metaData.tracks.names['de'].join(', ') == 'Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer'
+        assert conference.metaData.rooms.size() == 11
+        assert conference.metaData.rooms.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
+        assert conference.metaData.rooms.name.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
+        assert conference.metaData.tracks.size() == 9
+        assert conference.metaData.tracks.names['de'].join(', ') == 'Community, Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer'
         assert conference.metaData.defaultLanguage.id == 'de'
         assert conference.metaData.languages.size() == 2
         assert conference.metaData.languages.names.de.join(', ') == 'Deutsch, Englisch'
         assert conference.metaData.languages.names.en.join(', ') == 'German, English'
-        assert conference.metaData.audiences.size() == 2
-        assert conference.metaData.audiences.names.de.join(', ') == 'Anfänger, Fortgeschrittene'
-        assert conference.metaData.audiences.names.en.join(', ') == 'beginners, advanced'
+        assert conference.metaData.audiences.size() == 3
+        assert conference.metaData.audiences.names.de.join(', ') == 'Anfänger, Fortgeschrittene, alle'
+        assert conference.metaData.audiences.names.en.join(', ') == 'beginners, advanced, all'
     }
 
     void "should get conference infos"() {
@@ -122,30 +126,30 @@ class JavalandDataExtractorSpec extends Specification {
         when:
         def talkTypes = extractor.talkTypes
         then:
-        assert talkTypes.size() == 5
-        assert talkTypes.id.join('') == ('1'..'5').join('')
-        assert talkTypes.order.join('') == ('1'..'5').join('')
-        assert talkTypes.names.de.join(', ') == 'Best Practices, Keynote, Neuerscheinungen oder Features, Projektbericht, Tipps & Tricks'
-        assert talkTypes.names.en.join(', ') == 'best practices, keynote, new releases or features , project report, tips & tricks'
+        assert talkTypes.size() == 7
+        assert talkTypes.id.join('') == ('1'..'7').join('')
+        assert talkTypes.order.join('') == ('1'..'7').join('')
+        assert talkTypes.names.de.join(', ') == 'Best Practices, Community, Keynote, Neuerscheinungen oder Features, Projektbericht, Schulungstag, Tipps & Tricks'
+        assert talkTypes.names.en.join(', ') == 'best practices, Community, keynote, new releases or features , project report, training day, tips & tricks'
     }
 
     void "should get talks"() {
         when:
         def talks = extractor.talks.sort {it.id}
         then:
-        assert talks.size() == 110
-        assert talks.first().title == 'Behavioral Diff als neues Testparadigma'
-        assert talks.first().room.name == 'Neptun'
+        assert talks.size() == 121
+        assert talks.first().title == 'Community Testeintrag'
+        assert talks.first().room.name == 'Wintergarten'
     }
 
     void "should get all speakers"() {
         when:
         def speakers = extractor.speakers.sort {it.id}
         then:
-        assert speakers.size() == 116
-        assert speakers.first().name == 'Matthias Faix'
-        assert speakers.first().company == 'IPM Köln'
-        assert speakers.first().id == '146723'
+        assert speakers.size() == 123
+        assert speakers.first().name == 'Fried Saacke'
+        assert speakers.first().company == 'DOAG Dienstleistungen GmbH'
+        assert speakers.first().id == '136700'
         assert !speakers.first().talks
     }
 
@@ -153,10 +157,10 @@ class JavalandDataExtractorSpec extends Specification {
         when:
         def speakers = extractor.speakersWithTalks.sort {it.id}
         then:
-        assert speakers.size() == 116
-        assert speakers.first().name == 'Matthias Faix'
-        assert speakers.first().company == 'IPM Köln'
-        assert speakers.first().id == '146723'
+        assert speakers.size() == 123
+        assert speakers.first().name == 'Fried Saacke'
+        assert speakers.first().company == 'DOAG Dienstleistungen GmbH'
+        assert speakers.first().id == '136700'
         assert speakers.first().talks.size() == 1
         assert speakers.first().talks.first().class == Talk
         assert speakers.find {it.name == 'Roel Spilker'}.talks.size() == 2

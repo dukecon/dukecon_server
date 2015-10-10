@@ -3,6 +3,7 @@ package org.dukecon.model;
 import com.fasterxml.jackson.annotation.*;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,10 @@ import java.util.List;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MetaData {
-//    @JsonProperty(value = "conferenceId")
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-//    @JsonIdentityReference(alwaysAsId = true)
-//    private Conference conference;
+    @JsonProperty(value = "conferenceId")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    private Conference conference;
     private List<Audience> audiences = new ArrayList<>();
     private List<TalkType> talkTypes = new ArrayList<>();
     private List<Language> languages = new ArrayList<>();
