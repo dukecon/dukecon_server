@@ -92,7 +92,7 @@ abstract class AbstractPreferencesService {
         log.debug ("Adding preferences for '{}'", principalId)
 
         // Check if this preference was already created.
-        Collection<Preference> preferences = preferencesRepository.findByPrincipalIdAndEventId(
+        Collection<Preference> preferences = preferencesRepository.findByPrincipalIdAndEventId (
                 principalId, userPreference.eventId)
         // If it doesn't exist yet, add it.
         if((preferences == null) || preferences.empty) {
