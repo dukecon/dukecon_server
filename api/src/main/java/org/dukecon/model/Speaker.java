@@ -32,7 +32,7 @@ public class Speaker {
     @Deprecated
     private boolean defaultSpeaker;
 
-    @JsonProperty(value = "talkIds")
+    @JsonProperty(value = "eventIds")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private List<Event> events = new ArrayList<>();

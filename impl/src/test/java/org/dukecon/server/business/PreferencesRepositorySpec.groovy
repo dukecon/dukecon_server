@@ -11,7 +11,6 @@ import org.springframework.test.context.web.WebAppConfiguration
 import spock.lang.Specification
 
 import javax.inject.Inject
-import java.util.prefs.PreferenceChangeEvent
 
 /**
  * @author Gerd Aschemann, http://aschemann.net, @GerdAschemann
@@ -26,7 +25,7 @@ class PreferencesRepositorySpec extends Specification {
 
     void "test simple insert" () {
         when:
-            Preference savedPref = preferencesRepository.save (new Preference (principalId : "0815", talkId : "001"))
+            Preference savedPref = preferencesRepository.save (new Preference (principalId : "0815", eventId: "001"))
         then:
             assert null != savedPref
             log.debug ("New Preference has id {} and version {}", savedPref.id, savedPref.version)
@@ -34,7 +33,7 @@ class PreferencesRepositorySpec extends Specification {
 
     void "test insert and retrieve" () {
         when:
-            Preference savedPref = preferencesRepository.save(new Preference (principalId : "0815", talkId : "002", version : 1))
+            Preference savedPref = preferencesRepository.save(new Preference (principalId : "0815", eventId: "002", version : 1))
             List<Preference> results = preferencesRepository.findByPrincipalId("0815")
         then:
             assert null != savedPref
@@ -46,8 +45,8 @@ class PreferencesRepositorySpec extends Specification {
 
     void "test constraint violation" () {
         when:
-            preferencesRepository.save(new Preference (principalId : "0815", talkId : "003", version : 1))
-            preferencesRepository.save(new Preference (principalId : "0815", talkId : "003", version : 1))
+            preferencesRepository.save(new Preference (principalId : "0815", eventId: "003", version : 1))
+            preferencesRepository.save(new Preference (principalId : "0815", eventId: "003", version : 1))
         then:
             DataIntegrityViolationException e = thrown()
             log.debug ("Expected exception '{}' was thrown", e.message)

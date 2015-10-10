@@ -14,6 +14,6 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPreference {
-    @NonNull private String talkId;
+    @NonNull private String eventId;
     private int version;
 }
