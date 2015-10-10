@@ -34,6 +34,9 @@ class KeycloakConfigService {
 	@Value("\${keycloak.resource:dukecon}")
 	private String resource
 	
+	// TODO: Check if we could parameterize this?
+	@Value("\${preferences.rest.path}")
+	private String redirectUri
 
 	@GET
 	public Response getKeycloakConfig () {
@@ -43,6 +46,7 @@ class KeycloakConfigService {
 			'auth-server-url': authServerUrl,
 			'ssl-required':	sslRequired,
 			'resource': resource,
+			'redirectUri': redirectUri,
 			]
 		log.debug ("keycloak.json = '{}'", keyCloakConfig)
 		
