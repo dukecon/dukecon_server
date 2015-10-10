@@ -21,7 +21,7 @@ class JavalandDataExtractor {
                 .speakers(this.speakers)
                 .talks(this.talks)
                 .build()
-//        conf.metaData.conference = conf
+        conf.metaData.conference = conf
         conf.speakers = getSpeakersWithTalks()
         return conf
     }
@@ -108,7 +108,7 @@ class JavalandDataExtractor {
      * @return map with speaker ids as key and a list all talks of this speaker as value
      */
     private Map<String, List<Talk>> getSpeakerIdToTalks() {
-        (talks.collect{[it.speakers.first().id, it]} + talks.collect{[it.speakers[1]?.id, it]})
+        (talks.findAll{it.speakers}.collect{[it.speakers.first().id, it]} + talks.collect{[it.speakers[1]?.id, it]})
                 .inject([:]){map, list ->
                     if(!map[list.first()]) {
                         map[list.first()] = []
