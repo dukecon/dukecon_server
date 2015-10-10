@@ -69,7 +69,7 @@ class JavalandDataExtractor {
         return talksJson.findAll { it.RAUMNAME }.collect { [it.RAUM_NR, it.RAUMNAME] }.unique().sort {
             it.first()
         }.collect {
-            Room.builder().id(it.first()?.toString()).order(it.first()?.toInteger()).name(it.last()).build()
+            Room.builder().id(it.first()?.toString()).order(it.first()?.toInteger()).names(de: it[1], en: it[1]).build()
         }
     }
 
