@@ -30,7 +30,7 @@ public class Event {
     @JsonProperty(value = "typeId")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
-    private TalkType type;
+    private EventType type;
     @JsonProperty(value = "roomId")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)

@@ -21,7 +21,7 @@ public class MetaData {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Conference conference;
     private List<Audience> audiences = new ArrayList<>();
-    private List<TalkType> talkTypes = new ArrayList<>();
+    private List<EventType> eventTypes = new ArrayList<>();
     private List<Language> languages = new ArrayList<>();
     private Language defaultLanguage;
     private List<Track> tracks;

@@ -124,13 +124,13 @@ class JavalandDataExtractorSpec extends Specification {
 
     void "should get talk types"() {
         when:
-        def talkTypes = extractor.talkTypes
+        def eventTypes = extractor.eventTypes
         then:
-        assert talkTypes.size() == 7
-        assert talkTypes.id.join('') == ('1'..'7').join('')
-        assert talkTypes.order.join('') == ('1'..'7').join('')
-        assert talkTypes.names.de.join(', ') == 'Best Practices, Community, Keynote, Neuerscheinungen oder Features, Projektbericht, Schulungstag, Tipps & Tricks'
-        assert talkTypes.names.en.join(', ') == 'best practices, Community, keynote, new releases or features , project report, training day, tips & tricks'
+        assert eventTypes.size() == 7
+        assert eventTypes.id.join('') == ('1'..'7').join('')
+        assert eventTypes.order.join('') == ('1'..'7').join('')
+        assert eventTypes.names.de.join(', ') == 'Best Practices, Community, Keynote, Neuerscheinungen oder Features, Projektbericht, Schulungstag, Tipps & Tricks'
+        assert eventTypes.names.en.join(', ') == 'best practices, Community, keynote, new releases or features , project report, training day, tips & tricks'
     }
 
     void "should get events"() {

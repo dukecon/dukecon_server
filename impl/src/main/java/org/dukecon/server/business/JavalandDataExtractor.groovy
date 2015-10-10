@@ -27,7 +27,7 @@ class JavalandDataExtractor {
     }
 
     private MetaData getMetaData() {
-        MetaData.builder().locations(this.locations).tracks(this.tracks).languages(this.languages).defaultLanguage(this.defaultLanguage).audiences(this.audiences).talkTypes(this.talkTypes).build()
+        MetaData.builder().locations(this.locations).tracks(this.tracks).languages(this.languages).defaultLanguage(this.defaultLanguage).audiences(this.audiences).eventTypes(this.eventTypes).build()
     }
 
     List<Track> getTracks() {
@@ -73,12 +73,12 @@ class JavalandDataExtractor {
         }
     }
 
-    List<TalkType> getTalkTypes() {
+    List<EventType> getEventTypes() {
         int i = 1
         return talksJson.findAll { it.VORTRAGSTYP }.collect { [it.VORTRAGSTYP, it.VORTRAGSTYP_EN] }.unique().sort {
             it.first()
         }.collect {
-            TalkType.builder().id(i.toString()).order(i++).names(de: it[0], en: it[1]).build()
+            EventType.builder().id(i.toString()).order(i++).names(de: it[0], en: it[1]).build()
         }
     }
 
@@ -130,7 +130,7 @@ class JavalandDataExtractor {
                     .demo(t.DEMO != null && t.DEMO.equalsIgnoreCase('ja'))
                     .track(tracks.find{t.ORDERT == it.order})
                     .audience(audiences.find {t.AUDIENCE_EN == it.names.en})
-                    .type(talkTypes.find {t.VORTRAGSTYP_EN == it.names.en})
+                    .type(eventTypes.find {t.VORTRAGSTYP_EN == it.names.en})
                     .location(locations.find {t.RAUM_NR == it.id})
                     .speakers([speakerLookup[t.ID_PERSON?.toString()], speakerLookup[t.ID_PERSON_COREF?.toString()], speakerLookup[t.ID_PERSON_COCOREF?.toString()]].findAll {it})
                     .build()
