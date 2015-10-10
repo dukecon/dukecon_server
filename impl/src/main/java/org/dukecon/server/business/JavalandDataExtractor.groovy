@@ -27,14 +27,14 @@ class JavalandDataExtractor {
     }
 
     private MetaData getMetaData() {
-        MetaData.builder().locations(this.locations).tracks(this.tracks).languages(this.languages).defaultLanguage(this.defaultLanguage).audiences(this.audiences).eventTypes(this.eventTypes).build()
+        MetaData.builder().locations(this.locations).tracks(this.tracks).languages(this.languages).defaultLanguage(this.defaultLanguage).audiences(this.audiences).eventTypes(this.eventTypes).defaultIcon("Unknown.png").build()
     }
 
     List<Track> getTracks() {
         return talksJson.findAll { it.TRACK }.collect { [it.ORDERT, it.TRACK, it.TRACK_EN] }.unique().sort {
             it.first()
         }.collect {
-            Track.builder().id(it.first()?.toString()).order(it.first()).names([de: it[1], en: it[2]]).build()
+            Track.builder().id(it.first()?.toString()).order(it.first()).names([de: it[1], en: it[2]]).icon("track_${it.first()}.png").build()
         }
     }
 
@@ -44,7 +44,7 @@ class JavalandDataExtractor {
             it.first()
         }.collect {
             def lang = Locale."${it[1].toUpperCase()}".language
-            Language.builder().id(lang).order(i++).names([de: it[0], en: it[1]]).build()
+            Language.builder().id(lang).order(i++).names([de: it[0], en: it[1]]).icon("language_${lang}.png").build()
         }
     }
 
@@ -61,7 +61,7 @@ class JavalandDataExtractor {
         return talksJson.findAll { it.AUDIENCE }.collect { [it.AUDIENCE, it.AUDIENCE_EN] }.unique().sort {
             it.first()
         }.collect {
-            Audience.builder().id(i.toString()).order(i++).names([de: it[0], en: it[1]]).build()
+            Audience.builder().id(i.toString()).icon("audience_${i}.png").order(i++).names([de: it[0], en: it[1]]).build()
         }
     }
 
@@ -69,7 +69,7 @@ class JavalandDataExtractor {
         return talksJson.findAll { it.RAUMNAME }.collect { [it.RAUM_NR, it.RAUMNAME] }.unique().sort {
             it.first()
         }.collect {
-            Location.builder().id(it.first()?.toString()).order(it.first()?.toInteger()).names(de: it[1], en: it[1]).build()
+            Location.builder().id(it.first()?.toString()).order(it.first()?.toInteger()).names(de: it[1], en: it[1]).icon("location_${it.first()}.png").build()
         }
     }
 
@@ -78,7 +78,7 @@ class JavalandDataExtractor {
         return talksJson.findAll { it.VORTRAGSTYP }.collect { [it.VORTRAGSTYP, it.VORTRAGSTYP_EN] }.unique().sort {
             it.first()
         }.collect {
-            EventType.builder().id(i.toString()).order(i++).names(de: it[0], en: it[1]).build()
+            EventType.builder().id(i.toString()).icon("eventType_${i}.png").order(i++).names(de: it[0], en: it[1]).build()
         }
     }
 

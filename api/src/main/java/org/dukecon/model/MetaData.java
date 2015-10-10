@@ -24,6 +24,7 @@ public class MetaData {
     private List<EventType> eventTypes = new ArrayList<>();
     private List<Language> languages = new ArrayList<>();
     private Language defaultLanguage;
-    private List<Track> tracks;
-    private List<Location> locations;
+    private List<Track> tracks = new ArrayList<>();
+    private List<Location> locations = new ArrayList<>();
+    private String defaultIcon;
 }

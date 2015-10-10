@@ -34,6 +34,7 @@ class JavalandDataExtractorSpec extends Specification {
         assert tracks.id == ["1"] + ("1".."8")
         assert tracks.names["de"].join(", ") == "Community, Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer"
         assert tracks.names["en"].join(", ") == "Community, container & microservices, Core Java & JVM based languages, enterprise Java & cloud, frontend & mobile, IDEs & tools, internet of things, architecture & security, newcomer"
+        assert tracks.icon.join(', ') == 'track_1.png, track_1.png, track_2.png, track_3.png, track_4.png, track_5.png, track_6.png, track_7.png, track_8.png'
     }
 
     void "should default language be 'de'"() {
@@ -43,7 +44,9 @@ class JavalandDataExtractorSpec extends Specification {
         assert language.id == 'de'
         assert language.order == 1
         assert language.names.de == 'Deutsch'
+        assert language.icon == 'language_de.png'
     }
+
     void "should list languages"() {
         when:
         List<Language> languages = extractor.languages
@@ -53,6 +56,7 @@ class JavalandDataExtractorSpec extends Specification {
         assert languages.order.join(', ') == '1, 2'
         assert languages.names.de.join(', ') == 'Deutsch, Englisch'
         assert languages.names.en.join(', ') == 'German, English'
+        assert languages.icon.join(', ') == 'language_de.png, language_en.png'
     }
 
     void "should get iso code from language"() {
@@ -81,6 +85,8 @@ class JavalandDataExtractorSpec extends Specification {
         assert audiences[2].order == 3
         assert audiences[2].names.de == 'alle'
         assert audiences[2].names.en == 'all'
+
+        assert audiences.icon.join(', ') == 'audience_1.png, audience_2.png, audience_3.png'
     }
 
     void "should list 7 locations"() {
@@ -91,6 +97,7 @@ class JavalandDataExtractorSpec extends Specification {
         assert locations.id.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
         assert locations.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
         assert locations.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
+        assert locations.icon.join(', ') == 'location_1.png, location_1.png, location_2.png, location_2.png, location_3.png, location_3.png, location_4.png, location_5.png, location_5.png, location_6.png, location_7.png'
     }
 
     void "should extract all meta data"() {
@@ -105,6 +112,7 @@ class JavalandDataExtractorSpec extends Specification {
         assert conference.metaData.tracks.size() == 9
         assert conference.metaData.tracks.names['de'].join(', ') == 'Community, Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer'
         assert conference.metaData.defaultLanguage.id == 'de'
+        assert conference.metaData.defaultIcon == 'Unknown.png'
         assert conference.metaData.languages.size() == 2
         assert conference.metaData.languages.names.de.join(', ') == 'Deutsch, Englisch'
         assert conference.metaData.languages.names.en.join(', ') == 'German, English'
@@ -122,7 +130,7 @@ class JavalandDataExtractorSpec extends Specification {
         assert conference.url == 'http://dukecon.org'
     }
 
-    void "should get talk types"() {
+    void "should get event types"() {
         when:
         def eventTypes = extractor.eventTypes
         then:
@@ -131,6 +139,7 @@ class JavalandDataExtractorSpec extends Specification {
         assert eventTypes.order.join('') == ('1'..'7').join('')
         assert eventTypes.names.de.join(', ') == 'Best Practices, Community, Keynote, Neuerscheinungen oder Features, Projektbericht, Schulungstag, Tipps & Tricks'
         assert eventTypes.names.en.join(', ') == 'best practices, Community, keynote, new releases or features , project report, training day, tips & tricks'
+        assert eventTypes.icon.join(', ') == 'eventType_1.png, eventType_2.png, eventType_3.png, eventType_4.png, eventType_5.png, eventType_6.png, eventType_7.png'
     }
 
     void "should get events"() {

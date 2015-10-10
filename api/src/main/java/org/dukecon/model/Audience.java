@@ -17,4 +17,5 @@ public class Audience {
     private String id;
     private Integer order;
     private Map<String, String> names = new HashMap<>();
+    private String icon;
 }

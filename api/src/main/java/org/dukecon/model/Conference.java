@@ -23,4 +23,5 @@ public class Conference {
     private MetaData metaData;
     private List<Event> events;
     private List<Speaker> speakers;
+    private String icon;
 }
