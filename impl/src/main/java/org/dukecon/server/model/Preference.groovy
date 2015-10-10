@@ -18,7 +18,7 @@ class Preference {
     String principalId
 
     @Column(name = "talk_id", nullable = false)
-    String talkId
+    String eventId
 
     @Column
     int version

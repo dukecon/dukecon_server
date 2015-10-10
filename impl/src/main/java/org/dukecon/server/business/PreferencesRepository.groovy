@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository
  */
 interface PreferencesRepository extends CrudRepository<Preference,Long> {
     Collection<Preference> findByPrincipalId(String principalId)
-    Collection<Preference> findByPrincipalIdAndTalkId(String principalId, String talkId)
+    Collection<Preference> findByPrincipalIdAndEventId(String principalId, String eventId)
 }

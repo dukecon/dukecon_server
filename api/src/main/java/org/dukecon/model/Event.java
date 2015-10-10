@@ -31,7 +31,7 @@ public class Event {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private EventType type;
-    @JsonProperty(value = "roomId")
+    @JsonProperty(value = "locationId")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private Location location;

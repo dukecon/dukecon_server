@@ -65,9 +65,9 @@ class PreferencesServiceSpec extends Specification {
         Authentication testerAuthentication = [ getPrincipal : { testerPrincipal } ] as Authentication
         SecurityContextHolder.getContext().authentication = testerAuthentication
         List<UserPreference> userPreferences = [
-                UserPreference.builder().talkId("17").build(),
-                UserPreference.builder().talkId("18").build(),
-                UserPreference.builder().talkId("19").build(),
+                UserPreference.builder().eventId("17").build(),
+                UserPreference.builder().eventId("18").build(),
+                UserPreference.builder().eventId("19").build(),
         ]
         when:
             Response responseSet = preferencesService.setPreferences(userPreferences)
@@ -86,14 +86,14 @@ class PreferencesServiceSpec extends Specification {
         Authentication testerAuthentication = [ getPrincipal : { testerPrincipal } ] as Authentication
         SecurityContextHolder.getContext().authentication = testerAuthentication
         List<UserPreference> userPreferences = [
-                UserPreference.builder().talkId("17").build(),
-                UserPreference.builder().talkId("18").build(),
-                UserPreference.builder().talkId("19").build(),
+                UserPreference.builder().eventId("17").build(),
+                UserPreference.builder().eventId("18").build(),
+                UserPreference.builder().eventId("19").build(),
         ]
         List<UserPreference> updatedUserPreferences = [
-                UserPreference.builder().talkId("17").version(1).build(),
-                UserPreference.builder().talkId("18").build(),
-                UserPreference.builder().talkId("19").build(),
+                UserPreference.builder().eventId("17").version(1).build(),
+                UserPreference.builder().eventId("18").build(),
+                UserPreference.builder().eventId("19").build(),
         ]
         when:
         Response responseSet = preferencesService.setPreferences(userPreferences)
@@ -115,14 +115,14 @@ class PreferencesServiceSpec extends Specification {
         Authentication testerAuthentication = [ getPrincipal : { testerPrincipal } ] as Authentication
         SecurityContextHolder.getContext().authentication = testerAuthentication
         List<UserPreference> userPreferences = [
-                UserPreference.builder().talkId("17").build(),
-                UserPreference.builder().talkId("18").build(),
-                UserPreference.builder().talkId("19").build(),
+                UserPreference.builder().eventId("17").build(),
+                UserPreference.builder().eventId("18").build(),
+                UserPreference.builder().eventId("19").build(),
         ]
         List<UserPreference> updatedUserPreferences = [
-                UserPreference.builder().talkId("17").version(1).build(),
+                UserPreference.builder().eventId("17").version(1).build(),
                 // 18 is deleted
-                UserPreference.builder().talkId("19").build(),
+                UserPreference.builder().eventId("19").build(),
         ]
         when:
         Response responseSet = preferencesService.setPreferences(userPreferences)

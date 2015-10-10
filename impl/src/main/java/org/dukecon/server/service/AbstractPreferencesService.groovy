@@ -38,7 +38,7 @@ abstract class AbstractPreferencesService {
 
         Collection<UserPreference> result = []
         preferences.each {Preference p ->
-            UserPreference up = UserPreference.builder().talkId(p.talkId).version(p.version).build()
+            UserPreference up = UserPreference.builder().eventId(p.eventId).version(p.version).build()
             result.add (up)
         }
 
@@ -58,23 +58,23 @@ abstract class AbstractPreferencesService {
         Collection<Preference> preferences = preferencesRepository.findByPrincipalId (principalId)
 
         // Prepare some maps for adding/updating/deletion
-        Map<String, Preference> preferencesByTalk = preferences.collectEntries {Preference p -> [p.talkId, p]}
-        Map<String, UserPreference> userPreferencesByTalk = userPreferences.collectEntries {UserPreference up -> [up.talkId, up]}
+        Map<String, Preference> preferencesByTalk = preferences.collectEntries {Preference p -> [p.eventId, p]}
+        Map<String, UserPreference> userPreferencesByTalk = userPreferences.collectEntries {UserPreference up -> [up.eventId, up]}
 
         // Delete some preferences
         // Yes, we could have done so in the collector above but wanted to separate setup of
         // internal data structures from business logic
         preferences.each {Preference p ->
-            if (!userPreferencesByTalk.containsKey(p.talkId)) {
-                log.debug ("Deleting talk {} from preferences of user {}", p.talkId, principalId)
-                preferences.remove(p.talkId)
+            if (!userPreferencesByTalk.containsKey(p.eventId)) {
+                log.debug ("Deleting talk {} from preferences of user {}", p.eventId, principalId)
+                preferences.remove(p.eventId)
                 preferencesRepository.delete(p.id)
             }
         }
 
         // Add new userPreferences and update existing ones
         userPreferences.each {UserPreference up->
-            Preference p = preferencesByTalk[up.talkId] ?: new Preference(principalId : principalId, talkId : up.talkId)
+            Preference p = preferencesByTalk[up.eventId] ?: new Preference(principalId : principalId, eventId: up.eventId)
             preferencesRepository.save(p)
         }
 
@@ -92,11 +92,11 @@ abstract class AbstractPreferencesService {
         log.debug ("Adding preferences for '{}'", principalId)
 
         // Check if this preference was already created.
-        Collection<Preference> preferences = preferencesRepository.findByPrincipalIdAndTalkId(
-                principalId, userPreference.talkId)
+        Collection<Preference> preferences = preferencesRepository.findByPrincipalIdAndEventId (
+                principalId, userPreference.eventId)
         // If it doesn't exist yet, add it.
         if((preferences == null) || preferences.empty) {
-            Preference p = new Preference(principalId : principalId, talkId : userPreference.talkId)
+            Preference p = new Preference(principalId : principalId, eventId: userPreference.eventId)
             preferencesRepository.save(p)
         } else {
             // Well actually we tried to create something that's already
@@ -121,7 +121,7 @@ abstract class AbstractPreferencesService {
         // Actually this should only return max one element, but I
         // don't quite understand the mechanisms behind this service.
         Collection<Preference> preferences = preferencesRepository.findByPrincipalIdAndTalkId(
-                principalId, userPreference.talkId)
+                principalId, userPreference.eventId)
         if((preferences != null) && !preferences.empty) {
             preferences.each { Preference preference ->
                 preferencesRepository.delete(preference.id)
