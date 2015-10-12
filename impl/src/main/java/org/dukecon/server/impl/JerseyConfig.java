@@ -2,7 +2,7 @@ package org.dukecon.server.impl;
 
 import javax.ws.rs.ApplicationPath;
 
-import org.dukecon.server.service.ConferenceService;
+import org.dukecon.server.service.ConferencesResource;
 import org.dukecon.server.service.FiltersService;
 import org.dukecon.server.service.KeycloakConfigService;
 import org.dukecon.server.service.MetaService;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
-        register(ConferenceService.class);
+        register(ConferencesResource.class);
         register(MetaService.class);
         register(KeycloakConfigService.class);
         register(TalkService.class);
