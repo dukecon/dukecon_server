@@ -1,7 +1,6 @@
 package org.dukecon.server.service
 
 import groovy.transform.TypeChecked
-import org.dukecon.model.Conference
 import org.dukecon.server.business.JavalandDataProvider
 import org.springframework.stereotype.Component
 
@@ -26,7 +25,7 @@ class ConferencesResource {
 
     @GET
     public Response getConferences() {
-        return Response.ok().entity([[id:talkProvider.conference.id, name:talkProvider.conference.name]]).build();
+        return Response.ok().entity([[id: talkProvider.conference.id, name: talkProvider.conference.name]]).build();
     }
 
     @Path("/{id}")

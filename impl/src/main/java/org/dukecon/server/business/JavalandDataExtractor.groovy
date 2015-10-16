@@ -3,6 +3,9 @@ package org.dukecon.server.business
 import groovy.util.logging.Slf4j
 import org.dukecon.model.*
 
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
@@ -53,7 +56,7 @@ class JavalandDataExtractor {
     }
 
     Language getLanguage(String name) {
-        return name ? languages.find {Locale."${name.toUpperCase()}".language == it.id} : null
+        return name ? languages.find { Locale."${name.toUpperCase()}".language == it.id } : null
     }
 
     List<Audience> getAudiences() {
@@ -83,14 +86,14 @@ class JavalandDataExtractor {
     }
 
     private List<Speaker> getSpeakers() {
-        def result = talksJson.findAll {it.ID_PERSON}.collect {t ->
+        def result = talksJson.findAll { it.ID_PERSON }.collect { t ->
             Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).build()
-        } + talksJson.findAll {it.ID_PERSON_COREF}.collect {t ->
+        } + talksJson.findAll { it.ID_PERSON_COREF }.collect { t ->
             Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).build()
-        } + talksJson.findAll {it.ID_PERSON_COCOREF}.collect {t ->
+        } + talksJson.findAll { it.ID_PERSON_COCOREF }.collect { t ->
             Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).company(t.COCOREFERENT_FIRMA).build()
         }
-        result.flatten().unique{it.id}
+        result.flatten().unique { it.id }
     }
 
     /**
@@ -98,7 +101,7 @@ class JavalandDataExtractor {
      * @return list of speakers with their events assigned
      */
     private List<Speaker> getSpeakersWithEvents(Map<String, List<Event>> talkLookup = getSpeakerIdToEvents()) {
-        speakers.collect {Speaker s ->
+        speakers.collect { Speaker s ->
             s.events = ([] + talkLookup[s.id]).flatten()
             s
         }
@@ -108,31 +111,35 @@ class JavalandDataExtractor {
      * @return map with speaker ids as key and a list all events of this speaker as value
      */
     private Map<String, List<Event>> getSpeakerIdToEvents() {
-        (events.findAll{it.speakers}.collect{[it.speakers.first().id, it]} + events.collect{[it.speakers[1]?.id, it]})
-                .inject([:]){map, list ->
-                    if(!map[list.first()]) {
-                        map[list.first()] = []
-                    }
-                    map[list.first()] << list[1]
-                    return map
-                }.findAll {k,v -> k}
+        (events.findAll { it.speakers }.collect { [it.speakers.first().id, it] } + events.collect {
+            [it.speakers[1]?.id, it]
+        })
+                .inject([:]) { map, list ->
+            if (!map[list.first()]) {
+                map[list.first()] = []
+            }
+            map[list.first()] << list[1]
+            return map
+        }.findAll { k, v -> k }
     }
 
-    private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries{[it.id, it]}) {
-        return talksJson.collect { t ->
+    private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries { [it.id, it] }) {
+        return talksJson.collect { eventJson ->
             return Event.builder()
-                    .id(t.ID.toString())
-                    .start(t.DATUM_ES_EN + 'T' + t.BEGINN)
-                    .end(t.DATUM_ES_EN + 'T' + t.ENDE)
-                    .title(t.TITEL)
-                    .abstractText(t.ABSTRACT_TEXT?.replaceAll("&quot;", "\""))
-                    .language(getLanguage(t.SPRACHE_EN))
-                    .demo(t.DEMO != null && t.DEMO.equalsIgnoreCase('ja'))
-                    .track(tracks.find{t.ORDERT == it.order})
-                    .audience(audiences.find {t.AUDIENCE_EN == it.names.en})
-                    .type(eventTypes.find {t.VORTRAGSTYP_EN == it.names.en})
-                    .location(locations.find {t.RAUM_NR == it.id})
-                    .speakers([speakerLookup[t.ID_PERSON?.toString()], speakerLookup[t.ID_PERSON_COREF?.toString()], speakerLookup[t.ID_PERSON_COCOREF?.toString()]].findAll {it})
+                    .id(eventJson.ID.toString())
+                    .start(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.BEGINN, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                    .end(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.ENDE, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                    .title(eventJson.TITEL)
+                    .abstractText(eventJson.ABSTRACT_TEXT?.replaceAll("&quot;", "\""))
+                    .language(getLanguage(eventJson.SPRACHE_EN))
+                    .demo(eventJson.DEMO != null && eventJson.DEMO.equalsIgnoreCase('ja'))
+                    .track(tracks.find { eventJson.ORDERT == it.order })
+                    .audience(audiences.find { eventJson.AUDIENCE_EN == it.names.en })
+                    .type(eventTypes.find { eventJson.VORTRAGSTYP_EN == it.names.en })
+                    .location(locations.find { eventJson.RAUM_NR == it.id })
+                    .speakers([speakerLookup[eventJson.ID_PERSON?.toString()], speakerLookup[eventJson.ID_PERSON_COREF?.toString()], speakerLookup[eventJson.ID_PERSON_COCOREF?.toString()]].findAll {
+                it
+            })
                     .build()
         }
     }

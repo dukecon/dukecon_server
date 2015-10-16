@@ -7,10 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.embedded.ServletRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
-import org.springframework.context.annotation.Configuration
 
 @SpringBootApplication
-@ComponentScan ("org.dukecon.server")
+@ComponentScan("org.dukecon.server")
 @EnableAutoConfiguration
 class DukeConServerApplication {
 
@@ -23,6 +22,7 @@ class DukeConServerApplication {
         def registration = new ServletRegistrationBean(new WebServlet(), '/console/*')
         return registration
     }
+
 }
 
 

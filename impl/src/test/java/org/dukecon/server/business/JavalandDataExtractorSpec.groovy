@@ -2,11 +2,13 @@ package org.dukecon.server.business
 
 import groovy.json.JsonSlurper
 import org.dukecon.model.Audience
+import org.dukecon.model.Event
 import org.dukecon.model.Language
 import org.dukecon.model.Location
-import org.dukecon.model.Event
 import spock.lang.Specification
 
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -25,7 +27,7 @@ class JavalandDataExtractorSpec extends Specification {
         slurper.parse(is, "ISO-8859-1")
     }
 
-    void "should get 9 tracks"(){
+    void "should get 9 tracks"() {
         when:
         def tracks = extractor.tracks
         then:
@@ -144,7 +146,7 @@ class JavalandDataExtractorSpec extends Specification {
 
     void "should get events"() {
         when:
-        def events = extractor.events.sort {it.id}
+        def events = extractor.events.sort { it.id }
         then:
         assert events.size() == 121
         assert events.first().title == 'Community Testeintrag'
@@ -153,7 +155,7 @@ class JavalandDataExtractorSpec extends Specification {
 
     void "should get all speakers"() {
         when:
-        def speakers = extractor.speakers.sort {it.id}
+        def speakers = extractor.speakers.sort { it.id }
         then:
         assert speakers.size() == 123
         assert speakers.first().name == 'Fried Saacke'
@@ -164,7 +166,7 @@ class JavalandDataExtractorSpec extends Specification {
 
     void "should get all speakers with their events"() {
         when:
-        def speakers = extractor.speakersWithEvents.sort {it.id}
+        def speakers = extractor.speakersWithEvents.sort { it.id }
         then:
         assert speakers.size() == 123
         assert speakers.first().name == 'Fried Saacke'
@@ -172,8 +174,8 @@ class JavalandDataExtractorSpec extends Specification {
         assert speakers.first().id == '136700'
         assert speakers.first().events.size() == 1
         assert speakers.first().events.first().class == Event
-        assert speakers.find {it.name == 'Roel Spilker'}.events.size() == 2
-        assert speakers.find {it.name == 'Thorben Janssen'}.events.size() == 2
+        assert speakers.find { it.name == 'Roel Spilker' }.events.size() == 2
+        assert speakers.find { it.name == 'Thorben Janssen' }.events.size() == 2
     }
 
     void "should get a map of speaker ids to events held from this speaker"() {
@@ -208,7 +210,7 @@ class JavalandDataExtractorSpec extends Specification {
         when:
         def json = new JsonSlurper().parseText('{ "hits" : { "hits" : [ {"_source":{"ID_KONGRESS":499959,"ID":509632,"ID_SEMINAR":"509632","FARBCODE":335744,"TRACK":"Core Java & JVM basierte Sprachen","TRACK_EN":"Core Java & JVM based languages","ORDERT":2,"AUDIENCE":"Fortgeschrittene","AUDIENCE_EN":"advanced","DATUM":"2016-03-09T00:00:00.000+01:00","SIMULTAN":"0","DATUM_ES_EN":"2016-03-09","DATUM_ES":"09.03.2016","BEGINN":"09:00","ENDE":"09:40","TIMESTAMP":"0016-03-07T08:53:28.000+00:53:28","TIMESTAMP_ENDE":"0016-03-07T09:33:28.000+00:53:28","SEMINAR_NR":"63","RAUM_NR":"1","RAUMNAME":"Wintergarten","AREAID":"1/W","TITEL":"Java\'s Next Big Thing: Value Objects","TITEL_EN":null,"ABSTRACT_EN":null,"REFERENT_NAME":"Henning Schwentner","KEYWORDS":null,"REFERENT_NACHNAME":"Schwentner","REFERENT_FIRMA":"WPS - Workplace Solutions GmbH","ID_PERSON":370942,"ID_PERSON_COREF":null,"ID_PERSON_COCOREF":null,"VORTRAGSTYP":"Neuerscheinungen oder Features","VORTRAGSTYP_EN":"new releases or features ","COREFERENT_NAME":null,"COCOREFERENT_NAME":null,"COREFERENT_FIRMA":null,"COCOREFERENT_FIRMA":null,"ABSTRACT_TEXT":"Nach Lambdas und Co. mit Java 8 ist das \\"Next Big Thing\\" f�r Java die Unterst�tzung von Value Types direkt in der Programmiersprache. Damit bekommt Java ein Feature, das andere Programmiersprachen schon l�nger haben.\\r\\n\\r\\nIn diesem Vortrag schauen wir uns genau an:\\r\\n\\r\\n* was hinter dem Schlachtruf \\"Codes like a class, works like an int\\" steckt\\r\\n* warum value types gleichzeitig effizienteren wie auch besser lesbaren Code erm�glichen\\r\\n* wie der Stand des zugeh�rigen JEP 169 ist\\r\\n* den Unterschied zwischen Reference Types und Value Types\\r\\n* wie Value Types in anderen Sprachen (insbesondere C# und Swift) schon umgesetzt sind\\r\\n* was Vererbung f�r Value Types bedeutet\\r\\n* was die Vorteile von Speicherung auf dem Stack versus Speicherung auf dem Heap sind\\r\\n\\r\\nDer Vortrag wird im \\"Lessig-Style\\" gehalten werden. (https://www.youtube.com/watch?v=RrpajcAgR1E)","SPRACHE":"Deutsch","DEMO":"Nein","KEYWORDS_EN":null,"SPRACHE_EN":"German","DEMO_EN":"no","BEGINN_EN":null,"ENDE_EN":null}}]}}')
         extractor = new JavalandDataExtractor(talksJson: json.hits.hits._source)
-        def events = extractor.events.sort {it.id}
+        def events = extractor.events.sort { it.id }
         then:
         assert events.size() == 1
         assert events.first().audience.names.de == 'Fortgeschrittene'
@@ -221,8 +223,8 @@ class JavalandDataExtractorSpec extends Specification {
         assert events.first().track.id == '2'
         assert events.first().title == 'Java\'s Next Big Thing: Value Objects'
         assert events.first().id == '509632'
-        assert events.first().start == '2016-03-09T09:00'
-        assert events.first().end == '2016-03-09T09:40'
+        assert events.first().start == LocalDateTime.parse('2016-03-09 09:00:00', DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        assert events.first().end == LocalDateTime.parse('2016-03-09 09:40:00', DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         assert events.first().speakers.size() == 1
         assert events.first().speakers.first().name == 'Henning Schwentner'
         assert events.first().speakers.first().company == 'WPS - Workplace Solutions GmbH'

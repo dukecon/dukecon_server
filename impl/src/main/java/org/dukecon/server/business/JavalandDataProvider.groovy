@@ -5,8 +5,8 @@ import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
-import org.dukecon.model.Speaker
 import org.dukecon.model.Event
+import org.dukecon.model.Speaker
 import org.dukecon.model.TalkOld
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
