@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Component
-@Path("/conferences")
+@Path("conferences")
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 class ConferencesResource {
@@ -28,7 +28,7 @@ class ConferencesResource {
         return Response.ok().entity([[id: talkProvider.conference.id, name: talkProvider.conference.name]]).build();
     }
 
-    @Path("/{id}")
+    @Path("{id}")
     public ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
         def conference = talkProvider.conference
         if (conference.id != id) {
