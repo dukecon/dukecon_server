@@ -33,7 +33,7 @@ class JavalandDataExtractorSpec extends Specification {
         then:
         assert tracks.size() == 9
         assert tracks.order == [1] + (1..8)
-        assert tracks.id == ["1"] + ("1".."8")
+        assert tracks.id == ("1".."9")
         assert tracks.names["de"].join(", ") == "Community, Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer"
         assert tracks.names["en"].join(", ") == "Community, container & microservices, Core Java & JVM based languages, enterprise Java & cloud, frontend & mobile, IDEs & tools, internet of things, architecture & security, newcomer"
         assert tracks.icon.join(', ') == 'track_1.png, track_1.png, track_2.png, track_3.png, track_4.png, track_5.png, track_6.png, track_7.png, track_8.png'
@@ -96,7 +96,7 @@ class JavalandDataExtractorSpec extends Specification {
         List<Location> locations = extractor.locations
         then:
         assert locations.size() == 11
-        assert locations.id.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
+        assert locations.id.join(', ') == '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11'
         assert locations.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
         assert locations.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
         assert locations.icon.join(', ') == 'location_1.png, location_1.png, location_2.png, location_2.png, location_3.png, location_3.png, location_4.png, location_5.png, location_5.png, location_6.png, location_7.png'
@@ -220,7 +220,7 @@ class JavalandDataExtractorSpec extends Specification {
         assert events.first().location.names.de == "Wintergarten"
         assert events.first().track.names.de == 'Core Java & JVM basierte Sprachen'
         assert events.first().track.order == 2
-        assert events.first().track.id == '2'
+        assert events.first().track.id == '1'
         assert events.first().title == 'Java\'s Next Big Thing: Value Objects'
         assert events.first().id == '509632'
         assert events.first().start == LocalDateTime.parse('2016-03-09 09:00:00', DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))

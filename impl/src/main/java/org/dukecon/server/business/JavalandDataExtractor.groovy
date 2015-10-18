@@ -36,8 +36,8 @@ class JavalandDataExtractor {
     List<Track> getTracks() {
         return talksJson.findAll { it.TRACK }.collect { [it.ORDERT, it.TRACK, it.TRACK_EN] }.unique().sort {
             it.first()
-        }.collect {
-            Track.builder().id(it.first()?.toString()).order(it.first()).names([de: it[1], en: it[2]]).icon("track_${it.first()}.png").build()
+        }.withIndex().collect {track, index ->
+            Track.builder().id(index + 1 as String).order(track.first()).names([de: track[1], en: track[2]]).icon("track_${track.first()}.png").build()
         }
     }
 
@@ -60,28 +60,26 @@ class JavalandDataExtractor {
     }
 
     List<Audience> getAudiences() {
-        int i = 1
         return talksJson.findAll { it.AUDIENCE }.collect { [it.AUDIENCE, it.AUDIENCE_EN] }.unique().sort {
             it.first()
-        }.collect {
-            Audience.builder().id(i.toString()).icon("audience_${i}.png").order(i++).names([de: it[0], en: it[1]]).build()
+        }.withIndex().collect {audience, index ->
+            Audience.builder().id(index + 1 as String).icon("audience_${index + 1}.png").order(index + 1).names([de: audience[0], en: audience[1]]).build()
         }
     }
 
     List<Location> getLocations() {
         return talksJson.findAll { it.RAUMNAME }.collect { [it.RAUM_NR, it.RAUMNAME] }.unique().sort {
             it.first()
-        }.collect {
-            Location.builder().id(it.first()?.toString()).order(it.first()?.toInteger()).names(de: it[1], en: it[1]).icon("location_${it.first()}.png").build()
+        }.withIndex().collect {room, index ->
+            Location.builder().id(index + 1 as String).order(room.first()?.toInteger()).names(de: room[1], en: room[1]).icon("location_${room.first()}.png").build()
         }
     }
 
     List<EventType> getEventTypes() {
-        int i = 1
         return talksJson.findAll { it.VORTRAGSTYP }.collect { [it.VORTRAGSTYP, it.VORTRAGSTYP_EN] }.unique().sort {
             it.first()
-        }.collect {
-            EventType.builder().id(i.toString()).icon("eventType_${i}.png").order(i++).names(de: it[0], en: it[1]).build()
+        }.withIndex().collect {type, index ->
+            EventType.builder().id(index + 1 as String).icon("eventType_${index + 1}.png").order(index + 1).names(de: type[0], en: type[1]).build()
         }
     }
 
