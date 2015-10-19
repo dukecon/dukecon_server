@@ -3,6 +3,7 @@ package org.dukecon.server.business
 import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication
 import org.dukecon.model.Event
+import org.dukecon.server.conference.JavalandDataProvider
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration

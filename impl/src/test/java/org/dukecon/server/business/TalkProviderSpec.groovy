@@ -2,6 +2,7 @@ package org.dukecon.server.business
 
 import org.dukecon.model.Conference
 import org.dukecon.model.Event
+import org.dukecon.server.conference.JavalandDataProvider
 import spock.lang.Specification
 
 import java.time.Instant

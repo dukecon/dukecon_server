@@ -1,4 +1,4 @@
-package org.dukecon.server.service
+package org.dukecon.server.security
 
 import groovy.util.logging.Slf4j
 

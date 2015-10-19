@@ -1,4 +1,4 @@
-package org.dukecon.server.business
+package org.dukecon.server.conference
 
 import groovy.json.JsonSlurper
 import groovy.transform.TypeChecked

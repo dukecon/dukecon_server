@@ -2,7 +2,7 @@ package org.dukecon.server.service
 
 import org.dukecon.model.Conference
 import org.dukecon.model.Event
-import org.dukecon.server.business.SliceEventHelper
+import org.dukecon.server.conference.SliceEventHelper
 
 import javax.ws.rs.GET
 import javax.ws.rs.Path

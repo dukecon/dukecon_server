@@ -1,8 +1,6 @@
 package org.dukecon.server.service;
 
-import org.dukecon.model.Conference;
-import org.dukecon.model.MetaData;
-import org.dukecon.server.business.JavalandDataProvider;
+import org.dukecon.server.conference.JavalandDataProvider;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;

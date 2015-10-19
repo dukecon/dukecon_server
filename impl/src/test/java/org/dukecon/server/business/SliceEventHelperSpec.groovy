@@ -5,7 +5,7 @@ import spock.lang.Specification
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import static org.dukecon.server.business.SliceEventHelper.*
+import static org.dukecon.server.conference.SliceEventHelper.*
 
 
 /**

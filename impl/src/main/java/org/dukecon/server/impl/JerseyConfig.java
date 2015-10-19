@@ -4,7 +4,7 @@ import javax.ws.rs.ApplicationPath;
 
 import org.dukecon.server.service.ConferencesResource;
 import org.dukecon.server.service.FiltersService;
-import org.dukecon.server.service.KeycloakConfigService;
+import org.dukecon.server.security.KeycloakConfigService;
 import org.dukecon.server.service.MetaService;
 import org.dukecon.server.service.NoAuthPreferencesServices;
 import org.dukecon.server.service.PreferencesService;
