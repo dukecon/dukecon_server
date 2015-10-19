@@ -1,10 +1,8 @@
-package org.dukecon.server.service
+package org.dukecon.server.preferences
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.user.UserPreference
-import org.dukecon.server.business.PreferencesRepository
-import org.dukecon.server.model.Preference
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject

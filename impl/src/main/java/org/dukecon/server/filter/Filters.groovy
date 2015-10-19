@@ -1,4 +1,4 @@
-package org.dukecon.server.model
+package org.dukecon.server.filter
 
 import groovy.transform.TypeChecked
 import groovy.transform.builder.Builder

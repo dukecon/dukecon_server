@@ -1,6 +1,6 @@
-package org.dukecon.server.business
+package org.dukecon.server.preferences
 
-import org.dukecon.server.model.Preference
+import org.dukecon.server.preferences.Preference
 import org.springframework.data.repository.CrudRepository
 
 /**

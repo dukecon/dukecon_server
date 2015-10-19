@@ -1,13 +1,12 @@
-package org.dukecon.server.impl;
+package org.dukecon.server.core;
 
 import javax.ws.rs.ApplicationPath;
 
-import org.dukecon.server.service.ConferencesResource;
-import org.dukecon.server.service.FiltersService;
+import org.dukecon.server.conference.ConferencesResource;
+import org.dukecon.server.filter.FiltersService;
 import org.dukecon.server.security.KeycloakConfigService;
-import org.dukecon.server.service.MetaService;
-import org.dukecon.server.service.NoAuthPreferencesServices;
-import org.dukecon.server.service.PreferencesService;
+import org.dukecon.server.preferences.NoAuthPreferencesServices;
+import org.dukecon.server.preferences.PreferencesService;
 import org.dukecon.server.service.TalkService;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package org.dukecon.server.service
+package org.dukecon.server.conference
 
 import org.dukecon.model.Conference
 import org.dukecon.model.Event

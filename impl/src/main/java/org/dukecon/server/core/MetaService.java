@@ -1,4 +1,4 @@
-package org.dukecon.server.service;
+package org.dukecon.server.core;
 
 import org.dukecon.server.conference.JavalandDataProvider;
 import org.springframework.stereotype.Component;

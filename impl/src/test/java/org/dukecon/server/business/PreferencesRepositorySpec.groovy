@@ -2,7 +2,8 @@ package org.dukecon.server.business
 
 import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication
-import org.dukecon.server.model.Preference
+import org.dukecon.server.preferences.Preference
+import org.dukecon.server.preferences.PreferencesRepository
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.dao.DataIntegrityViolationException

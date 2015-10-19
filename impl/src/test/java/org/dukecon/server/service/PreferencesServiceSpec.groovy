@@ -4,6 +4,7 @@ import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication
 import org.dukecon.model.user.UserPreference
+import org.dukecon.server.preferences.PreferencesService
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.security.core.Authentication

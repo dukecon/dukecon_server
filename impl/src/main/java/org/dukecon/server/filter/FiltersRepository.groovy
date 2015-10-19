@@ -1,6 +1,6 @@
-package org.dukecon.server.repository
+package org.dukecon.server.filter
 
-import org.dukecon.server.model.Filters
+import org.dukecon.server.filter.Filters
 import org.springframework.data.repository.CrudRepository
 
 /**

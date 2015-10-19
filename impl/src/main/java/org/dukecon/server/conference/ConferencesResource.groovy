@@ -1,7 +1,6 @@
-package org.dukecon.server.service
+package org.dukecon.server.conference
 
 import groovy.transform.TypeChecked
-import org.dukecon.server.conference.JavalandDataProvider
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject

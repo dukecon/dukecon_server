@@ -2,7 +2,8 @@ package org.dukecon.server.repository
 
 import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication
-import org.dukecon.server.model.Filters
+import org.dukecon.server.filter.Filters
+import org.dukecon.server.filter.FiltersRepository
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.dao.DataIntegrityViolationException
