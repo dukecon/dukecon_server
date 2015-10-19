@@ -1,4 +1,4 @@
-package org.dukecon.server.business
+package org.dukecon.server.conference
 
 import org.dukecon.model.Conference
 import org.dukecon.model.Event
@@ -10,7 +10,7 @@ import java.time.Instant
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
-class TalkProviderSpec extends Specification {
+class EventProviderSpec extends Specification {
     def "test cache is always expired"() {
         when:
         JavalandDataProvider provider = new JavalandDataProvider(cacheLastUpdated: Instant.now(), cacheExpiresAfterSeconds: 0)

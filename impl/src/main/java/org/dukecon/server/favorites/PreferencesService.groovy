@@ -1,4 +1,4 @@
-package org.dukecon.server.preferences
+package org.dukecon.server.favorites
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j

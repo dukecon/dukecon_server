@@ -1,9 +1,9 @@
-package org.dukecon.server.business
+package org.dukecon.server.favorite
 
 import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication
-import org.dukecon.server.preferences.Preference
-import org.dukecon.server.preferences.PreferencesRepository
+import org.dukecon.server.favorites.Preference
+import org.dukecon.server.favorites.PreferencesRepository
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.dao.DataIntegrityViolationException
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @WebAppConfiguration
 @IntegrationTest(["server.port=0"])
 @Slf4j
-class PreferencesRepositorySpec extends Specification {
+class FavoritesRepositorySpec extends Specification {
     @Inject
     PreferencesRepository preferencesRepository
 

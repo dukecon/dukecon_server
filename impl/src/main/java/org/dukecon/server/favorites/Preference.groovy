@@ -1,4 +1,4 @@
-package org.dukecon.server.preferences
+package org.dukecon.server.favorites
 
 import javax.persistence.Column
 import javax.persistence.Entity

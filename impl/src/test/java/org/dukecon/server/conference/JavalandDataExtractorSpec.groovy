@@ -1,11 +1,10 @@
-package org.dukecon.server.business
+package org.dukecon.server.conference
 
 import groovy.json.JsonSlurper
 import org.dukecon.model.Audience
 import org.dukecon.model.Event
 import org.dukecon.model.Language
 import org.dukecon.model.Location
-import org.dukecon.server.conference.JavalandDataExtractor
 import spock.lang.Specification
 
 import java.time.LocalDateTime

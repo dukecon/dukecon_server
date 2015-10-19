@@ -1,4 +1,4 @@
-package org.dukecon.server.repository
+package org.dukecon.server.filter
 
 import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication

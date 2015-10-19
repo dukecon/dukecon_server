@@ -1,4 +1,4 @@
-package org.dukecon.server.business
+package org.dukecon.server.conference
 
 import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication
