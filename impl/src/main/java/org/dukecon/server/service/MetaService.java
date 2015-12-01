@@ -38,4 +38,12 @@ public class MetaService {
         m.put("last_updated", "2015-05-19T16:20:11");
         return Response.ok().entity(m).build();
     }
+
+    @GET
+    @Path("pingSecure")
+    public Response pingSecure() {
+        Map<String, String> m = new HashMap<>(1);
+        m.put("last_updated", "2015-05-19T16:20:11");
+        return Response.ok().entity(m).build();
+    }
 }
