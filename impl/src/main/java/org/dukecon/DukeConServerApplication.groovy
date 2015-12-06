@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.embedded.ServletRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
+import org.springframework.web.filter.ShallowEtagHeaderFilter
+
+import javax.servlet.Filter
 
 @SpringBootApplication
 @ComponentScan("org.dukecon.server")
@@ -15,6 +18,11 @@ class DukeConServerApplication {
 
     static void main(String[] args) {
         SpringApplication.run DukeConServerApplication, args
+    }
+
+    @Bean
+    public Filter shallowEtagHeaderFilter() {
+        return new ShallowEtagHeaderFilter();
     }
 
     @Bean
