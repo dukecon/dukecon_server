@@ -23,10 +23,37 @@
         <spock.version>1.0-groovy-2.4</spock.version>
         
         <surefire.argline></surefire.argline>
+		<jgiven.version>0.9.5</jgiven.version>
     </properties>
 
+	<dependencyManagement>
     <dependencies>
         <dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-bom</artifactId>
+				<version>1.1.5.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian.extension</groupId>
+				<artifactId>arquillian-drone-bom</artifactId>
+				<version>1.3.1.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian.selenium</groupId>
+				<artifactId>selenium-bom</artifactId>
+				<version>2.48.2</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
             <groupId>org.dukecon</groupId>
             <artifactId>dukecon-server-api</artifactId>
             <version>${project.version}</version>
@@ -110,6 +137,42 @@
             <version>1.1.0-SNAPSHOT</version>
             <type>swf</type>
         </dependency-->
+		<dependency>
+			<groupId>org.jboss.arquillian.graphene</groupId>
+			<artifactId>graphene-webdriver</artifactId>
+			<version>2.0.3.Final</version>
+			<type>pom</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-standalone</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-phantom-binary</artifactId>
+			<version>1.9.7</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.4.01</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.tngtech.jgiven</groupId>
+			<artifactId>jgiven-junit</artifactId>
+			<version>${jgiven.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.1.0</version>
+			<scope>test</scope>
+		</dependency>
     </dependencies>
 
     <profiles>
@@ -165,17 +228,57 @@
                 <version>2.9.2-01</version>
                 <extensions>true</extensions>
             </plugin>
+			<!-- copy the html5 war file to the target folder so surefire can pick it up -->
             <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.dukecon</groupId>
+									<artifactId>dukecon-html5-client</artifactId>
+									<type>war</type>
+									<overWrite>true</overWrite>
+								</artifactItem>
+							</artifactItems>
+							<stripVersion>true</stripVersion>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <argLine>${surefire.argline}</argLine>
                     <useFile>false</useFile>
+					<additionalClasspathElements>
+						<!-- this is necessary so Spring boot picks up the static content in /public that is used by the GUI test -->
+						<additionalClasspathElement>${project.build.directory}/dependency/dukecon-html5-client.war</additionalClasspathElement>
+					</additionalClasspathElements>
                     <includes>
                         <include>**/*Spec.java</include>
                         <include>**/*Spec.groovy</include>
                         <include>**/*Test*.java</include>
                         <include>**/*Test*.groovy</include>
                     </includes>
+					<systemProperties>
+						<!-- when you run the tests in the IDE, arquillian.xml is used
+						with a firefox browser served by a remote selenium. -->
+						<!-- when you run the tests from maven, use the arquillian-headless.xml
+						instead that uses a phantom headless browser -->
+						<property>
+							<name>arquillian.xml</name>
+							<value>arquillian-headless.xml</value>
+						</property>
+					</systemProperties>
                 </configuration>
             </plugin>
             <!--
@@ -202,6 +305,22 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>3.2.1</version>
             </plugin>
+			<plugin>
+				<groupId>com.tngtech.jgiven</groupId>
+				<artifactId>jgiven-maven-plugin
+				</artifactId>
+				<version>${jgiven.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<format>html5</format>
+				</configuration>
+			</plugin>
         </plugins>
         <pluginManagement>
             <plugins>
