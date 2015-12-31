@@ -25,7 +25,8 @@ public class CacheManifestFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res
 		if (reqUrl.endsWith("cache.manifest")) {
 			log.debug ("Adding no-cache control to manifest file '{}'", reqUrl)
-			response.setHeader("Cache-Control", "no-cache");
+			response.setHeader("Cache-Control", "no-cache, max-age=0, no-store")
+			response.setHeader("Pragma", "no-cache")
 		} else {
 			log.debug ("Not adding cache control to '{}'", reqUrl)
 		}
