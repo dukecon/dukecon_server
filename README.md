@@ -27,6 +27,11 @@
   * GET
   * http://localhost:8080/rest/filters
 
+## Health Check
+
+Für den Health Check bitte `/health` als URL aufrufen.
+Ein Status-Code 200 zeigt an, dass alles in Ordnung ist.
+
 ## DB
 
 * im Moment H2, später wahrscheinlich PostgreSQL
