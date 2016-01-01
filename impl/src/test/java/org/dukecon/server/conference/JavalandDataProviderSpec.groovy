@@ -1,32 +1,17 @@
 package org.dukecon.server.conference
 
-import groovy.util.logging.Slf4j
-import org.dukecon.DukeConServerApplication
 import org.dukecon.model.Event
-import org.dukecon.server.conference.JavalandDataProvider
-import org.springframework.boot.test.IntegrationTest
-import org.springframework.boot.test.SpringApplicationContextLoader
-import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.web.WebAppConfiguration
 import spock.lang.Specification
-
-import javax.inject.Inject
-
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
-@ContextConfiguration(loader = SpringApplicationContextLoader, classes = DukeConServerApplication)
-@WebAppConfiguration
-@IntegrationTest(["server.port=0"])
-@Slf4j
-//@TypeChecked
 class JavalandDataProviderSpec extends Specification {
-    @Inject
+
     JavalandDataProvider dataProvider
 
-    def cleanup() {
-        dataProvider.clearCache()
+    void setup() {
+        dataProvider = new JavalandDataProvider();
     }
 
     void "Should return 110 events (2016)"() {

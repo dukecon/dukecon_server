@@ -50,16 +50,14 @@ class JavalandDataProvider {
     }
 
     private void checkCache() {
-        if (talks.isEmpty() || !conference || isCacheExpired()) {
-            clearCache()
-            cacheLastUpdated = Instant.now()
-            log.info("Reread data from '{}'", talksUri)
-            readData()
+        // Synchronized to avoid triggering reads in parallel
+        synchronized (this) {
+            if (talks.isEmpty() || !conference || isCacheExpired()) {
+                log.info("Rereading data from '{}'", talksUri)
+                readData()
+                cacheLastUpdated = Instant.now()
+            }
         }
-    }
-
-    public void clearCache() {
-        this.talks = []
     }
 
     private boolean isCacheExpired() {
