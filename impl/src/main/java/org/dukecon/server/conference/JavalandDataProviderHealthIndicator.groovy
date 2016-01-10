@@ -19,12 +19,21 @@ class JavalandDataProviderHealthIndicator implements HealthIndicator {
     @Inject
     JavalandDataProvider talkProvider;
 
+    @Inject
+    JavalandDataRemote talkRemote;
+
     @Override
     Health health() {
         try {
-            // if getAllTalks succeeds, everything is fine!
-            talkProvider.getAllTalks();
-            return new Health.Builder().up().build();
+            // trigger loading of data and see if it succeeds
+            talkProvider.conference
+            if (talkRemote.backupActive) {
+                return new Health.Builder().down(talkRemote.staleException).build();
+            } else if (talkProvider.staleException) {
+                return new Health.Builder().down(talkProvider.staleException).build();
+            } else {
+                return new Health.Builder().up().build();
+            }
         } catch (Exception e) {
             return new Health.Builder().down(e).build();
         }

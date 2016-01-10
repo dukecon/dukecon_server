@@ -16,12 +16,12 @@
 
     <properties>
         <start-class>org.dukecon.DukeConServerApplication</start-class>
-        
+
         <java.version>1.7</java.version>
         <keycloak.version>1.4.0.Final</keycloak.version>
         <groovy.version>2.4.3</groovy.version>
         <spock.version>1.0-groovy-2.4</spock.version>
-        
+
         <surefire.argline></surefire.argline>
 		<jgiven.version>0.9.5</jgiven.version>
     </properties>
@@ -111,6 +111,23 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
+        <!-- upgrade archaius-core to avoid NoClassDefFoundError exception -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+            <version>1.0.4.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.netflix.archaius</groupId>
+                    <artifactId>archaius-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.archaius</groupId>
+            <artifactId>archaius-core</artifactId>
+            <version>0.7.1</version>
+        </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -192,7 +209,7 @@
             </properties>
         </profile>
     </profiles>
-    
+
     <build>
         <plugins>
             <plugin>
