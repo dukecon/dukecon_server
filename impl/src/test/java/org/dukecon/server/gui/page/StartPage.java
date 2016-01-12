@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Location;
+import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
@@ -29,8 +30,23 @@ public class StartPage extends AbstractPage {
     @FindBy(css = "#days_filter")
     private WebElement daysFilter;
 
+    @FindBy(id = "loading")
+    private WebElement loading;
+
     @FindBy(css = ".talk-cell div")
     private List<WebElement> talks;
+
+    @FindBy(name = "login")
+    private WebElement loginLink;
+
+    @FindBy(name = "logout")
+    private WebElement logoutLink;
+
+    @FindBy(css = ".username")
+    private WebElement username;
+
+    @Page
+    private KeycloakLoginPage keycloakLoginPage;
 
     public void verify() {
         browser.manage().window().setSize(new Dimension(1024, 800));
@@ -40,7 +56,8 @@ public class StartPage extends AbstractPage {
           */
         ((JavascriptExecutor) browser).executeScript("localStorage.clear()");
         browser.navigate().refresh();
-        Graphene.waitModel().withTimeout(10, TimeUnit.SECONDS).until().element(selectedDay).is().present();
+        Graphene.waitModel().until().element(loading).is().not().visible();
+        Graphene.waitModel().withTimeout(10, TimeUnit.SECONDS).until().element(selectedDay).is().visible();
     }
 
     public DetailsPage clickOnFirstTalk() {
@@ -73,6 +90,27 @@ public class StartPage extends AbstractPage {
                             .map(e -> new FilterItem(e.getText())).collect(Collectors.toList()));
         }
         return result;
+    }
+
+    public KeycloakLoginPage clickOnLogin() {
+        loginLink.click();
+        keycloakLoginPage.verify();
+        return keycloakLoginPage;
+    }
+
+    public String getUsername() {
+        Graphene.waitModel().withTimeout(15, TimeUnit.SECONDS).until().element(loading).is().not().visible();
+        Graphene.waitModel().withTimeout(15, TimeUnit.SECONDS).until().element(username).is().visible();
+        return username.getText();
+    }
+
+    public boolean isLoggedIn() {
+        return logoutLink.isDisplayed();
+    }
+
+    public void logoff() {
+        logoutLink.click();
+        Graphene.waitModel().until().element(loginLink).is().visible();
     }
 
     @Data

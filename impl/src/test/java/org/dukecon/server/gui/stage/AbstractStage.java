@@ -1,6 +1,7 @@
 package org.dukecon.server.gui.stage;
 
 import com.tngtech.jgiven.CurrentStep;
+import com.tngtech.jgiven.annotation.AfterStage;
 import com.tngtech.jgiven.annotation.ExpectedScenarioState;
 import com.tngtech.jgiven.annotation.IntroWord;
 import org.dukecon.server.gui.page.AbstractPage;
@@ -12,12 +13,14 @@ public abstract class AbstractStage<SELF extends AbstractStage<?>> {
     @ExpectedScenarioState
     private CurrentStep currentStep;
 
-    protected void screenShot(AbstractPage page) {
-        currentStep.addAttachment(page.createScreenshot());
+    @AfterStage
+    protected void screenShot() {
+        currentStep.addAttachment(AbstractPage.createDirectScreenshot());
     }
 
     @IntroWord
     public SELF and() {
+        screenShot();
         return (SELF) this;
     }
 }

@@ -23,7 +23,8 @@
         <spock.version>1.0-groovy-2.4</spock.version>
 
         <surefire.argline></surefire.argline>
-		<jgiven.version>0.9.5</jgiven.version>
+		<jgiven.version>0.11.0</jgiven.version>
+        <arquillian.config>arquillian-headless.xml</arquillian.config>
     </properties>
 
 	<dependencyManagement>
@@ -176,6 +177,11 @@
 			<version>1.9.7</version>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-firefox-driver</artifactId>
+            <version>2.48.2</version>
+        </dependency>
 		<dependency>
 			<groupId>xml-apis</groupId>
 			<artifactId>xml-apis</artifactId>
@@ -206,6 +212,12 @@
             </activation>
             <properties>
                 <surefire.argline>-Djava.security.egd=file:/dev/./urandom</surefire.argline>
+            </properties>
+        </profile>
+        <profile>
+            <id>arquillian-profile-firefox</id>
+            <properties>
+                <arquillian.config>arquillian-firefox.xml</arquillian.config>
             </properties>
         </profile>
     </profiles>
@@ -297,7 +309,7 @@
 						instead that uses a phantom headless browser -->
 						<property>
 							<name>arquillian.xml</name>
-							<value>arquillian-headless.xml</value>
+							<value>${arquillian.config}</value>
 						</property>
 					</systemProperties>
                 </configuration>

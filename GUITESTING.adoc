@@ -45,11 +45,11 @@ Arquillian will ensure that PhantomJS, a headless browser is available on the bu
 
 Where do I find the automatic test reports?::
 
-After you have run 
+After you have run in the sub-folder `impl`:
 +
 [source]
 ----
-mvn test
+mvn -Parquillian-profile-firefox test
 mvn jgiven:report
 ----
 +

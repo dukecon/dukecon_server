@@ -22,10 +22,17 @@ public class ThenStartPage extends AbstractStage<ThenStartPage> {
         return this;
     }
 
-    public void all_filters_should_have_at_least_$1_values(int minSize) {
+    public ThenStartPage all_filters_should_have_at_least_$1_values(int minSize) {
         for (Map.Entry<StartPage.Filter, List<StartPage.FilterItem>> e : startPage.getFilters().entrySet()) {
             assertThat(e.getValue().size()).describedAs("size of filter '%s'", e.getKey())
                     .isGreaterThanOrEqualTo(minSize);
         }
+        return this;
     }
+
+    public ThenStartPage should_show_username(String username) {
+        assertThat(startPage.getUsername()).isEqualTo(username);
+        return this;
+    }
+
 }
