@@ -3,8 +3,10 @@ package org.dukecon.server.gui.page;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
+import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.page.Location;
 import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.*;
@@ -50,13 +52,17 @@ public class StartPage extends AbstractPage {
 
     public void verify() {
         browser.manage().window().setSize(new Dimension(1024, 800));
+        HasCapabilities c = (HasCapabilities) GrapheneContext.getContextFor(Default.class).getWebDriver();
+        if(c.getCapabilities().getBrowserName().equals("phantomjs")) {
         /* clear local storage, otherwise the app will not work in PhantomJS (but it will
          work in other browsers like Firefox.
          TODO: find out why and fix in the app
           */
-        ((JavascriptExecutor) browser).executeScript("localStorage.clear()");
-        browser.navigate().refresh();
-        Graphene.waitModel().until().element(loading).is().not().visible();
+            ((JavascriptExecutor) browser).executeScript("localStorage.clear()");
+            browser.navigate().refresh();
+        }
+
+        Graphene.waitModel().withTimeout(20, TimeUnit.SECONDS).until().element(loading).is().not().visible();
         Graphene.waitModel().withTimeout(10, TimeUnit.SECONDS).until().element(selectedDay).is().visible();
     }
 
