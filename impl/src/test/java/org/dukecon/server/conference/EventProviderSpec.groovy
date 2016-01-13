@@ -48,7 +48,7 @@ class EventProviderSpec extends Specification {
     }
 
 
-    class MockTalkProvider extends JavalandDataProvider {
+    class MockRemote extends JavalandDataRemote {
         boolean hasReread = false
 
         void resetHasReread() {
@@ -56,44 +56,45 @@ class EventProviderSpec extends Specification {
         }
 
         @Override
-        protected void readData() {
+        Conference readConferenceData() {
             hasReread = true
-            talks = [Event.builder().build()]
-            conference = Conference.builder().build()
+            return Conference.builder().build()
         }
     }
 
     void "Should reread events"() {
         given:
-        JavalandDataProvider talkProvider = new MockTalkProvider()
+        JavalandDataProvider talkProvider = new JavalandDataProvider()
+        talkProvider.remote = new MockRemote();
         when:
-        def talks = talkProvider.allTalks
+        def conference = talkProvider.conference
         then:
-        assert talkProvider.hasReread
-        assert talkProvider.talks
+        assert talkProvider.remote.hasReread
+        assert talkProvider.conference
         when:
-        talkProvider.resetHasReread()
-        talks = talkProvider.allTalks
+        talkProvider.remote.resetHasReread()
+        conference = talkProvider.conference
         then:
-        assert talkProvider.hasReread
-        assert talkProvider.talks
+        assert talkProvider.remote.hasReread
+        assert talkProvider.conference
     }
 
     void "Should not reread events"() {
         given:
-        JavalandDataProvider talkProvider = new MockTalkProvider()
+        JavalandDataProvider talkProvider = new JavalandDataProvider()
+        talkProvider.remote = new MockRemote();
         talkProvider.cacheExpiresAfterSeconds = 10
         when:
-        def talks = talkProvider.allTalks
+        def conference = talkProvider.conference
         then:
-        assert talkProvider.hasReread
-        assert talkProvider.talks
+        assert talkProvider.remote.hasReread
+        assert talkProvider.conference
         when:
-        talkProvider.resetHasReread()
-        talks = talkProvider.allTalks
+        talkProvider.remote.resetHasReread()
+        conference = talkProvider.conference
         then:
-        assert !talkProvider.hasReread
-        assert talkProvider.talks
+        assert !talkProvider.remote.hasReread
+        assert talkProvider.conference
     }
 
 }

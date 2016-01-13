@@ -1,0 +1,12 @@
+<arquillian xmlns="http://jboss.com/arquillian"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
+
+    <!-- firefox is good for debugging -->
+    <!-- https://docs.travis-ci.com/user/gui-and-headless-browsers/ -->
+    <!-- http://www.installationpage.com/selenium/how-to-run-selenium-headless-firefox-in-ubuntu/ -->
+    <extension qualifier="webdriver">
+        <property name="browser">firefox</property>
+    </extension>
+
+</arquillian>

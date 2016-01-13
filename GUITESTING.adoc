@@ -1,0 +1,71 @@
+= GUI Testing
+
+The `impl` modules includes GUI tests based on http://arquillian.org/modules/graphene-extension/[Arquillian's Graphene] and http://jgiven.org/[JGiven]. 
+
+It tries to facilitated best practices from Behaviour Driven Development (BDD) and Page Object Patterns.
+JGiven produces a nice (static) HTML5 output that gives an overview of the tests implemented.
+
+See `impl/src/test/java/org/dukecon/server/gui` for examples.
+
+== FAQ
+
+What do I write into the PageTest classes?::
+
+Please place BDD style code here following the Given/When/Then pattern.
+
+What do I write into the Stage classes?::
+
+These implement the methods called in the PageTest classes.
+They interact on a business level with the web pages.
+They must not access the elements of the web page directly.
+
+What do I write into the Page classes?::
+
+Each Page class wraps a GUI screen. When a screen changes its layout or design (HTML tags, but same logic), you'll need to change only your Page class.
+All your tests will stay the same.
+
+What do I the Tag annotations for?::
+
+Use these annotations to group your tests.
+You'll find them in the output.
+
+How do I run the tests from my IDE?::
+
+You can run and debug them from your IDE like any other test.
++
+Prerequisite: Please run a selenium server locally first.
+You'll find a script inside this project's selenium folder.
+Firefox needs to be installed on your local machine.
+Have a look at arquillian.xml to re-configure this default.
+
+How do I run the tests in the automatic build?::
+
+Maven will run Surefire as part of the build.
+Arquillian will run Firefox on your build machine.
++
+In order to run a headless build, pass the following parameter to Maven to run all tested wrapped in Xvfb
++
+[source]
+----
+mvn -Djvm="${WORKSPACE}/xvfb.sh" test
+----
++
+or start Xvfb before you start Maven.
+
+Where do I find the automatic test reports?::
+
+After you have run in the sub-folder `impl`:
++
+[source]
+----
+mvn -Parquillian-profile-firefox test
+mvn jgiven:report
+----
++
+you'll find them in `impl/target/jgiven-reports/html`
+
+Where can I find out more about the tools used?::
+
+* JGiven: http://jgiven.org/
+* Arquillian: http://arquillian.org/
+* Arquillian Graphene: http://arquillian.org/modules/graphene-extension/

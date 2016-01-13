@@ -4,5 +4,6 @@ target
 .settings
 .idea
 *.iml
+javaland-2016-backup.raw
 logs/
 impl/overlays/

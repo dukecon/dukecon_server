@@ -25,7 +25,10 @@ public class CacheManifestFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res
 		if (reqUrl.endsWith("cache.manifest")) {
 			log.debug ("Adding no-cache control to manifest file '{}'", reqUrl)
-			response.setHeader("Cache-Control", "no-cache");
+			// you must not add 'no-store' here, otherwise it will not work on Firefox and Opera
+			// http://stackoverflow.com/questions/8303785/html5-cache-manifest-working-great-on-chrome-but-not-on-firefox-and-opera
+			response.setHeader("Cache-Control", "no-cache, max-age=0")
+			response.setHeader("Pragma", "no-cache")
 		} else {
 			log.debug ("Not adding cache control to '{}'", reqUrl)
 		}
