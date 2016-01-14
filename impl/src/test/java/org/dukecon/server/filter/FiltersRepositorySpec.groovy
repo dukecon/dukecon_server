@@ -21,7 +21,6 @@ import javax.inject.Inject
 @WebAppConfiguration
 @IntegrationTest(["server.port=0"])
 @Slf4j
-@Transactional
 class FiltersRepositorySpec extends Specification {
     @Inject
     FiltersRepository filtersRepository
@@ -37,9 +36,9 @@ class FiltersRepositorySpec extends Specification {
     void "test insert and retrieve"() {
         when:
         def all = filtersRepository.findAll()
-        Filters savedFilters = filtersRepository.save(new Filters(principalId: "4711", favourites: true, languages: ["Englisch"]))
+        Filters savedFilters = filtersRepository.save(new Filters(principalId: "4712", favourites: true, languages: ["Englisch"]))
         all = filtersRepository.findAll()
-        Filters result = filtersRepository.findByPrincipalId("4711")
+        Filters result = filtersRepository.findByPrincipalId("4712")
         then:
         assert null != savedFilters
         log.debug("New Filters has id {} and languages {}", savedFilters.id, savedFilters.languages)
@@ -51,7 +50,7 @@ class FiltersRepositorySpec extends Specification {
         filtersRepository.save(new Filters(principalId: "4711", favourites: true, languages: ["Englisch"]))
         filtersRepository.save(new Filters(principalId: "4711", favourites: true, languages: ["Deutsch"]))
         then:
-        DataIntegrityViolationException e = thrown()
+        DataIntegrityViolationException e = thrown(DataIntegrityViolationException)
         log.debug("Expected exception '{}' was thrown", e.message)
     }
 }

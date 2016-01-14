@@ -9,6 +9,8 @@ import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.ElementCollection
+import javax.persistence.Table
+import javax.persistence.UniqueConstraint
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -21,9 +23,10 @@ class Filters {
     @GeneratedValue
     long id
 
-    @Column(name = "principal_id", nullable = false)
+    @Column(name = "principal_id", nullable = false, unique = true)
     private String principalId
 
+    @Column(name = "onlyFavorites")
     private boolean favourites = false
 
     @ElementCollection(fetch = FetchType.EAGER)
