@@ -33,6 +33,10 @@ Für den Health Check bitte `/health` als URL aufrufen.
 Ein Status-Code 200 zeigt an, dass alles in Ordnung ist.
 
 ## DB
+* H2 im Development-Modus
+  * In-Memory (jdbc:h2:mem:testdb)
+  * DB-Konsole verfügbar: http://localhost:8080/develop/h2-console/
+* PostgreSQL im Profil "postgresql"
+  * Aktivieren mit -Dspring.profiles.active=postgresql
+  * zum Starten der Tests gegen die PostgreSQL-DB wird das Profil "postgresql-test" benötigt, damit die DB gelöscht wird (-Dspring.profiles.active=postgresql-test)
 
-* im Moment H2, später wahrscheinlich PostgreSQL
-* DB-Konsole für die H2: http://localhost:8080/console
