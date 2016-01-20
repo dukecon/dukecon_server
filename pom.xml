@@ -15,6 +15,11 @@
 	<version>1.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+    <scm>
+        <url>https://github.com/dukecon/dukecon_server</url>
+        <connection>scm:git:https://github.com/dukecon/dukecon_server.git</connection>
+        <tag>HEAD</tag>
+    </scm>
 	<name>DukeCon Server</name>
 	<description>reference implementation for a conference planner</description>
 
@@ -77,5 +82,15 @@
 		<module>api</module>
 		<module>impl</module>
 	</modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
