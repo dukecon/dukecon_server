@@ -63,6 +63,12 @@ public class StartPage extends AbstractPage {
         }
 
         Graphene.waitModel().withTimeout(20, TimeUnit.SECONDS).until().element(loading).is().not().visible();
+
+        WebElement acceptCookiesButton = browser.findElement(By.cssSelector(".alert-button button"));
+        if(acceptCookiesButton != null) {
+            acceptCookiesButton.click();
+        }
+
         Graphene.waitModel().withTimeout(10, TimeUnit.SECONDS).until().element(selectedDay).is().visible();
     }
 
