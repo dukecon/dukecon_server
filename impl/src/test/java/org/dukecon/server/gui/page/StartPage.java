@@ -84,7 +84,7 @@ public class StartPage extends AbstractPage {
      * Typed access to the days listed to filter the talks.
      */
     public List<Day> getDays() {
-        return daysFilter.findElements(By.tagName("button")).stream()
+        return daysFilter.findElements(By.cssSelector("button.day-widescreen")).stream()
                 .map(e -> new Day(e.getText())).collect(Collectors.toList());
     }
 
