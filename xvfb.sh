@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -x
+#!/usr/bin/env bash
 # this is a wrapper for Xvfb to be able to run tests in headless CI environments
 # Use 
 #   mvn -Djvm="./xvfb.sh"
