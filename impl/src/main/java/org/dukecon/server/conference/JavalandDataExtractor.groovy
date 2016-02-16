@@ -46,9 +46,21 @@ class JavalandDataExtractor {
         return talksJson.findAll { it.SPRACHE }.collect { [it.SPRACHE, it.SPRACHE_EN] }.unique().sort {
             it.first()
         }.collect {
-            def lang = Locale."${it[1].toUpperCase()}".language
+            def lang = toIsoLanguageCode(it[1])
             Language.builder().id(lang).order(i++).names([de: it[0], en: it[1]]).icon("language_${lang}.png").build()
         }
+    }
+
+    private String toIsoLanguageCode(String language) {
+        def iso;
+        try {
+            iso = Locale."${language.toUpperCase()}".language
+        } catch (MissingPropertyException) {
+            // Usually: "German & English
+            iso = language.toLowerCase().replaceAll("[^a-z]", "");
+            log.warn("unknown language {}", language);
+        }
+        return iso;
     }
 
     Language getDefaultLanguage() {
@@ -56,7 +68,7 @@ class JavalandDataExtractor {
     }
 
     Language getLanguage(String name) {
-        return name ? languages.find { Locale."${name.toUpperCase()}".language == it.id } : null
+        return name ? languages.find { toIsoLanguageCode(name) == it.id } : null
     }
 
     List<Audience> getAudiences() {
