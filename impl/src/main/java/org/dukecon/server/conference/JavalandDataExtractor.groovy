@@ -5,6 +5,7 @@ import org.dukecon.model.*
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -140,7 +141,7 @@ class JavalandDataExtractor {
                     .start(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.BEGINN, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                     .end(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.ENDE, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                     .title(eventJson.TITEL)
-                    .abstractText(eventJson.ABSTRACT_TEXT?.replaceAll("&quot;", "\""))
+                    .abstractText(eventJson.ABSTRACT_TEXT?.replaceAll("&quot;", "\"")?.replaceAll("\r\n", "\n"))
                     .language(getLanguage(eventJson.SPRACHE_EN))
                     .demo(eventJson.DEMO != null && eventJson.DEMO.equalsIgnoreCase('ja'))
                     .track(tracks.find { eventJson.TRACK_EN == it.names.en })
@@ -151,6 +152,6 @@ class JavalandDataExtractor {
                 it
             })
                     .build()
-        }
+        }.findAll {Event event -> event.start.until(event.end, ChronoUnit.MINUTES) > 0}
     }
 }
