@@ -1,5 +1,6 @@
 package org.dukecon.server.gui.page;
 
+import com.google.common.base.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -8,7 +9,6 @@ import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
 import org.jboss.arquillian.graphene.page.Location;
-import org.jboss.arquillian.graphene.page.Page;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
@@ -47,9 +47,6 @@ public class StartPage extends AbstractPage {
     @FindBy(css = ".username")
     private WebElement username;
 
-    @Page
-    private KeycloakLoginPage keycloakLoginPage;
-
     public void verify() {
         browser.manage().window().setSize(new Dimension(1024, 800));
         HasCapabilities c = (HasCapabilities) GrapheneContext.getContextFor(Default.class).getWebDriver();
@@ -65,7 +62,7 @@ public class StartPage extends AbstractPage {
         Graphene.waitModel().withTimeout(20, TimeUnit.SECONDS).until().element(loading).is().not().visible();
 
         WebElement acceptCookiesButton = browser.findElement(By.cssSelector(".alert-button button"));
-        if(acceptCookiesButton != null) {
+        if (acceptCookiesButton != null && acceptCookiesButton.isDisplayed()) {
             acceptCookiesButton.click();
         }
 
@@ -75,9 +72,7 @@ public class StartPage extends AbstractPage {
     public DetailsPage clickOnFirstTalk() {
         assertThat(talks.size()).describedAs("size of talks").isGreaterThanOrEqualTo(1);
         talks.get(0).findElement(By.cssSelector("a")).click();
-        DetailsPage detailsPage = Graphene.createPageFragment(DetailsPage.class, browser.findElement(By.cssSelector("body")));
-        detailsPage.verify();
-        return detailsPage;
+        return instanceOfPage(DetailsPage.class);
     }
 
     /**
@@ -106,8 +101,33 @@ public class StartPage extends AbstractPage {
 
     public KeycloakLoginPage clickOnLogin() {
         loginLink.click();
-        keycloakLoginPage.verify();
-        return keycloakLoginPage;
+        Graphene.waitModel().until((Predicate<WebDriver>) webDriver -> {
+            // if a logout link becomes visible, logout
+            // this might happen if a cookie is left in the browser
+            try {
+                WebElement logoutLink = browser.findElement(By.name("logout"));
+                if (logoutLink != null && logoutLink.isDisplayed()) {
+                    logoutLink.click();
+                    Graphene.waitModel().until().element(loginLink).is().visible();
+                    loginLink.click();
+                    return false;
+                }
+            } catch (NoSuchElementException e) {
+                // not found
+            }
+            // if username field appears, we are fine
+            try {
+                WebElement usernameField = browser.findElement(By.name("username"));
+                if (usernameField != null && usernameField.isDisplayed()) {
+                    return true;
+
+                }
+            } catch (NoSuchElementException e) {
+                // not found
+            }
+            return false;
+        });
+        return instanceOfPage(KeycloakLoginPage.class);
     }
 
     public String getUsername() {

@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.enricher.PageObjectEnricher;
+import org.jboss.arquillian.graphene.enricher.exception.GrapheneTestEnricherException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -40,4 +42,24 @@ public abstract class AbstractPage {
                         + " (" + browser.getCurrentUrl() + ")");
     }
 
+    /**
+     * It is easy to instantiate a page with Graphene.goTo(). But this will work only for a
+     * that is annotated with @Location. This function adds the missing piece. This avoids
+     * using Graphene.createPageFragement on the body element of the page, or having a page object
+     * filled with @Page annotated pages.
+     */
+    public <C extends AbstractPage> C instanceOfPage(Class<C> page) {
+        C pageInstance;
+        GrapheneContext grapheneContext = GrapheneContext.getContextFor(Default.class);
+        WebDriver browser = grapheneContext.getWebDriver();
+        try {
+            pageInstance = PageObjectEnricher.setupPage(grapheneContext, browser, page);
+        } catch (Exception e) {
+            throw new GrapheneTestEnricherException("Error while initializing: " + page, e);
+        }
+        pageInstance.verify();
+        return pageInstance;
+    }
+
+    public abstract void verify();
 }
