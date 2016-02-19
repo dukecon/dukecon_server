@@ -2,7 +2,6 @@ package org.dukecon.server.conference
 
 import org.dukecon.model.Conference
 import org.dukecon.model.Event
-import org.dukecon.server.conference.SliceEventHelper
 
 import javax.ws.rs.GET
 import javax.ws.rs.Path
@@ -29,7 +28,6 @@ class ConferenceDetailResource {
     @GET
     @Path("speakers")
     public Response getSpeakers() {
-        println id
         return Response.ok().entity(conference.speakers).build();
     }
 
