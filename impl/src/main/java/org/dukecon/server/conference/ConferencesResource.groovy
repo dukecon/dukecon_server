@@ -45,8 +45,7 @@ class ConferencesResource {
         }
     }
 
-    @GET
-    @Path("{id:[0-9]*}")
+    @Path("{id}")
     public ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
         def conference = talkProvider.conference
         if (conference.id != id) {
