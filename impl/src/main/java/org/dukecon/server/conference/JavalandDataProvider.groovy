@@ -1,6 +1,5 @@
 package org.dukecon.server.conference
 
-import com.netflix.hystrix.exception.HystrixRuntimeException
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
@@ -43,20 +42,7 @@ class JavalandDataProvider {
             // Synchronized to avoid triggering reads in parallel
             synchronized (this) {
                 if (!cacheLastUpdated || isCacheExpired()) {
-                    try {
-                        this.conference = remote.readConferenceData()
-                        staleException = null
-                    } catch (Exception e) {
-                        staleException = e
-                    }
-                    if(conference == null) {
-                        // no previously cached result exists
-                        throw staleException;
-                    }
-                    /* indepdendent of the result update the timestamp so
-                       the next caller will get the cached result.
-                     */
-                    cacheLastUpdated = Instant.now()
+                    update()
                 }
             }
         }
@@ -69,4 +55,21 @@ class JavalandDataProvider {
         return cacheLastUpdated.plusSeconds(cacheExpiresAfterSeconds).isBefore(Instant.now())
     }
 
+    public synchronized boolean update() {
+        try {
+            this.conference = remote.readConferenceData()
+            staleException = null
+        } catch (Exception e) {
+            staleException = e
+        }
+        if(conference == null) {
+            // no previously cached result exists
+            throw staleException;
+        }
+        /* indepdendent of the result update the timestamp so
+           the next caller will get the cached result.
+         */
+        cacheLastUpdated = Instant.now()
+        return staleException == null && !remote.isBackupActive()
+    }
 }

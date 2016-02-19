@@ -27,7 +27,26 @@ class ConferencesResource {
         return Response.ok().entity([[id: talkProvider.conference.id, name: talkProvider.conference.name]]).build();
     }
 
-    @Path("{id}")
+    @GET
+    @Path("update/{id:[0-9]*}")
+    public Response updateConference(@PathParam("id") String id) {
+        try {
+            if (talkProvider.update()) {
+                return Response.ok().entity([message: "ok"]).build();
+            } else if (talkProvider.remote.isBackupActive()) {
+                return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                        .entity([message: "backup active"]).build();
+            } else {
+                return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                        .entity([message: talkProvider.staleException.toString()]).build();
+            }
+        } catch (RuntimeException e) {
+            return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity([message: e.toString()]).build();
+        }
+    }
+
+    @GET
+    @Path("{id:[0-9]*}")
     public ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
         def conference = talkProvider.conference
         if (conference.id != id) {

@@ -11,6 +11,10 @@
 
 ### Talks
 
+Erreichbar über `/rest/conferences/499959`. Die Daten werden gecached.
+
+Die Daten können über die URL `/rest/conferences/update/499959` aktualisiert werden. Hierfür ist eine Anmeldung und die Berechtigung `ROLE_ADMIN` erforderlich.
+
 ### Meta-Informationen
 
 ### User-Preferences (Vortragsfavoriten)
