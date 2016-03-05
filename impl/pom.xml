@@ -199,6 +199,11 @@
 			<version>3.1.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.0</version>
+        </dependency>        
     </dependencies>
 
     <profiles>
@@ -217,6 +222,45 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <apiSources>
+                          <apiSource>
+                                <springmvc>false</springmvc>
+                                <locations>org.dukecon.server.conference</locations>
+                                <schemes>http,https</schemes>
+                                <host>dukecon.org</host>
+                                <basePath>/rest</basePath>
+                                <info>
+                                    <title>DukeCon API</title>
+                                    <version>v1</version>
+                                    <description>Documentation of the REST API.</description>
+                                    <termsOfService>https://dukecon.org/</termsOfService>
+                                </info>
+                                        <!-- Support classpath or file absolute path here.
+                                        1) classpath e.g: "classpath:/markdown.hbs", "classpath:/templates/hello.html"
+                                        2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
+                                            "${basedir}/src/main/resources/template/hello.html" -->
+                                            <!-- 
+                                        <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
+                                         -->
+                                <outputPath>${basedir}/generated/document.html</outputPath>
+                                <swaggerDirectory>generated/swagger-ui</swaggerDirectory>
+                            </apiSource>
+                        </apiSources>
+                    </configuration>
+                    <executions>
+                            <execution>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                            </execution>
+                    </executions>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -306,23 +350,6 @@
 						</property>
 					</systemProperties>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.sebastian-daschner</groupId>
-                <artifactId>jaxrs-analyzer-maven-plugin</artifactId>
-                <version>0.9</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>analyze-jaxrs</goal>
-                        </goals>
-                        <configuration>
-                            <!--<backend>swagger</backend>-->
-                            <buildDirectory>${basedir}/../api/target</buildDirectory>
-                            <deployedDomain>dukecon.org</deployedDomain>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.flywaydb</groupId>

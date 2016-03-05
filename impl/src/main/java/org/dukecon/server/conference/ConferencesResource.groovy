@@ -1,6 +1,7 @@
 package org.dukecon.server.conference
 
 import groovy.transform.TypeChecked
+import org.dukecon.model.Conference
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject
@@ -10,12 +11,14 @@ import javax.ws.rs.PathParam
 import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
+import io.swagger.annotations.*;
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Component
 @Path("conferences")
+@Api(value="/", description = "Conferences endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 class ConferencesResource {
@@ -23,6 +26,9 @@ class ConferencesResource {
     JavalandDataProvider talkProvider;
 
     @GET
+    @ApiOperation(value="returns list of conferences",
+            response = Conference.class,
+            responseContainer = "List")
     public Response getConferences() {
         return Response.ok().entity([[id: talkProvider.conference.id, name: talkProvider.conference.name]]).build();
     }
@@ -46,6 +52,7 @@ class ConferencesResource {
     }
 
     @Path("{id}")
+    @ApiOperation(value = "Conference details")
     public ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
         def conference = talkProvider.conference
         if (conference.id != id) {
