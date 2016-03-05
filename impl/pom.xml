@@ -213,12 +213,6 @@
                 <surefire.argline>-Djava.security.egd=file:/dev/./urandom</surefire.argline>
             </properties>
         </profile>
-        <profile>
-            <id>arquillian-profile-firefox</id>
-            <properties>
-                <arquillian.config>arquillian-firefox.xml</arquillian.config>
-            </properties>
-        </profile>
     </profiles>
 
     <build>

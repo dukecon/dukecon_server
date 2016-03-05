@@ -58,7 +58,7 @@ After you have run in the sub-folder `impl`:
 +
 [source]
 ----
-mvn -Parquillian-profile-firefox test
+mvn test
 mvn jgiven:report
 ----
 +
