@@ -313,25 +313,23 @@
 					</systemProperties>
                 </configuration>
             </plugin>
-            <!--
             <plugin>
                 <groupId>com.sebastian-daschner</groupId>
                 <artifactId>jaxrs-analyzer-maven-plugin</artifactId>
-                <version>0.6</version>
+                <version>0.9</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>analyze-jaxrs</goal>
                         </goals>
                         <configuration>
-                            <backend>swagger</backend>
+                            <!--<backend>swagger</backend>-->
                             <buildDirectory>${basedir}/../api/target</buildDirectory>
                             <deployedDomain>dukecon.org</deployedDomain>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            -->
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
