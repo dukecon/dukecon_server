@@ -7,3 +7,4 @@ target
 javaland-2016-backup.raw
 logs/
 impl/overlays/
+generated/

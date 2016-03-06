@@ -24,6 +24,13 @@
         <surefire.argline />
 		<jgiven.version>0.11.0</jgiven.version>
         <arquillian.config>arquillian-headless.xml</arquillian.config>
+
+        <swagger.input.directory>${project.basedir}/src/main/swagger</swagger.input.directory>
+        <base.generated.docs.dir>${project.build.directory}/generated-docs</base.generated.docs.dir>
+        <generated.asciidoc.directory>${base.generated.docs.dir}/asciidoc</generated.asciidoc.directory>
+        <asciidoctor.input.directory>${project.basedir}/src/docs/asciidoc</asciidoctor.input.directory>
+        <asciidoctor.html.output.directory>${base.generated.docs.dir}/html</asciidoctor.html.output.directory>
+        <asciidoctor.pdf.output.directory>${base.generated.docs.dir}/pdf</asciidoctor.pdf.output.directory>
     </properties>
 
 	<dependencyManagement>
@@ -247,19 +254,91 @@
                                             <!-- 
                                         <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
                                          -->
-                                <outputPath>${basedir}/generated/document.html</outputPath>
-                                <swaggerDirectory>generated/swagger-ui</swaggerDirectory>
+                                <outputPath>${basedir}/target/generated/document.html</outputPath>
+                                <swaggerDirectory>${swagger.input.directory}</swaggerDirectory>
                             </apiSource>
                         </apiSources>
                     </configuration>
                     <executions>
                             <execution>
-                                <phase>compile</phase>
+                                <phase>generate-resources</phase>
                                 <goals>
                                     <goal>generate</goal>
                                 </goals>
                             </execution>
                     </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.github.robwin</groupId>
+                <artifactId>swagger2markup-maven-plugin</artifactId>
+                <version>0.9.3</version>
+                <configuration>
+                    <inputDirectory>${swagger.input.directory}</inputDirectory>
+                    <outputDirectory>${generated.asciidoc.directory}</outputDirectory>
+                    <separateDefinitions>true</separateDefinitions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-swagger</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>1.5.3</version>
+                <!-- Configure generic document generation settings -->
+                <configuration>
+                    <sourceDirectory>${asciidoctor.input.directory}</sourceDirectory>
+                    <sourceDocumentName>index.adoc</sourceDocumentName>
+                    <attributes>
+                        <doctype>book</doctype>
+                        <toc>left</toc>
+                        <toclevels>2</toclevels>
+                        <generated>${generated.asciidoc.directory}</generated>
+                    </attributes>
+                </configuration>
+                <!-- Since each execution can only handle one backend, run
+                     separate executions for each desired output type -->
+                <executions>
+                    <execution>
+                        <id>output-html</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>html5</backend>
+                            <outputDirectory>${asciidoctor.html.output.directory}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Copy the static docs into build.outputDirectory to be included in the jar -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/docs</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${asciidoctor.html.output.directory}</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

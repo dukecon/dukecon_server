@@ -1,0 +1,10 @@
+== Dukecon REST Server
+
+Different clients can access conference data through this backend services. Currently there are already a few clients
+like HTML5 and Flex. Others as a Cordova wrapper for HTML5, native Android or iOS are much appreciated.
+
+=== REST documentation
+
+This REST services are built with Spring Boot and JAX-RS. A swagger file will be generated for each build and converted
+to Asciidoc with swagger2markup and finally to this HTML document. See following chapters for generated API documentation.
+

@@ -16,7 +16,7 @@ import io.swagger.annotations.*;
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
-@Api(value="/conferences", description = "Conferences endpoint")
+@Api(hidden = true, value="/conferences", description = "Conferences endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 class ConferenceDetailResource {
     Conference conference
@@ -26,6 +26,9 @@ class ConferenceDetailResource {
     }
 
     @GET
+    @Path("/")
+    @ApiOperation(value="returns full conference data",
+            response = Conference.class)
     public Response getConference() {
         return Response.ok().entity(conference).build();
     }
@@ -50,9 +53,8 @@ class ConferenceDetailResource {
 
     @GET
     @Path("metadata")
-    @ApiOperation(value="returns list of conference events",
-            response = MetaData.class,
-            responseContainer = "List")
+    @ApiOperation(value="returns list of conference meta data",
+            response = MetaData.class)
     public Response getMeta() {
         return Response.ok().entity(conference.metaData).build();
     }
