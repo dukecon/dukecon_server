@@ -157,7 +157,7 @@ class JavalandDataExtractorSpec extends Specification {
         when:
         def speakers = extractor.speakers.sort { it.id }
         then:
-        assert speakers.size() == 123
+        assert speakers.size() >= 123
         assert speakers.first().name == 'Fried Saacke'
         assert speakers.first().company == 'DOAG Dienstleistungen GmbH'
         assert speakers.first().id == '136700'
@@ -168,7 +168,7 @@ class JavalandDataExtractorSpec extends Specification {
         when:
         def speakers = extractor.speakersWithEvents.sort { it.id }
         then:
-        assert speakers.size() == 123
+        assert speakers.size() >= 123
         assert speakers.first().name == 'Fried Saacke'
         assert speakers.first().company == 'DOAG Dienstleistungen GmbH'
         assert speakers.first().id == '136700'
