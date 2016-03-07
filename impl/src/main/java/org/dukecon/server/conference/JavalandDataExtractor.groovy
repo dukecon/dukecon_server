@@ -7,6 +7,8 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
+import static com.xlson.groovycsv.CsvParser.parseCsv
+
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
@@ -16,7 +18,10 @@ class JavalandDataExtractor {
     String conferenceUrl = 'http://dukecon.org'
     String conferenceName = 'DukeCon Conference'
 
+    Map<String,String> twitterHandleBySpeakerName = [:]
+
     Conference buildConference() {
+        buildTwitterHandles()
         Conference conf = Conference.builder()
                 .id(talksJson.ID_KONGRESS.unique().first()?.toString())
                 .name(conferenceName)
@@ -28,6 +33,23 @@ class JavalandDataExtractor {
         conf.metaData.conference = conf
         conf.speakers = getSpeakersWithEvents()
         return conf
+    }
+
+    private void buildTwitterHandles () {
+        InputStream twitterData = this.class.getResourceAsStream("/twitterhandles.csv")
+        def csv = parseCsv(new InputStreamReader(twitterData))
+
+        csv.each { line ->
+            String speakerName = line.Speaker.trim()
+            if (twitterHandleBySpeakerName[speakerName]) {
+                log.warn("Duplicate Speaker in CSV: {}", speakerName)
+            } else if (line.TwitterHandle.startsWith("@")) {
+                log.debug("Speaker '{}' has TwitterHandle: '{}'", speakerName, line.TwitterHandle)
+                twitterHandleBySpeakerName[speakerName] = line.TwitterHandle
+            } else {
+                log.error("Speaker '{}' has no valid TwitterHandle!", speakerName)
+            }
+        }
     }
 
     private MetaData getMetaData() {
@@ -98,13 +120,21 @@ class JavalandDataExtractor {
 
     private List<Speaker> getSpeakers() {
         def result = talksJson.findAll { it.ID_PERSON }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).build()
+
+            Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).twitter(twitterHandle(t)).build()
         } + talksJson.findAll { it.ID_PERSON_COREF }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).build()
+            Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).twitter(twitterHandle(t)).build()
         } + talksJson.findAll { it.ID_PERSON_COCOREF }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).company(t.COCOREFERENT_FIRMA).build()
+            Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).company(t.COCOREFERENT_FIRMA).twitter(twitterHandle(t)).build()
         }
         result.flatten().unique { it.id }
+
+        return result
+    }
+
+    String twitterHandle (t) {
+        String speakerName = t.REFERENT_NAME
+        String twitterHandle = twitterHandleBySpeakerName[speakerName] ?: ""
     }
 
     /**
