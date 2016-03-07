@@ -260,13 +260,13 @@
                                         <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
                                          -->
                                 <outputPath>${basedir}/target/generated/document.html</outputPath>
-                                <swaggerDirectory>${swagger.input.directory}</swaggerDirectory>
+                                <swaggerDirectory>${basedir}/target/generated/swagger</swaggerDirectory>
                             </apiSource>
                         </apiSources>
                     </configuration>
                     <executions>
                             <execution>
-                                <phase>generate-resources</phase>
+                                <phase>process-classes</phase>
                                 <goals>
                                     <goal>generate</goal>
                                 </goals>
@@ -278,13 +278,13 @@
                 <artifactId>swagger2markup-maven-plugin</artifactId>
                 <version>0.9.3</version>
                 <configuration>
-                    <inputDirectory>${swagger.input.directory}</inputDirectory>
+                    <inputDirectory>${basedir}/target/generated/swagger</inputDirectory>
                     <outputDirectory>${generated.asciidoc.directory}</outputDirectory>
                     <separateDefinitions>true</separateDefinitions>
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>generate-resources</phase>
+                        <phase>process-classes</phase>
                         <goals>
                             <goal>process-swagger</goal>
                         </goals>
@@ -311,7 +311,7 @@
                 <executions>
                     <execution>
                         <id>output-html</id>
-                        <phase>generate-resources</phase>
+                        <phase>process-classes</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
