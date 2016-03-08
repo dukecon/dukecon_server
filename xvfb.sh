@@ -3,4 +3,5 @@
 # Use 
 #   mvn -Djvm="./xvfb.sh"
 # so that Surefire runs your tests in a Xvfb wrapped Java process
+set
 /usr/bin/xvfb-run $JAVA_HOME/bin/java $@
