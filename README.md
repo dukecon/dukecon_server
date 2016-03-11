@@ -1,4 +1,4 @@
-# dukecon_server
+# DukeCon Server
 
 ## Build & Dependency Status
 
@@ -11,36 +11,37 @@
 
 ### Talks
 
-Erreichbar über `/rest/conferences/499959`. Die Daten werden gecached.
+Accessible on `/rest/conferences/499959`.
+Data is being cached.
 
-Die Daten können über die URL `/rest/conferences/update/499959` aktualisiert werden. Hierfür ist eine Anmeldung und die Berechtigung `ROLE_ADMIN` erforderlich.
+Data can be updated with URI `/rest/conferences/update/499959`.
+Therefor an authenticated request with role `ROLE_ADMIN` is needed.
 
-### Meta-Informationen
+### Meta-Information
 
-### User-Preferences (Vortragsfavoriten)
+### User-Preferences (Talk favorites)
 
 ### User-Filter
-* Login über Keycloak
-* Datenablage je Principal in der Datenbank
-* Speichern:
-  * PUT
-  * http://localhost:8080/rest/filters
-  * Content-Type: application/json
-  * {"favourites":true,"levels":["Fortgeschritten"],"languages":["Englisch"],"tracks":["IDEs & Tools"],"locations":["Wintergarten", "Schauspielhaus"]}
-* Lesen:
-  * GET
-  * http://localhost:8080/rest/filters
+* Login with Keycloak
+* Filters will be persisted with a record of each principal in the DB
+* Write/save:
+  * HTTP method `PUT` 
+  * URL `http://localhost:8080/rest/filters`
+  * Content-Type: `application/json`
+  * Payload: `{"favourites":true,"levels":["Fortgeschritten"],"languages":["Englisch"],"tracks":["IDEs & Tools"],"locations":["Wintergarten", "Schauspielhaus"]}`
+* Read:
+  * HTTP method `GET`
+  * URL `http://localhost:8080/rest/filters`
 
 ## Health Check
 
-Für den Health Check bitte `/health` als URL aufrufen.
-Ein Status-Code 200 zeigt an, dass alles in Ordnung ist.
+Health check is available at `/health` URI.  
+HTTP status code `200` of the response tells you that everything is ok.
 
 ## DB
-* H2 im Development-Modus
-  * In-Memory (jdbc:h2:mem:testdb)
-  * DB-Konsole verfügbar: http://localhost:8080/develop/h2-console/
-* PostgreSQL im Profil "postgresql"
-  * Aktivieren mit -Dspring.profiles.active=postgresql
-  * zum Starten der Tests gegen die PostgreSQL-DB wird das Profil "postgresql-test" benötigt, damit die DB gelöscht wird (-Dspring.profiles.active=postgresql-test)
-
+* H2 in development mode
+  * In-Memory (`jdbc:h2:mem:testdb`)
+  * DB console: `http://localhost:8080/develop/h2-console/`
+* PostgreSQL with profile _"postgresql"_
+  * activate with `-Dspring.profiles.active=postgresql`
+  * to run the tests against the PostgreSQL db (and a previously reset of the db), you need the _"postgresql-test"_ profile (`-Dspring.profiles.active=postgresql-test`)
