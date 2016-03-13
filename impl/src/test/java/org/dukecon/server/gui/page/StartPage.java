@@ -35,7 +35,7 @@ public class StartPage extends AbstractPage {
     @FindBy(id = "loading")
     private WebElement loading;
 
-    @FindBy(css = ".talk-cell div")
+    @FindBy(css = ".talk-info .title")
     private List<WebElement> talks;
 
     @FindBy(name = "login")
