@@ -104,7 +104,8 @@
                 <artifactId>multi-module-maven-release-plugin</artifactId>
                 <configuration>
                     <resolveSnapshots>
-                        <resolveSnapshot>org.dukecon:dukecon-html5-client:${dukecon.client.html5.version}</resolveSnapshot>
+                        <!-- TODO: allow for usage of a version property -->
+                        <resolveSnapshot>org.dukecon:dukecon-html5-client:1.3-SNAPSHOT</resolveSnapshot>
                     </resolveSnapshots>
                 </configuration>
             </plugin>
