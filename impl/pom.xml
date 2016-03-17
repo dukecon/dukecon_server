@@ -21,6 +21,8 @@
         <groovy.version>2.4.3</groovy.version>
         <spock.version>1.0-groovy-2.4</spock.version>
 
+        <selenium.version>2.52.0</selenium.version>
+
         <surefire.argline />
 		<jgiven.version>0.11.0</jgiven.version>
         <arquillian.config>arquillian-headless.xml</arquillian.config>
@@ -34,8 +36,15 @@
     </properties>
 
 	<dependencyManagement>
-    <dependencies>
-        <dependency>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.arquillian.selenium</groupId>
+                <artifactId>selenium-bom</artifactId>
+                <version>${selenium.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
 				<groupId>org.jboss.arquillian</groupId>
 				<artifactId>arquillian-bom</artifactId>
 				<version>1.1.5.Final</version>
