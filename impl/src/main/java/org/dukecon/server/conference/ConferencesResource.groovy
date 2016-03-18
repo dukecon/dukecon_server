@@ -1,6 +1,7 @@
 package org.dukecon.server.conference
 
 import groovy.transform.TypeChecked
+import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
 import org.springframework.stereotype.Component
 
@@ -11,7 +12,7 @@ import javax.ws.rs.PathParam
 import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
-import io.swagger.annotations.*;
+import io.swagger.annotations.*
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -21,43 +22,57 @@ import io.swagger.annotations.*;
 @Api(value="/", description = "Conferences endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
+@Slf4j
 class ConferencesResource {
+    List<ConferenceDataProvider> talkProviders
+
     @Inject
-    JavalandDataProvider talkProvider;
+    ConferencesResource(List<ConferenceDataProvider> talkProviders) {
+        this.talkProviders = talkProviders
+    }
 
     @GET
     @ApiOperation(value="returns list of conferences",
             response = Conference.class,
             responseContainer = "List")
     public Response getConferences() {
-        return Response.ok().entity([[id: talkProvider.conference.id, name: talkProvider.conference.name]]).build();
+        def conferences = talkProviders.collect{p -> [id : p.conference.id, name : p.conference.name]}
+        return Response.ok().entity(conferences).build()
     }
 
     @GET
     @Path("update/{id:[0-9]*}")
     public Response updateConference(@PathParam("id") String id) {
         try {
-            if (talkProvider.update()) {
-                return Response.ok().entity([message: "ok"]).build();
-            } else if (talkProvider.remote.isBackupActive()) {
-                return Response.status(Response.Status.SERVICE_UNAVAILABLE)
-                        .entity([message: "backup active"]).build();
-            } else {
-                return Response.status(Response.Status.SERVICE_UNAVAILABLE)
-                        .entity([message: talkProvider.staleException.toString()]).build();
+            def provider = getConferenceProvider(id);
+            if (provider == null)
+                return Response.status(Response.Status.NOT_FOUND).build()
+            if (provider.update()) {
+                return Response.ok().entity([message: "ok"]).build()
             }
+            if (provider.isBackupActive()) {
+                return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                        .entity([message: "backup active"]).build()
+            }
+            return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                        .entity([message: provider.staleException.toString()]).build()
         } catch (RuntimeException e) {
-            return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity([message: e.toString()]).build();
+            return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity([message: e.toString()]).build()
         }
     }
 
     @Path("{id}")
     @ApiOperation(value = "Conference details")
     public ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
-        def conference = talkProvider.conference
-        if (conference.id != id) {
-            throw new IllegalArgumentException("resource with id $id not found")
+        def provider = getConferenceProvider(id)
+        if (provider == null) {
+            log.warn("Conference with id {} not found", id)
+            return new ConferenceDetailResource(null)
         }
-        return new ConferenceDetailResource(conference)
+        return new ConferenceDetailResource(provider.conference)
+    }
+
+    private ConferenceDataProvider getConferenceProvider(String id) {
+        return talkProviders.find{p -> p.conference.id == id}
     }
 }

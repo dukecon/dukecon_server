@@ -1,4 +1,4 @@
-package org.dukecon.server.conference
+package org.dukecon.server.javaland
 
 import groovy.json.JsonSlurper
 import org.dukecon.model.Audience

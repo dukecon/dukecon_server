@@ -1,6 +1,6 @@
 package org.dukecon.server.core;
 
-import org.dukecon.server.conference.JavalandDataProvider;
+import org.dukecon.server.conference.ConferenceDataProvider;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -10,7 +10,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
@@ -19,12 +21,14 @@ import java.util.Map;
 @Path("meta")
 public class MetaService {
     @Inject
-    JavalandDataProvider talkProvider;
+    List<ConferenceDataProvider> talkProviders;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMeta() {
-        return Response.ok().entity(talkProvider.getConference().getMetaData()).build();
+        String id = "499959"; //hardcoded to Javaland for now
+        Optional<ConferenceDataProvider> provider = talkProviders.stream().filter( p -> p.getConference().getId().equals(id)).findFirst();
+        return Response.ok().entity(provider.get().getConference().getMetaData()).build();
     }
 
     @GET

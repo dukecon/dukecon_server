@@ -1,7 +1,8 @@
-package org.dukecon.server.conference
+package org.dukecon.server.javaland
 
 import org.dukecon.model.Conference
 import org.dukecon.model.Event
+import org.dukecon.server.javaland.JavalandDataRemote
 import spock.lang.Specification
 
 /**

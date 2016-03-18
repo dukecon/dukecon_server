@@ -1,4 +1,4 @@
-package org.dukecon.server.conference
+package org.dukecon.server.javaland
 
 import groovy.util.logging.Slf4j
 import org.dukecon.model.*

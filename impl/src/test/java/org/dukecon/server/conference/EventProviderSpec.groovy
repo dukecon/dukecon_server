@@ -1,8 +1,8 @@
 package org.dukecon.server.conference
 
 import org.dukecon.model.Conference
-import org.dukecon.model.Event
-import org.dukecon.server.conference.JavalandDataProvider
+import org.dukecon.server.javaland.JavalandDataProvider
+import org.dukecon.server.javaland.JavalandDataRemote
 import spock.lang.Specification
 
 import java.time.Instant

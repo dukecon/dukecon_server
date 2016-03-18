@@ -1,5 +1,8 @@
-package org.dukecon.server.conference
+package org.dukecon.server.javaland
 
+import org.dukecon.server.javaland.JavalandDataProvider
+import org.dukecon.server.javaland.JavalandDataProviderHealthIndicator
+import org.dukecon.server.javaland.JavalandDataRemote
 import org.springframework.boot.actuate.health.Status
 import spock.lang.Specification
 

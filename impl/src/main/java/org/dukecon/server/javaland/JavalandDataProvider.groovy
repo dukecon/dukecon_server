@@ -1,8 +1,9 @@
-package org.dukecon.server.conference
+package org.dukecon.server.javaland
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
+import org.dukecon.server.conference.ConferenceDataProvider
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
@@ -18,7 +19,7 @@ import java.time.Instant
 @Slf4j
 @Component
 @TypeChecked
-class JavalandDataProvider {
+class JavalandDataProvider implements ConferenceDataProvider {
 
     @Inject
     JavalandDataRemote remote;
@@ -71,5 +72,9 @@ class JavalandDataProvider {
          */
         cacheLastUpdated = Instant.now()
         return staleException == null && !remote.isBackupActive()
+    }
+
+    public boolean isBackupActive() {
+        return remote.isBackupActive()
     }
 }

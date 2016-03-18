@@ -1,4 +1,4 @@
-package org.dukecon.server.conference
+package org.dukecon.server.javaland
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand
 import groovy.json.JsonOutput
