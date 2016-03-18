@@ -11,7 +11,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 branches:
   except:
-    - /^dukecon-server-[0-9].*/
+    - /^dukecon-server-[0-9].*$/
 script:
   - mvn -U test
 cache:
