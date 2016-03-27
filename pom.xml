@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.0.RELEASE</version>
+		<version>1.3.3.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -27,7 +27,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
         <!-- Don't use ${project.version} here - even if it is the same! -->
         <dukecon.client.html5.version>1.3-SNAPSHOT</dukecon.client.html5.version>
-		<lombok.version>1.16.4</lombok.version>
+		<lombok.version>1.16.8</lombok.version>
         <!-- Set this to localhost if you would like to test upload server -->
         <nexus.repository.host>dev.dukecon.org</nexus.repository.host>
         <nexus.repository.port />
@@ -72,13 +72,21 @@
             <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/releases</url>
         </repository>
     </distributionManagement>
-    
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

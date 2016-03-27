@@ -17,7 +17,7 @@
         <start-class>org.dukecon.DukeConServerApplication</start-class>
 
         <java.version>1.7</java.version>
-        <keycloak.version>1.7.0.Final</keycloak.version>
+        <keycloak.version>1.9.1.Final</keycloak.version>
         <groovy.version>2.4.3</groovy.version>
         <spock.version>1.0-groovy-2.4</spock.version>
 
@@ -142,7 +142,8 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4-1201-jdbc41</version>
+            <!-- Make sure this aligns with the runtime (docker) environments! -->
+            <version>9.3-1103-jdbc41</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -160,16 +161,7 @@
             <artifactId>spock-spring</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--
-            Disabled for now ... no need to force you to require Flex & Flash stuff :-)
-        -->
-        <!--dependency>
-            <groupId>org.dukecon</groupId>
-            <artifactId>dukecon-flex-core</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
-            <type>swf</type>
-        </dependency-->
-		<dependency>
+        <dependency>
 			<groupId>org.jboss.arquillian.graphene</groupId>
 			<artifactId>graphene-webdriver</artifactId>
 			<version>2.0.3.Final</version>
@@ -441,7 +433,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>4.0</version>
             </plugin>
 			<plugin>
 				<groupId>com.tngtech.jgiven</groupId>
