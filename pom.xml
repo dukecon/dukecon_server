@@ -19,7 +19,13 @@
         <connection>scm:git:git@github.com:dukecon/dukecon_server.git</connection>
     </scm>
 	<name>DukeCon Server</name>
-	<description>reference implementation for a conference planner</description>
+	<description>Reference server implementation for a conference planner</description>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
