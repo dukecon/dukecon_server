@@ -17,14 +17,14 @@
         <start-class>org.dukecon.DukeConServerApplication</start-class>
 
         <java.version>1.7</java.version>
-        <keycloak.version>1.7.0.Final</keycloak.version>
-        <groovy.version>2.4.3</groovy.version>
+        <keycloak.version>1.9.1.Final</keycloak.version>
+        <groovy.version>2.4.6</groovy.version>
         <spock.version>1.0-groovy-2.4</spock.version>
 
-        <selenium.version>2.52.0</selenium.version>
+        <selenium.version>2.53.0</selenium.version>
 
         <surefire.argline />
-		<jgiven.version>0.11.0</jgiven.version>
+		<jgiven.version>0.11.3</jgiven.version>
         <arquillian.config>arquillian-headless.xml</arquillian.config>
 
         <swagger.input.directory>${project.basedir}/src/main/swagger</swagger.input.directory>
@@ -126,7 +126,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-hystrix</artifactId>
-            <version>1.0.4.RELEASE</version>
+            <version>1.0.6.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.netflix.archaius</groupId>
@@ -137,12 +137,13 @@
         <dependency>
             <groupId>com.netflix.archaius</groupId>
             <artifactId>archaius-core</artifactId>
-            <version>0.7.1</version>
+            <version>0.7.4</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4-1201-jdbc41</version>
+            <!-- Make sure this aligns with the runtime (docker) environments! -->
+            <version>9.3-1103-jdbc41</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -160,16 +161,7 @@
             <artifactId>spock-spring</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--
-            Disabled for now ... no need to force you to require Flex & Flash stuff :-)
-        -->
-        <!--dependency>
-            <groupId>org.dukecon</groupId>
-            <artifactId>dukecon-flex-core</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
-            <type>swf</type>
-        </dependency-->
-		<dependency>
+        <dependency>
 			<groupId>org.jboss.arquillian.graphene</groupId>
 			<artifactId>graphene-webdriver</artifactId>
 			<version>2.0.3.Final</version>
@@ -184,7 +176,7 @@
 		<dependency>
 			<groupId>org.jboss.arquillian.extension</groupId>
 			<artifactId>arquillian-phantom-binary</artifactId>
-			<version>1.9.7</version>
+			<version>2.1.1</version>
 			<scope>test</scope>
 		</dependency>
         <dependency>
@@ -194,6 +186,7 @@
 		<dependency>
 			<groupId>xml-apis</groupId>
 			<artifactId>xml-apis</artifactId>
+            <!-- Version 1.x >= 1.4.01 needed by arquillian / selenium? -->
 			<version>1.4.01</version>
 			<scope>test</scope>
 		</dependency>
@@ -206,13 +199,13 @@
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>3.1.0</version>
+			<version>3.3.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
-            <version>1.5.0</version>
+            <version>1.5.8</version>
         </dependency>
         <dependency>
             <groupId>com.xlson.groovycsv</groupId>
@@ -240,7 +233,7 @@
             <plugin>
                 <groupId>com.github.kongchen</groupId>
                 <artifactId>swagger-maven-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.1.3</version>
                 <configuration>
                     <apiSources>
                           <apiSource>
@@ -441,7 +434,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>4.0</version>
             </plugin>
 			<plugin>
 				<groupId>com.tngtech.jgiven</groupId>

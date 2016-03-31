@@ -4,8 +4,9 @@
 
 * [![Build Status](https://travis-ci.org/dukecon/dukecon_server.svg?branch=master)](https://travis-ci.org/dukecon/dukecon_server)
 
-* API: [![Dependency Status API](https://www.versioneye.com/user/projects/5552099d06c318a32a0000c5/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5552099d06c318a32a0000c5)
-* Impl: [![Dependency Status Impl](https://www.versioneye.com/user/projects/555209a206c3183055000123/badge.svg?style=flat)](https://www.versioneye.com/user/projects/555209a206c3183055000123)
+* Reactor: [![Dependency Status](https://www.versioneye.com/user/projects/56f80143ed7236000ac3f3f1/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56f80143ed7236000ac3f3f1)
+* API: [![Dependency Status](https://www.versioneye.com/user/projects/56f8034335630e0029db09a6/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56f8034335630e0029db09a6)
+* Impl: [![Dependency Status](https://www.versioneye.com/user/projects/56f8034735630e003888ac53/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56f8034735630e003888ac53)
 
 ## REST Services
 
