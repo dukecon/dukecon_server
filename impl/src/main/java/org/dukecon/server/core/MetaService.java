@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,15 +21,30 @@ import java.util.Optional;
 @Component
 @Path("meta")
 public class MetaService {
-    @Inject
     List<ConferenceDataProvider> talkProviders;
 
+    @Inject
+    MetaService(List<ConferenceDataProvider> talkProviders) {
+        this.talkProviders = talkProviders;
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMeta(@PathParam("id") String id) {
+        Optional<ConferenceDataProvider> provider = talkProviders.stream().filter(p -> p.getConference().getId().equals(id)).findFirst();
+        if (provider.isPresent()) {
+            return Response.ok().entity(provider.get().getConference().getMetaData()).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @Deprecated
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMeta() {
-        String id = "499959"; //hardcoded to Javaland for now
-        Optional<ConferenceDataProvider> provider = talkProviders.stream().filter( p -> p.getConference().getId().equals(id)).findFirst();
-        return Response.ok().entity(provider.get().getConference().getMetaData()).build();
+        String id = "499959"; //hardcoded to Javaland 2016
+        return getMeta(id);
     }
 
     @GET
