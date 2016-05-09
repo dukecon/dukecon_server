@@ -80,7 +80,7 @@
     <repositories>
         <repository>
             <id>dukecon</id>
-            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public</url>
+            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -88,12 +88,18 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <!-- Make the site plugin happy: It needs to find some information about GEMs -->
+            <id>gemfire-repository</id>
+            <name>Gemfire Repository</name>
+            <url>${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/gemfire-release-proxy/</url>
+        </repository>
     </repositories>
     
     <pluginRepositories>
         <pluginRepository>
             <id>dukecon</id>
-            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public</url>
+            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -156,6 +162,11 @@
                     <groupId>com.github.danielflower.mavenplugins</groupId>
                     <artifactId>multi-module-maven-release-plugin</artifactId>
                     <version>DC-1.5-SNAPSHOT</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.8.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
