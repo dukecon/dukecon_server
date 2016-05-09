@@ -65,12 +65,21 @@
     </licenses>
 
 	<properties>
+        <dukecon.client.html5.version>1.3-SNAPSHOT</dukecon.client.html5.version>
+        <gitlog-maven-plugin.version>1.13.2</gitlog-maven-plugin.version>
+        <jqassistant-maven-plugin.version>1.1.3</jqassistant-maven-plugin.version>
+        <lombok.version>1.16.8</lombok.version>
+        <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+        <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
+        <multi-module-maven-release-plugin.version>DC-1.5-SNAPSHOT</multi-module-maven-release-plugin.version>
+        <spring-boot-starter-parent.version>${project.parent.version}</spring-boot-starter-parent.version>
+        <versioneye-maven-plugin.version>3.9.2</versioneye-maven-plugin.version>
+        <wagon-webdav-jackrabbit.version>2.10</wagon-webdav-jackrabbit.version>
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
         <!-- Don't use ${project.version} here - even if it is the same! -->
-        <dukecon.client.html5.version>1.3-SNAPSHOT</dukecon.client.html5.version>
-		<lombok.version>1.16.8</lombok.version>
         <!-- Set this to localhost if you would like to test upload server -->
         <nexus.repository.host>dev.dukecon.org</nexus.repository.host>
         <nexus.repository.port />
@@ -160,7 +169,7 @@
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-webdav-jackrabbit</artifactId>
-                <version>2.10</version>
+                <version>${wagon-webdav-jackrabbit.version}</version>
             </extension>
         </extensions>
         <pluginManagement>
@@ -168,12 +177,12 @@
                 <plugin>
                     <groupId>com.github.danielflower.mavenplugins</groupId>
                     <artifactId>multi-module-maven-release-plugin</artifactId>
-                    <version>DC-1.5-SNAPSHOT</version>
+                    <version>${multi-module-maven-release-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>2.8.1</version>
+                    <version>${maven-project-info-reports-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -181,7 +190,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.10</version>
+                <version>${maven-dependency-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>analyze</id>
@@ -218,7 +227,7 @@
             <plugin>
                 <groupId>com.buschmais.jqassistant.scm</groupId>
                 <artifactId>jqassistant-maven-plugin</artifactId>
-                <version>1.1.3</version>
+                <version>${jqassistant-maven-plugin.version}</version>
                 <extensions>true</extensions>
                 <executions>
                     <execution>
@@ -235,7 +244,7 @@
             <plugin>
                 <groupId>com.versioneye</groupId>
                 <artifactId>versioneye-maven-plugin</artifactId>
-                <version>3.9.1</version>
+                <version>${versioneye-maven-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
@@ -245,7 +254,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.8.1</version>
+                <version>${maven-project-info-reports-plugin.version}</version>
                 <configuration>
                     <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                 </configuration>
@@ -253,7 +262,7 @@
             <plugin>
                 <groupId>com.github.danielflower.mavenplugins</groupId>
                 <artifactId>gitlog-maven-plugin</artifactId>
-                <version>1.13.2</version>
+                <version>${gitlog-maven-plugin.version}</version>
                 <configuration>
                     <simpleHTMLChangeLogFilename>gitlog.html</simpleHTMLChangeLogFilename>
                 </configuration>
