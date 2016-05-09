@@ -114,7 +114,17 @@
             <name>DukeCon Snapshots</name>
             <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/releases</url>
         </repository>
+        <site>
+            <id>dukecon-site</id>
+            <name>DukeCon Site</name>
+            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/site</url>
+        </site>
     </distributionManagement>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/dukecon/dukecon_server/issues</url>
+    </issueManagement>
 
     <dependencyManagement>
         <dependencies>
