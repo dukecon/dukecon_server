@@ -553,6 +553,9 @@
                 <groupId>com.versioneye</groupId>
                 <artifactId>versioneye-maven-plugin</artifactId>
                 <version>${versioneye-maven-plugin.version}</version>
+                <configuration>
+                    <ignoreDependencyManagement>true</ignoreDependencyManagement>
+                </configuration>
             </plugin>
         </plugins>
     </build>
