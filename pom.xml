@@ -123,7 +123,7 @@
         <site>
             <id>dukecon-site</id>
             <name>DukeCon Site</name>
-            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/site</url>
+            <url>dav:http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/site</url>
         </site>
     </distributionManagement>
 
