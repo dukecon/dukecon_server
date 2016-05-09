@@ -445,6 +445,21 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <configuration>
+                            <injectAllReactorProjects>true</injectAllReactorProjects>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Copy the static docs into build.outputDirectory to be included in the jar -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -476,6 +491,23 @@
                             <artifactId>dukecon-html5-client</artifactId>
                         </overlay>
                     </overlays>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>**/*.txt</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Implementation-Build>${project.artifactId}-${project.version}-r${buildNumber}</Implementation-Build>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>
@@ -584,6 +616,29 @@
 					<format>html5</format>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <revisionOnScmFailure>_localbuild</revisionOnScmFailure>
+                    <shortRevisionLength>8</shortRevisionLength>
+                    <format>{0,date,yyyy-MM-dd_HH:mm:ss}</format>
+                    <items>
+                        <item>timestamp</item>
+                    </items>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
