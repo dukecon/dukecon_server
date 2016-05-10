@@ -1,10 +1,9 @@
-target
 .classpath
+.idea
 .project
 .settings
-.idea
 *.iml
-javaland-2016-backup.raw
+*.log
+*.raw
 logs/
-impl/overlays/
-generated/
+target/
