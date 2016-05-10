@@ -383,8 +383,8 @@
                                             <!-- 
                                         <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
                                          -->
-                                <outputPath>${basedir}/target/generated/document.html</outputPath>
-                                <swaggerDirectory>${basedir}/target/generated/swagger</swaggerDirectory>
+                                <outputPath>${project.build.directory}/generated/document.html</outputPath>
+                                <swaggerDirectory>${project.build.directory}/generated/swagger</swaggerDirectory>
                             </apiSource>
                         </apiSources>
                     </configuration>
@@ -401,7 +401,7 @@
                 <groupId>io.github.robwin</groupId>
                 <artifactId>swagger2markup-maven-plugin</artifactId>
                 <configuration>
-                    <inputDirectory>${basedir}/target/generated/swagger</inputDirectory>
+                    <inputDirectory>${project.build.directory}/generated/swagger</inputDirectory>
                     <outputDirectory>${generated.asciidoc.directory}</outputDirectory>
                     <separateDefinitions>true</separateDefinitions>
                 </configuration>
