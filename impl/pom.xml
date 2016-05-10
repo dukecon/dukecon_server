@@ -364,30 +364,31 @@
                 <artifactId>swagger-maven-plugin</artifactId>
                 <configuration>
                     <apiSources>
-                          <apiSource>
-                                <springmvc>false</springmvc>
-                                <locations>org.dukecon.server.conference</locations>
-                                <schemes>http,https</schemes>
-                                <host>dukecon.org</host>
-                                <basePath>/rest</basePath>
-                                <info>
-                                    <title>DukeCon API</title>
-                                    <version>v1</version>
-                                    <description>Documentation of the REST API.</description>
-                                    <termsOfService>https://dukecon.org/</termsOfService>
-                                </info>
-                                        <!-- Support classpath or file absolute path here.
-                                        1) classpath e.g: "classpath:/markdown.hbs", "classpath:/templates/hello.html"
-                                        2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
-                                            "${basedir}/src/main/resources/template/hello.html" -->
-                                            <!-- 
-                                        <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
-                                         -->
-                                <outputPath>${project.build.directory}/generated/document.html</outputPath>
-                                <swaggerDirectory>${project.build.directory}/generated/swagger</swaggerDirectory>
-                            </apiSource>
-                        </apiSources>
-                    </configuration>
+                        <apiSource>
+                            <springmvc>false</springmvc>
+                            <locations>org.dukecon.server.conference</locations>
+                            <schemes>http,https</schemes>
+                            <host>dukecon.org</host>
+                            <basePath>/rest</basePath>
+                            <info>
+                                <title>DukeCon API</title>
+                                <version>v1</version>
+                                <description>Documentation of the REST API.</description>
+                                <termsOfService>https://dukecon.org/</termsOfService>
+                            </info>
+                            <!-- Support classpath or file absolute path here.
+                                1) classpath e.g: "classpath:/markdown.hbs", "classpath:/templates/hello.html"
+                                2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
+                                    "${basedir}/src/main/resources/template/hello.html"
+                            -->
+                            <!--
+                                <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
+                            -->
+                            <outputPath>${project.build.directory}/generated/document.html</outputPath>
+                            <swaggerDirectory>${project.build.directory}/generated/swagger</swaggerDirectory>
+                        </apiSource>
+                    </apiSources>
+                </configuration>
                     <executions>
                             <execution>
                                 <phase>process-classes</phase>
