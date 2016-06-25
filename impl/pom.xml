@@ -403,7 +403,7 @@
                 <groupId>io.github.robwin</groupId>
                 <artifactId>swagger2markup-maven-plugin</artifactId>
                 <configuration>
-                    <inputDirectory>${project.build.directory}/generated/swagger</inputDirectory>
+                    <inputDirectory>${project.build.directory}/swagger-ui</inputDirectory>
                     <outputDirectory>${generated.asciidoc.directory}</outputDirectory>
                     <separateDefinitions>true</separateDefinitions>
                 </configuration>
