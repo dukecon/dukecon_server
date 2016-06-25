@@ -373,7 +373,7 @@
                             <info>
                                 <title>DukeCon API</title>
                                 <version>v1</version>
-                                <description>Documentation of the REST API.</description>
+                                <description>Documentation of the DukeCon REST API.</description>
                                 <termsOfService>https://dukecon.org/</termsOfService>
                             </info>
                             <!-- Support classpath or file absolute path here.
@@ -385,7 +385,8 @@
                                 <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
                             -->
                             <outputPath>${project.build.directory}/generated/document.html</outputPath>
-                            <swaggerDirectory>${project.build.directory}/generated/swagger</swaggerDirectory>
+                            <swaggerDirectory>${project.build.directory}/swagger-ui</swaggerDirectory>
+                            <attachSwaggerArtifact>true</attachSwaggerArtifact>
                         </apiSource>
                     </apiSources>
                 </configuration>
