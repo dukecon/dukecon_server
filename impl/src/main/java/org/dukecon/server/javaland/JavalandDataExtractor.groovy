@@ -37,6 +37,12 @@ class JavalandDataExtractor {
 
     private void buildTwitterHandles () {
         InputStream twitterData = this.class.getResourceAsStream("/twitterhandles.csv")
+        if (null == twitterData) {
+            log.warn ("No twitter handles available!")
+            return
+        } else {
+            log.debug ("Can read #{}b of twitter data", twitterData.available())
+        }
         def csv = parseCsv(new InputStreamReader(twitterData))
 
         csv.each { line ->
