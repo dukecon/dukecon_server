@@ -170,7 +170,7 @@
         <site>
             <id>dukecon-site</id>
             <name>DukeCon Site</name>
-            <url>dav:http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/site/${project.groupId}/${project.artifactId}</url>
+            <url>dav:http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/site/${project.groupId}/${project.artifactId}/${project.version}</url>
         </site>
     </distributionManagement>
 
