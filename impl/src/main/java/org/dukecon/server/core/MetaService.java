@@ -43,7 +43,7 @@ public class MetaService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMeta() {
-        String id = "499959"; //hardcoded to Javaland 2016
+        String id = "496615"; //hardcoded to JFS 2016
         return getMeta(id);
     }
 
