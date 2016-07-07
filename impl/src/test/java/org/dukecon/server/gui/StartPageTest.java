@@ -20,7 +20,7 @@ public class StartPageTest extends AbstractPageTest<GivenStartPage, WhenStartPag
     @StartPageTag
     public void should_show_start_page() throws InterruptedException {
         given().start_page_opened_in_browser();
-        then().$1_days_should_be_shown(4)
+        then().$1_days_should_be_shown(1)
                 .and().all_filters_should_have_at_least_$1_values(2);
     }
 
