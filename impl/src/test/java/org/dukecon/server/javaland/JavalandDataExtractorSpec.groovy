@@ -127,7 +127,7 @@ class JavalandDataExtractorSpec extends Specification {
         when:
         def conference = extractor.buildConference()
         then:
-        assert conference.id == '499959'
+        assert conference.id == '496615'
         assert conference.name == 'DukeCon Conference'
         assert conference.url == 'http://dukecon.org'
     }
