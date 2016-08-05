@@ -28,13 +28,13 @@ public class MetaService {
         this.talkProviders = talkProviders;
     }
 
-    @GET
+/*    @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMeta(@PathParam("id") String id) {
         Optional<ConferenceDataProvider> provider = talkProviders.stream().filter(p -> p.getConference().getId().equals(id)).findFirst();
         if (provider.isPresent()) {
-            return Response.ok().entity(provider.get().getConference().getMetaData()).build();
+            return Response.ok().entity(provider.get().getConference()).build();
         }
         return Response.status(Response.Status.NOT_FOUND).build();
     }
@@ -45,7 +45,7 @@ public class MetaService {
     public Response getMeta() {
         String id = "499959"; //hardcoded to Javaland 2016
         return getMeta(id);
-    }
+    }*/
 
     @GET
     @Path("ping")

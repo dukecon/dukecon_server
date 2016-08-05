@@ -1,7 +1,9 @@
 package org.dukecon
 
 import flex.messaging.MessageBroker
+import flex.messaging.io.PropertyProxyRegistry
 import flex.messaging.io.SerializationContext
+import org.dukecon.server.utils.LocalDateTimePropertyProxy
 import org.flywaydb.core.Flyway
 import org.springframework.beans.factory.BeanFactory
 import org.springframework.boot.SpringApplication
@@ -17,6 +19,7 @@ import org.springframework.web.filter.ShallowEtagHeaderFilter
 
 import javax.annotation.PostConstruct
 import javax.servlet.Filter
+import java.time.LocalDateTime
 
 @SpringBootApplication
 @ComponentScan("org.dukecon.server")
@@ -74,7 +77,7 @@ class DukeConServerApplication {
         serializationContext.supportRemoteClass = true;
         //false  Legacy Flex 1.5 behavior was to return a java.util.Collection for Array
         //true New Flex 2+ behavior is to return Object[] for AS3 Array
-        serializationContext.legacyCollection = false;
+        serializationContext.legacyCollection = true;
 
         serializationContext.legacyMap = false;
         //false Legacy flash.xml.XMLDocument Type
@@ -89,6 +92,11 @@ class DukeConServerApplication {
         serializationContext.restoreReferences = false;
         serializationContext.logPropertyErrors = false;
         serializationContext.ignorePropertyErrors = true;
+
+        // Register a property proxy that allows serialization of LocalDateTime objects.
+        PropertyProxyRegistry.getRegistry().register(
+                LocalDateTime.class, new LocalDateTimePropertyProxy()
+        );
     }
 
 }

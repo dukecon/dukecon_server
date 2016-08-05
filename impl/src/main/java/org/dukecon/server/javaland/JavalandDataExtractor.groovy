@@ -26,11 +26,16 @@ class JavalandDataExtractor {
                 .id(talksJson.ID_KONGRESS.unique().first()?.toString())
                 .name(conferenceName)
                 .url(conferenceUrl)
-                .metaData(metaData)
+                .locations(this.locations)
+                .tracks(this.tracks)
+                .languages(this.languages)
+                .defaultLanguage(this.defaultLanguage)
+                .audiences(this.audiences)
+                .eventTypes(this.eventTypes)
+                .defaultIcon("Unknown.png")
                 .speakers(this.speakers)
                 .events(this.events)
                 .build()
-        conf.metaData.conference = conf
         conf.speakers = getSpeakersWithEvents()
         return conf
     }

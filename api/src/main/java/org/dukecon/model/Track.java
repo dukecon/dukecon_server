@@ -15,9 +15,14 @@ import java.util.Map;
 @EqualsAndHashCode(of = "order")
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Track {
+public class Track implements Identifyable {
     private String id;
     private Integer order;
     private Map<String, String> names = new HashMap<>();
     private String icon;
+
+    @Override
+    public String getId() {
+        return id;
+    }
 }

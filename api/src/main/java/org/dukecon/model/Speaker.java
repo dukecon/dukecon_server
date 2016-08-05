@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Speaker {
+public class Speaker implements Identifyable {
     private String id;
     private String name;
     private String company;
@@ -26,6 +26,12 @@ public class Speaker {
     private String twitter;
     private String gplus;
     private String bio;
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
     /**
      * @deprecated will be removed in v2 as we only need a speaker order per talk
      */

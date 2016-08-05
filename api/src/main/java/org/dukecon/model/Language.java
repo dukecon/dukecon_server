@@ -13,7 +13,7 @@ import java.util.Map;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Language {
+public class Language implements Identifyable {
     private String id;
     private Integer order;
     private Map<String, String> names = new HashMap<>();
