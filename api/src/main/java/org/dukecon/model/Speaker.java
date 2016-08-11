@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.dukecon.model.annotations.Relation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Speaker implements Identifyable {
+    @Relation(relationType = Relation.RelationType.MANY_TO_ONE)
+    private Conference conference;
     private String id;
     private String name;
     private String company;
@@ -26,11 +29,6 @@ public class Speaker implements Identifyable {
     private String twitter;
     private String gplus;
     private String bio;
-
-    @Override
-    public String getId() {
-        return id;
-    }
 
     /**
      * @deprecated will be removed in v2 as we only need a speaker order per talk

@@ -35,9 +35,4 @@ public class MetaData implements Identifyable {
     @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Location.class)
     private List<Location> locations = new ArrayList<>();
     private String defaultIcon;
-
-    @Override
-    public String getId() {
-        return id;
-    }
 }

@@ -42,9 +42,4 @@ public class Conference implements Identifyable {
     private List<Event> events;
     @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Speaker.class)
     private List<Speaker> speakers;
-
-    @Override
-    public String getId() {
-        return id;
-    }
 }
