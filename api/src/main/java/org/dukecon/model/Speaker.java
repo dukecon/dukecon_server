@@ -19,8 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Speaker implements Identifyable {
-    @Relation(relationType = Relation.RelationType.MANY_TO_ONE)
-    private Conference conference;
     private String id;
     private String name;
     private String company;
@@ -39,5 +37,6 @@ public class Speaker implements Identifyable {
     @JsonProperty(value = "eventIds")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
+    @Relation(relationType = Relation.RelationType.MANY_TO_MANY, remoteType = Event.class)
     private List<Event> events = new ArrayList<>();
 }

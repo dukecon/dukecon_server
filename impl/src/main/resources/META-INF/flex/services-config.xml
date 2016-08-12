@@ -57,12 +57,15 @@
         </channel-definition-->
         <channel-definition id="shortPollingAmf" class="mx.messaging.channels.AMFChannel">
             <endpoint url="http://{server.name}:{server.port}/{context.root}/messagebroker/short-polling-amf"
-                      class="flex.messaging.endpoints.AMFEndpoint"/>
+                      class="org.dukecon.server.utils.amf.AmfEndpoint"/>
             <properties>
                 <polling-enabled>true</polling-enabled>
                 <polling-interval-millis>30000</polling-interval-millis>
                 <piggybacking-enabled>true</piggybacking-enabled>
                 <add-no-cache-headers>true</add-no-cache-headers>
+                <serialization>
+                    <type-marshaller>org.dukecon.server.utils.amf.FlexASTranslator</type-marshaller>
+                </serialization>
             </properties>
         </channel-definition>
     </channels>

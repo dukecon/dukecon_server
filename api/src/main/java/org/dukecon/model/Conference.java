@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.ToString;
 import org.dukecon.model.annotations.Relation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,23 +22,11 @@ public class Conference implements Identifyable {
     private String name;
     private String url;
     private String icon;
-    private String defaultIcon;
 
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Audience.class)
-    private List<Audience> audiences = new ArrayList<>();
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = EventType.class)
-    private List<EventType> eventTypes = new ArrayList<>();
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Language.class)
-    private List<Language> languages = new ArrayList<>();
-    @Relation(relationType = Relation.RelationType.ONE_TO_ONE)
-    private Language defaultLanguage;
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Track.class)
-    private List<Track> tracks = new ArrayList<>();
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Location.class)
-    private List<Location> locations = new ArrayList<>();
-
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Event.class)
+    @Relation(relationType = Relation.RelationType.ONE_TO_ONE, privateOwned = true)
+    private MetaData metaData;
+    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Event.class, privateOwned = true)
     private List<Event> events;
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Speaker.class)
+    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Speaker.class, privateOwned = true)
     private List<Speaker> speakers;
 }

@@ -22,8 +22,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Event implements Identifyable {
     private String id;
-    @Relation(relationType = Relation.RelationType.MANY_TO_ONE)
-    private Conference conference;
     @JsonProperty(value = "trackId")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)

@@ -18,19 +18,15 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MetaData implements Identifyable {
     private String id;
-    @JsonProperty(value = "conferenceId")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    private Conference conference;
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Audience.class)
+    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Audience.class, privateOwned = true)
     private List<Audience> audiences = new ArrayList<>();
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = EventType.class)
+    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = EventType.class, privateOwned = true)
     private List<EventType> eventTypes = new ArrayList<>();
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Language.class)
+    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Language.class, privateOwned = true)
     private List<Language> languages = new ArrayList<>();
     @Relation(relationType = Relation.RelationType.ONE_TO_ONE)
     private Language defaultLanguage;
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Track.class)
+    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Track.class, privateOwned = true)
     private List<Track> tracks = new ArrayList<>();
     @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Location.class)
     private List<Location> locations = new ArrayList<>();

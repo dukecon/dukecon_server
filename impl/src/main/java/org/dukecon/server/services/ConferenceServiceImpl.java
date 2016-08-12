@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by christoferdutz on 02.08.16.
@@ -52,8 +53,8 @@ public class ConferenceServiceImpl implements ConferenceService {
         for(ConferenceDataProvider provider : talkProviders) {
             Conference conference = provider.getConference();
             // TODO : Remove this hack!
-            updateLanguageIds(conference.getDefaultLanguage());
-            for(Language language : conference.getLanguages()) {
+            updateLanguageIds(conference.getMetaData().getDefaultLanguage());
+            for(Language language : conference.getMetaData().getLanguages()) {
                 updateLanguageIds(language);
             }
             for(Event event : conference.getEvents()) {
@@ -67,33 +68,26 @@ public class ConferenceServiceImpl implements ConferenceService {
             Map<String, Speaker> speakerMap = new HashMap<>();
             Map<String, Track> trackMap = new HashMap<>();
             Map<String, Event> eventMap = new HashMap<>();
-            for(Audience audience : conference.getAudiences()) {
-                audience.setConference(conference);
+            for(Audience audience : conference.getMetaData().getAudiences()) {
                 audienceMap.put(audience.getId(), audience);
             }
-            for(EventType eventType : conference.getEventTypes()) {
-                eventType.setConference(conference);
+            for(EventType eventType : conference.getMetaData().getEventTypes()) {
                 eventTypeMap.put(eventType.getId(), eventType);
             }
-            for(Language language : conference.getLanguages()) {
-                language.setConference(conference);
+            for(Language language : conference.getMetaData().getLanguages()) {
                 languageMap.put(language.getId(), language);
             }
-            conference.setDefaultLanguage(languageMap.get(conference.getDefaultLanguage().getId()));
-            for(Location location : conference.getLocations()) {
-                location.setConference(conference);
+            conference.getMetaData().setDefaultLanguage(languageMap.get(conference.getMetaData().getDefaultLanguage().getId()));
+            for(Location location : conference.getMetaData().getLocations()) {
                 locationMap.put(location.getId(), location);
             }
             for(Speaker speaker : conference.getSpeakers()) {
-                speaker.setConference(conference);
                 speakerMap.put(speaker.getId(), speaker);
             }
-            for(Track track : conference.getTracks()) {
-                track.setConference(conference);
+            for(Track track : conference.getMetaData().getTracks()) {
                 trackMap.put(track.getId(), track);
             }
             for(Event event : conference.getEvents()) {
-                event.setConference(conference);
                 if(event.getAudience() != null) {
                     event.setAudience(audienceMap.get(event.getAudience().getId()));
                 }
@@ -109,20 +103,17 @@ public class ConferenceServiceImpl implements ConferenceService {
                 if(event.getType() != null) {
                     event.setType(eventTypeMap.get(event.getType().getId()));
                 }
-                List<Speaker> speakers = new LinkedList<>();
-                for(Speaker speaker : event.getSpeakers()) {
-                    speakers.add(speakerMap.get(speaker.getId()));
-                }
+                List<Speaker> speakers = event.getSpeakers().stream().map(
+                        speaker -> speakerMap.get(speaker.getId())).collect(Collectors.toCollection(LinkedList::new));
                 event.setSpeakers(speakers);
                 eventMap.put(event.getId(), event);
             }
             for(Speaker speaker : conference.getSpeakers()) {
-                List<Event> events = new LinkedList<>();
-                for(Event event : speaker.getEvents()) {
-                    events.add(eventMap.get(event.getId()));
-                }
+                List<Event> events = speaker.getEvents().stream().map(
+                        event -> eventMap.get(event.getId())).collect(Collectors.toCollection(LinkedList::new));
                 speaker.setEvents(events);
             }
+            conference.getMetaData().setId(conference.getId());
 
             conferences.add(conference);
         }
