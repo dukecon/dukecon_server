@@ -23,10 +23,10 @@ public class Conference implements Identifyable {
     private String url;
     private String icon;
 
-    @Relation(relationType = Relation.RelationType.ONE_TO_ONE, privateOwned = true)
+    @Relation(relationType = Relation.RelationType.ONE_TO_ONE)
     private MetaData metaData;
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Event.class, privateOwned = true)
+    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Event.class)
     private List<Event> events;
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Speaker.class, privateOwned = true)
+    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Speaker.class)
     private List<Speaker> speakers;
 }
