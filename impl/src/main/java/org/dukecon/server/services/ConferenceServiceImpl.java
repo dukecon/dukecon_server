@@ -61,6 +61,8 @@ public class ConferenceServiceImpl implements ConferenceService {
                 updateLanguageIds(event.getLanguage());
             }
 
+            // When reading things from the input json there are multiple instances of many entities,
+            // This code makes sure only one entity instance is used throughout the object graph.
             Map<String, Audience> audienceMap = new HashMap<>();
             Map<String, EventType> eventTypeMap = new HashMap<>();
             Map<String, Language> languageMap = new HashMap<>();
