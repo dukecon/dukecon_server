@@ -1,6 +1,7 @@
 package org.dukecon.server.services;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dukecon.services.ResourceService;
 import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
@@ -29,50 +30,37 @@ public class ResourceServiceImpl implements ResourceService {
     public Map<String, Map<String, byte[]>> getResourcesForConference(String conferenceId) {
         Map<String, Map<String, byte[]>> result = new HashMap<>();
 
-        Set<String> imageResources = servletContext.getResourcePaths("/public/img/");
+        // Languages
+        Set<String> imageResources = servletContext.getResourcePaths("/public/img/languages");
+        result.put("languages", getImageData(imageResources));
 
-        if(imageResources != null) {
-            for (String imageResource : imageResources) {
-                // Languages
-                if (imageResource.startsWith("language_")) {
-                    if (!result.containsKey("languages")) {
-                        result.put("languages", new HashMap<>());
-                    }
-                    String id = imageResource.substring("language_".length());
-                    byte[] imageData = getImageData(imageResource);
-                    if (imageData != null) {
-                        result.get("languages").put(id, imageData);
-                    }
-                }
-
-                // Streams
-                else if (imageResource.startsWith("track_")) {
-                    if (!result.containsKey("streams")) {
-                        result.put("streams", new HashMap<>());
-                    }
-                    String id = imageResource.substring("track_".length());
-                    byte[] imageData = getImageData(imageResource);
-                    if (imageData != null) {
-                        result.get("streams").put(id, imageData);
-                    }
-                }
-            }
-        }
+        // Streams
+        imageResources = servletContext.getResourcePaths("/public/img/streams");
+        result.put("streams", getImageData(imageResources));
 
         return result;
     }
 
-    private byte[] getImageData(String imageResource) {
-        try {
-            URL resourceUrl = servletContext.getResource(imageResource);
-            InputStream resourceInputStream = resourceUrl.openStream();
-            return IOUtils.toByteArray(resourceInputStream);
-        } catch (MalformedURLException e) {
-            // Not much we can do about this here ... simply ignore.
-        } catch (IOException e) {
-            e.printStackTrace();
+    private Map<String, byte[]> getImageData(Set<String> imageResources) {
+        Map<String, byte[]> images = new HashMap<>();
+        if(imageResources != null) {
+            for (String imageResource : imageResources) {
+                String id = StringUtils.substringBefore(StringUtils.substringAfterLast(imageResource, "/"), ".");
+                try {
+                    URL resourceUrl = servletContext.getResource(imageResource);
+                    InputStream resourceInputStream = resourceUrl.openStream();
+                    byte[] imageData = IOUtils.toByteArray(resourceInputStream);
+                    if (imageData != null) {
+                        images.put(id, imageData);
+                    }
+                } catch (MalformedURLException e) {
+                    // Not much we can do about this here ... simply ignore.
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return null;
+        return images;
     }
 
 }
