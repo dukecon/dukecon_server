@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DukeConServerApplication.class)
 @WebIntegrationTest({"server.port=0", "management.port=0"})
-public class DetailPageTest extends AbstractPageTest<GivenStartPage, WhenStartPage, ThenDetailPage> {
+public class DetailPageIT extends AbstractPageIT<GivenStartPage, WhenStartPage, ThenDetailPage> {
 
     @Test
     @DetailPageTag

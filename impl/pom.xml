@@ -240,6 +240,11 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.spockframework</groupId>
       <artifactId>spock-core</artifactId>
       <scope>test</scope>
@@ -522,6 +527,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
+        <version>2.6</version>
         <configuration>
           <overlays>
             <overlay>
@@ -538,6 +544,12 @@
               </includes>
             </resource>
           </webResources>
+          <overlays>
+            <overlay>
+              <groupId>org.dukecon</groupId>
+              <artifactId>dukecon-html5-client</artifactId>
+            </overlay>
+          </overlays>
           <archive>
             <manifest>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -585,7 +597,7 @@
         <extensions>true</extensions>
       </plugin>
       <!-- copy the html5 war file to the target folder so surefire can pick it up -->
-      <plugin>
+      <!--plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
@@ -608,7 +620,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin-->
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
@@ -616,16 +628,49 @@
           <forkMode>always</forkMode>
           <argLine>${surefire.argline}</argLine>
           <useFile>false</useFile>
-          <additionalClasspathElements>
-            <!-- this is necessary so Spring boot picks up the static content in /public that is used by the GUI test -->
-            <additionalClasspathElement>${project.build.directory}/dependency/dukecon-html5-client.war</additionalClasspathElement>
-          </additionalClasspathElements>
           <includes>
             <include>**/*Spec.java</include>
             <include>**/*Spec.groovy</include>
             <include>**/*Test*.java</include>
             <include>**/*Test*.groovy</include>
           </includes>
+          <systemProperties>
+            <!-- when you run the tests in the IDE, arquillian.xml is used
+            with a firefox browser served by a remote selenium. -->
+            <!-- when you run the tests from maven, use the arquillian-headless.xml
+            instead that uses a phantom headless browser -->
+            <property>
+              <name>arquillian.xml</name>
+              <value>${arquillian.config}</value>
+            </property>
+          </systemProperties>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.18.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <argLine>${surefire.argline}</argLine>
+          <includes>
+            <include>**/*IT.java</include>
+            <include>**/*IT.groovy</include>
+          </includes>
+          <excludes>
+            <exclude>**/Abstract*</exclude>
+          </excludes>
+          <additionalClasspathElements>
+            <!-- this is necessary so Spring boot picks up the static content in /public that is used by the GUI test -->
+            <additionalClasspathElement>${project.build.directory}/war/work/org.dukecon/dukecon-html5-client</additionalClasspathElement>
+          </additionalClasspathElements>
           <systemProperties>
             <!-- when you run the tests in the IDE, arquillian.xml is used
             with a firefox browser served by a remote selenium. -->

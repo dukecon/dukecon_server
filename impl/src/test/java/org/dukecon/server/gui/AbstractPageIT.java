@@ -17,7 +17,7 @@ import java.net.URL;
 /**
  * Base class for all Selenium/Graphene webpage tests.
  */
-public class AbstractPageTest<GIVEN, WHEN, THEN> extends ScenarioTest<GIVEN, WHEN, THEN> {
+public class AbstractPageIT<GIVEN, WHEN, THEN> extends ScenarioTest<GIVEN, WHEN, THEN> {
 
     @ClassRule
     public static ArquillianClassRule classRule = new ArquillianClassRule();
