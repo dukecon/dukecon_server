@@ -69,7 +69,7 @@ class JavalandDataExtractor {
             it.first()
         }.collect {
             def lang = toIsoLanguageCode(it[1])
-            Language.builder().id(lang).order(i++).names([de: it[0], en: it[1]]).icon("language_${lang}.png").build()
+            Language.builder().id(Integer.toString(i)).code(lang).order(i++).names([de: it[0], en: it[1]]).icon("language_${lang}.png").build()
         }
     }
 
@@ -90,7 +90,7 @@ class JavalandDataExtractor {
     }
 
     Language getLanguage(String name) {
-        return name ? languages.find { toIsoLanguageCode(name) == it.id } : null
+        return name ? languages.find { toIsoLanguageCode(name) == it.code } : null
     }
 
     List<Audience> getAudiences() {

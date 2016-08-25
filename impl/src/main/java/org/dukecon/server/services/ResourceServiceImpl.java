@@ -31,11 +31,11 @@ public class ResourceServiceImpl implements ResourceService {
         Map<String, Map<String, byte[]>> result = new HashMap<>();
 
         // Languages
-        Set<String> imageResources = servletContext.getResourcePaths("/public/img/languages");
+        Set<String> imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/languages");
         result.put("languages", getImageData(imageResources));
 
         // Streams
-        imageResources = servletContext.getResourcePaths("/public/img/streams");
+        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/streams");
         result.put("streams", getImageData(imageResources));
 
         return result;

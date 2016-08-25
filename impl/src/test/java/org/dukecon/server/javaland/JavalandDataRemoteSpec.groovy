@@ -27,7 +27,7 @@ class JavalandDataRemoteSpec extends Specification {
         assert conference.metaData.locations.size() == 7
         assert conference.metaData.locations.order.join('') == ('1'..'7').join('')
         assert conference.metaData.tracks.size() == 8
-        assert conference.metaData.defaultLanguage.id == 'de'
+        assert conference.metaData.defaultLanguage.code == 'de'
         assert conference.metaData.languages.size() == 2
         assert conference.metaData.audiences.size() == 2
     }

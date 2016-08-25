@@ -52,14 +52,6 @@ public class ConferenceServiceImpl implements ConferenceService {
         Collection<Conference> conferences = new LinkedList<>();
         for(ConferenceDataProvider provider : talkProviders) {
             Conference conference = provider.getConference();
-            // TODO : Remove this hack!
-            updateLanguageIds(conference.getMetaData().getDefaultLanguage());
-            for(Language language : conference.getMetaData().getLanguages()) {
-                updateLanguageIds(language);
-            }
-            for(Event event : conference.getEvents()) {
-                updateLanguageIds(event.getLanguage());
-            }
 
             // When reading things from the input json there are multiple instances of many entities,
             // This code makes sure only one entity instance is used throughout the object graph.
@@ -122,19 +114,4 @@ public class ConferenceServiceImpl implements ConferenceService {
         return conferences;
     }
 
-    private void updateLanguageIds(Language language) {
-        if(language != null) {
-            switch (language.getId()) {
-                case "de":
-                    language.setId("1");
-                    break;
-                case "en":
-                    language.setId("2");
-                    break;
-                case "germanenglish":
-                    language.setId("3");
-                    break;
-            }
-        }
-    }
 }

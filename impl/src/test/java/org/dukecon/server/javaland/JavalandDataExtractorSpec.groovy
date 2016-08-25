@@ -43,7 +43,7 @@ class JavalandDataExtractorSpec extends Specification {
         when:
         Language language = extractor.defaultLanguage
         then:
-        assert language.id == 'de'
+        assert language.code == 'de'
         assert language.order == 1
         assert language.names.de == 'Deutsch'
         assert language.icon == 'language_de.png'
@@ -54,7 +54,7 @@ class JavalandDataExtractorSpec extends Specification {
         List<Language> languages = extractor.languages
         then:
         assert languages.size() == 2
-        assert languages.id.join(', ') == 'de, en'
+        assert languages.code.join(', ') == 'de, en'
         assert languages.order.join(', ') == '1, 2'
         assert languages.names.de.join(', ') == 'Deutsch, Englisch'
         assert languages.names.en.join(', ') == 'German, English'
@@ -66,8 +66,8 @@ class JavalandDataExtractorSpec extends Specification {
         def en = extractor.getLanguage("English")
         def de = extractor.getLanguage("German")
         then:
-        assert en.id == 'en'
-        assert de.id == 'de'
+        assert en.code == 'en'
+        assert de.code == 'de'
     }
 
     void "should list two audience levels"() {
@@ -113,7 +113,7 @@ class JavalandDataExtractorSpec extends Specification {
         assert conference.metaData.locations.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
         assert conference.metaData.tracks.size() == 9
         assert conference.metaData.tracks.names['de'].join(', ') == 'Community, Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer'
-        assert conference.metaData.defaultLanguage.id == 'de'
+        assert conference.metaData.defaultLanguage.code == 'de'
         assert conference.metaData.defaultIcon == 'Unknown.png'
         assert conference.metaData.languages.size() == 2
         assert conference.metaData.languages.names.de.join(', ') == 'Deutsch, Englisch'
@@ -214,7 +214,7 @@ class JavalandDataExtractorSpec extends Specification {
         then:
         assert events.size() == 1
         assert events.first().audience.names.de == 'Fortgeschrittene'
-        assert events.first().language.id == "de"
+        assert events.first().language.code == "de"
         assert events.first().location.id == '1'
         assert events.first().location.order == 1
         assert events.first().location.names.de == "Wintergarten"
