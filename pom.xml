@@ -417,6 +417,29 @@
                 <groupId>org.springframework.flex</groupId>
                 <artifactId>spring-flex-core</artifactId>
                 <version>${spring-flex.version}</version>
+                <exclusions>
+                    <!-- Spring-Flex still references old BlazeDS versions -->
+                    <exclusion>
+                        <groupId>com.adobe.blazeds</groupId>
+                        <artifactId>blazeds-common</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.adobe.blazeds</groupId>
+                        <artifactId>blazeds-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.adobe.blazeds</groupId>
+                        <artifactId>blazeds-proxy</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.adobe.blazeds</groupId>
+                        <artifactId>blazeds-remoting</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.activemq</groupId>
+                        <artifactId>activemq-core</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- This is sometimes needed at runtime -->
             <!--dependency>
