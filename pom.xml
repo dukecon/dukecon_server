@@ -592,14 +592,15 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <!-- FIXME: Deactivated due to ssl certificate problems -->
+            <!--plugin>
                 <groupId>com.versioneye</groupId>
                 <artifactId>versioneye-maven-plugin</artifactId>
                 <version>${versioneye-maven-plugin.version}</version>
                 <configuration>
                     <ignoreDependencyManagement>true</ignoreDependencyManagement>
                 </configuration>
-            </plugin>
+            </plugin-->
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
