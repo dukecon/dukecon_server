@@ -25,6 +25,8 @@ public class JerseyConfig extends ResourceConfig {
         register(PreferencesService.class);
         register(NoAuthPreferencesService.class);
         register(FiltersService.class);
+
+        register(CorsFilter.class);
     }
 
 }
