@@ -64,7 +64,7 @@ class ConferencesResource {
     @Path("{id}")
     @ApiOperation(value = "Conference details")
     public ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
-        def provider = getConferenceProvider(id)
+        def provider = getConferenceProvider(id.replace(".json", ""))
         if (provider == null) {
             log.warn("Conference with id {} not found", id)
             return new ConferenceDetailResource(null)
