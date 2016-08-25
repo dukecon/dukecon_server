@@ -412,6 +412,12 @@
                 <groupId>org.apache.flex.blazeds</groupId>
                 <artifactId>flex-messaging-core</artifactId>
                 <version>${blazeds.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.activemq</groupId>
+                        <artifactId>activemq-core</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.springframework.flex</groupId>
