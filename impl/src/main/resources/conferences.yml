@@ -1,0 +1,24 @@
+conferences:
+  -
+    id: 499959
+    talksUri: https://www.javaland.eu/api/schedule/JavaLand2016/jl.php?key=TestJL
+    backupUri: javaland-2016-backup.raw
+    conferenceUrl: http://dukecon.org${server.contextPath}
+    conferenceName: JavaLand 2016
+    startDate: 2016-03-08
+    endDate: 2016-03-10
+  -
+    id: 496615
+    talksUri: https://www.javaland.eu/api/schedule/JavaLand2016/stuttgart.php?key=TestJL
+    backupUri: jfs-2016-backup.raw
+    conferenceUrl: https://dukecon.org/jfs
+    conferenceName: Java Forum Stuttgart 2016
+    startDate: 2016-07-07
+    endDate: 2016-07-07
+  -
+    id: hc2016
+    talksUri: herbstcampus_2016_veranstaltungen_20160826.csv
+    conferenceUrl: https://dukecon.org/hc16
+    conferenceName: Herbstcampus 2016
+    startDate: 2016-08-30
+    endDate: 2016-09-01

@@ -2,7 +2,8 @@ package org.dukecon
 
 import flex.messaging.MessageBroker
 import flex.messaging.io.SerializationContext
-
+import org.dukecon.server.conference.ConferenceDataProvider
+import org.dukecon.server.conference.ConferencesConfiguration
 import org.flywaydb.core.Flyway
 import org.springframework.beans.factory.BeanFactory
 import org.springframework.boot.SpringApplication
@@ -17,6 +18,7 @@ import org.springframework.flex.messaging.MessageTemplate
 import org.springframework.web.filter.ShallowEtagHeaderFilter
 
 import javax.annotation.PostConstruct
+import javax.inject.Inject
 import javax.servlet.Filter
 
 @SpringBootApplication
@@ -29,6 +31,8 @@ class DukeConServerApplication {
         SpringApplication.run DukeConServerApplication, args
     }
 
+    @Inject
+    private ConferencesConfiguration conferencesConfiguration
     @Bean
     public Filter shallowEtagHeaderFilter() {
         return new ShallowEtagHeaderFilter();
