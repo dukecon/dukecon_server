@@ -9,5 +9,5 @@ import org.dukecon.model.Conference
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 interface ConferenceDataExtractor {
-    Conference buildConference()
+    Conference getConference()
 }

@@ -17,7 +17,7 @@ conferences:
     endDate: 2016-07-07
   -
     id: hc2016
-    talksUri: herbstcampus_2016_veranstaltungen_20160826.csv
+    talksUri: herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv
     conferenceUrl: https://dukecon.org/hc16
     conferenceName: Herbstcampus 2016
     startDate: 2016-08-30
