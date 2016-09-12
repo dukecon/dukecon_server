@@ -76,6 +76,7 @@
         <flyway-maven-plugin.version>4.0.1</flyway-maven-plugin.version>
         <git-commit-id-plugin.version>2.2.1</git-commit-id-plugin.version>
         <gitlog-maven-plugin.version>1.13.2</gitlog-maven-plugin.version>
+        <google-guava.version>19.0</google-guava.version>
         <graphene-webdriver.version>2.0.3.Final</graphene-webdriver.version>
         <groovy-eclipse-batch.version>2.4.3-01</groovy-eclipse-batch.version>
         <groovy-eclipse-compiler.version>2.9.2-01</groovy-eclipse-compiler.version>
@@ -201,6 +202,11 @@
                 <groupId>com.netflix.hystrix</groupId>
                 <artifactId>hystrix-javanica</artifactId>
                 <version>${hystrix-javanica.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${google-guava.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.tngtech.jgiven</groupId>

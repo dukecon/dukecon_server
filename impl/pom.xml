@@ -60,6 +60,10 @@
       <artifactId>h2</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
       <!-- upgrade archaius-core to avoid NoClassDefFoundError exception -->
       <groupId>com.netflix.archaius</groupId>
       <artifactId>archaius-core</artifactId>
