@@ -25,7 +25,7 @@ class HerbstcampusSpeakerMapper {
     }
 
     private void addSpeaker(String firstname, String lastname, String email, String twitter, String company, String bio, String eventId) {
-        if (lastname) {
+        if (lastname && email) {
             Speaker speaker = Speaker.builder()
                     .id(Integer.toString("${firstname}_${lastname}_${email}".hashCode()))
                     .name("${firstname} ${lastname}")
@@ -33,9 +33,14 @@ class HerbstcampusSpeakerMapper {
                     .company(company)
                     .twitter(twitter)
                     .bio(bio)
+                    .events([])
                     .build()
-            speakers.put(speaker.id, speaker)
-            eventIdsToSpeaker.put(eventId, speaker)
+            if (speakers.containsKey(speaker.id)) {
+                eventIdsToSpeaker.put(eventId, speakers.get(speaker.id))
+            } else {
+                speakers.put(speaker.id, speaker)
+                eventIdsToSpeaker.put(eventId, speaker)
+            }
         }
     }
 

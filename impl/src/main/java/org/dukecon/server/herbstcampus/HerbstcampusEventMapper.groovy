@@ -1,6 +1,7 @@
 package org.dukecon.server.herbstcampus
 
 import org.dukecon.model.Event
+import org.dukecon.model.Speaker
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -33,7 +34,8 @@ class HerbstcampusEventMapper {
     }
 
     private Event getEvent(row) {
-        return Event.builder()
+        def speakers = speakerMapper.getSpeakersForEvent(row.values[0])
+        def event = Event.builder()
                 .id(row.values[0])
                 .title("${row.Titel} - ${row.Untertitel}")
                 .abstractText(row.Kurzabstract)
@@ -44,8 +46,12 @@ class HerbstcampusEventMapper {
                 .audience(audienceMapper.entityForName(row.Level))
                 .type(eventTypeMapper.entityForName(row.Art))
                 .location(locationMapper.entityForName(row.Raum))
-                .speakers(speakerMapper.getSpeakersForEvent(row.values[0]))
+                .speakers(speakers)
                 .build()
+        speakers.each {Speaker s ->
+            s.events = s.events + event
+        }
+        return event
     }
 
     private LocalDateTime getTime(row, String date, String time) {

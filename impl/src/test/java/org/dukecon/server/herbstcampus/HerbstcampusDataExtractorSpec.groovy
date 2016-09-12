@@ -2,6 +2,7 @@ package org.dukecon.server.herbstcampus
 
 import org.dukecon.model.Audience
 import org.dukecon.model.Conference
+import org.dukecon.model.Speaker
 import spock.lang.Specification
 
 import java.time.LocalDateTime
@@ -44,6 +45,8 @@ class HerbstcampusDataExtractorSpec extends Specification {
         then:
         speakers.size() == 51
         mapper.eventIdsToSpeaker.get('5511').size() == 2
+        mapper.eventIdsToSpeaker.get('5287').first().is(mapper.eventIdsToSpeaker.get('5290').first())
+        speakers.events*.size().each {it > 0}
     }
 
     void "should read 51 talks"() {
@@ -64,6 +67,7 @@ class HerbstcampusDataExtractorSpec extends Specification {
 
         then:
         event.speakers.first().name == 'Falk Sippach'
+        event.speakers.first().events.size() == 2
         event.id == '5287'
         event.title == 'Kontinuierlich und effizient - Agil Softwarearchitektur dokumentieren'
         event.start == LocalDateTime.of(2016, 8, 31, 15, 40)
