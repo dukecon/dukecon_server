@@ -86,6 +86,7 @@
         <hystrix-javanica.version>1.4.10</hystrix-javanica.version>
         <javax.inject.version>1</javax.inject.version>
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <javax.validation-api.version>1.1.0.Final</javax.validation-api.version>
         <javax.ws.rs-api.version>2.0.1</javax.ws.rs-api.version>
         <jersey-server.version>2.22.2</jersey-server.version>
         <jgiven-core.version>0.11.3</jgiven-core.version>
@@ -230,6 +231,11 @@
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${javax.servlet-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.ws.rs</groupId>
@@ -584,13 +590,14 @@
                             <!-- Most of the following dependencies are used in groovy code - so the plugin cannot detect it currently -->
                             <ignoredUnusedDeclaredDependencies>
                                 <ignoredUnusedDeclaredDependency>com.h2database:h2</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.apache.flex.blazeds:blazeds-spring-boot-starter</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.keycloak:keycloak-spring-boot-adapter</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-configuration-processor</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-actuator</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-jersey</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-web</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.springframework.cloud:spring-cloud-starter-hystrix</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.springframework.security:spring-security-web</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.apache.flex.blazeds:blazeds-spring-boot-starter</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </execution>
