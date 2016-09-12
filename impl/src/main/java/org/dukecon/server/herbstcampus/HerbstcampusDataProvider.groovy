@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 class HerbstcampusDataProvider implements ConferenceDataProvider {
     @Override
     Conference getConference() {
-        new HerbstcampusDataExtractor('hc16', new HerbstcampusCsvInput('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv'), '2016-08-30').conference
+        new HerbstcampusDataExtractor('1234', new HerbstcampusCsvInput('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv'), '2016-08-30').conference
     }
 
     @Override

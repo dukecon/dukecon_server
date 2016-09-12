@@ -103,9 +103,11 @@ public class ConferenceServiceImpl implements ConferenceService {
                 eventMap.put(event.getId(), event);
             }
             for(Speaker speaker : conference.getSpeakers()) {
-                List<Event> events = speaker.getEvents().stream().map(
-                        event -> eventMap.get(event.getId())).collect(Collectors.toCollection(LinkedList::new));
-                speaker.setEvents(events);
+                if(speaker.getEvents() != null) {
+                    List<Event> events = speaker.getEvents().stream().map(
+                            event -> eventMap.get(event.getId())).collect(Collectors.toCollection(LinkedList::new));
+                    speaker.setEvents(events);
+                }
             }
             conference.getMetaData().setId(conference.getId());
 

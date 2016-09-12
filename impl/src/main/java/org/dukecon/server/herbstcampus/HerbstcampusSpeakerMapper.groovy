@@ -27,8 +27,9 @@ class HerbstcampusSpeakerMapper {
     private void addSpeaker(String firstname, String lastname, String email, String twitter, String company, String bio, String eventId) {
         if (lastname) {
             Speaker speaker = Speaker.builder()
-                    .id("${firstname}_${lastname}_${email}")
+                    .id(Integer.toString("${firstname}_${lastname}_${email}".hashCode()))
                     .name("${firstname} ${lastname}")
+                    .email("${email}")
                     .company(company)
                     .twitter(twitter)
                     .bio(bio)
