@@ -72,8 +72,18 @@ class HerbstcampusDataExtractorSpec extends Specification {
         event.title == 'Kontinuierlich und effizient - Agil Softwarearchitektur dokumentieren'
         event.start == LocalDateTime.of(2016, 8, 31, 15, 40)
         event.end == LocalDateTime.of(2016, 8, 31, 16, 50)
+        event.type.names.de == 'Vortrag'
         event.language.code == 'de'
         event.track.names['de'] == 'JavaScript'
+
+        when:
+        event = events.find {it.id == '5140'}
+
+        then:
+        event.speakers.first().name == 'Stefan Lieser'
+        event.type.names.de == 'Tutorium'
+        event.start == LocalDateTime.of(2016, 8, 30, 9, 40)
+        event.end == LocalDateTime.of(2016, 8, 30, 18, 30)
     }
 
     void "should get one language"() {

@@ -56,7 +56,7 @@ class HerbstcampusEventMapper {
 
     private LocalDateTime getTime(row, String date, String time) {
         switch (row.Tag) {
-            case 3:
+            case '3':
                 return LocalDateTime.parse("${date} ${time}", DateTimeFormatter.ofPattern('yyyy-MM-dd HHmm'))
             default:
                 return (LocalDateTime.parse("${date} ${time}", DateTimeFormatter.ofPattern('yyyy-MM-dd HHmm')).plusDays(Long.valueOf(row.Tag)))
