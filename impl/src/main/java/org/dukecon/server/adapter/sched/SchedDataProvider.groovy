@@ -1,0 +1,95 @@
+package org.dukecon.server.adapter.sched
+
+import groovy.transform.TypeChecked
+import groovy.util.logging.Slf4j
+import org.apache.commons.lang3.StringUtils
+import org.dukecon.model.Conference
+import org.dukecon.server.conference.ConferenceDataProvider
+import org.springframework.beans.factory.InitializingBean
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
+
+import javax.inject.Inject
+import java.time.Instant
+
+/**
+ * Calls the remote service and caches the result as needed.
+ *
+ * @author Niko Köbler, http://www.n-k.de, @dasniko
+ * @author Falk Sippach, falk@jug-da.de, @sippsack
+ */
+@Slf4j
+@Component
+@TypeChecked
+class SchedDataProvider implements ConferenceDataProvider, InitializingBean {
+
+    @Value("\${sched.cache.expires:3600}")
+    Integer cacheExpiresAfterSeconds
+
+    @Value("#{'\${sched.conferences}'.split(',')}")
+    private List<String> conferences
+
+    @Inject
+    private SchedDataRemote remote
+
+    volatile Instant cacheLastUpdated
+
+    volatile Conference conference
+
+    volatile Exception staleException
+
+    @Override
+    void afterPropertiesSet() throws Exception {
+
+    }
+
+    Conference getConference() {
+        checkCache()
+        return conference
+    }
+
+    private void checkCache() {
+        if (!cacheLastUpdated || isCacheExpired()) {
+            // Synchronized to avoid triggering reads in parallel
+            synchronized (this) {
+                if (!cacheLastUpdated || isCacheExpired()) {
+                    update()
+                }
+            }
+        }
+    }
+
+    private boolean isCacheExpired() {
+        if (!cacheExpiresAfterSeconds) {
+            return true
+        }
+        return cacheLastUpdated.plusSeconds(cacheExpiresAfterSeconds).isBefore(Instant.now())
+    }
+
+    public synchronized boolean update() {
+        try {
+            // TODO: Greatly refactor this ...
+            for(String conference : conferences) {
+                if(!StringUtils.isEmpty(conference)) {
+                    this.conference = remote.readConferenceData(conference)
+                    staleException = null
+                }
+            }
+        } catch (Exception e) {
+            staleException = e
+        }
+        if((conference == null) && (staleException != null)) {
+            // no previously cached result exists
+            throw staleException
+        }
+        /* indepdendent of the result update the timestamp so
+           the next caller will get the cached result.
+         */
+        cacheLastUpdated = Instant.now()
+        return staleException == null && !remote.isBackupActive()
+    }
+
+    public boolean isBackupActive() {
+        return remote.isBackupActive()
+    }
+}

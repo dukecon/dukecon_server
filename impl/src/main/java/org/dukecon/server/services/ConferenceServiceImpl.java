@@ -52,6 +52,9 @@ public class ConferenceServiceImpl implements ConferenceService {
         Collection<Conference> conferences = new LinkedList<>();
         for(ConferenceDataProvider provider : talkProviders) {
             Conference conference = provider.getConference();
+            if(conference == null) {
+                continue;
+            }
 
             // When reading things from the input json there are multiple instances of many entities,
             // This code makes sure only one entity instance is used throughout the object graph.
@@ -62,51 +65,67 @@ public class ConferenceServiceImpl implements ConferenceService {
             Map<String, Speaker> speakerMap = new HashMap<>();
             Map<String, Track> trackMap = new HashMap<>();
             Map<String, Event> eventMap = new HashMap<>();
-            for(Audience audience : conference.getMetaData().getAudiences()) {
-                audienceMap.put(audience.getId(), audience);
+            if(conference.getMetaData().getAudiences() != null) {
+                for (Audience audience : conference.getMetaData().getAudiences()) {
+                    audienceMap.put(audience.getId(), audience);
+                }
             }
-            for(EventType eventType : conference.getMetaData().getEventTypes()) {
-                eventTypeMap.put(eventType.getId(), eventType);
+            if(conference.getMetaData().getEventTypes() != null) {
+                for (EventType eventType : conference.getMetaData().getEventTypes()) {
+                    eventTypeMap.put(eventType.getId(), eventType);
+                }
             }
-            for(Language language : conference.getMetaData().getLanguages()) {
-                languageMap.put(language.getId(), language);
+            if(conference.getMetaData().getLanguages() != null) {
+                for (Language language : conference.getMetaData().getLanguages()) {
+                    languageMap.put(language.getId(), language);
+                }
             }
             conference.getMetaData().setDefaultLanguage(languageMap.get(conference.getMetaData().getDefaultLanguage().getId()));
-            for(Location location : conference.getMetaData().getLocations()) {
-                locationMap.put(location.getId(), location);
+            if(conference.getMetaData().getLocations() != null) {
+                for (Location location : conference.getMetaData().getLocations()) {
+                    locationMap.put(location.getId(), location);
+                }
             }
-            for(Speaker speaker : conference.getSpeakers()) {
-                speakerMap.put(speaker.getId(), speaker);
+            if(conference.getSpeakers() != null) {
+                for (Speaker speaker : conference.getSpeakers()) {
+                    speakerMap.put(speaker.getId(), speaker);
+                }
             }
-            for(Track track : conference.getMetaData().getTracks()) {
-                trackMap.put(track.getId(), track);
+            if(conference.getMetaData().getTracks() != null) {
+                for (Track track : conference.getMetaData().getTracks()) {
+                    trackMap.put(track.getId(), track);
+                }
             }
-            for(Event event : conference.getEvents()) {
-                if(event.getAudience() != null) {
-                    event.setAudience(audienceMap.get(event.getAudience().getId()));
+            if(conference.getEvents() != null) {
+                for (Event event : conference.getEvents()) {
+                    if (event.getAudience() != null) {
+                        event.setAudience(audienceMap.get(event.getAudience().getId()));
+                    }
+                    if (event.getTrack() != null) {
+                        event.setTrack(trackMap.get(event.getTrack().getId()));
+                    }
+                    if (event.getLanguage() != null) {
+                        event.setLanguage(languageMap.get(event.getLanguage().getId()));
+                    }
+                    if (event.getLocation() != null) {
+                        event.setLocation(locationMap.get(event.getLocation().getId()));
+                    }
+                    if (event.getType() != null) {
+                        event.setType(eventTypeMap.get(event.getType().getId()));
+                    }
+                    List<Speaker> speakers = event.getSpeakers().stream().map(
+                            speaker -> speakerMap.get(speaker.getId())).collect(Collectors.toCollection(LinkedList::new));
+                    event.setSpeakers(speakers);
+                    eventMap.put(event.getId(), event);
                 }
-                if(event.getTrack() != null) {
-                    event.setTrack(trackMap.get(event.getTrack().getId()));
-                }
-                if(event.getLanguage() != null) {
-                    event.setLanguage(languageMap.get(event.getLanguage().getId()));
-                }
-                if(event.getLocation() != null) {
-                    event.setLocation(locationMap.get(event.getLocation().getId()));
-                }
-                if(event.getType() != null) {
-                    event.setType(eventTypeMap.get(event.getType().getId()));
-                }
-                List<Speaker> speakers = event.getSpeakers().stream().map(
-                        speaker -> speakerMap.get(speaker.getId())).collect(Collectors.toCollection(LinkedList::new));
-                event.setSpeakers(speakers);
-                eventMap.put(event.getId(), event);
             }
-            for(Speaker speaker : conference.getSpeakers()) {
-                if(speaker.getEvents() != null) {
-                    List<Event> events = speaker.getEvents().stream().map(
-                            event -> eventMap.get(event.getId())).collect(Collectors.toCollection(LinkedList::new));
-                    speaker.setEvents(events);
+            if(conference.getSpeakers() != null) {
+                for (Speaker speaker : conference.getSpeakers()) {
+                    if (speaker.getEvents() != null) {
+                        List<Event> events = speaker.getEvents().stream().map(
+                                event -> eventMap.get(event.getId())).collect(Collectors.toCollection(LinkedList::new));
+                        speaker.setEvents(events);
+                    }
                 }
             }
             conference.getMetaData().setId(conference.getId());
