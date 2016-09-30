@@ -8,7 +8,8 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 /**
- * @author Christofer Dutz, christofer.dutz@codecentric.de
+ * @author Falk Sippach, falk@jug-da.de, @sippsack
+ * @author Christofer Dutz, christofer.dutz@codecentric.de, @ChristoferDutz
  */
 @Slf4j
 class SchedDataExtractor {

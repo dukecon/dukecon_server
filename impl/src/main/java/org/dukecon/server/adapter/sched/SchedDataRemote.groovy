@@ -18,9 +18,9 @@ import java.nio.charset.StandardCharsets
  *
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  * @author Falk Sippach, falk@jug-da.de, @sippsack
-
  * @author Alexander Schwartz, alexander.schwartz@gmx.net, @ahus1de
  *         (added Hystrix)
+ * @author Christofer Dutz, christofer.dutz@codecentric.de, @ChristoferDutz
  */
 @Slf4j
 @Component
