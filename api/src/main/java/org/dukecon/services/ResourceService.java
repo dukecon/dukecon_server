@@ -7,6 +7,7 @@ import java.util.Map;
  */
 public interface ResourceService {
 
+    Map<String, byte[]> getLogosForConferences();
     Map<String, Map<String, byte[]>> getResourcesForConference(String conferenceId);
 
 }

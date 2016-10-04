@@ -27,8 +27,28 @@ public class ResourceServiceImpl implements ResourceService {
     private ServletContext servletContext;
 
     @Override
+    public Map<String, byte[]> getLogosForConferences() {
+        Map<String, byte[]> result = new HashMap<>();
+        Set<String> conferenceImageResources = servletContext.getResourcePaths("/public/img");
+        for(String conferenceResourcesRoot : conferenceImageResources) {
+            String conferenceId = StringUtils.substringAfterLast(
+                    StringUtils.substringBeforeLast(conferenceResourcesRoot, "/"), "/");
+            Set<String> conferenceResources = servletContext.getResourcePaths(conferenceResourcesRoot + "/conference");
+            Map<String, byte[]> confResources = getImageData(conferenceResources);
+            if(confResources.containsKey("logo")) {
+                result.put(conferenceId, confResources.get("logo"));
+            }
+        }
+        return result;
+    }
+
+    @Override
     public Map<String, Map<String, byte[]>> getResourcesForConference(String conferenceId) {
         Map<String, Map<String, byte[]>> result = new HashMap<>();
+
+        // Logo
+        Set<String> conferenceResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/conference");
+        result.put("conference", getImageData(conferenceResources));
 
         // Languages
         Set<String> imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/languages");
