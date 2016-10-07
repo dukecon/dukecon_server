@@ -41,7 +41,13 @@ class SchedDataProvider implements ConferenceDataProvider, InitializingBean {
 
     @Override
     void afterPropertiesSet() throws Exception {
-
+        if(conferences.size() > 0) {
+            for(String conference : conferences) {
+                if(!StringUtils.isEmpty(conference)) {
+                    log.info("Initializing Adapter: Sched: " + conference.split("@")[0])
+                }
+            }
+        }
     }
 
     Conference getConference() {
