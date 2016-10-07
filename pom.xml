@@ -102,9 +102,7 @@
         <maven-war-plugin.version>2.6</maven-war-plugin.version>
         <multi-module-maven-release-plugin.version>DC-1.5-SNAPSHOT</multi-module-maven-release-plugin.version>
         <postgresql.version>9.3-1103-jdbc41</postgresql.version>
-        <selenium-api.version>2.53.0</selenium-api.version>
-        <selenium.version>${selenium-api.version}</selenium.version>
-        <selenium.firefoxdriver.version>2.53.1</selenium.firefoxdriver.version>
+        <selenium.version>2.53.1</selenium.version>
         <slf4j-api.version>1.7.21</slf4j-api.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-lang.version>3.4</commons-lang.version>
@@ -353,22 +351,22 @@
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-api</artifactId>
-                <version>${selenium-api.version}</version>
+                <version>${selenium.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-firefox-driver</artifactId>
-                <version>${selenium-api.version}</version>
+                <version>${selenium.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-remote-driver</artifactId>
-                <version>${selenium-api.version}</version>
+                <version>${selenium.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-support</artifactId>
-                <version>${selenium-api.version}</version>
+                <version>${selenium.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
