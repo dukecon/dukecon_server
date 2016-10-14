@@ -13,7 +13,7 @@ class HerbstcampusCsvInput implements Iterable<PropertyMapper> {
 
     HerbstcampusCsvInput(String filename) {
         InputStream stream = HerbstcampusCsvInput.class.getResourceAsStream("/${filename}")
-        this.input = tidyUpCsvIterator(parseCsv(new InputStreamReader(stream), separator: ';'))
+        this.input = tidyUpCsvIterator(parseCsv(new InputStreamReader(stream, "UTF-8"), separator: ';'))
     }
 
     /**
