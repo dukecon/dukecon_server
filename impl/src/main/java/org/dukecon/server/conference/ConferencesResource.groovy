@@ -35,11 +35,21 @@ class ConferencesResource {
     @ApiOperation(value="returns list of conferences",
             response = Conference.class,
             responseContainer = "List")
-    public Response getConferences() {
-        def conferences = talkProviders.collect{p -> [id : p.conference.id, name : p.conference.name]}
+    public Response getAllConferences() {
+        def conferences = getConferences().collect{c -> [id : c.id, name : c.name]}
         return Response.ok().entity(conferences).build()
     }
 
+    private List<Conference> getConferences() {
+        talkProviders.findAll{p -> p.conference}.collect{p -> p.conference}
+    }
+
+    /**
+     * Reread conference input data.
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Path("update/{id:[0-9]*}")
     public Response updateConference(@PathParam("id") String id) {
@@ -64,15 +74,15 @@ class ConferencesResource {
     @Path("{id}")
     @ApiOperation(value = "Conference details")
     public ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
-        def provider = getConferenceProvider(id.replace(".json", ""))
-        if (provider == null) {
+        def conference = getConferences().find{c -> c.id == id.replace(".json", "")}
+        if (conference == null) {
             log.warn("Conference with id {} not found", id)
             return new ConferenceDetailResource(null)
         }
-        return new ConferenceDetailResource(provider.conference)
+        return new ConferenceDetailResource(conference)
     }
 
     private ConferenceDataProvider getConferenceProvider(String id) {
-        return talkProviders.find{p -> p.conference.id == id}
+        return talkProviders.find{p -> p.conference?.id == id}
     }
 }
