@@ -2,6 +2,9 @@ package org.dukecon.server.services;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.dukecon.model.Resources;
+import org.dukecon.model.Styles;
+import org.dukecon.services.ConferenceService;
 import org.dukecon.services.ResourceService;
 import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,9 @@ public class ResourceServiceImpl implements ResourceService {
     @Inject
     private ServletContext servletContext;
 
+    @Inject
+    private ConferenceService conferenceService;
+
     @Override
     public Map<String, byte[]> getLogosForConferences() {
         Map<String, byte[]> result = new HashMap<>();
@@ -43,20 +49,33 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public Map<String, Map<String, byte[]>> getResourcesForConference(String conferenceId) {
-        Map<String, Map<String, byte[]>> result = new HashMap<>();
+    public Resources getResourcesForConference(String conferenceId) {
+        Resources result = Resources.builder().build();
+
+        // Styles
+        Styles styles = conferenceService.getConferenceStyles(conferenceId);
+        if(styles != null) {
+            result.setStyles(styles);
+        }
 
         // Logo
         Set<String> conferenceResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/conference");
-        result.put("conference", getImageData(conferenceResources));
+        if(!conferenceResources.isEmpty()) {
+            Map<String, byte[]> imageData = getImageData(conferenceResources);
+            result.setConferenceImage(imageData.get("logo"));
+        }
 
         // Languages
         Set<String> imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/languages");
-        result.put("languages", getImageData(imageResources));
+        if(!imageResources.isEmpty()) {
+            result.setLanguageImages(getImageData(imageResources));
+        }
 
         // Streams
         imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/streams");
-        result.put("streams", getImageData(imageResources));
+        if(!imageResources.isEmpty()) {
+            result.setStreamImages(getImageData(imageResources));
+        }
 
         return result;
     }
