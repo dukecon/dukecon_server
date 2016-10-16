@@ -48,3 +48,13 @@ a {
 a:hover {
     color: ${styles.hoverLink};
 }
+h1 a:hover {
+    background-color: ${styles.hover};
+}
+h1 a.active:hover {
+    background-color:${styles.reverse};
+    color: ${styles.dark};
+}
+button.highlightBack:hover {
+    background-color: ${styles.highlight};
+}
