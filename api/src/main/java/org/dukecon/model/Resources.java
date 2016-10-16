@@ -16,8 +16,10 @@ public class Resources {
 
     private Styles styles;
     private byte[] conferenceImage;
+    private Map<String, byte[]> locationImages;
+    private Map<String, byte[]> locationMapImages;
     private Map<String, byte[]> languageImages;
     private Map<String, byte[]> streamImages;
-
+    private Map<String, byte[]> speakerImages;
 
 }

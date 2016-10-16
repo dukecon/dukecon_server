@@ -59,22 +59,40 @@ public class ResourceServiceImpl implements ResourceService {
         }
 
         // Logo
-        Set<String> conferenceResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/conference");
-        if(!conferenceResources.isEmpty()) {
-            Map<String, byte[]> imageData = getImageData(conferenceResources);
+        Set<String> imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/conference");
+        if((imageResources != null) && !imageResources.isEmpty()) {
+            Map<String, byte[]> imageData = getImageData(imageResources);
             result.setConferenceImage(imageData.get("logo"));
         }
 
+        // Locations
+        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/locations");
+        if((imageResources != null) && !imageResources.isEmpty()) {
+            result.setLocationImages(getImageData(imageResources));
+        }
+
+        // Location Maps
+        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/location-maps");
+        if((imageResources != null) && !imageResources.isEmpty()) {
+            result.setLocationMapImages(getImageData(imageResources));
+        }
+
         // Languages
-        Set<String> imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/languages");
-        if(!imageResources.isEmpty()) {
+        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/languages");
+        if((imageResources != null) && !imageResources.isEmpty()) {
             result.setLanguageImages(getImageData(imageResources));
         }
 
         // Streams
         imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/streams");
-        if(!imageResources.isEmpty()) {
+        if((imageResources != null) && !imageResources.isEmpty()) {
             result.setStreamImages(getImageData(imageResources));
+        }
+
+        // Speakers
+        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/speakers");
+        if((imageResources != null) && !imageResources.isEmpty()) {
+            result.setSpeakerImages(getImageData(imageResources));
         }
 
         return result;

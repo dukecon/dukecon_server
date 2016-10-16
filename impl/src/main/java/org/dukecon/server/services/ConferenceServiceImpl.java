@@ -150,13 +150,16 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
     public Styles getConferenceStyles(String conferenceId) {
         InputStream is = servletContext.getResourceAsStream(
                 "/WEB-INF/conferences/" + conferenceId + ".properties");
-        Properties conferenceProperties = new Properties();
-        try {
-            conferenceProperties.load(is);
-            return new Styles(conferenceProperties);
-        } catch (IOException e) {
-            return null;
+        if(is != null) {
+            Properties conferenceProperties = new Properties();
+            try {
+                conferenceProperties.load(is);
+                return new Styles(conferenceProperties);
+            } catch (IOException e) {
+                return null;
+            }
         }
+        return null;
     }
 
 }
