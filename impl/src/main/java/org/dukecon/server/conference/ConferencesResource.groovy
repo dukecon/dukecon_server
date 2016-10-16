@@ -53,7 +53,7 @@ class ConferencesResource implements ServletContextAware {
     @ApiOperation(value="returns list of conferences",
             response = Conference.class,
             responseContainer = "List")
-    public Response getAllConferences() {
+    Response getAllConferences() {
         def conferences = getConferences().collect{c -> [id : c.id, name : c.name]}
         return Response.ok().entity(conferences).build()
     }
@@ -91,7 +91,7 @@ class ConferencesResource implements ServletContextAware {
 
     @Path("{id}")
     @ApiOperation(value = "Conference details")
-    public ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
+    ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
         def conference = getConferences().find{c -> c.id == id.replace(".json", "")}
         if (conference == null) {
             log.warn("Conference with id {} not found", id)
