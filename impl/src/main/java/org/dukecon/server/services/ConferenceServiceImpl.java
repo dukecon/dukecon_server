@@ -5,8 +5,12 @@ import org.dukecon.server.conference.ConferenceDataProvider;
 import org.dukecon.services.ConferenceService;
 import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.ServletContextAware;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,10 +20,17 @@ import java.util.stream.Collectors;
 
 @Service("conferenceService")
 @RemotingDestination
-public class ConferenceServiceImpl implements ConferenceService {
+public class ConferenceServiceImpl implements ConferenceService, ServletContextAware {
+
+    private ServletContext servletContext;
 
     @Inject
     private List<ConferenceDataProvider> talkProviders;
+
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
 
     @Override
     public void create(Conference obj) {
@@ -133,6 +144,22 @@ public class ConferenceServiceImpl implements ConferenceService {
             conferences.add(conference);
         }
         return conferences;
+    }
+
+    @Override
+    public Styles getConferenceStyles(String conferenceId) {
+        InputStream is = servletContext.getResourceAsStream(
+                "/WEB-INF/conferences/" + conferenceId + ".properties");
+        if(is != null) {
+            Properties conferenceProperties = new Properties();
+            try {
+                conferenceProperties.load(is);
+                return new Styles(conferenceProperties);
+            } catch (IOException e) {
+                return null;
+            }
+        }
+        return null;
     }
 
 }

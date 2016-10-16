@@ -2,7 +2,6 @@ package org.dukecon
 
 import flex.messaging.MessageBroker
 import flex.messaging.io.SerializationContext
-import org.dukecon.server.conference.ConferenceDataProvider
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.flywaydb.core.Flyway
 import org.springframework.beans.factory.BeanFactory
@@ -34,22 +33,22 @@ class DukeConServerApplication {
     @Inject
     private ConferencesConfiguration conferencesConfiguration
     @Bean
-    public Filter shallowEtagHeaderFilter() {
-        return new ShallowEtagHeaderFilter();
+    Filter shallowEtagHeaderFilter() {
+        return new ShallowEtagHeaderFilter()
     }
 
     @Bean
     @Profile("postgresql-test")
-    public FlywayMigrationStrategy cleanMigrateStrategy() {
+    FlywayMigrationStrategy cleanMigrateStrategy() {
         FlywayMigrationStrategy strategy = new FlywayMigrationStrategy() {
             @Override
-            public void migrate(Flyway flyway) {
-                flyway.clean();
-                flyway.migrate();
+            void migrate(Flyway flyway) {
+                flyway.clean()
+                flyway.migrate()
             }
-        };
+        }
 
-        return strategy;
+        return strategy
     }
 
     /**
@@ -59,41 +58,41 @@ class DukeConServerApplication {
      * @return A new instance of a MessageTemplate
      */
     @Bean
-    public MessageTemplate messageTemplate(BeanFactory beanFactory, MessageBroker messageBroker) {
-        MessageTemplate messageTemplate = new MessageTemplate();
-        messageTemplate.setBeanFactory(beanFactory);
-        messageTemplate.setMessageBroker(messageBroker);
-        return messageTemplate;
+    MessageTemplate messageTemplate(BeanFactory beanFactory, MessageBroker messageBroker) {
+        MessageTemplate messageTemplate = new MessageTemplate()
+        messageTemplate.setBeanFactory(beanFactory)
+        messageTemplate.setMessageBroker(messageBroker)
+        return messageTemplate
     }
 
     /**
      * Fine tune the settings of the BlazeDS serialization.
      */
     @PostConstruct
-    public void configureSerializationContext() {
+    static void configureSerializationContext() {
         //ThreadLocal SerializationContent
-        SerializationContext serializationContext = SerializationContext.getSerializationContext();
-        serializationContext.enableSmallMessages = true;
-        serializationContext.instantiateTypes = true;
+        SerializationContext serializationContext = SerializationContext.getSerializationContext()
+        serializationContext.enableSmallMessages = true
+        serializationContext.instantiateTypes = true
         //use _remoteClass field
-        serializationContext.supportRemoteClass = true;
+        serializationContext.supportRemoteClass = true
         //false  Legacy Flex 1.5 behavior was to return a java.util.Collection for Array
         //true New Flex 2+ behavior is to return Object[] for AS3 Array
-        serializationContext.legacyCollection = true;
+        serializationContext.legacyCollection = true
 
-        serializationContext.legacyMap = false;
+        serializationContext.legacyMap = false
         //false Legacy flash.xml.XMLDocument Type
         //true New E4X XML Type
-        serializationContext.legacyXMLDocument = false;
+        serializationContext.legacyXMLDocument = false
 
         //determines whether the constructed Document is name-space aware
-        serializationContext.legacyXMLNamespaces = false;
-        serializationContext.legacyThrowable = false;
-        serializationContext.legacyBigNumbers = false;
+        serializationContext.legacyXMLNamespaces = false
+        serializationContext.legacyThrowable = false
+        serializationContext.legacyBigNumbers = false
 
-        serializationContext.restoreReferences = false;
-        serializationContext.logPropertyErrors = false;
-        serializationContext.ignorePropertyErrors = true;
+        serializationContext.restoreReferences = false
+        serializationContext.logPropertyErrors = false
+        serializationContext.ignorePropertyErrors = true
     }
 
 }

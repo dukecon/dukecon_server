@@ -1,5 +1,7 @@
 package org.dukecon.services;
 
+import org.dukecon.model.Resources;
+
 import java.util.Map;
 
 /**
@@ -8,6 +10,6 @@ import java.util.Map;
 public interface ResourceService {
 
     Map<String, byte[]> getLogosForConferences();
-    Map<String, Map<String, byte[]>> getResourcesForConference(String conferenceId);
+    Resources getResourcesForConference(String conferenceId);
 
 }
