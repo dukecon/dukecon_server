@@ -3,6 +3,7 @@ package org.dukecon.server.core;
 import javax.ws.rs.ApplicationPath;
 
 import org.dukecon.server.conference.ConferencesResource;
+import org.dukecon.server.conference.InitResource;
 import org.dukecon.server.filter.FiltersService;
 import org.dukecon.server.security.KeycloakConfigService;
 import org.dukecon.server.favorites.NoAuthPreferencesService;
@@ -20,6 +21,7 @@ public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
         register(ConferencesResource.class);
+        register(InitResource.class);
         register(MetaService.class);
         register(KeycloakConfigService.class);
         register(PreferencesService.class);
