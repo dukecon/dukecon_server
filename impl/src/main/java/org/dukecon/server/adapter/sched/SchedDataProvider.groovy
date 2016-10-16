@@ -27,7 +27,7 @@ class SchedDataProvider implements ConferenceDataProvider, InitializingBean {
     @Value("\${sched.cache.expires:3600}")
     Integer cacheExpiresAfterSeconds
 
-    @Value("#{'\${sched.conferences}'.split(',')}")
+    @Value("#{'\${sched.conferences:}'.split(',')}")
     private List<String> conferences
 
     @Inject
@@ -73,7 +73,7 @@ class SchedDataProvider implements ConferenceDataProvider, InitializingBean {
         return cacheLastUpdated.plusSeconds(cacheExpiresAfterSeconds).isBefore(Instant.now())
     }
 
-    public synchronized boolean update() {
+    synchronized boolean update() {
         try {
             // TODO: Greatly refactor this ...
             for(String conference : conferences) {
@@ -96,7 +96,7 @@ class SchedDataProvider implements ConferenceDataProvider, InitializingBean {
         return staleException == null && !remote.isBackupActive()
     }
 
-    public boolean isBackupActive() {
+    boolean isBackupActive() {
         return remote.isBackupActive()
     }
 }

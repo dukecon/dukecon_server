@@ -1,11 +1,21 @@
 package org.dukecon.server.conference
 
+import freemarker.template.Configuration
+import freemarker.template.Template
+import freemarker.template.TemplateException
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
+import org.dukecon.model.Styles
+import org.dukecon.services.ConferenceService
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
+import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.context.ServletContextAware
 
 import javax.inject.Inject
+import javax.servlet.ServletContext
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam
@@ -23,12 +33,20 @@ import io.swagger.annotations.*
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 @Slf4j
-class ConferencesResource {
+class ConferencesResource implements ServletContextAware {
+    ConferenceService conferenceService
     List<ConferenceDataProvider> talkProviders
+    ServletContext servletContext
 
     @Inject
-    ConferencesResource(List<ConferenceDataProvider> talkProviders) {
+    ConferencesResource(ConferenceService conferenceService, List<ConferenceDataProvider> talkProviders) {
+        this.conferenceService = conferenceService
         this.talkProviders = talkProviders
+    }
+
+    @Override
+    void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext
     }
 
     @GET
@@ -52,9 +70,9 @@ class ConferencesResource {
      */
     @GET
     @Path("update/{id:[0-9]*}")
-    public Response updateConference(@PathParam("id") String id) {
+    Response updateConference(@PathParam("id") String id) {
         try {
-            def provider = getConferenceProvider(id);
+            def provider = getConferenceProvider(id)
             if (provider == null)
                 return Response.status(Response.Status.NOT_FOUND).build()
             if (provider.update()) {
@@ -82,7 +100,52 @@ class ConferencesResource {
         return new ConferenceDetailResource(conference)
     }
 
+    @GET
+    @ResponseBody
+    @Produces("text/css")
+    @Path("{id}/styles.css")
+    @ApiOperation(value = "Conference styles")
+    String getConferenceStyles(@PathParam("id") String id) {
+        Styles styles = conferenceService.getConferenceStyles(id)
+        if(styles == null) {
+            throw new ResourceNotFoundException()
+        }
+        try {
+            final Configuration cfg = new Configuration()
+            cfg.setServletContextForTemplateLoading(servletContext, "/WEB-INF/templates")
+
+            // Get the template instance.
+            final Template temp = cfg.getTemplate("styles.ftl")
+
+            // Create the template output.
+            final StringWriter out = new StringWriter()
+            final Map<String, Object> enhancedVarMap = new HashMap<String, Object>()
+            enhancedVarMap.put("styles", styles)
+            temp.process(enhancedVarMap, out)
+            out.flush()
+
+            // Extract the email content as String.
+            // The first line contains the subject, the rest the mail content.
+            return out.getBuffer().toString()
+        } catch (final TemplateException e) {
+            if (log.isWarnEnabled()) {
+                log.warn("Error creating email", e)
+            }
+            throw new RuntimeException("ERROR_CREATING_STYLE_CSS", e)
+        } catch (final IOException e) {
+            if (log.isWarnEnabled()) {
+                log.warn("Error creating email", e)
+            }
+            throw new RuntimeException("ERROR_CREATING_STYLE_CSS", e)
+        }
+    }
+
     private ConferenceDataProvider getConferenceProvider(String id) {
         return talkProviders.find{p -> p.conference?.id == id}
     }
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    class ResourceNotFoundException extends RuntimeException {
+    }
+
 }
