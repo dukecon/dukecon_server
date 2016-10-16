@@ -1,11 +1,13 @@
 .dark {
     color: ${styles.dark};
+    border-color: ${styles.dark};
 }
 .darkBack {
     background-color: ${styles.dark};
 }
 .darkLink {
     color: ${styles.darkLink};
+    border-color: ${styles.darkLink};
 }
 .darkLinkBack {
     background-color: ${styles.darkLink};
@@ -14,13 +16,13 @@
     color: ${styles.hover};
 }
 .hoverBack {
-    color: ${styles.hover};
+    background-color: ${styles.hover};
 }
 .hoverLink {
     color: ${styles.hoverLink};
 }
 .hoverLinkBack {
-    color: ${styles.hoverLink};
+    background-color: ${styles.hoverLink};
 }
 .reverse {
     color: ${styles.reverse};
