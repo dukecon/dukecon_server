@@ -32,7 +32,8 @@ class InitResource {
     }
 
     @GET
-    @Path("{conference:[a-zA-Z_0-9]*}/{year:[0-9]*}/init.json")
+    // TODO: Second identifier might be more generic, i.e., different from "year" connotation
+    @Path("init/{conference:[a-zA-Z_0-9]+}/{year:[0-9]+}")
     public Response getCurrentConference(@PathParam("conference") String conference, @PathParam("year") String year) {
         def c = talkProviders.collect {ConferenceDataProvider p -> p.conference }.find {c -> c?.name == 'Javaland 2016' }
         return Response.ok().entity([id: c.id, name: c.name]).build();
