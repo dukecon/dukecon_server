@@ -95,7 +95,7 @@ class JavalandDataRemote {
         String[] resourceParts = uri.split(":")
         InputStream stream = this.getClass().getResourceAsStream(resourceParts[1])
         if(stream == null) {
-            throw new IOException("file '" + uri + "' not found")
+            throw new IOException("file '${uri}' not found")
         }
         return stream;
     }
