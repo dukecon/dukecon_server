@@ -4,6 +4,7 @@
 .settings
 *.iml
 *.log
+*-backup.raw
 logs/
 target/
 impl/overlays/
