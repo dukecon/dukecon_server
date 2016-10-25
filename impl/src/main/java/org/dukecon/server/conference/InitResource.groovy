@@ -5,6 +5,7 @@ import groovy.util.logging.Slf4j
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.dukecon.model.Conference
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject
@@ -29,6 +30,18 @@ class InitResource {
     @Inject
     InitResource(List<ConferenceDataProvider> talkProviders) {
         this.talkProviders = talkProviders
+    }
+
+    @Value("\${conferences.default.id:javaland}")
+    String defaultConferenceName
+
+    @Value("\${conferences.default.id:522447}")
+    String defaultConferenceId
+
+    @GET
+    @Path("init.json")
+    public Response defaultConference() {
+        return Response.ok().entity([id: defaultConferenceId, name: defaultConferenceName]).build()
     }
 
     @GET

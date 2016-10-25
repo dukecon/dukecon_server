@@ -29,7 +29,7 @@ class JavalandDataRemote {
     @Value("\${talks.uri:https://www.javaland.eu/api/schedule/JavaLand2016/jl.php?key=TestJL}")
     String talksUri
 
-    @Value("\${talks.backup:javaland-2016-backup.raw}")
+    @Value("\${talks.backup:javaland-2017-backup.raw}")
     String backup
 
     @Value("\${conference.url:http://dukecon.org}")
@@ -74,7 +74,7 @@ class JavalandDataRemote {
     @TypeChecked(TypeCheckingMode.SKIP)
     public Conference readConferenceDataFallback() {
         try {
-            log.info("Rereading data from backup '{}'", backup)
+            log.info("Rereading JSON data from backup '{}'", backup)
             def rawJson = new JsonSlurper().parse(new File(backup).newInputStream(), BACKUP_CHARSET)
             Conference conference = createConference(rawJson.hits.hits._source)
             backupActive = true;
@@ -91,7 +91,7 @@ class JavalandDataRemote {
     }
 
     private InputStream readResource(String uri) {
-        log.info("Reading JSON data from local file")
+        log.info("Reading JSON data from '{}'", uri)
         String[] resourceParts = uri.split(":")
         InputStream stream = this.getClass().getResourceAsStream(resourceParts[1])
         if(stream == null) {
