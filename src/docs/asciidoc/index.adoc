@@ -1,0 +1,10 @@
+= DukeCon Server
+
+== Architecture
+
+=== Package Structure
+
+["plantuml", "dukecon-server-packages", "svg"]
+------------------------------------------------
+include::images/level0-whitebox-architecture.puml[]
+------------------------------------------------

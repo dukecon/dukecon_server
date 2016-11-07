@@ -21,11 +21,6 @@
     <arquillian.config>arquillian-headless.xml</arquillian.config>
 
     <swagger.input.directory>${project.basedir}/src/main/swagger</swagger.input.directory>
-    <base.generated.docs.dir>${project.build.directory}/generated-docs</base.generated.docs.dir>
-    <generated.asciidoc.directory>${base.generated.docs.dir}/asciidoc</generated.asciidoc.directory>
-    <asciidoctor.input.directory>${project.basedir}/src/docs/asciidoc</asciidoctor.input.directory>
-    <asciidoctor.html.output.directory>${base.generated.docs.dir}/html</asciidoctor.html.output.directory>
-    <asciidoctor.pdf.output.directory>${base.generated.docs.dir}/pdf</asciidoctor.pdf.output.directory>
   </properties>
 
   <dependencyManagement>
@@ -461,36 +456,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.asciidoctor</groupId>
-        <artifactId>asciidoctor-maven-plugin</artifactId>
-        <!-- Configure generic document generation settings -->
-        <configuration>
-          <sourceDirectory>${asciidoctor.input.directory}</sourceDirectory>
-          <sourceDocumentName>index.adoc</sourceDocumentName>
-          <attributes>
-            <doctype>book</doctype>
-            <toc>left</toc>
-            <toclevels>2</toclevels>
-            <generated>${generated.asciidoc.directory}</generated>
-          </attributes>
-        </configuration>
-        <!-- Since each execution can only handle one backend, run
-             separate executions for each desired output type -->
-        <executions>
-          <execution>
-            <id>output-html</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>process-asciidoc</goal>
-            </goals>
-            <configuration>
-              <backend>html5</backend>
-              <outputDirectory>${asciidoctor.html.output.directory}</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
 
       <plugin>
         <groupId>pl.project13.maven</groupId>
@@ -721,6 +686,10 @@
             <item>timestamp</item>
           </items>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.asciidoctor</groupId>
+        <artifactId>asciidoctor-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

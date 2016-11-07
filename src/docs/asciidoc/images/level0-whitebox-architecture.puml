@@ -1,0 +1,87 @@
+@startuml
+skinparam componentStyle uml2
+
+'cloud dukecon {
+package "conference" #yellow {
+  package "services" as ConferenceServices {
+  }
+  package adapter as ConferenceAdapters {
+    package api as ConferenceAdapterApi {
+    }
+    package sched as ConferenceAdapterSched {
+    }
+    package formes as ConferenceAdapterFormes {
+    }
+    package herbstcampus as ConferenceAdapterHerbstcampus {
+    }
+    ConferenceAdapterApi <|-- ConferenceAdapterSched : implement
+    ConferenceAdapterApi <|-- ConferenceAdapterFormes : implement
+    ConferenceAdapterApi <|-- ConferenceAdapterHerbstcampus : implement
+  }
+  ConferenceServices --> ConferenceAdapterApi : use
+}
+
+package user #green {
+package "favorites" {
+  package services as FavoritesServices {
+  }
+  package repository as FavoritesRepository {
+  }
+  FavoritesServices --> FavoritesRepository : use
+}
+
+package filter {
+  package services as FiltersServices {
+  }
+  package repository as FiltersRepository {
+  }
+  FiltersServices --> FiltersRepository : use
+}
+note right of filter
+    Should be renamed
+    to "filters"?
+end note
+}
+
+package dukeconStorage {
+package databases {
+database favoritesDB <<PostgreSQL>> {
+}
+FavoritesRepository --> favoritesDB
+database filtersDB <<PostgreSQL>> {
+}
+FiltersRepository --> filtersDB
+}
+package files {
+storage herbstcampus2016 <<File>> {
+}
+}
+}
+'}
+ConferenceAdapterHerbstcampus --> herbstcampus2016
+
+cloud externalDataSources {
+  package javaland <<FormesDataRepository>> {
+    interface "javaland-2016" as javaland2016
+    interface "javaland-2017" as javaland2017
+  }
+  package jfs <<FormesDataRepository>> {
+    interface "jfs-2016" as jfs2016
+  }
+  package linuxfoundation <<SchedDataRepository>> {
+    interface "apachecon-2016eu" as apachecon2016eu
+    interface "apachecon-2016us" as apachecon2016us
+  }
+}
+ConferenceAdapterFormes -down-> javaland2016 : https / json
+ConferenceAdapterFormes -down-> javaland2017 : https / json
+ConferenceAdapterFormes -down-> jfs2016 : https / json
+ConferenceAdapterSched -down-> apachecon2016eu : ???
+ConferenceAdapterSched -down-> apachecon2016us : ???
+'javaland2016 <--  ConferenceAdapterFormes : https / json
+'javaland2017 <--  ConferenceAdapterFormes : https / json
+'jfs2016 <--  ConferenceAdapterFormes: https / json
+'apachecon2016eu <-- ConferenceAdapterSched : ???
+'apachecon2016us <-- ConferenceAdapterSched : ???
+
+@enduml
