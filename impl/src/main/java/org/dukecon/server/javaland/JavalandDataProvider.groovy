@@ -3,7 +3,7 @@ package org.dukecon.server.javaland
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
-import org.dukecon.server.conference.ConferenceDataProvider
+import org.dukecon.server.adapter.ConferenceDataProvider
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
@@ -13,12 +13,15 @@ import java.time.Instant
 /**
  * Calls the remote service and caches the result as needed.
  *
+ * @deprecated will be removed in favor for WebResourceDataProvider
+ *
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Slf4j
-@Component
+//@Component
 @TypeChecked
+@Deprecated
 class JavalandDataProvider implements ConferenceDataProvider {
 
     @Inject

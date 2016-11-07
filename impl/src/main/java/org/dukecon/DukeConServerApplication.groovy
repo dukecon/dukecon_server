@@ -2,7 +2,7 @@ package org.dukecon
 
 import flex.messaging.MessageBroker
 import flex.messaging.io.SerializationContext
-import org.dukecon.server.conference.ConferencesConfiguration
+import org.dukecon.server.adapter.DataProviderLoader
 import org.flywaydb.core.Flyway
 import org.springframework.beans.factory.BeanFactory
 import org.springframework.boot.SpringApplication
@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker
+import org.springframework.context.ApplicationContextInitializer
+import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Profile
@@ -17,7 +19,6 @@ import org.springframework.flex.messaging.MessageTemplate
 import org.springframework.web.filter.ShallowEtagHeaderFilter
 
 import javax.annotation.PostConstruct
-import javax.inject.Inject
 import javax.servlet.Filter
 
 @SpringBootApplication
@@ -27,11 +28,13 @@ import javax.servlet.Filter
 class DukeConServerApplication {
 
     static void main(String[] args) {
-        SpringApplication.run DukeConServerApplication, args
+        def application = new SpringApplication(DukeConServerApplication)
+        application.addInitializers({ ConfigurableApplicationContext ctx ->
+            ctx.addBeanFactoryPostProcessor(new DataProviderLoader(ctx.getEnvironment()))
+        } as ApplicationContextInitializer)
+        application.run(args)
     }
 
-    @Inject
-    private ConferencesConfiguration conferencesConfiguration
     @Bean
     Filter shallowEtagHeaderFilter() {
         return new ShallowEtagHeaderFilter()

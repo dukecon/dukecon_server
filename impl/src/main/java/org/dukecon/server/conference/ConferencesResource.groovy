@@ -7,6 +7,7 @@ import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
 import org.dukecon.model.Styles
+import org.dukecon.server.adapter.ConferenceDataProvider
 import org.dukecon.services.ConferenceService
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
@@ -35,13 +36,13 @@ import io.swagger.annotations.*
 @Slf4j
 class ConferencesResource implements ServletContextAware {
     ConferenceService conferenceService
-    List<ConferenceDataProvider> talkProviders
+    Map<String, ConferenceDataProvider> talkProviders = new HashMap<>()
     ServletContext servletContext
 
     @Inject
     ConferencesResource(ConferenceService conferenceService, List<ConferenceDataProvider> talkProviders) {
         this.conferenceService = conferenceService
-        this.talkProviders = talkProviders
+        talkProviders.findAll{it.conference}.each {this.talkProviders[it.conference.id] = it}
     }
 
     @Override
@@ -59,7 +60,7 @@ class ConferencesResource implements ServletContextAware {
     }
 
     private List<Conference> getConferences() {
-        talkProviders.findAll{p -> p.conference}.collect{p -> p.conference}
+        talkProviders.values().findAll{p  -> p.conference}.collect{p -> p.conference}
     }
 
     /**
@@ -141,7 +142,7 @@ class ConferencesResource implements ServletContextAware {
     }
 
     private ConferenceDataProvider getConferenceProvider(String id) {
-        return talkProviders.find{p -> p.conference?.id == id}
+        return talkProviders[id]
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)

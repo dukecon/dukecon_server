@@ -9,11 +9,14 @@ import org.springframework.stereotype.Component
 import javax.inject.Inject
 
 /**
+ * @deprecated will be (re)moved in favor for WebResourceDataProviderHealthIndicator.
+ *
  * @author Alexander Schwartz, alexander.schwartz@gmx.net, @ahus1de
  */
 @Slf4j
-@Component
+//@Component
 @TypeChecked
+@Deprecated
 class JavalandDataProviderHealthIndicator implements HealthIndicator {
 
     @Inject

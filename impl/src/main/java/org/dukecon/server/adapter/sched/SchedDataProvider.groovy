@@ -4,7 +4,7 @@ import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.apache.commons.lang3.StringUtils
 import org.dukecon.model.Conference
-import org.dukecon.server.conference.ConferenceDataProvider
+import org.dukecon.server.adapter.ConferenceDataProvider
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -15,6 +15,8 @@ import java.time.Instant
 /**
  * Calls the remote service and caches the result as needed.
  *
+ * @deprecated will be removed in favor of WebResourceDataProvider
+ *
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  * @author Christofer Dutz, christofer.dutz@codecentric.de, @ChristoferDutz
@@ -22,6 +24,7 @@ import java.time.Instant
 @Slf4j
 @Component
 @TypeChecked
+@Deprecated
 class SchedDataProvider implements ConferenceDataProvider, InitializingBean {
 
     @Value("\${sched.cache.expires:3600}")

@@ -1,10 +1,11 @@
-package org.dukecon.server.javaland
+package org.dukecon.server.conference.adpater.doag
 
 import groovy.json.JsonSlurper
 import org.dukecon.model.Audience
 import org.dukecon.model.Event
 import org.dukecon.model.Language
 import org.dukecon.model.Location
+import org.dukecon.server.javaland.JavalandDataExtractor
 import spock.lang.Specification
 
 import java.time.LocalDateTime
@@ -13,7 +14,7 @@ import java.time.format.DateTimeFormatter
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
-class JavalandDataExtractorSpec extends Specification {
+class DoagDataExtractorSpec extends Specification {
 
     private static JavalandDataExtractor extractor
 
@@ -22,7 +23,7 @@ class JavalandDataExtractorSpec extends Specification {
     }
 
     private readJson() {
-        InputStream is = JavalandDataExtractorSpec.class.getResourceAsStream('/javaland-2016.raw_community')
+        InputStream is = DoagDataExtractorSpec.class.getResourceAsStream('/javaland-2016.raw_community')
         JsonSlurper slurper = new JsonSlurper()
         slurper.parse(is, "ISO-8859-1")
     }

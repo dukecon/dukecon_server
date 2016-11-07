@@ -15,6 +15,8 @@ import java.nio.charset.StandardCharsets
 /**
  * Accessing remote resources and applying circuit breaker as needed.
  *
+ * @deprecated will be removed in favor for WebResourceRemote
+ *
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  * @author Falk Sippach, falk@jug-da.de, @sippsack
 
@@ -24,6 +26,7 @@ import java.nio.charset.StandardCharsets
 @Slf4j
 @Component
 @TypeChecked
+@Deprecated
 class JavalandDataRemote {
 
     @Value("\${talks.uri:https://www.javaland.eu/api/schedule/JavaLand2016/jl.php?key=TestJL}")

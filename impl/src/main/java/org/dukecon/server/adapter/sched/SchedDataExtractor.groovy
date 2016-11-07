@@ -8,6 +8,10 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 /**
+ * Extracts conference information, talks and speakers for Sched conferences (e. g. ApacheCon).
+ *
+ * TODO must be refactored as DoagDataExtractor
+ *
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  * @author Christofer Dutz, christofer.dutz@codecentric.de, @ChristoferDutz
  */

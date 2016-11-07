@@ -11,10 +11,13 @@ import javax.inject.Inject
 /**
  * @author Alexander Schwartz, alexander.schwartz@gmx.net, @ahus1de
  * @author Christofer Dutz, christofer.dutz@codecentric.de, @ChristoferDutz
+ *
+ * @deprecated will be removed in favor of WebResourceDataProviderHealthIndicator
  */
 @Slf4j
 @Component
 @TypeChecked
+@Deprecated
 class SchedDataProviderHealthIndicator implements HealthIndicator {
 
     @Inject

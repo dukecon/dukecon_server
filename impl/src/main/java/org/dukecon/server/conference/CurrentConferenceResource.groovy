@@ -2,9 +2,7 @@ package org.dukecon.server.conference
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
-import io.swagger.annotations.Api
-import io.swagger.annotations.ApiOperation
-import org.dukecon.model.Conference
+import org.dukecon.server.adapter.ConferenceDataProvider
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
@@ -24,11 +22,11 @@ import javax.ws.rs.core.Response
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 @Slf4j
-class InitResource {
+class CurrentConferenceResource {
     List<ConferenceDataProvider> talkProviders
 
     @Inject
-    InitResource(List<ConferenceDataProvider> talkProviders) {
+    CurrentConferenceResource(List<ConferenceDataProvider> talkProviders) {
         this.talkProviders = talkProviders
     }
 
@@ -49,6 +47,6 @@ class InitResource {
     @Path("init/{conference:[a-zA-Z_0-9]+}/{year:[0-9]+}")
     public Response getCurrentConference(@PathParam("conference") String conference, @PathParam("year") String year) {
         def c = talkProviders.conference.find{it?.name ==~ /.*(?i)${conference}.*/ && it?.name ==~ /.*${year}.*/}
-        return Response.ok().entity(c ? [id: c.id, name: c.name] : [:]).build();
+        return Response.ok().entity(c ? [id: c.id, name: c.name, url: c.url] : [:]).build();
     }
 }

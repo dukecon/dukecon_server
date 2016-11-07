@@ -1,15 +1,22 @@
-package org.dukecon.server.conference
+package org.dukecon.server.adapter
 
 import org.dukecon.model.Conference
-import org.springframework.stereotype.Component
 
 /**
+ * Data provider interface to abstract away different data resources providing mechanisms.
+ *
  * Created by annah on 18.03.2016.
  */
 interface ConferenceDataProvider {
 
+    /**
+     * @return from resource file created conference
+     */
     Conference getConference();
+
     boolean update();
+
     boolean isBackupActive();
+
     Exception staleException;
 }

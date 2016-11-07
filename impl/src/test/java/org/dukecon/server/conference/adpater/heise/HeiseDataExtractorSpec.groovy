@@ -1,17 +1,20 @@
-package org.dukecon.server.herbstcampus
+package org.dukecon.server.conference.adpater.heise
 
 import org.dukecon.model.Audience
 import org.dukecon.model.Conference
-import org.dukecon.model.Speaker
+import org.dukecon.server.adapter.heise.*
 import spock.lang.Specification
 
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack.
  */
-class HerbstcampusDataExtractorSpec extends Specification {
-    private static HerbstcampusDataExtractor extractor = new HerbstcampusDataExtractor('hc16', readCsv(), '2016-08-30')
+class HeiseDataExtractorSpec extends Specification {
+    private
+    static HeiseDataExtractor extractor = new HeiseDataExtractor('hc16', readCsv(), LocalDate.parse('2016-08-30', DateTimeFormatter.ofPattern("yyyy-MM-dd")))
     private Conference conference
 
     void setup() {
@@ -19,7 +22,7 @@ class HerbstcampusDataExtractorSpec extends Specification {
     }
 
     private static readCsv() {
-        new HerbstcampusCsvInput('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv')
+        new HeiseCsvInput('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv')
     }
 
     void "should contain metadata"() {
@@ -32,7 +35,7 @@ class HerbstcampusDataExtractorSpec extends Specification {
 
     void "should get 12 streams"() {
         when:
-        def streams = new HerbstcampusStreamMapper(readCsv()).entities
+        def streams = new HeiseStreamMapper(readCsv()).entities
         then:
         streams.size() == 12
         streams.names['de'] == ['Java', '.NET', 'JavaScript', 'andere Sprachen', 'Architektur', 'Testen/Qualität', 'Infrastruktur', 'Sicherheit', 'Agile/Soft Skills', 'Mobile', 'Big Data/Search', 'Diverses']
@@ -40,18 +43,18 @@ class HerbstcampusDataExtractorSpec extends Specification {
 
     void "should read 51 speakers"() {
         when:
-        def mapper = new HerbstcampusSpeakerMapper(readCsv())
+        def mapper = new HeiseSpeakerMapper(readCsv())
         def speakers = mapper.speakers
         then:
         speakers.size() == 51
         mapper.eventIdsToSpeaker.get('5511').size() == 2
         mapper.eventIdsToSpeaker.get('5287').first().is(mapper.eventIdsToSpeaker.get('5290').first())
-        speakers.events*.size().each {it > 0}
+        speakers.events*.size().each { it > 0 }
     }
 
     void "should read 51 talks"() {
         given:
-        def mapper = new HerbstcampusEventMapper(readCsv(), '2016-08-30', new HerbstcampusSpeakerMapper(readCsv()), new HerbstcampusLanguageMapper(readCsv()), new HerbstcampusStreamMapper(readCsv()), new HerbstcampusAudienceMapper(readCsv()), new HerbstcampusEventTypeMapper(readCsv()), new HerbstcampusLocationMapper(readCsv()))
+        def mapper = new HeiseEventMapper(readCsv(), LocalDate.parse('2016-08-30', DateTimeFormatter.ofPattern("yyyy-MM-dd")), new HeiseSpeakerMapper(readCsv()), new HeiseLanguageMapper(readCsv()), new HeiseStreamMapper(readCsv()), new HeiseAudienceMapper(readCsv()), new HeiseEventTypeMapper(readCsv()), new HeiseLocationMapper(readCsv()))
 
         when:
         def events = mapper.events
@@ -63,7 +66,7 @@ class HerbstcampusDataExtractorSpec extends Specification {
         events.speakers*.size().count(3) == 0
 
         when:
-        def event = events.find {it.id == '5287'}
+        def event = events.find { it.id == '5287' }
 
         then:
         event.speakers.first().name == 'Falk Sippach'
@@ -77,7 +80,7 @@ class HerbstcampusDataExtractorSpec extends Specification {
         event.track.names['de'] == 'JavaScript'
 
         when:
-        event = events.find {it.id == '5140'}
+        event = events.find { it.id == '5140' }
 
         then:
         event.speakers.first().name == 'Stefan Lieser'
@@ -88,7 +91,7 @@ class HerbstcampusDataExtractorSpec extends Specification {
 
     void "should get one language"() {
         given:
-        def mapper = new HerbstcampusLanguageMapper(readCsv())
+        def mapper = new HeiseLanguageMapper(readCsv())
 
         when:
         def languages = mapper.languages
@@ -102,7 +105,7 @@ class HerbstcampusDataExtractorSpec extends Specification {
 
     void "should get 6 locations"() {
         when:
-        def locations = new HerbstcampusLocationMapper(readCsv()).entities
+        def locations = new HeiseLocationMapper(readCsv()).entities
 
         then:
         locations.size() == 6
@@ -111,7 +114,7 @@ class HerbstcampusDataExtractorSpec extends Specification {
 
     void "should get 3 event types"() {
         given:
-        def mapper = new HerbstcampusEventTypeMapper(readCsv())
+        def mapper = new HeiseEventTypeMapper(readCsv())
 
         when:
         def eventTypes = mapper.entities
@@ -126,7 +129,7 @@ class HerbstcampusDataExtractorSpec extends Specification {
 
     void "should get 3 audiences"() {
         given:
-        def mapper = new HerbstcampusAudienceMapper(readCsv())
+        def mapper = new HeiseAudienceMapper(readCsv())
 
         when:
         def audiences = mapper.entities

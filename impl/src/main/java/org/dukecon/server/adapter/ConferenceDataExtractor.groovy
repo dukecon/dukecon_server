@@ -1,4 +1,4 @@
-package org.dukecon.server.conference
+package org.dukecon.server.adapter
 
 import org.dukecon.model.Conference
 

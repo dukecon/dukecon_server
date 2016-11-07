@@ -1,6 +1,6 @@
 package org.dukecon.server.core;
 
-import org.dukecon.server.conference.ConferenceDataProvider;
+import org.dukecon.server.adapter.ConferenceDataProvider;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;

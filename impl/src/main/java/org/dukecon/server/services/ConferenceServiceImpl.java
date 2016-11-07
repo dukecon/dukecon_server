@@ -1,7 +1,7 @@
 package org.dukecon.server.services;
 
 import org.dukecon.model.*;
-import org.dukecon.server.conference.ConferenceDataProvider;
+import org.dukecon.server.adapter.ConferenceDataProvider;
 import org.dukecon.services.ConferenceService;
 import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;

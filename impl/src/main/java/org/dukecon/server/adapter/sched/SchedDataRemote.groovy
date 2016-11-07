@@ -16,6 +16,8 @@ import java.nio.charset.StandardCharsets
 /**
  * Accessing remote resources and applying circuit breaker as needed.
  *
+ * @deprecated will be removed in favor of WebResourceDataRemote
+ *
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  * @author Alexander Schwartz, alexander.schwartz@gmx.net, @ahus1de
@@ -25,6 +27,7 @@ import java.nio.charset.StandardCharsets
 @Slf4j
 @Component
 @TypeChecked
+@Deprecated
 class SchedDataRemote {
 
     @Value("\${sched.baseConferenceUrl:https://&{conferenceId}.sched.org/api/site/sync?api_key=&{conferenceApiKey}}")

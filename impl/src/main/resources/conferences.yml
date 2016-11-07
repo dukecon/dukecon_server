@@ -1,24 +1,54 @@
-conferences:
-  -
-    id: 499959
-    talksUri: https://www.javaland.eu/api/schedule/JavaLand2016/jl.php?key=TestJL
-    backupUri: javaland-2016-backup.raw
-    conferenceUrl: http://dukecon.org${server.contextPath}
-    conferenceName: JavaLand 2016
-    startDate: 2016-03-08
-    endDate: 2016-03-10
-  -
-    id: 496615
-    talksUri: https://www.javaland.eu/api/schedule/JavaLand2016/stuttgart.php?key=TestJL
-    backupUri: jfs-2016-backup.raw
-    conferenceUrl: https://dukecon.org/jfs
-    conferenceName: Java Forum Stuttgart 2016
-    startDate: 2016-07-07
-    endDate: 2016-07-07
-  -
-    id: hc2016
-    talksUri: herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv
-    conferenceUrl: https://dukecon.org/hc16
-    conferenceName: Herbstcampus 2016
-    startDate: 2016-08-30
-    endDate: 2016-09-01
+-
+  id: jl2016
+  internalId: 499959
+  conference: javaland
+  year: 2016
+#  talksUri: https://www.javaland.eu/api/schedule/JavaLand2016/jl.php?key=TestJL
+#  backupUri: javaland-2016-backup.raw
+  talksUri: javaland-2016.raw
+  url: http://javaland.dukecon.org/2016
+  homeUrl: http://www.javaland.eu
+  name: JavaLand 2016
+  startDate: 2016-03-08
+  endDate: 2016-03-10
+  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
+-
+  id: jfs2016
+  internalId: 496615
+  conference: jfs
+  year: 2016
+#  talksUri: https://www.javaland.eu/api/schedule/JavaLand2016/stuttgart.php?key=TestJL
+#  backupUri: jfs-2016-backup.raw
+  talksUri: jfs-2016-final-finished-conf.raw
+  url: https://jfs.dukecon.org/2016
+  homeUrl: http://www.java-forum-stuttgart.de
+  name: Java Forum Stuttgart 2016
+  startDate: 2016-07-07
+  endDate: 2016-07-07
+  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
+-
+  id: hc2016
+  conference: herbstcampus
+  year: 2016
+  talksUri: herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv
+  url: https://herbstcampus.dukecon.org/2016
+  name: Herbstcampus 2016
+  homeTitle: Herbstcampus
+  homeUrl: http://www.herbstcampus.de/
+  startDate: 2016-08-30
+  endDate: 2016-09-01
+  extractorClass: org.dukecon.server.adapter.heise.HeiseDataExtractor
+-
+  id: jl2017
+  internalId: 522447
+  conference: javaland
+  year: 2017
+#  talksUri: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=522447
+#  backupUri: javaland-2017-backup.raw
+  talksUri: javaland-2017.raw
+  url: http://javaland.dukecon.org/${year}
+  homeUrl: http://www.javaland.eu
+  name: JavaLand 2017
+  startDate: 2016-03-28
+  endDate: 2016-03-30
+  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor

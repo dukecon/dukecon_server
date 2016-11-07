@@ -1,8 +1,12 @@
-package org.dukecon.server.javaland
+package org.dukecon.server.adapter.doag
 
+import groovy.json.JsonSlurper
+import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.*
+import org.dukecon.server.adapter.ConferenceDataExtractor
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -10,16 +14,37 @@ import java.time.temporal.ChronoUnit
 import static com.xlson.groovycsv.CsvParser.parseCsv
 
 /**
- * @deprecated will be removed in favor for DoagDataExtractor
- *
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Slf4j
-@Deprecated
-class  JavalandDataExtractor {
+class DoagDataExtractor implements ConferenceDataExtractor {
+
     def talksJson
     String conferenceUrl = 'http://dukecon.org'
     String conferenceName = 'DukeCon Conference'
+    private String id
+    private LocalDate startDate
+
+    DoagDataExtractor(String conferenceId, input, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
+        this.id = conferenceId
+        this.startDate = startDate
+        this.conferenceName = conferenceName
+        this.conferenceUrl = conferenceUrl
+        this.talksJson = readJson(input, conferenceId).hits.hits._source
+    }
+
+
+    private readJson(InputStream inputStream, String conferenceId) {
+        assert inputStream != null : "inputstream must not be null for conference ${conferenceId}"
+        JsonSlurper slurper = new JsonSlurper()
+        slurper.parse(inputStream, "ISO-8859-1")
+    }
+
+
+    @Override
+    Conference getConference() {
+        return buildConference()
+    }
 
     Map<String, String> twitterHandleBySpeakerName = [:]
 
