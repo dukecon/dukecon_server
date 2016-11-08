@@ -70,7 +70,7 @@ class ConferencesResource implements ServletContextAware {
      * @return
      */
     @GET
-    @Path("update/{id:[0-9]*}")
+    @Path("update/{id}")
     Response updateConference(@PathParam("id") String id) {
         try {
             def provider = getConferenceProvider(id)

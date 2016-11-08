@@ -1,7 +1,6 @@
 package org.dukecon.server.adapter.doag
 
 import groovy.json.JsonSlurper
-import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.*
 import org.dukecon.server.adapter.ConferenceDataExtractor
@@ -22,11 +21,11 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     def talksJson
     String conferenceUrl = 'http://dukecon.org'
     String conferenceName = 'DukeCon Conference'
-    private String id
+    private String conferenceId
     private LocalDate startDate
 
     DoagDataExtractor(String conferenceId, input, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
-        this.id = conferenceId
+        this.conferenceId = conferenceId
         this.startDate = startDate
         this.conferenceName = conferenceName
         this.conferenceUrl = conferenceUrl
@@ -51,7 +50,7 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     Conference buildConference() {
         buildTwitterHandles()
         Conference conf = Conference.builder()
-                .id(talksJson.ID_KONGRESS.unique().first()?.toString())
+                .id(conferenceId)
                 .name(conferenceName)
                 .url(conferenceUrl)
                 .metaData(metaData)
@@ -69,7 +68,7 @@ class DoagDataExtractor implements ConferenceDataExtractor {
         csv.each { line ->
             String speakerName = line.Speaker.trim()
             if (twitterHandleBySpeakerName[speakerName]) {
-                log.warn("Duplicate Speaker in CSV: {}", speakerName)
+                log.debug("Duplicate Speaker in CSV: {}", speakerName)
             } else if (line.TwitterHandle.startsWith("@")) {
                 log.debug("Speaker '{}' has TwitterHandle: '{}'", speakerName, line.TwitterHandle)
                 twitterHandleBySpeakerName[speakerName] = line.TwitterHandle

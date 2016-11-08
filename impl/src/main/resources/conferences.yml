@@ -44,7 +44,7 @@
   conference: javaland
   year: 2017
 #  talksUri: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=522447
-#  backupUri: javaland-2017-backup.raw
+  backupUri: javaland-2017-backup.raw
   talksUri: javaland-2017.raw
   url: http://javaland.dukecon.org/${year}
   homeUrl: http://www.javaland.eu

@@ -1,8 +1,6 @@
 package org.dukecon.server.javaland
 
-import org.dukecon.server.javaland.JavalandDataProvider
-import org.dukecon.server.javaland.JavalandDataProviderHealthIndicator
-import org.dukecon.server.javaland.JavalandDataRemote
+import org.dukecon.server.adapter.WebResourceDataProviderHealthIndicator
 import org.springframework.boot.actuate.health.Status
 import spock.lang.Specification
 
@@ -11,10 +9,10 @@ import spock.lang.Specification
  */
 class JavalandDataProviderHealthIndicatorSpec extends Specification {
 
-    JavalandDataProviderHealthIndicator healthIndicator;
+    WebResourceDataProviderHealthIndicator healthIndicator;
 
     void setup() {
-        healthIndicator = new JavalandDataProviderHealthIndicator();
+        healthIndicator = new WebResourceDataProviderHealthIndicator();
         healthIndicator.talkProvider = new JavalandDataProvider();
         healthIndicator.talkProvider.remote = new JavalandDataRemote();
         healthIndicator.talkRemote = healthIndicator.talkProvider.remote

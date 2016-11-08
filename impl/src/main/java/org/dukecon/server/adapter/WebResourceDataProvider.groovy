@@ -11,9 +11,16 @@ import org.dukecon.model.Conference
  */
 @TypeChecked
 class WebResourceDataProvider implements ConferenceDataProvider {
+
+    private final WebResourceDataProviderRemote dataProviderRemote
+
+    WebResourceDataProvider(WebResourceDataProviderRemote dataProviderRemote) {
+        this.dataProviderRemote = dataProviderRemote
+    }
+
     @Override
     Conference getConference() {
-        return null
+        return dataProviderRemote.conference
     }
 
     @Override

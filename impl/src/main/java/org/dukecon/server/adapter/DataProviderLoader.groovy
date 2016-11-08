@@ -2,6 +2,7 @@ package org.dukecon.server.adapter
 
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.springframework.beans.BeansException
+import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
 import org.springframework.beans.factory.support.BeanDefinitionBuilder
 import org.springframework.beans.factory.support.BeanDefinitionRegistry
@@ -26,7 +27,20 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
     void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         configuration.conferences.each { ConferencesConfiguration.Conference config ->
             if (config.backupUri) {
-                // TODO configure WebFileDataProvider
+                BeanDefinitionBuilder builderDataProviderRemote = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProviderRemote)
+                def dataExtractor = Class.forName(config.extractorClass).newInstance(config.id, this.class.getResourceAsStream("/${config.talksUri}"), config.startDate, config.name, config.url)
+                builderDataProviderRemote.addConstructorArgValue(dataExtractor)
+                builderDataProviderRemote.addConstructorArgValue(this.class.getResourceAsStream("/${config.backupUri}"))
+                beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider remote", builderDataProviderRemote.beanDefinition)
+
+                BeanDefinitionBuilder builderDataProvider = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProvider)
+                builderDataProvider.addConstructorArgReference("${config.name} dataprovider remote")
+                beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider", builderDataProvider.beanDefinition)
+
+                BeanDefinitionBuilder builderHealthCheck = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProviderHealthIndicator)
+                builderHealthCheck.addConstructorArgReference("${config.name} dataprovider")
+                builderHealthCheck.addConstructorArgReference("${config.name} dataprovider remote")
+                beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider health indicator", builderHealthCheck.beanDefinition)
             } else {
                 BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(LocalResourceDataProvider)
                 def dataExtractor = Class.forName(config.extractorClass).newInstance(config.id, this.class.getResourceAsStream("/${config.talksUri}"), config.startDate, config.name, config.url)
