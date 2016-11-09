@@ -10,12 +10,12 @@ package "conference" #yellow {
     }
     package sched as ConferenceAdapterSched {
     }
-    package formes as ConferenceAdapterFormes {
+    package doag as ConferenceAdapterDoag {
     }
     package herbstcampus as ConferenceAdapterHerbstcampus {
     }
     ConferenceAdapterApi <|-- ConferenceAdapterSched : implement
-    ConferenceAdapterApi <|-- ConferenceAdapterFormes : implement
+    ConferenceAdapterApi <|-- ConferenceAdapterDoag : implement
     ConferenceAdapterApi <|-- ConferenceAdapterHerbstcampus : implement
   }
   ConferenceServices --> ConferenceAdapterApi : use
@@ -42,6 +42,10 @@ note right of filter
     to "filters"?
 end note
 }
+note left of user
+    Needs to be
+    newly introduced
+end note
 
 package dukeconStorage {
 package databases {
@@ -61,11 +65,11 @@ storage herbstcampus2016 <<File>> {
 ConferenceAdapterHerbstcampus --> herbstcampus2016
 
 cloud externalDataSources {
-  package javaland <<FormesDataRepository>> {
+  package javaland <<DoagDataRepository>> {
     interface "javaland-2016" as javaland2016
     interface "javaland-2017" as javaland2017
   }
-  package jfs <<FormesDataRepository>> {
+  package jfs <<DoagDataRepository>> {
     interface "jfs-2016" as jfs2016
   }
   package linuxfoundation <<SchedDataRepository>> {
@@ -73,14 +77,14 @@ cloud externalDataSources {
     interface "apachecon-2016us" as apachecon2016us
   }
 }
-ConferenceAdapterFormes -down-> javaland2016 : https / json
-ConferenceAdapterFormes -down-> javaland2017 : https / json
-ConferenceAdapterFormes -down-> jfs2016 : https / json
+ConferenceAdapterDoag -down-> javaland2016 : https / json
+ConferenceAdapterDoag -down-> javaland2017 : https / json
+ConferenceAdapterDoag -down-> jfs2016 : https / json
 ConferenceAdapterSched -down-> apachecon2016eu : ???
 ConferenceAdapterSched -down-> apachecon2016us : ???
-'javaland2016 <--  ConferenceAdapterFormes : https / json
-'javaland2017 <--  ConferenceAdapterFormes : https / json
-'jfs2016 <--  ConferenceAdapterFormes: https / json
+'javaland2016 <--  ConferenceAdapterDoag : https / json
+'javaland2017 <--  ConferenceAdapterDoag : https / json
+'jfs2016 <--  ConferenceAdapterDoag: https / json
 'apachecon2016eu <-- ConferenceAdapterSched : ???
 'apachecon2016us <-- ConferenceAdapterSched : ???
 
