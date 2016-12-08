@@ -13,8 +13,7 @@ import java.time.format.DateTimeFormatter
  * @author Falk Sippach, falk@jug-da.de, @sippsack.
  */
 class HeiseDataExtractorSpec extends Specification {
-    private
-    static HeiseDataExtractor extractor = new HeiseDataExtractor('hc16', readCsv(), LocalDate.parse('2016-08-30', DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+    private static HeiseDataExtractor extractor = new HeiseDataExtractor('hc16', readCsv(), LocalDate.parse('2016-08-30', DateTimeFormatter.ofPattern("yyyy-MM-dd")))
     private Conference conference
 
     void setup() {

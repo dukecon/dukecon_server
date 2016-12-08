@@ -2,7 +2,9 @@ package org.dukecon.server.adapter.sched
 
 import groovy.util.logging.Slf4j
 import org.dukecon.model.*
+import org.dukecon.server.adapter.ConferenceDataExtractor
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -10,19 +12,34 @@ import java.time.temporal.ChronoUnit
 /**
  * Extracts conference information, talks and speakers for Sched conferences (e. g. ApacheCon).
  *
- * TODO must be refactored as DoagDataExtractor
+ * TODO must be refactored like DoagDataExtractor
  *
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  * @author Christofer Dutz, christofer.dutz@codecentric.de, @ChristoferDutz
  */
 @Slf4j
-class SchedDataExtractor {
+class SchedDataExtractor implements ConferenceDataExtractor {
 
     def conferenceId
+    private LocalDate startDate
+    private String conferenceName
+    private String conferenceUrl
+
     def conferenceJson
     def eventsJson
 
-    Conference buildConference() {
+    SchedDataExtractor() {
+    }
+
+    SchedDataExtractor(String conferenceId, rawDataResource, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
+        this.conferenceId = conferenceId
+        this.startDate = startDate
+        this.conferenceName = conferenceName
+        this.conferenceUrl = conferenceUrl
+    }
+
+    @Override
+    Conference getConference() {
         Conference conf = Conference.builder()
                 .id(conferenceId.toString())
                 .name(conferenceJson.title.toString())

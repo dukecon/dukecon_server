@@ -2,6 +2,9 @@ package org.dukecon.server.adapter
 
 import groovy.transform.TypeChecked
 import org.dukecon.model.Conference
+import org.springframework.beans.factory.annotation.Value
+
+import java.time.Instant
 
 /**
  * Data provider for a resource file reachable through an url which may be updated periodically. For the sake of
@@ -12,24 +15,65 @@ import org.dukecon.model.Conference
 @TypeChecked
 class WebResourceDataProvider implements ConferenceDataProvider {
 
-    private final WebResourceDataProviderRemote dataProviderRemote
+    private final WebResourceDataProviderRemote remote
+
+    @Value("\${talks.cache.expires:3600}")
+    Integer cacheExpiresAfterSeconds
+
+    volatile Instant cacheLastUpdated
+
+    volatile Conference conference;
+
+    volatile Exception staleException;
 
     WebResourceDataProvider(WebResourceDataProviderRemote dataProviderRemote) {
-        this.dataProviderRemote = dataProviderRemote
+        this.remote = dataProviderRemote
     }
 
     @Override
     Conference getConference() {
-        return dataProviderRemote.conference
+        checkCache()
+        return conference
     }
 
-    @Override
-    boolean update() {
-        return false
+    private void checkCache() {
+        if (!cacheLastUpdated || isCacheExpired()) {
+            // Synchronized to avoid triggering reads in parallel
+            synchronized (this) {
+                if (!cacheLastUpdated || isCacheExpired()) {
+                    update()
+                }
+            }
+        }
     }
 
-    @Override
-    boolean isBackupActive() {
-        return false
+    private boolean isCacheExpired() {
+        if (!cacheExpiresAfterSeconds) {
+            return true
+        }
+        return cacheLastUpdated.plusSeconds(cacheExpiresAfterSeconds).isBefore(Instant.now())
     }
+
+    public synchronized boolean update() {
+        try {
+            this.conference = remote.readConferenceData()
+            staleException = null
+        } catch (Exception e) {
+            staleException = e
+        }
+        if (conference == null) {
+            // no previously cached result exists
+            throw staleException;
+        }
+        /* indepdendent of the result update the timestamp so
+           the next caller will get the cached result.
+         */
+        cacheLastUpdated = Instant.now()
+        return staleException == null && !remote.isBackupActive()
+    }
+
+    public boolean isBackupActive() {
+        return remote.isBackupActive()
+    }
+
 }

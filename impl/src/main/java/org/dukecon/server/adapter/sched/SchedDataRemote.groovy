@@ -143,6 +143,6 @@ class SchedDataRemote {
     Conference createConference(String conferenceId, conferenceJson, eventsJson) {
         SchedDataExtractor extractor = new SchedDataExtractor(
                 conferenceJson: conferenceJson, eventsJson: eventsJson, conferenceId: conferenceId)
-        return extractor.buildConference()
+        return extractor.getConference()
     }
 }

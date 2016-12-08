@@ -1,5 +1,7 @@
 package org.dukecon.server.conference
 
+import org.apache.commons.lang3.text.StrSubstitutor
+import org.dukecon.server.adapter.DefaultRawDataResource
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 import org.yaml.snakeyaml.Yaml
@@ -12,17 +14,33 @@ import java.time.LocalDate
 @Configuration
 class ConferencesConfiguration {
 
-    public static ConferencesConfiguration fromFile(String classpathName) {
+    static ConferencesConfiguration fromFile(String classpathName, Map<String, Object> allProperties) {
         new ConferencesConfiguration(conferences: new Yaml(new YamlDateTimeConstructor()).load(getClass().getResourceAsStream("/${classpathName}")).collect {
-            new Conference(it)
+            new Conference(substitutePlaceHolder(it, allProperties))
         })
+    }
+
+    private static Map substitutePlaceHolder(Map properties, Map allConfigProperties) {
+        def substitutor = new StrSubstitutor(properties + allConfigProperties)
+        properties.each {k, v ->
+            if (v instanceof String) {
+                properties[k] = substitutor.replace(v)
+            }
+            if (v instanceof Map) {
+                def substitutor2 = new StrSubstitutor(properties + allConfigProperties)
+                v.each {k1, v1 ->
+                    v[k1] = substitutor.replace(v1)
+                }
+            }
+        }
+        properties
     }
 
     @NotNull
     @Valid
     List<Conference> conferences = [];
 
-    public static class Conference {
+    static class Conference {
         @NotNull
         String id
 
@@ -32,7 +50,7 @@ class ConferencesConfiguration {
         String conference
 
         @NotNull
-        Integer year
+        String year
 
         @NotNull
         String name
@@ -51,12 +69,14 @@ class ConferencesConfiguration {
         LocalDate endDate
 
         @NotNull
-        String talksUri
+        Object talksUri
 
         String backupUri
 
         @NotNull
-        String extractorClass
+        Class extractorClass
+
+        Class rawDataResourcesClass = DefaultRawDataResource.class
 
         @Override
         String toString() {

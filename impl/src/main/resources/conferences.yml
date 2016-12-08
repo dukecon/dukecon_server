@@ -7,12 +7,12 @@
 #  backupUri: javaland-2016-backup.raw
   talksUri: javaland-2016.raw
   url: http://javaland.dukecon.org/2016
-  homeUrl: http://www.javaland.eu
+  homeUrl: http://www.javaland.eu${sched.conferences[apacheconeu2016]}
   name: JavaLand 2016
   startDate: 2016-03-08
   endDate: 2016-03-10
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
--
+  rawDataResourcesClass: org.dukecon.server.adapter.DefaultRawDataResource-
   id: jfs2016
   internalId: 496615
   conference: jfs
@@ -39,6 +39,22 @@
   endDate: 2016-09-01
   extractorClass: org.dukecon.server.adapter.heise.HeiseDataExtractor
 -
+  id: apacheconeu2016
+  internalId:
+  conference: apachecon
+  year: eu2016
+  talksUri:
+    conferenceData:https://${conferenceId}.sched.org/api/site/sync?api_key=${conferenceApiKey}
+    eventsData:https://${conferenceId}.sched.org/api/session/list?api_key=${conferenceApiKey}&custom_data=Y&format=json
+  backupUri: apacheconeu2016-2017-backup.raw
+#  talksUri: apacheconeu2016-2017.raw
+  url: http://apachecon.dukecon.org/${year}
+  homeUrl: apacheconeu2016.sched.org
+  name: ApacheCon Europe 2016
+  startDate: 2016-11-16
+  endDate: 2016-11-18
+  extractorClass: org.dukecon.server.adapter.sched.SchedDataExtractor
+-
   id: jl2017
   internalId: 522447
   conference: javaland
@@ -46,7 +62,7 @@
 #  talksUri: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=522447
   backupUri: javaland-2017-backup.raw
   talksUri: javaland-2017.raw
-  url: http://javaland.dukecon.org/${year}
+  url: http://${conference}.dukecon.org/${year}
   homeUrl: http://www.javaland.eu
   name: JavaLand 2017
   startDate: 2016-03-28

@@ -1,6 +1,8 @@
-package org.dukecon.server.javaland
+package org.dukecon.server.conference.adpater
 
 import org.dukecon.server.adapter.WebResourceDataProviderHealthIndicator
+import org.dukecon.server.javaland.JavalandDataProvider
+import org.dukecon.server.javaland.JavalandDataRemote
 import org.springframework.boot.actuate.health.Status
 import spock.lang.Ignore
 import spock.lang.Specification
@@ -9,16 +11,18 @@ import spock.lang.Specification
  * @author Alexander Schwartz, alexander.schwartz@gmx.net, @ahus1de
  */
 @Ignore
-class JavalandDataProviderHealthIndicatorSpec extends Specification {
+class WebResourceDataProviderHealthIndicatorSpec extends Specification {
 
     WebResourceDataProviderHealthIndicator healthIndicator;
 
     void setup() {
-        healthIndicator = new WebResourceDataProviderHealthIndicator();
-        healthIndicator.talkProvider = new JavalandDataProvider();
-        healthIndicator.talkProvider.remote = new JavalandDataRemote();
-        healthIndicator.talkRemote = healthIndicator.talkProvider.remote
-        healthIndicator.talkProvider.remote.backup = "javaland-2016-backup.raw"
+        def remote = new JavalandDataRemote(backup: 'javaland-2016-backup.raw')
+        def talkProvider = new JavalandDataProvider(remote: remote)
+        healthIndicator = new WebResourceDataProviderHealthIndicator(talkProvider, remote);
+//        healthIndicator.talkProvider = new JavalandDataProvider();
+//        healthIndicator.talkProvider.remote = new JavalandDataRemote();
+//        healthIndicator.talkRemote = healthIndicator.talkProvider.remote
+//        healthIndicator.talkProvider.remote.backup = "javaland-2016-backup.raw"
     }
 
     void "Should return UP when resource has been read succcessfully"() {

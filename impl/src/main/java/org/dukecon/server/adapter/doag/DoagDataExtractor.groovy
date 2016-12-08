@@ -19,24 +19,23 @@ import static com.xlson.groovycsv.CsvParser.parseCsv
 class DoagDataExtractor implements ConferenceDataExtractor {
 
     def talksJson
-    String conferenceUrl = 'http://dukecon.org'
-    String conferenceName = 'DukeCon Conference'
-    private String conferenceId
-    private LocalDate startDate
+    private final String conferenceId
+    private final Class<? extends ConferenceDataExtractor> extractorClass
+    private final LocalDate startDate
+    private final String conferenceUrl = 'http://dukecon.org'
+    private final String conferenceName = 'DukeCon Conference'
 
-    DoagDataExtractor(String conferenceId, input, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
+    DoagDataExtractor(String conferenceId, rawDataResource, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
         this.conferenceId = conferenceId
+        this.talksJson = readJson(rawDataResource, conferenceId).hits.hits._source
         this.startDate = startDate
         this.conferenceName = conferenceName
         this.conferenceUrl = conferenceUrl
-        this.talksJson = readJson(input, conferenceId).hits.hits._source
     }
 
-
-    private readJson(InputStream inputStream, String conferenceId) {
-        assert inputStream != null : "inputstream must not be null for conference ${conferenceId}"
-        JsonSlurper slurper = new JsonSlurper()
-        slurper.parse(inputStream, "ISO-8859-1")
+    private readJson(rawDataResource, String conferenceId) {
+        assert rawDataResource != null : "rawDataResource must not be null for conference ${conferenceId}"
+        return new JsonSlurper().parse(rawDataResource, "ISO-8859-1")
     }
 
 
