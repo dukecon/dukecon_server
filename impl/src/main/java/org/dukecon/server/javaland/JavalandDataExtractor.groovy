@@ -17,7 +17,7 @@ import static com.xlson.groovycsv.CsvParser.parseCsv
  */
 @Slf4j
 @Deprecated
-class  JavalandDataExtractor implements ConferenceDataExtractor {
+class  JavalandDataExtractor {
     def talksJson
     String conferenceUrl = 'http://dukecon.org'
     String conferenceName = 'DukeCon Conference'
@@ -188,7 +188,6 @@ class  JavalandDataExtractor implements ConferenceDataExtractor {
         }.findAll { Event event -> event.start.until(event.end, ChronoUnit.MINUTES) > 0 }
     }
 
-    @Override
     Conference getConference() {
         return buildConference()
     }
