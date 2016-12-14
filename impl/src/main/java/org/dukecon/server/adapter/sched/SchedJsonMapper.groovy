@@ -19,4 +19,9 @@ class SchedJsonMapper implements RawDataMapper {
     Map<String, Object> asMap() {
         return null
     }
+
+    @Override
+    void useBackup(RawDataResourceSupplier resourceSupplier) {
+        // TODO implement
+    }
 }

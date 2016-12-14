@@ -1,5 +1,6 @@
 package org.dukecon.server.adapter
 
+import org.dukecon.server.adapter.doag.DoagJsonMapper
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.springframework.beans.BeansException
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
@@ -41,9 +42,10 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
         configuration.conferences.each { ConferencesConfiguration.Conference config ->
             if (config.backupUri) {
                 BeanDefinitionBuilder builderDataProviderRemote = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProviderRemote)
-                builderDataProviderRemote.addConstructorArgValue({ ->
-                    (config.talksUri.startsWith('http') ? new URL(config.talksUri) : this.class.getResourceAsStream("/${config.talksUri}"))
-                } as RawDataResourceSupplier)
+                builderDataProviderRemote.addConstructorArgValue(new DoagJsonMapper(new DefaultRawDataResource(config.talksUri)))
+//                        { ->
+//                    (config.talksUri.startsWith('http') ? new URL(config.talksUri) : this.class.getResourceAsStream("/${config.talksUri}"))
+//                } as RawDataResourceSupplier)
                 builderDataProviderRemote.addConstructorArgValue(config)
                 beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider remote", builderDataProviderRemote.beanDefinition)
 
@@ -57,7 +59,8 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
                 beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider health indicator", builderHealthCheck.beanDefinition)
             } else {
                 BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(LocalResourceDataProvider)
-                def dataExtractor = config.extractorClass.newInstance(config.id, this.class.getResourceAsStream("/${config.talksUri}"), config.startDate, config.name, config.url)
+                def rawDataMapper = config.rawDataMapperClass.newInstance(new DefaultRawDataResource(config.talksUri))
+                def dataExtractor = config.extractorClass.newInstance(config.id, rawDataMapper, config.startDate, config.name, config.url)
                 builder.addConstructorArgValue(dataExtractor)
                 beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider", builder.beanDefinition)
             }

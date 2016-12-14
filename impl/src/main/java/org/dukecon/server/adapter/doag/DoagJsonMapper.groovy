@@ -19,6 +19,12 @@ class DoagJsonMapper implements RawDataMapper {
     }
 
     @Override
+    @TypeChecked(TypeCheckingMode.SKIP)
+    void useBackup(RawDataResourceSupplier resourceSupplier) {
+        rawData.events = new JsonSlurper().parse(resourceSupplier.get(), "ISO-8859-1").events
+    }
+
+    @Override
     Map<String, Object> asMap() {
         return rawData
     }

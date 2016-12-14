@@ -4,6 +4,8 @@ import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
 import org.dukecon.model.*
 import org.dukecon.server.adapter.ConferenceDataExtractor
+import org.dukecon.server.adapter.RawDataMapper
+import org.dukecon.server.adapter.RawDataResourceSupplier
 
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -25,19 +27,13 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     private final String conferenceUrl = 'http://dukecon.org'
     private final String conferenceName = 'DukeCon Conference'
 
-    DoagDataExtractor(String conferenceId, rawDataResource, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
+    DoagDataExtractor(String conferenceId, RawDataMapper rawDataMapper, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
         this.conferenceId = conferenceId
-        this.talksJson = readJson(rawDataResource, conferenceId).hits.hits._source
+        this.talksJson = rawDataMapper.asMap().events
         this.startDate = startDate
         this.conferenceName = conferenceName
         this.conferenceUrl = conferenceUrl
     }
-
-    private readJson(rawDataResource, String conferenceId) {
-        assert rawDataResource != null : "rawDataResource must not be null for conference ${conferenceId}"
-        return new JsonSlurper().parse(rawDataResource, "ISO-8859-1")
-    }
-
 
     @Override
     Conference getConference() {

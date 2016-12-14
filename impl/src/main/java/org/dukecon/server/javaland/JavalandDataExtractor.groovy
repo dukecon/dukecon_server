@@ -2,6 +2,7 @@ package org.dukecon.server.javaland
 
 import groovy.util.logging.Slf4j
 import org.dukecon.model.*
+import org.dukecon.server.adapter.ConferenceDataExtractor
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -16,7 +17,7 @@ import static com.xlson.groovycsv.CsvParser.parseCsv
  */
 @Slf4j
 @Deprecated
-class  JavalandDataExtractor {
+class  JavalandDataExtractor implements ConferenceDataExtractor {
     def talksJson
     String conferenceUrl = 'http://dukecon.org'
     String conferenceName = 'DukeCon Conference'
@@ -185,5 +186,10 @@ class  JavalandDataExtractor {
             })
                     .build()
         }.findAll { Event event -> event.start.until(event.end, ChronoUnit.MINUTES) > 0 }
+    }
+
+    @Override
+    Conference getConference() {
+        return buildConference()
     }
 }

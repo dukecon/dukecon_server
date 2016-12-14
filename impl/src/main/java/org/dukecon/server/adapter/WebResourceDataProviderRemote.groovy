@@ -1,7 +1,7 @@
 package org.dukecon.server.adapter
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty
+import groovy.json.JsonOutput
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import groovy.util.logging.Slf4j
@@ -21,15 +21,15 @@ class WebResourceDataProviderRemote {
     // but to be sure choosing UTF-8 here.
     private final static String BACKUP_CHARSET = StandardCharsets.UTF_8.toString();
 
-    private final RawDataResourceSupplier rawDataResourceSupplier
+    private final RawDataMapper rawDataMapper
     private final ConferencesConfiguration.Conference config
 
     volatile boolean backupActive = false
     Exception staleException
     volatile Conference conference
 
-    WebResourceDataProviderRemote(RawDataResourceSupplier rawDataResourceSupplier, ConferencesConfiguration.Conference config) {
-        this.rawDataResourceSupplier = rawDataResourceSupplier
+    WebResourceDataProviderRemote(RawDataMapper rawDataMapper, ConferencesConfiguration.Conference config) {
+        this.rawDataMapper = rawDataMapper
         this.config = config
     }
 
@@ -39,15 +39,14 @@ class WebResourceDataProviderRemote {
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    @HystrixCommand(groupKey = "doag", commandKey = "readConferenceData", fallbackMethod = "readConferenceDataFallback", commandProperties = @HystrixProperty(name = "hystrix.command.default.execution.timeout.enabled", value = "false"))
+    @HystrixCommand(groupKey = "doag", commandKey = "readConferenceData", fallbackMethod = "readConferenceDataFallback")
     public Conference readConferenceData() {
         try {
             log.info("Rereading data from '{}'", config.talksUri)
-            def rawData = rawDataResourceSupplier.get()
-            Conference conference = createConference(rawData)
+            Conference conference = createConference(rawDataMapper)
             try {
                 File backupFile = new File("backup/${this.config.backupUri}");
-                backupFile.write(rawDataResourceSupplier.get().text, BACKUP_CHARSET);
+                backupFile.write(JsonOutput.toJson(rawDataMapper.asMap()), BACKUP_CHARSET);
             } catch (IOException e) {
                 log.warn("unable to write backup file '{}'", "backup/${this.config.backupUri}", e);
             }
@@ -65,7 +64,8 @@ class WebResourceDataProviderRemote {
     public Conference readConferenceDataFallback() {
         try {
             log.info("Rereading JSON data from backup '{}'", "backup/${this.config.backupUri}")
-            Conference conference = createConference(this.class.getResourceAsStream("/backup/${this.config.backupUri}"))
+            rawDataMapper.useBackup(new DefaultRawDataResource("file:backup/${this.config.backupUri}"))
+            Conference conference = createConference(rawDataMapper)
             backupActive = true;
             return conference;
         } catch (RuntimeException e) {

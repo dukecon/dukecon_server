@@ -131,13 +131,11 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
                 }
             }
             if(conference.getSpeakers() != null) {
-                for (Speaker speaker : conference.getSpeakers()) {
-                    if (speaker.getEvents() != null) {
-                        List<Event> events = speaker.getEvents().stream().map(
-                                event -> eventMap.get(event.getId())).collect(Collectors.toCollection(LinkedList::new));
-                        speaker.setEvents(events);
-                    }
-                }
+                conference.getSpeakers().stream().filter(speaker -> speaker.getEvents() != null).forEach(speaker -> {
+                    List<Event> events = speaker.getEvents().stream().map(
+                            event -> eventMap.get(event.getId())).collect(Collectors.toCollection(LinkedList::new));
+                    speaker.setEvents(events);
+                });
             }
             conference.getMetaData().setId(conference.getId());
 

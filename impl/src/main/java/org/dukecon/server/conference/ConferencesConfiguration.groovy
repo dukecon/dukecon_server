@@ -78,6 +78,8 @@ class ConferencesConfiguration {
 
         Class rawDataResourcesClass = DefaultRawDataResource.class
 
+        Class rawDataMapperClass
+
         @Override
         String toString() {
             return "$id: $name"
