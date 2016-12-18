@@ -39,7 +39,7 @@ class WebResourceDataProviderRemote {
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    @HystrixCommand(groupKey = "doag", commandKey = "readConferenceData", fallbackMethod = "readConferenceDataFallback")
+//    @HystrixCommand(groupKey = "doag", commandKey = "readConferenceData", fallbackMethod = "readConferenceDataFallback")
     public Conference readConferenceData() {
         try {
             log.info("Rereading data from '{}'", config.talksUri)
