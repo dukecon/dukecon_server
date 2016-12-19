@@ -45,25 +45,26 @@ class WebResourceDataProviderRemote {
             log.info("Rereading data from '{}'", config.talksUri)
             Conference conference = createConference(rawDataMapper)
             try {
-                File backupFile = new File("backup/${this.config.backupUri}");
-                backupFile.write(JsonOutput.toJson(rawDataMapper.asMap()), BACKUP_CHARSET);
+                File backupFile = new File(config.backupUri)
+                backupFile.write(JsonOutput.toJson(rawDataMapper.asMap()), BACKUP_CHARSET)
             } catch (IOException e) {
-                log.warn("unable to write backup file '{}'", "backup/${this.config.backupUri}", e);
+                log.error("unable to write backup file '{}': {}", config.backupUri, e.message, e)
             }
             backupActive = false;
             staleException = null;
             return conference;
         } catch (RuntimeException e) {
-            log.error("unable to read data", e);
-            staleException = e;
-            throw e;
+            // TODO: Either log an error or re-throw it!
+            log.error("unable to read data: {}", e.message, e)
+            staleException = e
+            throw e
         }
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
     public Conference readConferenceDataFallback() {
         try {
-            log.info("Rereading JSON data from backup '{}'", "backup/${this.config.backupUri}")
+            log.info("Rereading JSON data from backup '{}'", config.backupUri)
             rawDataMapper.useBackup(new DefaultRawDataResource("file:backup/${this.config.backupUri}"))
             Conference conference = createConference(rawDataMapper)
             backupActive = true;
