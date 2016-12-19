@@ -36,7 +36,7 @@ class SchedDataRemote {
     @Value("\${sched.baseEventsUrl:https://&{conferenceId}.sched.org/api/session/list?api_key=&{conferenceApiKey}&custom_data=Y&format=json}")
     String baseEventsUrl
 
-    @Value("\${sched.backup:sched/&{conferenceId}-backup.raw}")
+    @Value("\${sched.backup:&{conferenceId}-backup.raw}")
     String backupPattern
 
     volatile boolean backupActive = false
