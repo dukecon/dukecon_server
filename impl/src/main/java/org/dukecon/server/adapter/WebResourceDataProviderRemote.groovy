@@ -50,8 +50,8 @@ class WebResourceDataProviderRemote {
             } catch (IOException e) {
                 log.error("unable to write backup file '{}': {}", config.backupUri, e.message, e)
             }
-            backupActive = false;
-            staleException = null;
+            backupActive = false
+            staleException = null
             return conference;
         } catch (RuntimeException e) {
             // TODO: Either log an error or re-throw it!
