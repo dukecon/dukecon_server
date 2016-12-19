@@ -33,7 +33,7 @@ class CurrentConferenceResource {
     @Value("\${conferences.default.id:javaland}")
     String defaultConferenceName
 
-    @Value("\${conferences.default.id:522447}")
+    @Value("\${conferences.default.id:jl2017}")
     String defaultConferenceId
 
     @GET
