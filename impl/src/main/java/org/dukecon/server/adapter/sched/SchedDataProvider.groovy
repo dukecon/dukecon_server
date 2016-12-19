@@ -22,7 +22,7 @@ import java.time.Instant
  * @author Christofer Dutz, christofer.dutz@codecentric.de, @ChristoferDutz
  */
 @Slf4j
-@Component
+//@Component
 @TypeChecked
 @Deprecated
 class SchedDataProvider implements ConferenceDataProvider, InitializingBean {
