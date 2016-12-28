@@ -5,32 +5,28 @@ import freemarker.template.Template
 import freemarker.template.TemplateException
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
+import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
 import org.dukecon.model.Conference
 import org.dukecon.model.Styles
 import org.dukecon.server.adapter.ConferenceDataProvider
 import org.dukecon.services.ConferenceService
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.context.ServletContextAware
 
 import javax.inject.Inject
 import javax.servlet.ServletContext
-import javax.ws.rs.GET
-import javax.ws.rs.Path
-import javax.ws.rs.PathParam
-import javax.ws.rs.Produces
+import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
-import io.swagger.annotations.*
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Component
 @Path("conferences")
-@Api(value="/", description = "Conferences endpoint")
+@Api(value = "/", description = "Conferences endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 @Slf4j
@@ -42,7 +38,7 @@ class ConferencesResource implements ServletContextAware {
     @Inject
     ConferencesResource(ConferenceService conferenceService, List<ConferenceDataProvider> talkProviders) {
         this.conferenceService = conferenceService
-        talkProviders.findAll{it.conference}.each {this.talkProviders[it.conference.id] = it}
+        talkProviders.findAll { it.conference }.each { this.talkProviders[it.conference.id] = it }
     }
 
     @Override
@@ -51,16 +47,16 @@ class ConferencesResource implements ServletContextAware {
     }
 
     @GET
-    @ApiOperation(value="returns list of conferences",
+    @ApiOperation(value = "returns list of conferences",
             response = Conference.class,
             responseContainer = "List")
     Response getAllConferences() {
-        def conferences = getConferences().collect{c -> [id : c.id, name : c.name]}
+        def conferences = getConferences().collect { c -> [id: c.id, name: c.name] }
         return Response.ok().entity(conferences).build()
     }
 
     private List<Conference> getConferences() {
-        talkProviders.values().findAll{p  -> p.conference}.collect{p -> p.conference}
+        talkProviders.values().findAll { p -> p.conference }.collect { p -> p.conference }
     }
 
     /**
@@ -84,7 +80,7 @@ class ConferencesResource implements ServletContextAware {
                         .entity([message: "backup active"]).build()
             }
             return Response.status(Response.Status.SERVICE_UNAVAILABLE)
-                        .entity([message: provider.staleException.toString()]).build()
+                    .entity([message: provider.staleException.toString()]).build()
         } catch (RuntimeException e) {
             return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity([message: e.toString()]).build()
         }
@@ -93,10 +89,10 @@ class ConferencesResource implements ServletContextAware {
     @Path("{id}")
     @ApiOperation(value = "Conference details")
     ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
-        def conference = getConferences().find{c -> c.id == id.replace(".json", "")}
+        def conference = getConferences().find { c -> c.id == id.replace(".json", "") }
         if (conference == null) {
             log.warn("Conference with id {} not found", id)
-            return new ConferenceDetailResource(null)
+            throw new WebApplicationException(Response.Status.NOT_FOUND)
         }
         return new ConferenceDetailResource(conference)
     }
@@ -108,8 +104,8 @@ class ConferencesResource implements ServletContextAware {
     @ApiOperation(value = "Conference styles")
     String getConferenceStyles(@PathParam("id") String id) {
         Styles styles = conferenceService.getConferenceStyles(id)
-        if(styles == null) {
-            throw new ResourceNotFoundException()
+        if (styles == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND)
         }
         try {
             final Configuration cfg = new Configuration()
@@ -145,8 +141,5 @@ class ConferencesResource implements ServletContextAware {
         return talkProviders[id]
     }
 
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    class ResourceNotFoundException extends RuntimeException {
-    }
 
 }
