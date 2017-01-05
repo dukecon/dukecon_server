@@ -4,6 +4,7 @@ import groovy.util.logging.Slf4j
 import org.dukecon.DukeConServerApplication
 import org.dukecon.server.filter.Filters
 import org.dukecon.server.filter.FiltersRepository
+import org.junit.Ignore
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.dao.DataIntegrityViolationException
@@ -21,6 +22,8 @@ import javax.inject.Inject
 @WebAppConfiguration
 @IntegrationTest(["server.port=0"])
 @Slf4j
+// TODO Re-enable the test cases after solving https://github.com/dukecon/dukecon_server/issues/47
+@Ignore
 class FiltersRepositorySpec extends Specification {
     @Inject
     FiltersRepository filtersRepository
