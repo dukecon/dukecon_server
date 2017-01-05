@@ -63,12 +63,17 @@ class DoagDataExtractor implements ConferenceDataExtractor {
         csv.each { line ->
             String speakerName = line.Speaker.trim()
             if (twitterHandleBySpeakerName[speakerName]) {
-                log.debug("Duplicate Speaker in CSV: {}", speakerName)
+                if (twitterHandleBySpeakerName[speakerName] != line.TwitterHandle) {
+                    log.error("Duplicate Speaker '{}' in CSV with different Twitter Handle: '{}' vs. '{}'",
+                            speakerName, twitterHandleBySpeakerName[speakerName], line.TwitterHandle)
+                } else {
+                    log.debug("Duplicate Speaker in CSV: {}", speakerName)
+                }
             } else if (line.TwitterHandle.startsWith("@")) {
                 log.debug("Speaker '{}' has TwitterHandle: '{}'", speakerName, line.TwitterHandle)
                 twitterHandleBySpeakerName[speakerName] = line.TwitterHandle
             } else {
-                log.error("Speaker '{}' has no valid TwitterHandle!", speakerName)
+                log.debug("Speaker '{}' has no valid TwitterHandle!", speakerName)
             }
         }
     }
@@ -155,7 +160,7 @@ class DoagDataExtractor implements ConferenceDataExtractor {
 
     String twitterHandle(t) {
         String speakerName = t.REFERENT_NAME
-        String twitterHandle = twitterHandleBySpeakerName[speakerName] ?: ""
+        return twitterHandleBySpeakerName[speakerName] ?: ""
     }
 
     /**
