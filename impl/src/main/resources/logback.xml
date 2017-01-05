@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <!--<property name="LOG_TEMP" value="./logs"/>-->
     <property resource="logback.properties"/>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${appender.pattern}</pattern>
