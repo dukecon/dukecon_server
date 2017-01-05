@@ -43,6 +43,7 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     Map<String, String> twitterHandleBySpeakerName = [:]
 
     Conference buildConference() {
+        log.debug ("Building conference '{}' (name: {}, url: {})", conferenceId, conferenceName, conferenceUrl)
         buildTwitterHandles()
         Conference conf = Conference.builder()
                 .id(conferenceId)
@@ -168,8 +169,9 @@ class DoagDataExtractor implements ConferenceDataExtractor {
      * @return list of speakers with their events assigned
      */
     private List<Speaker> getSpeakersWithEvents(Map<String, List<Event>> talkLookup = getSpeakerIdToEvents()) {
-        speakers.collect { Speaker s ->
+        speakers.unique {Speaker l, Speaker r -> l.name <=> r.name}.collect { Speaker s ->
             s.events = ([] + talkLookup[s.id]).flatten()
+            log.debug ("Speaker '{}' has #{} events", s.name, s.events.size())
             s
         }
     }
