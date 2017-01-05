@@ -3,6 +3,8 @@ package org.dukecon.server.services;
 import org.dukecon.model.*;
 import org.dukecon.server.adapter.ConferenceDataProvider;
 import org.dukecon.services.ConferenceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.ServletContextAware;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 @Service("conferenceService")
 @RemotingDestination
 public class ConferenceServiceImpl implements ConferenceService, ServletContextAware {
+    private final Logger log = LoggerFactory.getLogger(ConferenceServiceImpl.class);
 
     private ServletContext servletContext;
 
@@ -34,28 +37,28 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
 
     @Override
     public void create(Conference obj) {
-        System.out.println("create(Conference)");
+        log.debug("create(Conference)");
     }
 
     @Override
     public Conference read(String id) {
-        System.out.println("read(Conference)");
+        log.debug("read(Conference)");
         return null;
     }
 
     @Override
     public void update(Conference obj) {
-        System.out.println("update(Conference)");
+        log.debug("update(Conference)");
     }
 
     @Override
     public void delete(Conference obj) {
-        System.out.println("delete(Conference)");
+        log.debug("delete(Conference)");
     }
 
     @Override
     public void delete(String id) {
-        System.out.println("delete(Conference)");
+        log.debug("delete(Conference)");
     }
 
     @Override
