@@ -147,14 +147,13 @@ class DoagDataExtractor implements ConferenceDataExtractor {
 
     private List<Speaker> getSpeakers() {
         def result = talksJson.findAll { it.ID_PERSON }.collect { t ->
-
             Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).twitter(twitterHandle(t)).build()
         } + talksJson.findAll { it.ID_PERSON_COREF }.collect { t ->
             Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).twitter(twitterHandle(t)).build()
         } + talksJson.findAll { it.ID_PERSON_COCOREF }.collect { t ->
             Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).company(t.COCOREFERENT_FIRMA).twitter(twitterHandle(t)).build()
         }
-        result.flatten().unique { it.id }
+        result = result.flatten().unique { it.id }
 
         return result
     }
@@ -169,7 +168,7 @@ class DoagDataExtractor implements ConferenceDataExtractor {
      * @return list of speakers with their events assigned
      */
     private List<Speaker> getSpeakersWithEvents(Map<String, List<Event>> talkLookup = getSpeakerIdToEvents()) {
-        speakers.unique {Speaker l, Speaker r -> l.name <=> r.name}.collect { Speaker s ->
+        speakers.collect { Speaker s ->
             s.events = ([] + talkLookup[s.id]).flatten()
             log.debug ("Speaker '{}' has #{} events", s.name, s.events.size())
             s
