@@ -20,7 +20,7 @@ class SpeakerImageServiceTests {
 
     @Test
     void testLoadImages() {
-        assert service.images.size() == 4
+        assert service.images.size() == 5
         assert service.images.each { k, v ->
             FileUtils.writeByteArrayToFile(new File("tmp/${v.filename}"), v.content)
         }
