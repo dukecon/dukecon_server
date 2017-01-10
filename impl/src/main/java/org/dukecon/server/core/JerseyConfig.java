@@ -4,6 +4,7 @@ import javax.ws.rs.ApplicationPath;
 
 import org.dukecon.server.conference.ConferencesResource;
 import org.dukecon.server.conference.CurrentConferenceResource;
+import org.dukecon.server.conference.SpeakerImageResource;
 import org.dukecon.server.filter.FiltersService;
 import org.dukecon.server.security.KeycloakConfigService;
 import org.dukecon.server.favorites.NoAuthPreferencesService;
@@ -27,6 +28,7 @@ public class JerseyConfig extends ResourceConfig {
         register(PreferencesService.class);
         register(NoAuthPreferencesService.class);
         register(FiltersService.class);
+        register(SpeakerImageResource.class);
 
         register(CorsFilter.class);
     }
