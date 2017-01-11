@@ -22,10 +22,10 @@ class ConferencesConfigurationTests {
 
     @Test
     public void parseConferencesFromYml() {
-        assert conferences.size() == 2
-        assert conferences.name == ['JavaLand 2016', 'ApacheCon Europe 2016']
+        assert conferences.size() == 3
+        assert conferences.name == ['JavaLand 2016', 'Herbstcampus 2016', 'ApacheCon Europe 2016']
         assert conferences[0].url == 'http://javaland.dukecon.org/2016'
-        assert conferences[0].talksUri.class == String
+        assert conferences[0].talksUri instanceof Map
         assert conferences[0].startDate.class == LocalDate
         assert conferences[0].extractorClass instanceof Class
         assert conferences[0].rawDataResourcesClass instanceof Class
@@ -38,11 +38,18 @@ class ConferencesConfigurationTests {
     }
 
     @Test
-    public void multipleRawDataResources() throws Exception {
-        def apacheconEu = conferences.find {it.id == 'apacheconeu2016'}
-        assert apacheconEu.talksUri instanceof Map
-        if (apacheconEu.talksUri instanceof Map) {
-            println apacheconEu.talksUri
-        }
+    public void multipleRawDataResourcesJavaLand() throws Exception {
+        def confernece = conferences.find {it.id == 'jl2016'}
+        assert confernece.talksUri instanceof Map
+        assert confernece.talksUri.eventsData == 'javaland-2016.raw'
+        assert confernece.talksUri.speakersData == 'javaland-speaker-2016.raw'
+
+
+    }
+
+    @Test
+    public void singleRawDataResourceHerbstcampus() throws Exception {
+        def conference = conferences.find {it.id == 'hc2016'}
+        assert conference.talksUri instanceof String
     }
 }

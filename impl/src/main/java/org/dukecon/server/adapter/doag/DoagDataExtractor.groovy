@@ -1,11 +1,9 @@
 package org.dukecon.server.adapter.doag
 
-import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
 import org.dukecon.model.*
 import org.dukecon.server.adapter.ConferenceDataExtractor
 import org.dukecon.server.adapter.RawDataMapper
-import org.dukecon.server.adapter.RawDataResourceSupplier
 
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -21,6 +19,7 @@ import static com.xlson.groovycsv.CsvParser.parseCsv
 class DoagDataExtractor implements ConferenceDataExtractor {
 
     def talksJson
+    def speakersJson
     private final String conferenceId
     private final Class<? extends ConferenceDataExtractor> extractorClass
     private final LocalDate startDate
@@ -29,7 +28,8 @@ class DoagDataExtractor implements ConferenceDataExtractor {
 
     DoagDataExtractor(String conferenceId, RawDataMapper rawDataMapper, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
         this.conferenceId = conferenceId
-        this.talksJson = rawDataMapper.asMap().events
+        this.talksJson = rawDataMapper.asMap().eventsData
+        this.speakersJson = rawDataMapper.asMap().speakersData
         this.startDate = startDate
         this.conferenceName = conferenceName
         this.conferenceUrl = conferenceUrl
@@ -146,16 +146,20 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     }
 
     private List<Speaker> getSpeakers() {
-        def result = talksJson.findAll { it.ID_PERSON }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).twitter(twitterHandle(t)).build()
-        } + talksJson.findAll { it.ID_PERSON_COREF }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).twitter(twitterHandle(t)).build()
-        } + talksJson.findAll { it.ID_PERSON_COCOREF }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).company(t.COCOREFERENT_FIRMA).twitter(twitterHandle(t)).build()
-        }
-        result = result.flatten().unique { it.id }
+        if (!speakersJson) {
+            def result = talksJson.findAll { it.ID_PERSON }.collect { t ->
+                Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).twitter(twitterHandle(t)).build()
+            } + talksJson.findAll { it.ID_PERSON_COREF }.collect { t ->
+                Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).twitter(twitterHandle(t)).build()
+            } + talksJson.findAll { it.ID_PERSON_COCOREF }.collect { t ->
+                Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).company(t.COCOREFERENT_FIRMA).twitter(twitterHandle(t)).build()
+            }
+            result = result.flatten().unique { it.id }
 
-        return result
+            return result
+        } else {
+            return new DoagSpeakersMapper(speakersJson).speakers.values() as List
+        }
     }
 
     String twitterHandle(t) {

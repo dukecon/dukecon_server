@@ -5,14 +5,30 @@
   year: 2016
 #  talksUri: https://www.javaland.eu/api/schedule/JavaLand2016/jl.php?key=TestJL
 #  backupUri: javaland-2016-backup.raw
-  talksUri: javaland-2016.raw
+  talksUri:
+    eventsData: javaland-2016.raw
+    speakersData: javaland-speaker-2016.raw
+  talksUriEncoding: ISO-8859-1
   url: http://${conference}.dukecon.org/${year}
-  homeUrl: http://www.javaland.eu${sched.conferences[apacheconeu2016]}
+  homeUrl: http://www.javaland.eu
   name: JavaLand 2016
   startDate: 2016-03-08
   endDate: 2016-03-10
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
+  rawDataResourcesClass: org.dukecon.server.adapter.DefaultRawDataResource
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+-
+  id: hc2016
+  conference: herbstcampus
+  year: 2016
+  talksUri: herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv
+  url: https://herbstcampus.dukecon.org/2016
+  name: Herbstcampus 2016
+  homeTitle: Herbstcampus
+  homeUrl: http://www.herbstcampus.de/
+  startDate: 2016-08-30
+  endDate: 2016-09-01
+  extractorClass: org.dukecon.server.adapter.heise.HeiseDataExtractor
 -
   id: apacheconeu2016
   internalId:

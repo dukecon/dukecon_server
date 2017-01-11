@@ -7,6 +7,7 @@ import org.dukecon.model.Language
 import org.dukecon.model.Location
 import org.dukecon.server.adapter.ConferenceDataExtractor
 import org.dukecon.server.adapter.DefaultRawDataResource
+import org.dukecon.server.adapter.MultipleRawDataResources
 import org.dukecon.server.adapter.doag.DoagDataExtractor
 import org.dukecon.server.adapter.doag.DoagJsonMapper
 import org.dukecon.server.javaland.JavalandDataExtractor
@@ -26,7 +27,7 @@ class DoagDataExtractorSpec extends Specification {
 
     void setupSpec() {
 //        extractor = new JavalandDataExtractor(talksJson: readJson().hits.hits._source)
-        extractor = new DoagDataExtractor('jl2016-test', new DoagJsonMapper(new DefaultRawDataResource('javaland-2016.raw_community')), LocalDate.now())
+        extractor = new DoagDataExtractor('jl2016-test', new DoagJsonMapper(new MultipleRawDataResources('javaland-2016.raw_community')), LocalDate.now())
     }
 
     private readJson() {
@@ -238,7 +239,6 @@ class DoagDataExtractorSpec extends Specification {
         assert events.first().speakers.size() == 1
         assert events.first().speakers.first().name == 'Henning Schwentner'
         assert events.first().speakers.first().company == 'WPS - Workplace Solutions GmbH'
-        assert !events.first().speakers.first().defaultSpeaker
         assert events.first().speakers.first().id == '370942'
         assert events.first().type.names.de == 'Neuerscheinungen oder Features'
         assert !events.first().demo

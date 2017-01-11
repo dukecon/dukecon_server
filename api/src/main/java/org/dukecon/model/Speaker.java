@@ -26,13 +26,11 @@ public class Speaker implements Identifyable {
     private String website;
     private String twitter;
     private String gplus;
+    private String facebook;
+    private String xing;
+    private String linkedin;
     private String bio;
-
-    /**
-     * @deprecated will be removed in v2 as we only need a speaker order per talk
-     */
-    @Deprecated
-    private boolean defaultSpeaker;
+    private String photoId;
 
     @JsonProperty(value = "eventIds")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")

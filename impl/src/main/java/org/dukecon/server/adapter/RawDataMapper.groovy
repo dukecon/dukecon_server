@@ -9,6 +9,10 @@ import groovy.transform.TypeCheckingMode
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 interface RawDataMapper {
+    /**
+     * @return raw data from input resources as Map
+     */
     Map<String, Object> asMap()
+//    Map<String, Object> createBackupData()
     void useBackup(RawDataResourceSupplier resourceSupplier)
 }

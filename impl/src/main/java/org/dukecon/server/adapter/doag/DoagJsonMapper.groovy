@@ -3,6 +3,7 @@ package org.dukecon.server.adapter.doag
 import groovy.json.JsonSlurper
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
+import org.dukecon.server.adapter.MultipleRawDataResources
 import org.dukecon.server.adapter.RawDataMapper
 import org.dukecon.server.adapter.RawDataResourceSupplier
 
@@ -11,11 +12,17 @@ import org.dukecon.server.adapter.RawDataResourceSupplier
  */
 @TypeChecked
 class DoagJsonMapper implements RawDataMapper {
-    private final Map<String, Object> rawData = [:]
+    private final Map<String, Object> rawData
+
+    DoagJsonMapper(MultipleRawDataResources resourceSupplier) {
+        rawData = parseResources(resourceSupplier)
+    }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    DoagJsonMapper(RawDataResourceSupplier... resourceSuppliers) {
-        rawData.events = new JsonSlurper().parse(resourceSuppliers.first().get(), "ISO-8859-1").hits.hits._source
+    private Map<String, Object> parseResources(MultipleRawDataResources resourceSupplier) {
+        resourceSupplier.get().collectEntries {k, v ->
+            [(k): new JsonSlurper().parse(v.get(), "ISO-8859-1").hits.hits._source]
+        }
     }
 
     @Override
