@@ -1,29 +1,18 @@
 package org.dukecon.server.favorite
 
 import groovy.util.logging.Slf4j
-import org.dukecon.DukeConServerApplication
+import org.dukecon.server.conference.AbstractDukeConSpec
 import org.dukecon.server.favorites.Preference
 import org.dukecon.server.favorites.PreferencesRepository
-import org.junit.Ignore
-import org.springframework.boot.test.IntegrationTest
-import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.dao.DataIntegrityViolationException
-import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.web.WebAppConfiguration
-import spock.lang.Specification
 
 import javax.inject.Inject
 
 /**
  * @author Gerd Aschemann, http://aschemann.net, @GerdAschemann
  */
-@ContextConfiguration(loader = SpringApplicationContextLoader, classes = DukeConServerApplication)
-@WebAppConfiguration
-@IntegrationTest(["server.port=0"])
 @Slf4j
-// TODO Re-enable the test cases after solving https://github.com/dukecon/dukecon_server/issues/47
-@Ignore
-class FavoritesRepositorySpec extends Specification {
+class FavoritesRepositorySpec extends AbstractDukeConSpec {
     @Inject
     PreferencesRepository preferencesRepository
 

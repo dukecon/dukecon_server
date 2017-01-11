@@ -1,30 +1,16 @@
 package org.dukecon.server.filter
 
 import groovy.util.logging.Slf4j
-import org.dukecon.DukeConServerApplication
-import org.dukecon.server.filter.Filters
-import org.dukecon.server.filter.FiltersRepository
-import org.junit.Ignore
-import org.springframework.boot.test.IntegrationTest
-import org.springframework.boot.test.SpringApplicationContextLoader
+import org.dukecon.server.conference.AbstractDukeConSpec
 import org.springframework.dao.DataIntegrityViolationException
-import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.web.WebAppConfiguration
-import org.springframework.transaction.annotation.Transactional
-import spock.lang.Specification
 
 import javax.inject.Inject
 
 /**
  * @author Gerd Aschemann, http://aschemann.net, @GerdAschemann
  */
-@ContextConfiguration(loader = SpringApplicationContextLoader, classes = DukeConServerApplication)
-@WebAppConfiguration
-@IntegrationTest(["server.port=0"])
 @Slf4j
-// TODO Re-enable the test cases after solving https://github.com/dukecon/dukecon_server/issues/47
-@Ignore
-class FiltersRepositorySpec extends Specification {
+class FiltersRepositorySpec extends AbstractDukeConSpec {
     @Inject
     FiltersRepository filtersRepository
 

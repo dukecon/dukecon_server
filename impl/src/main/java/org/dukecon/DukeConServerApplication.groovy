@@ -27,11 +27,16 @@ import javax.servlet.Filter
 @EnableAutoConfiguration
 class DukeConServerApplication {
 
+    static class DataProviderInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+        @Override
+        void initialize(ConfigurableApplicationContext ctx) {
+            ctx.addBeanFactoryPostProcessor(new DataProviderLoader(ctx.getEnvironment()))
+        }
+    }
+
     static void main(String[] args) {
         def application = new SpringApplication(DukeConServerApplication)
-        application.addInitializers({ ConfigurableApplicationContext ctx ->
-            ctx.addBeanFactoryPostProcessor(new DataProviderLoader(ctx.getEnvironment()))
-        } as ApplicationContextInitializer)
+        application.addInitializers(new DataProviderInitializer())
         application.run(args)
     }
 
