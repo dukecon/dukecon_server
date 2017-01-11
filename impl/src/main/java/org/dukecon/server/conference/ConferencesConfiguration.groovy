@@ -71,6 +71,9 @@ class ConferencesConfiguration {
         @NotNull
         Object talksUri
 
+
+        String talksUriEncoding = 'ISO-8859-1'
+
         String backupUri
 
         @NotNull
