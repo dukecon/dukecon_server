@@ -1,6 +1,7 @@
 package org.dukecon.server.conference.adpater
 
-import org.dukecon.server.adapter.DefaultRawDataResource
+import org.dukecon.adapter.ResourceWrapper
+
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.junit.Before
 import org.junit.Test
@@ -12,7 +13,7 @@ import java.time.LocalDate
  */
 class ConferencesConfigurationTests {
     private ConferencesConfiguration config
-    private List conferences
+    private List<ConferencesConfiguration.Conference> conferences
 
     @Before
     public void setUp() throws Exception {
@@ -29,7 +30,7 @@ class ConferencesConfigurationTests {
         assert conferences[0].startDate.class == LocalDate
         assert conferences[0].extractorClass instanceof Class
         assert conferences[0].rawDataResourcesClass instanceof Class
-        assert conferences[0].rawDataResourcesClass == DefaultRawDataResource.class
+        assert conferences[0].rawDataResourcesClass == ResourceWrapper.class
     }
 
     @Test

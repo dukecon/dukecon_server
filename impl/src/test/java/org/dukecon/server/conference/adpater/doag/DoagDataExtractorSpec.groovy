@@ -6,8 +6,7 @@ import org.dukecon.model.Event
 import org.dukecon.model.Language
 import org.dukecon.model.Location
 import org.dukecon.server.adapter.ConferenceDataExtractor
-import org.dukecon.server.adapter.DefaultRawDataResource
-import org.dukecon.server.adapter.MultipleRawDataResources
+import org.dukecon.server.adapter.RawDataResources
 import org.dukecon.server.adapter.doag.DoagDataExtractor
 import org.dukecon.server.adapter.doag.DoagJsonMapper
 import org.dukecon.server.javaland.JavalandDataExtractor
@@ -27,7 +26,7 @@ class DoagDataExtractorSpec extends Specification {
 
     void setupSpec() {
 //        extractor = new JavalandDataExtractor(talksJson: readJson().hits.hits._source)
-        extractor = new DoagDataExtractor('jl2016-test', new DoagJsonMapper(new MultipleRawDataResources('javaland-2016.raw_community')), LocalDate.now())
+        extractor = new DoagDataExtractor('jl2016-test', new DoagJsonMapper(new RawDataResources('javaland-2016.raw_community')), LocalDate.now())
     }
 
     private readJson() {

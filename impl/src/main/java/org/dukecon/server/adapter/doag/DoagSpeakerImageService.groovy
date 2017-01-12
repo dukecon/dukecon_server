@@ -1,8 +1,8 @@
 package org.dukecon.server.adapter.doag
 
 import groovy.json.JsonSlurper
-import org.apache.commons.io.FileUtils
-import org.dukecon.server.adapter.DefaultRawDataResource
+import org.dukecon.adapter.ResourceWrapper
+
 import org.springframework.stereotype.Service
 
 import javax.annotation.PostConstruct
@@ -29,7 +29,7 @@ class DoagSpeakerImageService {
 
     @PostConstruct
     void init() {
-        def speaker = new JsonSlurper().parse(new DefaultRawDataResource('javaland-speaker-2016.raw').get(), "ISO-8859-1").hits.hits._source
+        def speaker = new JsonSlurper().parse(ResourceWrapper.of('javaland-speaker-2016.raw').getStream(), "ISO-8859-1").hits.hits._source
         images = speaker.findAll { it.PROFILFOTO }.PROFILFOTO.collectEntries {
             String md5Hash = md5(it)
             [(md5Hash): new ImageWithName("${md5Hash}.${fileEnding(it)}", DatatypeConverter.parseBase64Binary(it))]

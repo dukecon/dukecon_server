@@ -15,7 +15,6 @@
   startDate: 2016-03-08
   endDate: 2016-03-10
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataResourcesClass: org.dukecon.server.adapter.DefaultRawDataResource
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
 -
   id: hc2016

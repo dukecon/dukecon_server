@@ -2,6 +2,7 @@ package org.dukecon.server.adapter
 
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
+import org.dukecon.adapter.ResourceWrapper
 
 /**
  * Subclasses can map input data (file, url, text) to a resulting map of raw data.
@@ -14,5 +15,5 @@ interface RawDataMapper {
      */
     Map<String, Object> asMap()
 //    Map<String, Object> createBackupData()
-    void useBackup(RawDataResourceSupplier resourceSupplier)
+    void useBackup(ResourceWrapper resourceSupplier)
 }

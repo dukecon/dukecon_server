@@ -1,8 +1,8 @@
 package org.dukecon.server.adapter.sched
 
 import groovy.transform.TypeChecked
+import org.dukecon.adapter.ResourceWrapper
 import org.dukecon.server.adapter.RawDataMapper
-import org.dukecon.server.adapter.RawDataResourceSupplier
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -11,7 +11,7 @@ import org.dukecon.server.adapter.RawDataResourceSupplier
 class SchedJsonMapper implements RawDataMapper {
 
 
-    SchedJsonMapper(RawDataResourceSupplier... resourceSupplier) {
+    SchedJsonMapper(ResourceWrapper... resourceSupplier) {
 
     }
 
@@ -21,7 +21,7 @@ class SchedJsonMapper implements RawDataMapper {
     }
 
     @Override
-    void useBackup(RawDataResourceSupplier resourceSupplier) {
+    void useBackup(ResourceWrapper resourceSupplier) {
         // TODO implement
     }
 }

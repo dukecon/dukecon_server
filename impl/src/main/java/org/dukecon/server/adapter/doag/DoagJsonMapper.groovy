@@ -3,9 +3,9 @@ package org.dukecon.server.adapter.doag
 import groovy.json.JsonSlurper
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
-import org.dukecon.server.adapter.MultipleRawDataResources
+import org.dukecon.adapter.ResourceWrapper
+import org.dukecon.server.adapter.RawDataResources
 import org.dukecon.server.adapter.RawDataMapper
-import org.dukecon.server.adapter.RawDataResourceSupplier
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -14,20 +14,20 @@ import org.dukecon.server.adapter.RawDataResourceSupplier
 class DoagJsonMapper implements RawDataMapper {
     private final Map<String, Object> rawData
 
-    DoagJsonMapper(MultipleRawDataResources resourceSupplier) {
+    DoagJsonMapper(RawDataResources resourceSupplier) {
         rawData = parseResources(resourceSupplier)
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    private Map<String, Object> parseResources(MultipleRawDataResources resourceSupplier) {
+    private Map<String, Object> parseResources(RawDataResources resourceSupplier) {
         resourceSupplier.get().collectEntries {k, v ->
-            [(k): new JsonSlurper().parse(v.get(), "ISO-8859-1").hits.hits._source]
+            [(k): new JsonSlurper().parse(v.getStream(), "ISO-8859-1").hits.hits._source]
         }
     }
 
     @Override
     @TypeChecked(TypeCheckingMode.SKIP)
-    void useBackup(RawDataResourceSupplier resourceSupplier) {
+    void useBackup(ResourceWrapper resourceSupplier) {
         rawData.events = new JsonSlurper().parse(resourceSupplier.get(), "ISO-8859-1").events
     }
 

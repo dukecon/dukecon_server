@@ -5,6 +5,7 @@ import groovy.json.JsonOutput
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import groovy.util.logging.Slf4j
+import org.dukecon.adapter.ResourceWrapper
 import org.dukecon.model.Conference
 import org.dukecon.server.conference.ConferencesConfiguration
 
@@ -65,7 +66,7 @@ class WebResourceDataProviderRemote {
     public Conference readConferenceDataFallback() {
         try {
             log.info("Rereading JSON data from backup '{}'", config.backupUri)
-            rawDataMapper.useBackup(new DefaultRawDataResource("file:backup/${this.config.backupUri}"))
+            rawDataMapper.useBackup(ResourceWrapper.of("file:backup/${this.config.backupUri}"))
             Conference conference = createConference(rawDataMapper)
             backupActive = true;
             return conference;

@@ -1,7 +1,8 @@
 package org.dukecon.server.conference
 
 import org.apache.commons.lang3.text.StrSubstitutor
-import org.dukecon.server.adapter.DefaultRawDataResource
+import org.dukecon.adapter.ResourceWrapper
+
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 import org.yaml.snakeyaml.Yaml
@@ -79,7 +80,8 @@ class ConferencesConfiguration {
         @NotNull
         Class extractorClass
 
-        Class rawDataResourcesClass = DefaultRawDataResource.class
+        @Deprecated
+        Class rawDataResourcesClass = ResourceWrapper.class
 
         Class rawDataMapperClass
 

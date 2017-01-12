@@ -1,8 +1,8 @@
 package org.dukecon.server.adapter.heise
 
 import com.xlson.groovycsv.PropertyMapper
+import org.dukecon.adapter.ResourceWrapper
 import org.dukecon.server.adapter.RawDataMapper
-import org.dukecon.server.adapter.RawDataResourceSupplier
 
 import static com.xlson.groovycsv.CsvParser.parseCsv
 
@@ -42,7 +42,7 @@ class HeiseCsvInput implements Iterable<PropertyMapper>, RawDataMapper {
     }
 
     @Override
-    void useBackup(RawDataResourceSupplier resourceSupplier) {
+    void useBackup(ResourceWrapper resourceSupplier) {
         // TODO implement
     }
 }

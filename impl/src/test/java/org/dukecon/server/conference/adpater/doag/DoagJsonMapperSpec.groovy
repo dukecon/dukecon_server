@@ -1,7 +1,6 @@
 package org.dukecon.server.conference.adpater.doag
 
-import org.dukecon.server.adapter.DefaultRawDataResource
-import org.dukecon.server.adapter.MultipleRawDataResources
+import org.dukecon.server.adapter.RawDataResources
 import org.dukecon.server.adapter.doag.DoagJsonMapper
 import spock.lang.Specification
 
@@ -12,7 +11,7 @@ class DoagJsonMapperSpec extends Specification {
 
     void "should get 110 events from single local file"() {
         when:
-        DoagJsonMapper mapper = new DoagJsonMapper(new MultipleRawDataResources('javaland-2016.raw'))
+        DoagJsonMapper mapper = new DoagJsonMapper(new RawDataResources('javaland-2016.raw'))
         then:
         mapper.asMap().size() == 1
         mapper.asMap().eventsData.size() == 110
@@ -20,7 +19,7 @@ class DoagJsonMapperSpec extends Specification {
 
     void "should get 110 events from multiple local files"() {
         when:
-        DoagJsonMapper mapper = new DoagJsonMapper(new MultipleRawDataResources([eventsData: 'javaland-2016.raw', speakersData: 'javaland-speaker-2016.raw']))
+        DoagJsonMapper mapper = new DoagJsonMapper(new RawDataResources([eventsData: 'javaland-2016.raw', speakersData: 'javaland-speaker-2016.raw']))
         then:
         mapper.asMap().size() == 2
         mapper.asMap().eventsData.size() == 110
