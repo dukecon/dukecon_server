@@ -10,4 +10,5 @@ import org.dukecon.model.Conference
  */
 interface ConferenceDataExtractor {
     Conference getConference()
+    RawDataMapper getRawDataMapper()
 }

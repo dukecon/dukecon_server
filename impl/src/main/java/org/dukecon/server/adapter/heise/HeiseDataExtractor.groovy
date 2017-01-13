@@ -2,6 +2,7 @@ package org.dukecon.server.adapter.heise
 
 import org.dukecon.model.Conference
 import org.dukecon.server.adapter.ConferenceDataExtractor
+import org.dukecon.server.adapter.RawDataMapper
 
 import java.time.LocalDate
 
@@ -41,4 +42,8 @@ class HeiseDataExtractor implements ConferenceDataExtractor {
                 .build()
     }
 
+    @Override
+    RawDataMapper getRawDataMapper() {
+        return null
+    }
 }

@@ -3,6 +3,7 @@ package org.dukecon.server.adapter.sched
 import groovy.util.logging.Slf4j
 import org.dukecon.model.*
 import org.dukecon.server.adapter.ConferenceDataExtractor
+import org.dukecon.server.adapter.RawDataMapper
 
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -50,6 +51,11 @@ class SchedDataExtractor implements ConferenceDataExtractor {
                 .build()
 //        conf.speakers = getSpeakersWithEvents()
         return conf
+    }
+
+    @Override
+    RawDataMapper getRawDataMapper() {
+        return null
     }
 
     private MetaData getMetaData() {

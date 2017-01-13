@@ -41,27 +41,37 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
     void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         configuration.conferences.each { ConferencesConfiguration.Conference config ->
             if (config.backupUri) {
-                BeanDefinitionBuilder builderDataProviderRemote = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProviderRemote)
-                builderDataProviderRemote.addConstructorArgValue(new DoagJsonMapper(new RawDataResources(config.talksUri)))
-                builderDataProviderRemote.addConstructorArgValue(config)
-                beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider remote", builderDataProviderRemote.beanDefinition)
-
-                BeanDefinitionBuilder builderDataProvider = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProvider)
-                builderDataProvider.addConstructorArgReference("${config.name} dataprovider remote")
-                beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider", builderDataProvider.beanDefinition)
-
-                BeanDefinitionBuilder builderHealthCheck = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProviderHealthIndicator)
-                builderHealthCheck.addConstructorArgReference("${config.name} dataprovider")
-                builderHealthCheck.addConstructorArgReference("${config.name} dataprovider remote")
-                beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider health indicator", builderHealthCheck.beanDefinition)
+                createWebResourceDataProviderForConference(config, beanDefinitionRegistry)
             } else {
-                BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(LocalResourceDataProvider)
-                def rawDataMapper = config.rawDataMapperClass.newInstance(new RawDataResources(config.talksUri))
-                def dataExtractor = config.extractorClass.newInstance(config.id, rawDataMapper, config.startDate, config.name, config.url)
-                builder.addConstructorArgValue(dataExtractor)
-                beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider", builder.beanDefinition)
+                createLocalResourceDataProviderForConference(config, beanDefinitionRegistry)
             }
         }
+    }
+
+    private void createLocalResourceDataProviderForConference(ConferencesConfiguration.Conference config, BeanDefinitionRegistry beanDefinitionRegistry) {
+        BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(LocalResourceDataProvider)
+        def rawDataMapper = config.rawDataMapperClass.newInstance(new RawDataResources(config.talksUri))
+        def dataExtractor = config.extractorClass.newInstance(config.id, rawDataMapper, config.startDate, config.name, config.url)
+        builder.addConstructorArgValue(dataExtractor)
+        beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider", builder.beanDefinition)
+    }
+
+    private void createWebResourceDataProviderForConference(ConferencesConfiguration.Conference config, BeanDefinitionRegistry beanDefinitionRegistry) {
+        BeanDefinitionBuilder builderDataProviderRemote = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProviderRemote)
+        def rawDataMapper = config.rawDataMapperClass.newInstance(new RawDataResources(config.talksUri))
+        def dataExtractor = config.extractorClass.newInstance(config.id, rawDataMapper, config.startDate, config.name, config.url)
+        builderDataProviderRemote.addConstructorArgValue(dataExtractor)
+        builderDataProviderRemote.addConstructorArgValue(config)
+        beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider remote", builderDataProviderRemote.beanDefinition)
+
+        BeanDefinitionBuilder builderDataProvider = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProvider)
+        builderDataProvider.addConstructorArgReference("${config.name} dataprovider remote")
+        beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider", builderDataProvider.beanDefinition)
+
+        BeanDefinitionBuilder builderHealthCheck = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProviderHealthIndicator)
+        builderHealthCheck.addConstructorArgReference("${config.name} dataprovider")
+        builderHealthCheck.addConstructorArgReference("${config.name} dataprovider remote")
+        beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider health indicator", builderHealthCheck.beanDefinition)
     }
 
     @Override

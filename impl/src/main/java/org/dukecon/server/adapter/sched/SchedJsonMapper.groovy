@@ -21,6 +21,11 @@ class SchedJsonMapper implements RawDataMapper {
     }
 
     @Override
+    void initMapper() {
+
+    }
+
+    @Override
     void useBackup(ResourceWrapper resourceSupplier) {
         // TODO implement
     }

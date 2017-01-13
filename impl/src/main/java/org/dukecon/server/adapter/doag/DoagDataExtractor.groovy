@@ -18,6 +18,7 @@ import static com.xlson.groovycsv.CsvParser.parseCsv
 @Slf4j
 class DoagDataExtractor implements ConferenceDataExtractor {
 
+    private final RawDataMapper rawDataMapper
     def talksJson
     def speakersJson
     private final String conferenceId
@@ -28,8 +29,9 @@ class DoagDataExtractor implements ConferenceDataExtractor {
 
     DoagDataExtractor(String conferenceId, RawDataMapper rawDataMapper, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
         this.conferenceId = conferenceId
-        this.talksJson = rawDataMapper.asMap().eventsData
-        this.speakersJson = rawDataMapper.asMap().speakersData
+        this.rawDataMapper = rawDataMapper
+//        this.talksJson = extractor.asMap().eventsData
+//        this.speakersJson = extractor.asMap().speakersData
         this.startDate = startDate
         this.conferenceName = conferenceName
         this.conferenceUrl = conferenceUrl
@@ -40,10 +42,18 @@ class DoagDataExtractor implements ConferenceDataExtractor {
         return buildConference()
     }
 
+    @Override
+    RawDataMapper getRawDataMapper() {
+        return this.rawDataMapper
+    }
+
     Map<String, String> twitterHandleBySpeakerName = [:]
 
     Conference buildConference() {
         log.debug ("Building conference '{}' (name: {}, url: {})", conferenceId, conferenceName, conferenceUrl)
+        this.rawDataMapper.initMapper()
+        this.talksJson = this.rawDataMapper.asMap().eventsData
+        this.speakersJson = this.rawDataMapper.asMap().speakersData
         buildTwitterHandles()
         Conference conf = Conference.builder()
                 .id(conferenceId)

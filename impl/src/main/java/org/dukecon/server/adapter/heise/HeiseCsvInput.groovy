@@ -42,6 +42,11 @@ class HeiseCsvInput implements Iterable<PropertyMapper>, RawDataMapper {
     }
 
     @Override
+    void initMapper() {
+
+    }
+
+    @Override
     void useBackup(ResourceWrapper resourceSupplier) {
         // TODO implement
     }

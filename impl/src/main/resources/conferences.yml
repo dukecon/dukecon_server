@@ -61,7 +61,7 @@
 #    eventsData: javaland-2017.raw
     eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=522447
     speakersData: javaland-speaker-2016.raw
-#  backupUri: javaland-2017-backup.raw
+  backupUri: javaland-2017-backup.raw
   url: http://${conference}.dukecon.org/${year}
   homeUrl: http://www.javaland.eu
   name: JavaLand 2017

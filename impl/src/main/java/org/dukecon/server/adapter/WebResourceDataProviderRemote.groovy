@@ -22,35 +22,33 @@ class WebResourceDataProviderRemote {
     // but to be sure choosing UTF-8 here.
     private final static String BACKUP_CHARSET = StandardCharsets.UTF_8.toString();
 
-    private final RawDataMapper rawDataMapper
+    private final ConferenceDataExtractor extractor
     private final ConferencesConfiguration.Conference config
 
     volatile boolean backupActive = false
     Exception staleException
     volatile Conference conference
 
-    WebResourceDataProviderRemote(RawDataMapper rawDataMapper, ConferencesConfiguration.Conference config) {
-        this.rawDataMapper = rawDataMapper
+    WebResourceDataProviderRemote(ConferenceDataExtractor extractor, ConferencesConfiguration.Conference config) {
+        this.extractor = extractor
         this.config = config
     }
 
-    private Conference createConference(rawData) {
-        ConferenceDataExtractor dataExtractor = this.config.extractorClass.newInstance(this.config.id, rawData, config.startDate, config.name, config.url) as ConferenceDataExtractor
-        dataExtractor.conference
-    }
-
     @TypeChecked(TypeCheckingMode.SKIP)
-//    @HystrixCommand(groupKey = "doag", commandKey = "readConferenceData", fallbackMethod = "readConferenceDataFallback")
+    @HystrixCommand(groupKey = "doag", commandKey = "readConferenceData", fallbackMethod = "readConferenceDataFallback")
     public Conference readConferenceData() {
         try {
             log.info("Rereading data from '{}'", config.talksUri)
-            Conference conference = createConference(rawDataMapper)
+            log.info("falk0")
+            Conference conference = extractor.getConference()
+            log.info("falk1")
             try {
                 File backupFile = new File(config.backupUri)
-                backupFile.write(JsonOutput.toJson(rawDataMapper.asMap()), BACKUP_CHARSET)
+                backupFile.write(JsonOutput.toJson(extractor.asMap()), BACKUP_CHARSET)
             } catch (IOException e) {
                 log.error("unable to write backup file '{}': {}", config.backupUri, e.message, e)
             }
+            log.info("falk2")
             backupActive = false
             staleException = null
             return conference;
@@ -66,12 +64,15 @@ class WebResourceDataProviderRemote {
     public Conference readConferenceDataFallback() {
         try {
             log.info("Rereading JSON data from backup '{}'", config.backupUri)
-            rawDataMapper.useBackup(ResourceWrapper.of("file:backup/${this.config.backupUri}"))
-            Conference conference = createConference(rawDataMapper)
-            backupActive = true;
-            return conference;
+            extractor.rawDataMapper.useBackup(ResourceWrapper.of("file:${this.config.backupUri}"))
+            log.info("falk3")
+            Conference conference = extractor.getConference()
+            log.info("falk4")
+            backupActive = true
+            return conference
         } catch (RuntimeException e) {
             log.error("unable to read backup", e);
+            backupActive = false
             throw e;
         }
     }
