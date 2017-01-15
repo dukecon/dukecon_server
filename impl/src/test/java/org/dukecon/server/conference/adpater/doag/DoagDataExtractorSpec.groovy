@@ -28,6 +28,7 @@ class DoagDataExtractorSpec extends Specification {
 //        extractor = new JavalandDataExtractor(talksJson: readJson().hits.hits._source)
         extractor = new DoagDataExtractor('jl2016-test', new DoagJsonMapper(new RawDataResources('javaland-2016.raw_community')), LocalDate.now())
         extractor.rawDataMapper.initMapper()
+        extractor.buildConference()
     }
 
     private readJson() {

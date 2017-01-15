@@ -11,20 +11,20 @@ class DoagJsonMapperSpec extends Specification {
 
     void "should get 110 events from single local file"() {
         when:
-        DoagJsonMapper mapper = new DoagJsonMapper(new RawDataResources('javaland-2016.raw'))
+        DoagJsonMapper mapper = new DoagJsonMapper(new RawDataResources('javaland-2016-final-finished-conf.raw'))
         mapper.initMapper()
         then:
         mapper.asMap().size() == 1
-        mapper.asMap().eventsData.size() == 110
+        mapper.asMap().eventsData.size() == 142
     }
 
     void "should get 110 events from multiple local files"() {
         when:
-        DoagJsonMapper mapper = new DoagJsonMapper(new RawDataResources([eventsData: 'javaland-2016.raw', speakersData: 'javaland-speaker-2016.raw']))
+        DoagJsonMapper mapper = new DoagJsonMapper(new RawDataResources([eventsData: 'javaland-2016-final-finished-conf.raw', speakersData: 'javaland-speaker-2016.raw']))
         mapper.initMapper()
         then:
         mapper.asMap().size() == 2
-        mapper.asMap().eventsData.size() == 110
+        mapper.asMap().eventsData.size() == 142
         mapper.asMap().speakersData.size() == 140
     }
 

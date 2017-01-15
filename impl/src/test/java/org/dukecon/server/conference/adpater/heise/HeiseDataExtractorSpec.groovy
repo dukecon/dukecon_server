@@ -2,6 +2,7 @@ package org.dukecon.server.conference.adpater.heise
 
 import org.dukecon.model.Audience
 import org.dukecon.model.Conference
+import org.dukecon.server.adapter.RawDataResources
 import org.dukecon.server.adapter.heise.*
 import spock.lang.Specification
 
@@ -21,7 +22,7 @@ class HeiseDataExtractorSpec extends Specification {
     }
 
     private static readCsv() {
-        new HeiseCsvInput('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv')
+        new HeiseCsvInput(new RawDataResources('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv'))
     }
 
     void "should contain metadata"() {
