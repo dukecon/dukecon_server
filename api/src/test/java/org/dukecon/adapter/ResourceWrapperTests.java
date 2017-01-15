@@ -4,12 +4,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -49,7 +46,7 @@ public class ResourceWrapperTests {
             wrapper.getStream();
             fail("may not create stream of not existing file");
         } catch (IOException e) {
-            assertEquals("notexists.txt (Das System kann die angegebene Datei nicht finden)", e.getMessage());
+            assertTrue(e.getMessage().startsWith("notexists.txt ("));
         }
     }
 
@@ -83,7 +80,7 @@ public class ResourceWrapperTests {
             wrapper.getStream();
             fail("may not create stream of not existing file");
         } catch (IOException e) {
-            assertEquals("notexists.txt (Das System kann die angegebene Datei nicht finden)", e.getMessage());
+            assertTrue(e.getMessage().startsWith("notexists.txt ("));
         }
     }
 
