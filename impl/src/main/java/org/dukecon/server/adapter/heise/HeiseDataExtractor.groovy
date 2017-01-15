@@ -15,12 +15,12 @@ class HeiseDataExtractor implements ConferenceDataExtractor {
 
     final Conference conference
 
-    HeiseDataExtractor(String conferenceId, input, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
-        this.conference = fromInput(getInput(input), startDate, conferenceId, conferenceName, conferenceUrl)
+    HeiseDataExtractor(String conferenceId, RawDataMapper rawDataMapper, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
+        this.conference = fromInput(getInput(rawDataMapper), startDate, conferenceId, conferenceName, conferenceUrl)
     }
 
-    private def getInput(input) {
-        input instanceof InputStream ? new HeiseCsvInput(input) : input
+    private def getInput(RawDataMapper rawDataMapper) {
+        rawDataMapper instanceof InputStream ? new HeiseCsvInput(rawDataMapper) : rawDataMapper
     }
 
     private Conference fromInput(input, LocalDate startDate, String conferenceId, String conferenceName, String conferenceUrl) {

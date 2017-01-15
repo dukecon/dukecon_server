@@ -13,7 +13,7 @@ interface RawDataMapper {
 
     void initMapper()
 
-    void useBackup(ResourceWrapper resourceSupplier)
+    void useBackup(ResourceWrapper resourceWrapper)
 
     /**
      * Concrete subclasses implements this method and return input data as map converted from input resources (JSON, CSV, ...)

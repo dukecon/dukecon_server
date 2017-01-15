@@ -29,8 +29,8 @@ class DoagJsonMapper implements RawDataMapper {
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)
-    private Map<String, Object> parseResources(RawDataResources resourceSupplier) {
-        resourceSupplier.get().collectEntries {k, v ->
+    private Map<String, Object> parseResources(RawDataResources rawDataResources) {
+        rawDataResources.get().collectEntries {k, v ->
             [(k): new JsonSlurper().parse(v.getStream() ?: new byte[0], "ISO-8859-1").hits.hits._source]
         }
     }

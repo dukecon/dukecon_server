@@ -3,8 +3,6 @@
   internalId: 499959
   conference: javaland
   year: 2016
-#  talksUri: https://www.javaland.eu/api/schedule/JavaLand2016/jl.php?key=TestJL
-#  backupUri: javaland-2016-backup.raw
   talksUri:
     eventsData: javaland-2016.raw
     speakersData: javaland-speaker-2016.raw
@@ -38,7 +36,6 @@
     conferenceData: https://${conferenceId}.sched.org/api/site/sync?api_key=${conferenceApiKey}
     eventsData: https://${conferenceId}.sched.org/api/session/list?api_key=${conferenceApiKey}&custom_data=Y&format=json
   backupUri: apacheconeu2016-2017-backup.raw
-#  talksUri: apacheconeu2016-2017.raw
   url: http://apachecon.dukecon.org/${year}
   homeUrl: apacheconeu2016.sched.org
   name: ApacheCon Europe 2016

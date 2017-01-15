@@ -11,7 +11,7 @@ import org.dukecon.server.adapter.RawDataMapper
 class SchedJsonMapper implements RawDataMapper {
 
 
-    SchedJsonMapper(ResourceWrapper... resourceSupplier) {
+    SchedJsonMapper(ResourceWrapper... resourceWrapper) {
 
     }
 
@@ -26,7 +26,7 @@ class SchedJsonMapper implements RawDataMapper {
     }
 
     @Override
-    void useBackup(ResourceWrapper resourceSupplier) {
+    void useBackup(ResourceWrapper resourceWrapper) {
         // TODO implement
     }
 }

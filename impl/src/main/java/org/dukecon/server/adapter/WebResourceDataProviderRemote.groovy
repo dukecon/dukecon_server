@@ -39,16 +39,13 @@ class WebResourceDataProviderRemote {
     public Conference readConferenceData() {
         try {
             log.info("Rereading data from '{}'", config.talksUri)
-            log.info("falk0")
             Conference conference = extractor.getConference()
-            log.info("falk1")
             try {
                 File backupFile = new File(config.backupUri)
-                backupFile.write(JsonOutput.toJson(extractor.asMap()), BACKUP_CHARSET)
+                backupFile.write(JsonOutput.toJson(extractor.rawDataMapper.asMap()), BACKUP_CHARSET)
             } catch (IOException e) {
                 log.error("unable to write backup file '{}': {}", config.backupUri, e.message, e)
             }
-            log.info("falk2")
             backupActive = false
             staleException = null
             return conference;
@@ -65,9 +62,7 @@ class WebResourceDataProviderRemote {
         try {
             log.info("Rereading JSON data from backup '{}'", config.backupUri)
             extractor.rawDataMapper.useBackup(ResourceWrapper.of("file:${this.config.backupUri}"))
-            log.info("falk3")
             Conference conference = extractor.getConference()
-            log.info("falk4")
             backupActive = true
             return conference
         } catch (RuntimeException e) {

@@ -3,6 +3,7 @@ package org.dukecon.server.adapter.heise
 import com.xlson.groovycsv.PropertyMapper
 import org.dukecon.adapter.ResourceWrapper
 import org.dukecon.server.adapter.RawDataMapper
+import org.dukecon.server.adapter.RawDataResources
 
 import static com.xlson.groovycsv.CsvParser.parseCsv
 
@@ -11,13 +12,13 @@ import static com.xlson.groovycsv.CsvParser.parseCsv
  */
 class HeiseCsvInput implements Iterable<PropertyMapper>, RawDataMapper {
 
-    private List<PropertyMapper> input
+    private final List<PropertyMapper> input
 
-    HeiseCsvInput(String filename) {
-        this(HeiseCsvInput.class.getResourceAsStream("/${filename}"))
+    HeiseCsvInput(RawDataResources resources) {
+        this(resources.get().eventsData.getStream())
     }
 
-    HeiseCsvInput(InputStream inputStream) {
+    private HeiseCsvInput(InputStream inputStream) {
         this.input = tidyUpCsvIterator(parseCsv(new InputStreamReader(inputStream, "UTF-8"), separator: ';'))
     }
 
@@ -38,7 +39,7 @@ class HeiseCsvInput implements Iterable<PropertyMapper>, RawDataMapper {
 
     @Override
     Map<String, Object> asMap() {
-        return [events:input]
+        return [eventsData:input]
     }
 
     @Override
@@ -47,7 +48,6 @@ class HeiseCsvInput implements Iterable<PropertyMapper>, RawDataMapper {
     }
 
     @Override
-    void useBackup(ResourceWrapper resourceSupplier) {
-        // TODO implement
+    void useBackup(ResourceWrapper resourceWrapper) {
     }
 }

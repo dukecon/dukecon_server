@@ -30,8 +30,6 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     DoagDataExtractor(String conferenceId, RawDataMapper rawDataMapper, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
         this.conferenceId = conferenceId
         this.rawDataMapper = rawDataMapper
-//        this.talksJson = extractor.asMap().eventsData
-//        this.speakersJson = extractor.asMap().speakersData
         this.startDate = startDate
         this.conferenceName = conferenceName
         this.conferenceUrl = conferenceUrl
