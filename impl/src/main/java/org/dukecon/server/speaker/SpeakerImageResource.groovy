@@ -1,21 +1,14 @@
-package org.dukecon.server.conference
+package org.dukecon.server.speaker
 
-import freemarker.template.Configuration
-import freemarker.template.Template
-import freemarker.template.TemplateException
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
-import io.swagger.annotations.ApiOperation
-import org.dukecon.model.Conference
-import org.dukecon.model.Styles
-import org.dukecon.server.adapter.ConferenceDataProvider
-import org.dukecon.server.adapter.doag.DoagSpeakerImageService
-import org.dukecon.services.ConferenceService
 import org.springframework.stereotype.Component
-import org.springframework.web.bind.annotation.ResponseBody
 
 import javax.inject.Inject
-import javax.ws.rs.*
+import javax.ws.rs.GET
+import javax.ws.rs.Path
+import javax.ws.rs.PathParam
+import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
@@ -28,10 +21,10 @@ import javax.ws.rs.core.Response
 @TypeChecked
 @Slf4j
 class SpeakerImageResource {
-    private final DoagSpeakerImageService speakerImageService
+    private final SpeakerImageService speakerImageService
 
     @Inject
-    SpeakerImageResource(DoagSpeakerImageService speakerImageService) {
+    SpeakerImageResource(SpeakerImageService speakerImageService) {
         this.speakerImageService = speakerImageService
     }
 
@@ -44,7 +37,7 @@ class SpeakerImageResource {
     @GET
     @Path('{id}')
     Response getConferenceDetails(@PathParam("id") String id) {
-        DoagSpeakerImageService.ImageWithName image = speakerImageService.getImage(id)
+        SpeakerImageService.ImageWithName image = speakerImageService.getImage(id)
         if (image) {
             return Response.status(Response.Status.OK)
                     .type("image/${image.filename.tokenize('.').last()}")

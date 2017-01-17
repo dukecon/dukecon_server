@@ -4,7 +4,10 @@ import groovy.util.logging.Slf4j
 import org.dukecon.model.*
 import org.dukecon.server.adapter.ConferenceDataExtractor
 import org.dukecon.server.adapter.RawDataMapper
+import org.dukecon.server.conference.ConferencesConfiguration
+import org.dukecon.server.speaker.SpeakerImageService
 
+import javax.inject.Inject
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -18,6 +21,8 @@ import static com.xlson.groovycsv.CsvParser.parseCsv
 @Slf4j
 class DoagDataExtractor implements ConferenceDataExtractor {
 
+    private SpeakerImageService speakerImageService
+
     private final RawDataMapper rawDataMapper
     def talksJson
     def speakersJson
@@ -27,6 +32,12 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     private final String conferenceUrl = 'http://dukecon.org'
     private final String conferenceName = 'DukeCon Conference'
 
+    DoagDataExtractor(ConferencesConfiguration.Conference config, RawDataMapper rawDataMapper, SpeakerImageService speakerImageService) {
+        this(config.id, rawDataMapper, config.startDate, config.name, config.url)
+        this.speakerImageService = speakerImageService
+    }
+
+    @Deprecated
     DoagDataExtractor(String conferenceId, RawDataMapper rawDataMapper, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
         this.conferenceId = conferenceId
         this.rawDataMapper = rawDataMapper
@@ -166,6 +177,9 @@ class DoagDataExtractor implements ConferenceDataExtractor {
 
             return result
         } else {
+            speakersJson.findAll { it.PROFILFOTO }.PROFILFOTO.each {
+                speakerImageService.addImage(it)
+            }
             return new DoagSpeakersMapper(speakersJson).speakers.values() as List
         }
     }

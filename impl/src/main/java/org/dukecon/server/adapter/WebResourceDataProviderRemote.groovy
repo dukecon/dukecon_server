@@ -29,7 +29,7 @@ class WebResourceDataProviderRemote {
     Exception staleException
     volatile Conference conference
 
-    WebResourceDataProviderRemote(ConferenceDataExtractor extractor, ConferencesConfiguration.Conference config) {
+    WebResourceDataProviderRemote(ConferencesConfiguration.Conference config, ConferenceDataExtractor extractor) {
         this.extractor = extractor
         this.config = config
     }

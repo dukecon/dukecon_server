@@ -40,6 +40,14 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
     @Override
     void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         configuration.conferences.each { ConferencesConfiguration.Conference config ->
+            def rawDataMapper = config.rawDataMapperClass.newInstance(new RawDataResources(config.talksUri))
+
+            BeanDefinitionBuilder builderDataExtractor = BeanDefinitionBuilder.genericBeanDefinition(config.extractorClass)
+            builderDataExtractor.addConstructorArgValue(config)
+            builderDataExtractor.addConstructorArgValue(rawDataMapper)
+            builderDataExtractor.addConstructorArgReference('speakerImageService')
+            beanDefinitionRegistry.registerBeanDefinition("${config.name} data extractor", builderDataExtractor.beanDefinition)
+
             if (config.backupUri) {
                 createWebResourceDataProviderForConference(config, beanDefinitionRegistry)
             } else {
@@ -50,18 +58,14 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
 
     private void createLocalResourceDataProviderForConference(ConferencesConfiguration.Conference config, BeanDefinitionRegistry beanDefinitionRegistry) {
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(LocalResourceDataProvider)
-        def rawDataMapper = config.rawDataMapperClass.newInstance(new RawDataResources(config.talksUri))
-        def dataExtractor = config.extractorClass.newInstance(config.id, rawDataMapper, config.startDate, config.name, config.url)
-        builder.addConstructorArgValue(dataExtractor)
+        builder.addConstructorArgReference("${config.name} data extractor")
         beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider", builder.beanDefinition)
     }
 
     private void createWebResourceDataProviderForConference(ConferencesConfiguration.Conference config, BeanDefinitionRegistry beanDefinitionRegistry) {
         BeanDefinitionBuilder builderDataProviderRemote = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProviderRemote)
-        def rawDataMapper = config.rawDataMapperClass.newInstance(new RawDataResources(config.talksUri))
-        def dataExtractor = config.extractorClass.newInstance(config.id, rawDataMapper, config.startDate, config.name, config.url)
-        builderDataProviderRemote.addConstructorArgValue(dataExtractor)
         builderDataProviderRemote.addConstructorArgValue(config)
+        builderDataProviderRemote.addConstructorArgReference("${config.name} data extractor")
         beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider remote", builderDataProviderRemote.beanDefinition)
 
         BeanDefinitionBuilder builderDataProvider = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProvider)

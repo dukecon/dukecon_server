@@ -3,6 +3,8 @@ package org.dukecon.server.adapter.heise
 import org.dukecon.model.Conference
 import org.dukecon.server.adapter.ConferenceDataExtractor
 import org.dukecon.server.adapter.RawDataMapper
+import org.dukecon.server.conference.ConferencesConfiguration
+import org.dukecon.server.speaker.SpeakerImageService
 
 import java.time.LocalDate
 
@@ -14,8 +16,15 @@ import java.time.LocalDate
 class HeiseDataExtractor implements ConferenceDataExtractor {
 
     final Conference conference
+    private SpeakerImageService speakerImageService
+
+    HeiseDataExtractor(ConferencesConfiguration.Conference config, RawDataMapper rawDataMapper, SpeakerImageService speakerImageService) {
+        this.speakerImageService = speakerImageService
+        this.conference = fromInput(getInput(rawDataMapper), config.startDate, config.id, config.name, config.url)
+    }
 
     HeiseDataExtractor(String conferenceId, RawDataMapper rawDataMapper, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
+        this.speakerImageService = new SpeakerImageService()
         this.conference = fromInput(getInput(rawDataMapper), startDate, conferenceId, conferenceName, conferenceUrl)
     }
 
@@ -30,7 +39,7 @@ class HeiseDataExtractor implements ConferenceDataExtractor {
         HeiseAudienceMapper audienceMapper = new HeiseAudienceMapper(input)
         HeiseEventTypeMapper eventTypeMapper = new HeiseEventTypeMapper(input)
         HeiseMetaDataMapper metaDataMapper = new HeiseMetaDataMapper(streamMapper, locationMapper, languageMapper, audienceMapper, eventTypeMapper)
-        HeiseSpeakerMapper speakerMapper = new HeiseSpeakerMapper(input)
+        HeiseSpeakerMapper speakerMapper = new HeiseSpeakerMapper(input, speakerImageService)
         HeiseEventMapper eventMapper = new HeiseEventMapper(input, startDate, speakerMapper, languageMapper, streamMapper, audienceMapper, eventTypeMapper, locationMapper)
         Conference.builder()
                 .id(conferenceId)

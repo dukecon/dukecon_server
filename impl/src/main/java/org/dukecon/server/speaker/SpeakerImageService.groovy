@@ -1,11 +1,7 @@
-package org.dukecon.server.adapter.doag
-
-import groovy.json.JsonSlurper
-import org.dukecon.adapter.ResourceWrapper
+package org.dukecon.server.speaker
 
 import org.springframework.stereotype.Service
 
-import javax.annotation.PostConstruct
 import javax.xml.bind.DatatypeConverter
 import java.security.MessageDigest
 
@@ -13,9 +9,9 @@ import java.security.MessageDigest
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Service
-class DoagSpeakerImageService {
+class SpeakerImageService {
 
-    Map<String, ImageWithName> images
+    Map<String, ImageWithName> images = [:]
 
     static class ImageWithName {
         final String filename
@@ -27,13 +23,14 @@ class DoagSpeakerImageService {
         }
     }
 
-    @PostConstruct
-    void init() {
-        def speaker = new JsonSlurper().parse(ResourceWrapper.of('javaland-speaker-2016.raw').getStream(), "ISO-8859-1").hits.hits._source
-        images = speaker.findAll { it.PROFILFOTO }.PROFILFOTO.collectEntries {
-            String md5Hash = md5(it)
-            [(md5Hash): new ImageWithName("${md5Hash}.${fileEnding(it)}", DatatypeConverter.parseBase64Binary(it))]
-        }
+    String addImage(byte[] content, String filename = null) {
+        return this.addImage(Base64.encoder.encodeToString(content), filename)
+    }
+
+    String addImage(String contentBase64, String filename = null) {
+        String md5Hash = md5(contentBase64)
+        images[md5Hash] = new ImageWithName(filename ?: "${md5Hash}.${fileEnding(contentBase64)}", Base64.decoder.decode(contentBase64))
+        return md5Hash
     }
 
     ImageWithName getImage(String md5Hash) {

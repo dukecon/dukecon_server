@@ -4,6 +4,7 @@ import org.dukecon.model.Audience
 import org.dukecon.model.Conference
 import org.dukecon.server.adapter.RawDataResources
 import org.dukecon.server.adapter.heise.*
+import org.dukecon.server.speaker.SpeakerImageService
 import spock.lang.Specification
 
 import java.time.LocalDate
@@ -43,7 +44,7 @@ class HeiseDataExtractorSpec extends Specification {
 
     void "should read 51 speakers"() {
         when:
-        def mapper = new HeiseSpeakerMapper(readCsv())
+        def mapper = new HeiseSpeakerMapper(readCsv(), new SpeakerImageService())
         def speakers = mapper.speakers
         then:
         speakers.size() == 51
@@ -54,7 +55,7 @@ class HeiseDataExtractorSpec extends Specification {
 
     void "should read 51 talks"() {
         given:
-        def mapper = new HeiseEventMapper(readCsv(), LocalDate.parse('2016-08-30', DateTimeFormatter.ofPattern("yyyy-MM-dd")), new HeiseSpeakerMapper(readCsv()), new HeiseLanguageMapper(readCsv()), new HeiseStreamMapper(readCsv()), new HeiseAudienceMapper(readCsv()), new HeiseEventTypeMapper(readCsv()), new HeiseLocationMapper(readCsv()))
+        def mapper = new HeiseEventMapper(readCsv(), LocalDate.parse('2016-08-30', DateTimeFormatter.ofPattern("yyyy-MM-dd")), new HeiseSpeakerMapper(readCsv(), new SpeakerImageService()), new HeiseLanguageMapper(readCsv()), new HeiseStreamMapper(readCsv()), new HeiseAudienceMapper(readCsv()), new HeiseEventTypeMapper(readCsv()), new HeiseLocationMapper(readCsv()))
 
         when:
         def events = mapper.events
