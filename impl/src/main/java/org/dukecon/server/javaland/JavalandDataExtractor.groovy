@@ -124,11 +124,11 @@ class  JavalandDataExtractor {
     private List<Speaker> getSpeakers() {
         def result = talksJson.findAll { it.ID_PERSON }.collect { t ->
 
-            Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).twitter(twitterHandle(t)).build()
+            Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).lastname(t.REFERENT_NACHNAME).company(t.REFERENT_FIRMA).twitter(twitterHandle(t)).build()
         } + talksJson.findAll { it.ID_PERSON_COREF }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).twitter(twitterHandle(t)).build()
+            Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).lastname(t.COREFERENT_NACHNAME).company(t.COREFERENT_FIRMA).twitter(twitterHandle(t)).build()
         } + talksJson.findAll { it.ID_PERSON_COCOREF }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).company(t.COCOREFERENT_FIRMA).twitter(twitterHandle(t)).build()
+            Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).lastname(t.COCOREFERENT_NACHNAME).company(t.COCOREFERENT_FIRMA).twitter(twitterHandle(t)).build()
         }
         result.flatten().unique { it.id }
 

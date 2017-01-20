@@ -21,6 +21,8 @@ import java.util.List;
 public class Speaker implements Identifyable {
     private String id;
     private String name;
+    private String firstname;
+    private String lastname;
     private String company;
     private String email;
     private String website;

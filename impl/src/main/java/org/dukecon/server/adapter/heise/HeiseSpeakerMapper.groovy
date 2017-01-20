@@ -33,6 +33,8 @@ class HeiseSpeakerMapper {
             Speaker speaker = Speaker.builder()
                     .id(Integer.toString("${firstname}_${lastname}_${email}".hashCode()))
                     .name("${firstname} ${lastname}")
+                    .firstname(firstname)
+                    .lastname(lastname)
                     .email("${email}")
                     .company(company)
                     .twitter(twitter)

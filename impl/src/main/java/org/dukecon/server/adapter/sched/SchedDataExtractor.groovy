@@ -114,6 +114,7 @@ class SchedDataExtractor implements ConferenceDataExtractor {
             return it.speakers
         }.collect {
             talk ->
+                // TODO: set first- and lastname
                 return Speaker.builder().id(talk.speakers.toString()).name(talk.speakers.toString()).build()
         }.flatten().unique {
             return it.id

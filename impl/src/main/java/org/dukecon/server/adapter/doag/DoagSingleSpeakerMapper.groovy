@@ -14,6 +14,8 @@ class DoagSingleSpeakerMapper {
         this.speaker = Speaker.builder()
                 .id(input.ID_PERSON?.toString())
                 .name("${input.VORNAME} ${input.NACHNAME}")
+                .firstname(input.VORNAME)
+                .lastname(input.NACHNAME)
                 .website(input.WEBSEITE)
                 .company(input.FIRMA)
 //                .email(input.)
