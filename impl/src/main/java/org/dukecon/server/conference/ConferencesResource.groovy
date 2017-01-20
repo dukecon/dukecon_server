@@ -69,18 +69,17 @@ class ConferencesResource implements ServletContextAware {
     @Path("update/{id}")
     Response updateConference(@PathParam("id") String id) {
         try {
-            def provider = getConferenceProvider(id)
-            if (provider == null)
+            if (talkProviders[id] == null)
                 return Response.status(Response.Status.NOT_FOUND).build()
-            if (provider.update()) {
+            if (talkProviders[id].update()) {
                 return Response.ok().entity([message: "ok"]).build()
             }
-            if (provider.isBackupActive()) {
+            if (talkProviders[id].isBackupActive()) {
                 return Response.status(Response.Status.SERVICE_UNAVAILABLE)
                         .entity([message: "backup active"]).build()
             }
             return Response.status(Response.Status.SERVICE_UNAVAILABLE)
-                    .entity([message: provider.staleException.toString()]).build()
+                    .entity([message: talkProviders[id].staleException.toString()]).build()
         } catch (RuntimeException e) {
             return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity([message: e.toString()]).build()
         }
@@ -89,7 +88,7 @@ class ConferencesResource implements ServletContextAware {
     @Path("{id}")
     @ApiOperation(value = "Conference details")
     ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
-        def conference = getConferences().find { c -> c.id == id.replace(".json", "") }
+        def conference = talkProviders[id.replace(".json", "")]?.getConference()
         if (conference == null) {
             log.warn("Conference with id {} not found", id)
             throw new WebApplicationException(Response.Status.NOT_FOUND)
@@ -136,10 +135,4 @@ class ConferencesResource implements ServletContextAware {
             throw new RuntimeException("ERROR_CREATING_STYLE_CSS", e)
         }
     }
-
-    private ConferenceDataProvider getConferenceProvider(String id) {
-        return talkProviders[id]
-    }
-
-
 }

@@ -24,6 +24,7 @@ class HeiseDataExtractor implements ConferenceDataExtractor {
     }
 
     HeiseDataExtractor(String conferenceId, RawDataMapper rawDataMapper, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
+
         this.speakerImageService = new SpeakerImageService()
         this.conference = fromInput(getInput(rawDataMapper), startDate, conferenceId, conferenceName, conferenceUrl)
     }

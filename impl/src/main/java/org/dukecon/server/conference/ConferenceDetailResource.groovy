@@ -26,7 +26,6 @@ class ConferenceDetailResource {
     }
 
     @GET
-    @Path("/")
     @ApiOperation(value="returns full conference data",
             response = Conference.class)
     public Response getConference() {

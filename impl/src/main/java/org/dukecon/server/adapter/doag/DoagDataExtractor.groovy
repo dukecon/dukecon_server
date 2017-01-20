@@ -165,23 +165,30 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     }
 
     private List<Speaker> getSpeakers() {
-        if (!speakersJson) {
-            def result = talksJson.findAll { it.ID_PERSON }.collect { t ->
-                Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).twitter(twitterHandle(t)).build()
-            } + talksJson.findAll { it.ID_PERSON_COREF }.collect { t ->
-                Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).twitter(twitterHandle(t)).build()
-            } + talksJson.findAll { it.ID_PERSON_COCOREF }.collect { t ->
-                Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).company(t.COCOREFERENT_FIRMA).twitter(twitterHandle(t)).build()
-            }
-            result = result.flatten().unique { it.id }
+        def result = talksJson.findAll { it.ID_PERSON }.collect { t ->
+            Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).company(t.REFERENT_FIRMA).twitter(twitterHandle(t)).build()
+        } << talksJson.findAll { it.ID_PERSON_COREF }.collect { t ->
+            Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).company(t.COREFERENT_FIRMA).twitter(twitterHandle(t)).build()
+        } << talksJson.findAll { it.ID_PERSON_COCOREF }.collect { t ->
+            Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).company(t.COCOREFERENT_FIRMA).twitter(twitterHandle(t)).build()
+        }.flatten().unique { it.id }
 
-            return result
-        } else {
+        if (speakersJson) {
+            def allSpeakerIds = talksJson.findAll {it.ID_PERSON}.collect {t -> t.ID_PERSON} << talksJson.findAll {it.ID_PERSON_COREF}.collect {t -> t.ID_PERSON_COREF} << talksJson.findAll {it.ID_PERSON_COCOREF}.collect {t -> t.ID_PERSON_COCOREF}.flatten().unique { it }
             speakersJson.findAll { it.PROFILFOTO }.PROFILFOTO.each {
                 speakerImageService.addImage(it)
             }
-            return new DoagSpeakersMapper(speakersJson).speakers.values() as List
+
+            def fullSpeakerDataMap = new DoagSpeakersMapper(speakersJson.findAll {allSpeakerIds.contains(it.ID_PERSON)}).speakers
+            result.flatten().unique().each {Speaker s ->
+                if (!fullSpeakerDataMap.containsKey(s.id)) {
+                    fullSpeakerDataMap[s.id] = s
+                }
+            }
+            return fullSpeakerDataMap.values() as List
         }
+
+        return result.flatten().unique({it.id})
     }
 
     String twitterHandle(t) {

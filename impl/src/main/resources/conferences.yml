@@ -3,7 +3,9 @@
   internalId: 499959
   conference: javaland
   year: 2016
-  talksUri: javaland-2016-final-finished-conf.raw
+  talksUri:
+    eventsData: javaland-2016-final-finished-conf.raw
+    speakersData: javaland-speaker-2016.raw
   url: http://javaland.dukecon.org/2016
   homeUrl: http://www.javaland.eu
   name: JavaLand 2016
@@ -61,7 +63,7 @@
   talksUri:
 #    eventsData: javaland-2017.raw
     eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=522447
-    speakersData: javaland-speaker-2016.raw
+    speakersData: https://www.javaland.eu/api/schedule/JavaLand/referenten.php/?key=JL-EOPTGB-DR
   backupUri: javaland-2017-backup.raw
   url: http://${conference}.dukecon.org/${year}
   homeUrl: http://www.javaland.eu
