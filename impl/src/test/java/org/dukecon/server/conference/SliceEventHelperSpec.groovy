@@ -2,6 +2,7 @@ package org.dukecon.server.conference
 
 import org.dukecon.model.Event
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -37,6 +38,24 @@ class SliceEventHelperSpec extends Specification {
         assert events5.join(', ') == '11'
         assert events6.join(', ') == '11'
         assert events7.join(', ') == '11'
+    }
+
+    @Unroll
+    def "should get time slots of event"(String id, String startTime, String endTime, String result) {
+        expect:
+        result == timeSlotsOf(new Event(id: id,
+                start: LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                end: LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))).join(', ')
+
+        where:
+        id | startTime             | endTime               | result
+        1  | '2016-03-09 09:00:00' | '2016-03-09 11:00:00' | '9, 10'
+        1  | '2016-03-09 09:00:00' | '2016-03-09 14:10:00' | '9, 10, 11, 12, 13, 14'
+        1  | '2016-03-09 08:50:00' | '2016-03-09 11:00:00' | '8, 9, 10'
+        1  | '2016-03-09 08:50:00' | '2016-03-09 11:10:00' | '8, 9, 10, 11'
+        1  | '2016-03-09 11:10:00' | '2016-03-09 11:10:00' | '11'
+        1  | '2016-03-09 11:10:00' | '2016-03-09 11:50:00' | '11'
+        1  | '2016-03-09 11:00:00' | '2016-03-09 12:00:00' | '11'
     }
 
     void "shouldPartDurationsOfMoreThanOneHour"() {
