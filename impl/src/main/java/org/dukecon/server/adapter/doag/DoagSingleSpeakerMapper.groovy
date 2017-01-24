@@ -10,14 +10,39 @@ import java.security.MessageDigest
 class DoagSingleSpeakerMapper {
     final Speaker speaker
 
+    enum Type {
+        DEFAULT,
+        REFERENT('REFERENT_'),
+        COREFERENT('COREFERENT_', '_COREF'),
+        COCOREFERENT('COCOREFERENT_', '_COCOREF');
+
+        private final String namesSuffix
+        private final String idPrefix
+
+        private Type(String namesSuffix = '', String idPrefix = '') {
+            this.idPrefix = idPrefix
+            this.namesSuffix = namesSuffix
+        }
+
+        String getIdKey() {"ID_PERSON${this.idPrefix}"}
+        String getNameKey() {"${this.namesSuffix}NAME"}
+        String getLastnameKey() {"${this.namesSuffix}NACHNAME"}
+        String getCompanyKey() {"${this.namesSuffix}FIRMA"}
+    }
+
     DoagSingleSpeakerMapper(input) {
+        this(input, Type.DEFAULT)
+    }
+
+    DoagSingleSpeakerMapper(input, Type type) {
         this.speaker = Speaker.builder()
-                .id(input.ID_PERSON?.toString())
+                .id(input[type.idKey]?.toString())
                 .name("${input.VORNAME} ${input.NACHNAME}")
-                .firstname(input.VORNAME)
-                .lastname(input.NACHNAME)
+                .name(input[type.nameKey] ?: "${input.VORNAME ?: ''} ${input[type.lastnameKey] ?: ''}".trim())
+                .firstname(input.VORNAME ?: input[type.nameKey]?.tokenize(' ')?.init()?.join(' '))
+                .lastname(input[type.lastnameKey]  ?: input[type.nameKey]?.tokenize(' ')?.last())
                 .website(input.WEBSEITE)
-                .company(input.FIRMA)
+                .company(input[type.companyKey])
 //                .email(input.)
                 .twitter(input.LINKTWITTER)
 //                .gplus(input.)
