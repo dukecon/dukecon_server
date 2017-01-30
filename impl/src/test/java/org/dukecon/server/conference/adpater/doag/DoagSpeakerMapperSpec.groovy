@@ -1,6 +1,7 @@
 package org.dukecon.server.conference.adpater.doag
 
 import groovy.json.JsonSlurper
+import org.dukecon.model.Speaker
 import org.dukecon.server.adapter.doag.DoagSingleSpeakerMapper
 import org.dukecon.server.adapter.doag.DoagSpeakersMapper
 import spock.lang.Specification
@@ -102,6 +103,34 @@ class DoagSpeakerMapperSpec extends Specification {
         singleSpeakerMapper.speaker.firstname == "Jérôme Max"
         singleSpeakerMapper.speaker.lastname == "Boateng"
         singleSpeakerMapper.speaker.name == "Jérôme Max Boateng"
+
+        when:
+        singleSpeakerMapper = new DoagSingleSpeakerMapper(new JsonSlurper().parseText('''{
+            "ID_PERSON" : 374172,
+            "NAME" : "Hubert Klein Ikkink"}'''))
+        then:
+        singleSpeakerMapper.speaker.firstname == 'Hubert Klein'
+        singleSpeakerMapper.speaker.lastname == 'Ikkink'
+        singleSpeakerMapper.speaker.name == 'Hubert Klein Ikkink'
+
+        when:
+        singleSpeakerMapper = new DoagSingleSpeakerMapper(new JsonSlurper().parseText('''{
+            "ID_PERSON" : 374172,
+            "NAME" : "Hubert Klein Ikkink",
+            "NACHNAME" : "Klein Ikkink"}'''))
+        then:
+        singleSpeakerMapper.speaker.firstname == 'Hubert'
+        singleSpeakerMapper.speaker.lastname == 'Klein Ikkink'
+        singleSpeakerMapper.speaker.name == 'Hubert Klein Ikkink'
+
+        when:
+        singleSpeakerMapper = new DoagSingleSpeakerMapper(new JsonSlurper().parseText('''{
+            "ID_PERSON" : 374172,
+            "NAME" : "Jan Carsten Lohmüller"}'''))
+        then:
+        singleSpeakerMapper.speaker.firstname == 'Jan Carsten'
+        singleSpeakerMapper.speaker.lastname == 'Lohmüller'
+        singleSpeakerMapper.speaker.name == 'Jan Carsten Lohmüller'
     }
 
     void "should not split nor concat first and lastname"() {
@@ -192,6 +221,7 @@ class DoagSpeakerMapperSpec extends Specification {
         when:
         def mapper = new DoagSpeakersMapper(json.hits.hits._source)
         then:
+        mapper.speakers.size() == 112
         assert mapper.speakers.size() == 112 : 'duplicate speakers are removed, 112 left over'
 
         when:
@@ -202,4 +232,47 @@ class DoagSpeakerMapperSpec extends Specification {
         niko.photoId == '384adc4c17568938801ceab9124c039f'
     }
 
+    void "should extract all speaker and co speaker from event input of javaland 2016"() {
+        when:
+        def json = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016-final-finished-conf.raw"), 'ISO-8859-1').hits.hits._source
+
+        and:
+        def map = [:]
+        map.putAll new DoagSpeakersMapper(json, DoagSingleSpeakerMapper.Type.REFERENT).speakers
+        map.putAll new DoagSpeakersMapper(json, DoagSingleSpeakerMapper.Type.COREFERENT).speakers
+        map.putAll new DoagSpeakersMapper(json, DoagSingleSpeakerMapper.Type.COCOREFERENT).speakers
+
+        then:
+        map.size() == 128
+    }
+
+    void "should extract all speaker and co speaker from event and speaker input from javaland 2016"() {
+        when:
+        def jsonEvents = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016-final-finished-conf.raw"), 'ISO-8859-1').hits.hits._source
+        def jsonSpeaker = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-speaker-2016.raw"), 'ISO-8859-1').hits.hits._source
+
+        and:
+        DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(jsonEvents, jsonSpeaker)
+
+        then:
+        assert jsonSpeaker.size() == 140 : "speaker input contains more speaker (140) than event input (128)"
+        mapper.speakers.size() == 128
+        println (jsonSpeaker.collect {"${it.VORNAME} ${it.NACHNAME}"})
+        println (mapper.speakers.values().name.sort())
+        println (jsonSpeaker.collect {"${it.VORNAME} ${it.NACHNAME}"} - mapper.speakers.values().name.sort())
+        mapper.photos.size() == 7
+
+        mapper.eventIds.size() == 124
+        mapper.speakerIds2EventsIds.size() == 141
+
+        !mapper.speakers.values().findAll { Speaker s -> !s.firstname || !s.lastname }
+
+        mapper.speakers.'359390'.name == 'Niko Köbler'
+        mapper.speakers.'359390'.firstname == 'Niko'
+        mapper.speakers.'359390'.lastname == 'Köbler'
+        mapper.speakers.'359390'.twitter == 'https://twitter.com/dasniko'
+        mapper.speakers.'359390'.company == 'Niko Köbler IT-Beratung'
+        mapper.speakers.'359390'.website == 'http://www.n-k.de'
+        mapper.speakers.'359390'.bio.startsWith('Niko macht ')
+    }
 }

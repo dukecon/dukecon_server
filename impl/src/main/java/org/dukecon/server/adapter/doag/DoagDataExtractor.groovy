@@ -165,6 +165,10 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     }
 
     private List<Speaker> getSpeakers() {
+        Map speakers = new DoagSpeakersMapper(talksJson, DoagSingleSpeakerMapper.Type.REFERENT).speakers
+        speakers.putAll new DoagSpeakersMapper(talksJson, DoagSingleSpeakerMapper.Type.COREFERENT).speakers
+        speakers.putAll new DoagSpeakersMapper(talksJson, DoagSingleSpeakerMapper.Type.COCOREFERENT).speakers
+
         def result = talksJson.findAll { it.ID_PERSON }.collect { t ->
             Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).lastname(t.REFERENT_NACHNAME).company(t.REFERENT_FIRMA).twitter(twitterHandle(t)).build()
         } << talksJson.findAll { it.ID_PERSON_COREF }.collect { t ->
