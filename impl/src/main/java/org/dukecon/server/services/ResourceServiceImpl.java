@@ -2,8 +2,11 @@ package org.dukecon.server.services;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.dukecon.model.Conference;
 import org.dukecon.model.Resources;
+import org.dukecon.model.Speaker;
 import org.dukecon.model.Styles;
+import org.dukecon.server.speaker.SpeakerImageService;
 import org.dukecon.services.ConferenceService;
 import org.dukecon.services.ResourceService;
 import org.springframework.flex.remoting.RemotingDestination;
@@ -32,6 +35,9 @@ public class ResourceServiceImpl implements ResourceService {
     @Inject
     private ConferenceService conferenceService;
 
+    @Inject
+    private SpeakerImageService speakerImageService;
+
     @Override
     public Map<String, byte[]> getLogosForConferences() {
         Map<String, byte[]> result = new HashMap<>();
@@ -51,6 +57,8 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public Resources getResourcesForConference(String conferenceId) {
         Resources result = Resources.builder().build();
+
+        Conference conference = conferenceService.read(conferenceId);
 
         // Styles
         Styles styles = conferenceService.getConferenceStyles(conferenceId);
@@ -90,9 +98,12 @@ public class ResourceServiceImpl implements ResourceService {
         }
 
         // Speakers
-        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/speakers");
-        if((imageResources != null) && !imageResources.isEmpty()) {
-            result.setSpeakerImages(getImageData(imageResources));
+        result.setSpeakerImages(new HashMap<>());
+        for(Speaker speaker : conference.getSpeakers()) {
+            SpeakerImageService.ImageWithName image = speakerImageService.getImage(speaker.getPhotoId());
+            if(image != null) {
+                result.getSpeakerImages().put(speaker.getId(), image.getContent());
+            }
         }
 
         return result;

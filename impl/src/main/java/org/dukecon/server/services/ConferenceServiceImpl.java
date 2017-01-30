@@ -30,6 +30,8 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
     @Inject
     private List<ConferenceDataProvider> talkProviders;
 
+    private Map<String, Conference> conferences;
+
     @Override
     public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
@@ -42,8 +44,10 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
 
     @Override
     public Conference read(String id) {
-        log.debug("read(Conference)");
-        return null;
+        if(conferences == null) {
+            list();
+        }
+        return conferences.get(id);
     }
 
     @Override
@@ -63,7 +67,7 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
 
     @Override
     public Collection<Conference> list() {
-        Collection<Conference> conferences = new LinkedList<>();
+        Map<String, Conference> conferences = new HashMap<>();
         for(ConferenceDataProvider provider : talkProviders) {
             Conference conference = provider.getConference();
             if(conference == null) {
@@ -136,15 +140,16 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
             if(conference.getSpeakers() != null) {
                 conference.getSpeakers().stream().filter(speaker -> speaker.getEvents() != null).forEach(speaker -> {
                     List<Event> events = speaker.getEvents().stream().map(
-                            event -> eventMap.get(event.getId())).collect(Collectors.toCollection(LinkedList::new));
+                            event -> eventMap.get((event != null) ? event.getId() : "")).collect(Collectors.toCollection(LinkedList::new));
                     speaker.setEvents(events);
                 });
             }
             conference.getMetaData().setId(conference.getId());
 
-            conferences.add(conference);
+            conferences.put(conference.getId(), conference);
         }
-        return conferences;
+        this.conferences = conferences;
+        return conferences.values();
     }
 
     @Override
