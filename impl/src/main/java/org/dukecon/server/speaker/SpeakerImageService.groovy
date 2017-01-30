@@ -2,7 +2,6 @@ package org.dukecon.server.speaker
 
 import org.springframework.stereotype.Service
 
-import javax.xml.bind.DatatypeConverter
 import java.security.MessageDigest
 
 /**
