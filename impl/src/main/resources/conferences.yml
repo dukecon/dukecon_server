@@ -98,7 +98,7 @@
   url: http://${conference}.dukecon.org/${year}
   homeUrl: http://2016.doag.org/
   name: DOAG Konferenz + Ausstellung 2016
-  startDate: 2016-09-21
-  endDate: 2016-09-24
+  startDate: 2016-11-15
+  endDate: 2016-11-18
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
