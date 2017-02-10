@@ -88,7 +88,7 @@
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
 -
-  id: doag2017
+  id: doag2016
   internalId: 512089
   conference: doag
   year: 2016
