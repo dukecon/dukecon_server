@@ -68,7 +68,37 @@
   url: http://${conference}.dukecon.org/${year}
   homeUrl: http://www.javaland.eu
   name: JavaLand 2017
-  startDate: 2016-03-28
-  endDate: 2016-03-30
+  startDate: 2017-03-28
+  endDate: 2017-03-30
+  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+-
+  id: apex2017
+  internalId: 527880
+  conference: apex
+  year: 2017
+  talksUri:
+    eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=527880
+  backupUri: apex-2017-backup.raw
+  url: http://${conference}.dukecon.org/${year}
+  homeUrl: http://apex.doag.org/
+  name: APEX Connect 2017
+  startDate: 2017-05-09
+  endDate: 2017-05-11
+  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+-
+  id: doag2017
+  internalId: 512089
+  conference: doag
+  year: 2016
+  talksUri:
+    eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=512089
+  backupUri: doag-2016-backup.raw
+  url: http://${conference}.dukecon.org/${year}
+  homeUrl: http://2016.doag.org/
+  name: DOAG Konferenz + Ausstellung 2016
+  startDate: 2016-09-21
+  endDate: 2016-09-24
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
