@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <services-config>
 
+    <validators>
+        <validator class="flex.messaging.validators.ClassDeserializationValidator">
+            <properties>
+                <allow-classes>
+                    <class name="org.dukecon.*"/>
+                    <class name="flex.messaging.messages.*"/>
+                    <class name="flex.messaging.io.amf.ASObject"/>
+                </allow-classes>
+            </properties>
+        </validator>
+    </validators>
+
     <services>
         <service id="remoting-service" class="flex.messaging.services.RemotingService">
             <adapters>
