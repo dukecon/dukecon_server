@@ -21,6 +21,7 @@ public class Conference implements Identifyable {
     private String id;
     private String name;
     private String url;
+    private String homeUrl;
     private String icon;
 
     @Relation(relationType = Relation.RelationType.ONE_TO_ONE)

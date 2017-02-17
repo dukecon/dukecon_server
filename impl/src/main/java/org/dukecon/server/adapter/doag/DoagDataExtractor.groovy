@@ -7,7 +7,6 @@ import org.dukecon.server.adapter.RawDataMapper
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.speaker.SpeakerImageService
 
-import javax.inject.Inject
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -30,20 +29,17 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     private final Class<? extends ConferenceDataExtractor> extractorClass
     private final LocalDate startDate
     private final String conferenceUrl = 'http://dukecon.org'
+    private final String conferenceHomeUrl = 'http://javaland.eu'
     private final String conferenceName = 'DukeCon Conference'
 
     DoagDataExtractor(ConferencesConfiguration.Conference config, RawDataMapper rawDataMapper, SpeakerImageService speakerImageService) {
-        this(config.id, rawDataMapper, config.startDate, config.name, config.url)
-        this.speakerImageService = speakerImageService
-    }
-
-    @Deprecated
-    DoagDataExtractor(String conferenceId, RawDataMapper rawDataMapper, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
-        this.conferenceId = conferenceId
+        this.conferenceId = config.id
         this.rawDataMapper = rawDataMapper
-        this.startDate = startDate
-        this.conferenceName = conferenceName
-        this.conferenceUrl = conferenceUrl
+        this.startDate = config.startDate
+        this.conferenceName = config.name
+        this.conferenceUrl = config.url
+        this.conferenceHomeUrl = config.homeUrl
+        this.speakerImageService = speakerImageService
     }
 
     @Override
@@ -59,17 +55,22 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     Map<String, String> twitterHandleBySpeakerName = [:]
 
     Conference buildConference() {
-        log.debug ("Building conference '{}' (name: {}, url: {})", conferenceId, conferenceName, conferenceUrl)
+        log.debug("Building conference '{}' (name: {}, url: {})", conferenceId, conferenceName, conferenceUrl)
         this.rawDataMapper.initMapper()
         this.talksJson = this.rawDataMapper.asMap().eventsData
         this.speakersJson = this.rawDataMapper.asMap().speakersData
+        DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(talksJson, speakersJson)
+        mapper.photos.each {
+            speakerImageService.addImage(it)
+        }
         buildTwitterHandles()
         Conference conf = Conference.builder()
                 .id(conferenceId)
                 .name(conferenceName)
                 .url(conferenceUrl)
+                .homeUrl(conferenceHomeUrl)
                 .metaData(metaData)
-                .speakers(this.speakers)
+                .speakers(mapper.speakers.values() as List)
                 .events(this.events)
                 .build()
         conf.speakers = getSpeakersWithEvents()
@@ -164,35 +165,13 @@ class DoagDataExtractor implements ConferenceDataExtractor {
         }
     }
 
+    @Deprecated
     private List<Speaker> getSpeakers() {
-        Map speakers = new DoagSpeakersMapper(talksJson, DoagSingleSpeakerMapper.Type.REFERENT).speakers
-        speakers.putAll new DoagSpeakersMapper(talksJson, DoagSingleSpeakerMapper.Type.COREFERENT).speakers
-        speakers.putAll new DoagSpeakersMapper(talksJson, DoagSingleSpeakerMapper.Type.COCOREFERENT).speakers
-
-        def result = talksJson.findAll { it.ID_PERSON }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).lastname(t.REFERENT_NACHNAME).company(t.REFERENT_FIRMA).twitter(twitterHandle(t)).build()
-        } << talksJson.findAll { it.ID_PERSON_COREF }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).lastname(t.COREFERENT_NACHNAME).company(t.COREFERENT_FIRMA).twitter(twitterHandle(t)).build()
-        } << talksJson.findAll { it.ID_PERSON_COCOREF }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).lastname(t.COCOREFERENT_NACHNAME).company(t.COCOREFERENT_FIRMA).twitter(twitterHandle(t)).build()
-        }.flatten().unique { it.id }
-
-        if (speakersJson) {
-            def allSpeakerIds = talksJson.findAll {it.ID_PERSON}.collect {t -> t.ID_PERSON} << talksJson.findAll {it.ID_PERSON_COREF}.collect {t -> t.ID_PERSON_COREF} << talksJson.findAll {it.ID_PERSON_COCOREF}.collect {t -> t.ID_PERSON_COCOREF}.flatten().unique { it }
-            speakersJson.findAll { it.PROFILFOTO }.PROFILFOTO.each {
-                speakerImageService.addImage(it)
-            }
-
-            def fullSpeakerDataMap = new DoagSpeakersMapper(speakersJson.findAll {allSpeakerIds.contains(it.ID_PERSON)}).speakers
-            result.flatten().unique().each {Speaker s ->
-                if (!fullSpeakerDataMap.containsKey(s.id)) {
-                    fullSpeakerDataMap[s.id] = s
-                }
-            }
-            return fullSpeakerDataMap.values() as List
+        DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(talksJson, speakersJson)
+        mapper.photos.each {
+            speakerImageService.addImage(it)
         }
-
-        return result.flatten().unique({it.id})
+        return mapper.speakers.values() as List
     }
 
     String twitterHandle(t) {
@@ -207,7 +186,7 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     private List<Speaker> getSpeakersWithEvents(Map<String, List<Event>> talkLookup = getSpeakerIdToEvents()) {
         speakers.collect { Speaker s ->
             s.events = ([] + talkLookup[s.id]).flatten()
-            log.debug ("Speaker '{}' has #{} events", s.name, s.events.size())
+            log.debug("Speaker '{}' has #{} events", s.name, s.events.size())
             s
         }
     }
@@ -228,6 +207,7 @@ class DoagDataExtractor implements ConferenceDataExtractor {
         }.findAll { k, v -> k }
     }
 
+    @Deprecated
     private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries { [it.id, it] }) {
         return talksJson.collect { eventJson ->
             return Event.builder()

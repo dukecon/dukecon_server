@@ -9,7 +9,9 @@ import org.dukecon.server.adapter.ConferenceDataExtractor
 import org.dukecon.server.adapter.RawDataResources
 import org.dukecon.server.adapter.doag.DoagDataExtractor
 import org.dukecon.server.adapter.doag.DoagJsonMapper
+import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.javaland.JavalandDataExtractor
+import org.dukecon.server.speaker.SpeakerImageService
 import spock.lang.Ignore
 import spock.lang.Specification
 
@@ -25,8 +27,7 @@ class DoagDataExtractorSpec extends Specification {
     private static ConferenceDataExtractor extractor
 
     void setupSpec() {
-//        extractor = new JavalandDataExtractor(talksJson: readJson().hits.hits._source)
-        extractor = new DoagDataExtractor('jl2016-test', new DoagJsonMapper(new RawDataResources('javaland-2016.raw_community')), LocalDate.now())
+        extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jl2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'), new DoagJsonMapper(new RawDataResources('javaland-2016.raw_community')), new SpeakerImageService())
         extractor.rawDataMapper.initMapper()
         extractor.buildConference()
     }
@@ -140,6 +141,7 @@ class DoagDataExtractorSpec extends Specification {
         assert conference.id == 'jl2016-test'
         assert conference.name == 'DukeCon Conference'
         assert conference.url == 'http://dukecon.org'
+        assert conference.homeUrl == 'http://javaland.eu'
     }
 
     void "should get event types"() {

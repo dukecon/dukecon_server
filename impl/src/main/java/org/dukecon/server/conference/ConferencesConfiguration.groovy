@@ -85,6 +85,10 @@ class ConferencesConfiguration {
 
         Class rawDataMapperClass
 
+        static Conference of(String id, String name, String url, String homeUrl) {
+            new Conference(id: id, name: name, url: url, homeUrl: homeUrl)
+        }
+
         @Override
         String toString() {
             return "$id: $name"
