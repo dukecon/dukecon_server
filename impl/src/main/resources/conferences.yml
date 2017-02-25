@@ -116,4 +116,4 @@
   startDate: 2017-03-14
   endDate: 2017-03-15
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMappe
+  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
