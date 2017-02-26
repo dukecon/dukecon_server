@@ -47,6 +47,10 @@ class CurrentConferenceResource {
     @Path("init/{conference:[a-zA-Z_0-9]+}/{year:[0-9]+}")
     public Response getCurrentConference(@PathParam("conference") String conference, @PathParam("year") String year) {
         def c = talkProviders.conference.find{it?.name ==~ /.*(?i)${conference}.*/ && it?.name ==~ /.*${year}.*/}
-        return Response.ok().entity(c ? [id: c.id, name: c.name, url: c.url] : [:]).build();
+        if (c) {
+            return Response.ok().entity(c ? [id: c.id, name: c.name, url: c.url] : [:]).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }

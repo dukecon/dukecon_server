@@ -112,7 +112,7 @@
   backupUri: datavision-2017-backup.raw
   url: https://programm.doag.org/${conference}/${year}
   homeUrl: http://datavision.doag.org/
-  name: DOAG Datavision
+  name: DOAG Datavision 2017
   startDate: 2017-03-14
   endDate: 2017-03-15
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
