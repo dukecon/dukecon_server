@@ -61,4 +61,5 @@ public class Event implements Identifyable {
     @Relation(relationType = Relation.RelationType.MANY_TO_ONE)
     private Language language;
     private boolean demo;
+    private boolean simultan;
 }

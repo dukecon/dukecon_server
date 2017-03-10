@@ -212,11 +212,13 @@ class DoagDataExtractor implements ConferenceDataExtractor {
         return talksJson.collect { eventJson ->
             return Event.builder()
                     .id(eventJson.ID.toString())
+                    // TODO: parse TIMESTAMP and TIMESTAMP_ENDE
                     .start(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.BEGINN, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                     .end(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.ENDE, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                     .title(eventJson.TITEL)
                     .abstractText(eventJson.ABSTRACT_TEXT?.replaceAll("&quot;", "\"")?.replaceAll("\r\n", "\n"))
                     .language(getLanguage(eventJson.SPRACHE_EN))
+                    .simultan(eventJson?.SIMULTAN == '1')
                     .demo(eventJson.DEMO != null && eventJson.DEMO.equalsIgnoreCase('ja'))
                     .track(tracks.find { eventJson.TRACK_EN == it.names.en })
                     .audience(audiences.find { eventJson.AUDIENCE_EN == it.names.en })
