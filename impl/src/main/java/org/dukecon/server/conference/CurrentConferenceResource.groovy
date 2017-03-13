@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam
 import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
+import java.time.format.DateTimeFormatter
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -23,32 +24,21 @@ import javax.ws.rs.core.Response
 @TypeChecked
 @Slf4j
 class CurrentConferenceResource {
-    List<ConferenceDataProvider> talkProviders
+    private final ConferencesConfigurationService configurationService
+    private final DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE
 
     @Inject
-    CurrentConferenceResource(List<ConferenceDataProvider> talkProviders) {
-        this.talkProviders = talkProviders
-    }
-
-    @Value("\${conferences.default.id:javaland}")
-    String defaultConferenceName
-
-    @Value("\${conferences.default.id:jl2017}")
-    String defaultConferenceId
-
-    @GET
-    @Path("init.json")
-    public Response defaultConference() {
-        return Response.ok().entity([id: defaultConferenceId, name: defaultConferenceName]).build()
+    CurrentConferenceResource(ConferencesConfigurationService configurationService) {
+        this.configurationService = configurationService
     }
 
     @GET
     // TODO: Second identifier might be more generic, i.e., different from "year" connotation
     @Path("init/{conference:[a-zA-Z_0-9]+}/{year:[0-9]+}")
-    public Response getCurrentConference(@PathParam("conference") String conference, @PathParam("year") String year) {
-        def c = talkProviders.conference.find{it?.name ==~ /.*(?i)${conference}.*/ && it?.name ==~ /.*${year}.*/}
+    public Response getCurrentConference2(@PathParam("conference") String conference, @PathParam("year") String year) {
+        def c = configurationService.getConference(conference, year)
         if (c) {
-            return Response.ok().entity(c ? [id: c.id, name: c.name, url: c.url] : [:]).build();
+            return Response.ok().entity(c ? [id: c.id, name: c.name, year: c.year, url: c.url, homeUrl: c.homeUrl, homeTitle: c.homeTitle, startDate: dtf.format(c.startDate), endDate: dtf.format(c.endDate)] : [:]).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

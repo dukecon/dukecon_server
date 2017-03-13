@@ -20,6 +20,7 @@ import javax.servlet.ServletContext
 import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
+import java.time.format.DateTimeFormatter
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -31,12 +32,16 @@ import javax.ws.rs.core.Response
 @TypeChecked
 @Slf4j
 class ConferencesResource implements ServletContextAware {
+    private final DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE
+
     ConferenceService conferenceService
     Map<String, ConferenceDataProvider> talkProviders = new HashMap<>()
     ServletContext servletContext
+    private final ConferencesConfigurationService configurationService
 
     @Inject
-    ConferencesResource(ConferenceService conferenceService, List<ConferenceDataProvider> talkProviders) {
+    ConferencesResource(ConferenceService conferenceService, ConferencesConfigurationService configurationService, List<ConferenceDataProvider> talkProviders) {
+        this.configurationService = configurationService
         this.conferenceService = conferenceService
         talkProviders.findAll { it.conference }.each { this.talkProviders[it.conference.id] = it }
     }
@@ -51,10 +56,11 @@ class ConferencesResource implements ServletContextAware {
             response = Conference.class,
             responseContainer = "List")
     Response getAllConferences() {
-        def conferences = getConferences().collect { c -> [id: c.id, name: c.name] }
+        def conferences = configurationService.conferences.collect { c -> [id: c.id, name: c.name, year: c.year, url: c.url, homeUrl: c.homeUrl, homeTitle: c.homeTitle, startDate: dtf.format(c.startDate), endDate: dtf.format(c.endDate)] }
         return Response.ok().entity(conferences).build()
     }
 
+    @Deprecated
     private List<Conference> getConferences() {
         talkProviders.values().findAll { p -> p.conference }.collect { p -> p.conference }
     }
