@@ -81,7 +81,7 @@ class DoagDataExtractor implements ConferenceDataExtractor {
 
     private static Map<String, String> parseTwitterHandles() {
         Map<String, String> result = [:]
-        InputStream twitterData = this.class.getResourceAsStream("/twitterhandles.csv")
+        InputStream twitterData = new org.springframework.core.io.ClassPathResource("twitterhandles.csv").inputStream
         def csv = parseCsv(new InputStreamReader(twitterData))
         csv.each { line ->
             result.put(line.Speaker.trim(), line.TwitterHandle?.trim())
