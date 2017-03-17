@@ -62,4 +62,8 @@ public class Event implements Identifyable {
     private Language language;
     private boolean demo;
     private boolean simultan;
+    /** flag if event is fully booked */
+    private boolean fullyBooked;
+    /** number of people favoured this event */
+    private Integer numberOfFavorites;
 }

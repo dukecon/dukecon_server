@@ -18,4 +18,5 @@ public class Location implements Identifyable {
     private Integer order;
     private Map<String, String> names = new HashMap<>();
     private String icon;
+    private Integer capacity;
 }

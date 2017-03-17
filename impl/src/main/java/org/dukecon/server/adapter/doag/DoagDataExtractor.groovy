@@ -4,6 +4,7 @@ import groovy.util.logging.Slf4j
 import org.dukecon.model.*
 import org.dukecon.server.adapter.ConferenceDataExtractor
 import org.dukecon.server.adapter.RawDataMapper
+import org.dukecon.server.adapter.RawDataResources
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.speaker.SpeakerImageService
 
@@ -32,6 +33,10 @@ class DoagDataExtractor implements ConferenceDataExtractor {
     private final String conferenceHomeUrl = 'http://javaland.eu'
     private final String conferenceName = 'DukeCon Conference'
 
+    static DoagDataExtractor fromFile(String filename, ConferencesConfiguration.Conference config) {
+        new DoagDataExtractor(config, new DoagJsonMapper(new RawDataResources(filename)), new SpeakerImageService())
+    }
+
     DoagDataExtractor(ConferencesConfiguration.Conference config, RawDataMapper rawDataMapper, SpeakerImageService speakerImageService) {
         this.conferenceId = config.id
         this.rawDataMapper = rawDataMapper
@@ -52,18 +57,15 @@ class DoagDataExtractor implements ConferenceDataExtractor {
         return this.rawDataMapper
     }
 
-    Map<String, String> twitterHandleBySpeakerName = [:]
-
     Conference buildConference() {
         log.debug("Building conference '{}' (name: {}, url: {})", conferenceId, conferenceName, conferenceUrl)
         this.rawDataMapper.initMapper()
         this.talksJson = this.rawDataMapper.asMap().eventsData
         this.speakersJson = this.rawDataMapper.asMap().speakersData
-        DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(talksJson, speakersJson)
+        DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(talksJson, speakersJson, parseTwitterHandles())
         mapper.photos.each {
             speakerImageService.addImage(it)
         }
-        buildTwitterHandles()
         Conference conf = Conference.builder()
                 .id(conferenceId)
                 .name(conferenceName)
@@ -73,30 +75,18 @@ class DoagDataExtractor implements ConferenceDataExtractor {
                 .speakers(mapper.speakers.values() as List)
                 .events(this.events)
                 .build()
-        conf.speakers = getSpeakersWithEvents()
+        conf.speakers = getSpeakersWithEvents(conf.speakers)
         return conf
     }
 
-    private void buildTwitterHandles() {
+    private static Map<String, String> parseTwitterHandles() {
+        Map<String, String> result = [:]
         InputStream twitterData = this.class.getResourceAsStream("/twitterhandles.csv")
         def csv = parseCsv(new InputStreamReader(twitterData))
-
         csv.each { line ->
-            String speakerName = line.Speaker.trim()
-            if (twitterHandleBySpeakerName[speakerName]) {
-                if (twitterHandleBySpeakerName[speakerName] != line.TwitterHandle) {
-                    log.error("Duplicate Speaker '{}' in CSV with different Twitter Handle: '{}' vs. '{}'",
-                            speakerName, twitterHandleBySpeakerName[speakerName], line.TwitterHandle)
-                } else {
-                    log.debug("Duplicate Speaker in CSV: {}", speakerName)
-                }
-            } else if (line.TwitterHandle.startsWith("@")) {
-                log.debug("Speaker '{}' has TwitterHandle: '{}'", speakerName, line.TwitterHandle)
-                twitterHandleBySpeakerName[speakerName] = line.TwitterHandle
-            } else {
-                log.debug("Speaker '{}' has no valid TwitterHandle!", speakerName)
-            }
+            result.put(line.Speaker.trim(), line.TwitterHandle?.trim())
         }
+        return result
     }
 
     private MetaData getMetaData() {
@@ -153,7 +143,7 @@ class DoagDataExtractor implements ConferenceDataExtractor {
         return talksJson.findAll { it.RAUMNAME }.collect { [it.RAUM_NR, it.RAUMNAME] }.unique().sort {
             it.first()
         }.withIndex().collect { room, index ->
-            Location.builder().id(index + 1 as String).order(room.first()?.toInteger()).names(de: room[1], en: room[1]).icon("location_${room.first()}.png").build()
+            Location.builder().id(index + 1 as String).order(room.first()?.toInteger()).capacity(100).names(de: room[1], en: room[1]).icon("location_${room.first()}.png").build()
         }
     }
 
@@ -174,16 +164,11 @@ class DoagDataExtractor implements ConferenceDataExtractor {
         return mapper.speakers.values() as List
     }
 
-    String twitterHandle(t) {
-        String speakerName = t.REFERENT_NAME
-        return twitterHandleBySpeakerName[speakerName] ?: ""
-    }
-
     /**
      * @param talkLookup
      * @return list of speakers with their events assigned
      */
-    private List<Speaker> getSpeakersWithEvents(Map<String, List<Event>> talkLookup = getSpeakerIdToEvents()) {
+    private List<Speaker> getSpeakersWithEvents(List<Speaker> speakers, Map<String, List<Event>> talkLookup = getSpeakerIdToEvents()) {
         speakers.collect { Speaker s ->
             s.events = ([] + talkLookup[s.id]).flatten()
             log.debug("Speaker '{}' has #{} events", s.name, s.events.size())
@@ -209,25 +194,36 @@ class DoagDataExtractor implements ConferenceDataExtractor {
 
     @Deprecated
     private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries { [it.id, it] }) {
-        return talksJson.collect { eventJson ->
-            return Event.builder()
-                    .id(eventJson.ID.toString())
-                    // TODO: parse TIMESTAMP and TIMESTAMP_ENDE
-                    .start(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.BEGINN, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
-                    .end(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.ENDE, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
-                    .title(eventJson.TITEL)
-                    .abstractText(eventJson.ABSTRACT_TEXT?.replaceAll("&quot;", "\"")?.replaceAll("\r\n", "\n"))
-                    .language(getLanguage(eventJson.SPRACHE_EN))
-                    .simultan(eventJson?.SIMULTAN == '1')
-                    .demo(eventJson.DEMO != null && eventJson.DEMO.equalsIgnoreCase('ja'))
-                    .track(tracks.find { eventJson.TRACK_EN == it.names.en })
-                    .audience(audiences.find { eventJson.AUDIENCE_EN == it.names.en })
-                    .type(eventTypes.find { eventJson.VORTRAGSTYP_EN == it.names.en })
-                    .location(locations.find { eventJson.RAUMNAME == it.names.en })
-                    .speakers([speakerLookup[eventJson.ID_PERSON?.toString()], speakerLookup[eventJson.ID_PERSON_COREF?.toString()], speakerLookup[eventJson.ID_PERSON_COCOREF?.toString()]].findAll {
-                it
-            })
-                    .build()
-        }.findAll { Event event -> event.start.until(event.end, ChronoUnit.MINUTES) > 0 }
+        return talksJson
+                .collect { eventJson -> getEvent(eventJson, speakerLookup) }
+                .findAll { Event event ->
+                    if (event.start.isAfter(event.end)) {
+                        log.warn("Event '{}' will be ignored, because start time ({}) is behind end time ({})", event.title, event.start, event.end)
+                    }
+                    return event.start.until(event.end, ChronoUnit.MINUTES) > 0
+                }
+    }
+
+    private Event getEvent(eventJson, Map<String, Speaker> speakerLookup) {
+        Event.builder()
+                .id(eventJson.ID.toString())
+                // TODO: parse TIMESTAMP and TIMESTAMP_ENDE
+                .start(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.BEGINN, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                .end(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.ENDE, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                .title(eventJson.TITEL)
+                .abstractText(eventJson.ABSTRACT_TEXT?.replaceAll("&quot;", "\"")?.replaceAll("\r\n", "\n"))
+                .language(getLanguage(eventJson.SPRACHE_EN))
+                .simultan(eventJson?.SIMULTAN == '1')
+                .demo(eventJson.DEMO != null && eventJson.DEMO.equalsIgnoreCase('ja'))
+                .track(tracks.find { eventJson.TRACK_EN == it.names.en })
+                .audience(audiences.find { eventJson.AUDIENCE_EN == it.names.en })
+                .type(eventTypes.find { eventJson.VORTRAGSTYP_EN == it.names.en })
+                .location(locations.find { eventJson.RAUMNAME == it.names.en })
+                .fullyBooked(false)
+                .numberOfFavorites(25)
+                .speakers([speakerLookup[eventJson.ID_PERSON?.toString()], speakerLookup[eventJson.ID_PERSON_COREF?.toString()], speakerLookup[eventJson.ID_PERSON_COCOREF?.toString()]].findAll {
+                    it
+                })
+                .build()
     }
 }
