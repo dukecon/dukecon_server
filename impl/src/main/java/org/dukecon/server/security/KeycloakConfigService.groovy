@@ -42,7 +42,7 @@ class KeycloakConfigService {
 	private String redirectUri
 
 	@GET
-	public Response getKeycloakConfig () {
+	Response getKeycloakConfig () {
         Map<String, String> keyCloakConfig = [
 			'realm': realm,
 			'realm-public-key': realmKey,
