@@ -2,7 +2,6 @@ package org.dukecon.server.conference
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
-import org.dukecon.server.adapter.ConferenceDataProvider
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
@@ -27,15 +26,27 @@ class CurrentConferenceResource {
     private final ConferencesConfigurationService configurationService
     private final DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE
 
+    @Value("\${conferences.default.shortname:javaland}")
+    String defaultConferenceName
+
+    @Value("\${conferences.default.year:2017}")
+    String defaultConferenceYear
+
     @Inject
     CurrentConferenceResource(ConferencesConfigurationService configurationService) {
         this.configurationService = configurationService
     }
 
     @GET
+    @Path("init.json")
+    public Response defaultConference() {
+        return getCurrentConference(defaultConferenceName, defaultConferenceYear)
+    }
+
+    @GET
     // TODO: Second identifier might be more generic, i.e., different from "year" connotation
     @Path("init/{conference:[a-zA-Z_0-9]+}/{year:[0-9]+}")
-    public Response getCurrentConference2(@PathParam("conference") String conference, @PathParam("year") String year) {
+    public Response getCurrentConference(@PathParam("conference") String conference, @PathParam("year") String year) {
         def c = configurationService.getConference(conference, year)
         if (c) {
             return Response.ok().entity(c ? [id: c.id, name: c.name, year: c.year, url: c.url, homeUrl: c.homeUrl, homeTitle: c.homeTitle, startDate: dtf.format(c.startDate), endDate: dtf.format(c.endDate)] : [:]).build();
