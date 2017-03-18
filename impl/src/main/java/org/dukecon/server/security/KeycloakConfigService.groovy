@@ -33,6 +33,9 @@ class KeycloakConfigService {
 	
 	@Value("\${keycloak.resource:dukecon}")
 	private String resource
+
+	@Value("\${keycloak.useAccountManagement:false}")
+    private boolean useAccountManagement
 	
 	// TODO: Check if we could parameterize this?
 	@Value("\${preferences.rest.path}")
@@ -47,7 +50,8 @@ class KeycloakConfigService {
 			'ssl-required':	sslRequired,
 			'resource': resource,
 			'redirectUri': redirectUri,
-			]
+            'useAccountManagement': "${useAccountManagement}"
+        ]
 		log.debug ("keycloak.json = '{}'", keyCloakConfig)
 		
         return Response.ok().entity(keyCloakConfig).build()
