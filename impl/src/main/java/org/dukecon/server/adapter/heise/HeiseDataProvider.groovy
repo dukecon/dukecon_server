@@ -12,6 +12,11 @@ import java.time.format.DateTimeFormatter
 //@Component
 class HeiseDataProvider implements ConferenceDataProvider {
     @Override
+    String getConferenceId() {
+        return "foobar"
+    }
+
+    @Override
     Conference getConference() {
         new HeiseDataExtractor('1234', new HeiseCsvInput('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv'), LocalDate.parse('2016-08-30', DateTimeFormatter.ofPattern("yyyy-MM-dd")), 'http://www.herbstcampus.de', 'Herbstcampus 2016').conference
     }

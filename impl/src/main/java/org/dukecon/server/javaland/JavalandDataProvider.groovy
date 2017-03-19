@@ -36,6 +36,11 @@ class JavalandDataProvider implements ConferenceDataProvider {
 
     volatile Exception staleException;
 
+    @Override
+    String getConferenceId() {
+        return "foobar"
+    }
+
     Conference getConference() {
         checkCache()
         return conference

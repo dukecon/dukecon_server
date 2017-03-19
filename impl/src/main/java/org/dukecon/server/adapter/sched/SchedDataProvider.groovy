@@ -53,6 +53,11 @@ class SchedDataProvider implements ConferenceDataProvider, InitializingBean {
         }
     }
 
+    @Override
+    String getConferenceId() {
+        return "foobar"
+    }
+
     Conference getConference() {
         checkCache()
         return conference
