@@ -18,9 +18,12 @@ import javax.inject.Inject
 @Service
 class ConferencesConfigurationService {
     private final ConferencesConfiguration configuration = new ConferencesConfiguration()
+    private final ConfigurableEnvironment env
 
     @Inject
-    ConfigurableEnvironment env
+    ConferencesConfigurationService(ConfigurableEnvironment env) {
+        this.env = env
+    }
 
     @PostConstruct
     void init() {

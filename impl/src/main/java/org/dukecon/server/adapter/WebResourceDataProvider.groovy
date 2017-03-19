@@ -25,9 +25,16 @@ class WebResourceDataProvider implements ConferenceDataProvider {
     volatile Conference conference;
 
     volatile Exception staleException;
+    private final String conferenceId
 
-    WebResourceDataProvider(WebResourceDataProviderRemote dataProviderRemote) {
+    WebResourceDataProvider(WebResourceDataProviderRemote dataProviderRemote, String conferenceId) {
+        this.conferenceId = conferenceId
         this.remote = dataProviderRemote
+    }
+
+    @Override
+    String getConferenceId() {
+        return conferenceId
     }
 
     @Override

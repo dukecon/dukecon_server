@@ -43,7 +43,7 @@ class ConferencesResource implements ServletContextAware {
     ConferencesResource(ConferenceService conferenceService, ConferencesConfigurationService configurationService, List<ConferenceDataProvider> talkProviders) {
         this.configurationService = configurationService
         this.conferenceService = conferenceService
-        talkProviders.findAll { it.conference }.each { this.talkProviders[it.conference.id] = it }
+        talkProviders.each { this.talkProviders[it.conferenceId] = it }
     }
 
     @Override
@@ -58,11 +58,6 @@ class ConferencesResource implements ServletContextAware {
     Response getAllConferences() {
         def conferences = configurationService.conferences.collect { c -> [id: c.id, name: c.name, year: c.year, url: c.url, homeUrl: c.homeUrl, homeTitle: c.homeTitle, startDate: dtf.format(c.startDate), endDate: dtf.format(c.endDate)] }
         return Response.ok().entity(conferences).build()
-    }
-
-    @Deprecated
-    private List<Conference> getConferences() {
-        talkProviders.values().findAll { p -> p.conference }.collect { p -> p.conference }
     }
 
     /**

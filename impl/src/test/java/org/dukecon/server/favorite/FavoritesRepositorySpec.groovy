@@ -44,4 +44,19 @@ class FavoritesRepositorySpec extends AbstractDukeConSpec {
             DataIntegrityViolationException e = thrown()
             log.debug ("Expected exception '{}' was thrown", e.message)
     }
+
+    void "test all favorites per event"() {
+        when:
+            preferencesRepository.save(new Preference (principalId : "0815", eventId: "003", version : 1))
+            preferencesRepository.save(new Preference (principalId : "0815", eventId: "005", version : 1))
+            preferencesRepository.save(new Preference (principalId : "4711", eventId: "005", version : 1))
+        and:
+            def events = preferencesRepository.allFavoritesPerEvent()
+        then:
+            assert events.size() == 2
+            assert events.sort{it[0]}.first() == ['003', 1] as Object[]
+            assert events.sort{it[0]}.first().first().class == String
+            assert events.sort{it[0]}.first().last().class == Long
+            assert events.sort{it[0]}.last() == ['005', 2] as Object[]
+    }
 }

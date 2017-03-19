@@ -6,7 +6,12 @@ import org.dukecon.server.adapter.ConferenceDataExtractor
 import org.dukecon.server.adapter.RawDataMapper
 import org.dukecon.server.adapter.RawDataResources
 import org.dukecon.server.conference.ConferencesConfiguration
+import org.dukecon.server.favorites.AbstractPreferencesService
+import org.dukecon.server.favorites.PreferencesService
 import org.dukecon.server.speaker.SpeakerImageService
+import org.springframework.beans.BeansException
+import org.springframework.context.ApplicationContext
+import org.springframework.context.ApplicationContextAware
 
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -19,9 +24,10 @@ import static com.xlson.groovycsv.CsvParser.parseCsv
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Slf4j
-class DoagDataExtractor implements ConferenceDataExtractor {
+class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAware {
 
     private SpeakerImageService speakerImageService
+    private AbstractPreferencesService preferencesService
 
     private final RawDataMapper rawDataMapper
     def talksJson
@@ -45,6 +51,11 @@ class DoagDataExtractor implements ConferenceDataExtractor {
         this.conferenceUrl = config.url
         this.conferenceHomeUrl = config.homeUrl
         this.speakerImageService = speakerImageService
+    }
+
+    @Override
+    void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.preferencesService = applicationContext.getBean(PreferencesService)
     }
 
     @Override
@@ -143,7 +154,7 @@ class DoagDataExtractor implements ConferenceDataExtractor {
         return talksJson.findAll { it.RAUMNAME }.collect { [it.RAUM_NR, it.RAUMNAME] }.unique().sort {
             it.first()
         }.withIndex().collect { room, index ->
-            Location.builder().id(index + 1 as String).order(room.first()?.toInteger()).capacity(100).names(de: room[1], en: room[1]).icon("location_${room.first()}.png").build()
+            Location.builder().id(index + 1 as String).order(room.first()?.toInteger()).capacity(0).names(de: room[1], en: room[1]).icon("location_${room.first()}.png").build()
         }
     }
 
@@ -194,20 +205,22 @@ class DoagDataExtractor implements ConferenceDataExtractor {
 
     @Deprecated
     private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries { [it.id, it] }) {
+        Map<String, Integer> favoritesPerEvent = preferencesService.allEventFavorites
+        println 'falk: ' + favoritesPerEvent
         return talksJson
-                .collect { eventJson -> getEvent(eventJson, speakerLookup) }
+                .collect { eventJson -> getEvent(eventJson, speakerLookup, favoritesPerEvent) }
                 .findAll { Event event ->
-                    if (event.start.isAfter(event.end)) {
-                        log.warn("Event '{}' will be ignored, because start time ({}) is behind end time ({})", event.title, event.start, event.end)
-                    }
-                    return event.start.until(event.end, ChronoUnit.MINUTES) > 0
-                }
+            if (event.start.isAfter(event.end)) {
+                log.warn("Event '{}' will be ignored, because start time ({}) is behind end time ({})", event.title, event.start, event.end)
+            }
+            return event.start.until(event.end, ChronoUnit.MINUTES) > 0
+        }
     }
 
-    private Event getEvent(eventJson, Map<String, Speaker> speakerLookup) {
+    private Event getEvent(eventJson, Map<String, Speaker> speakerLookup, Map<String, Integer> favoritesPerEvent) {
         Event.builder()
                 .id(eventJson.ID.toString())
-                // TODO: parse TIMESTAMP and TIMESTAMP_ENDE
+        // TODO: parse TIMESTAMP and TIMESTAMP_ENDE
                 .start(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.BEGINN, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .end(LocalDateTime.parse(eventJson.DATUM_ES_EN + ' ' + eventJson.ENDE, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .title(eventJson.TITEL)
@@ -219,11 +232,11 @@ class DoagDataExtractor implements ConferenceDataExtractor {
                 .audience(audiences.find { eventJson.AUDIENCE_EN == it.names.en })
                 .type(eventTypes.find { eventJson.VORTRAGSTYP_EN == it.names.en })
                 .location(locations.find { eventJson.RAUMNAME == it.names.en })
-                .fullyBooked(false)
-                .numberOfFavorites(25)
+                .fullyBooked(eventJson.AUSGEBUCHT as boolean)
+                .numberOfFavorites((favoritesPerEvent[eventJson.ID.toString()] ?: 0) as int)
                 .speakers([speakerLookup[eventJson.ID_PERSON?.toString()], speakerLookup[eventJson.ID_PERSON_COREF?.toString()], speakerLookup[eventJson.ID_PERSON_COCOREF?.toString()]].findAll {
-                    it
-                })
+            it
+        })
                 .build()
     }
 }

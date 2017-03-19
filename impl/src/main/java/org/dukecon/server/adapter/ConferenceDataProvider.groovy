@@ -8,15 +8,16 @@ import org.dukecon.model.Conference
  * Created by annah on 18.03.2016.
  */
 interface ConferenceDataProvider {
+    String getConferenceId()
 
     /**
      * @return from resource file created conference
      */
-    Conference getConference();
+    Conference getConference()
 
-    boolean update();
+    boolean update()
 
-    boolean isBackupActive();
+    boolean isBackupActive()
 
-    Exception staleException;
+    Exception staleException
 }

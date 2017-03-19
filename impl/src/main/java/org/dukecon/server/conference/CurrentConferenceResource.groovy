@@ -39,7 +39,7 @@ class CurrentConferenceResource {
 
     @GET
     @Path("init.json")
-    public Response defaultConference() {
+    public Response defaultConferenceForLocalDevelopment() {
         return getCurrentConference(defaultConferenceName, defaultConferenceYear)
     }
 

@@ -1,16 +1,13 @@
 package org.dukecon.server.adapter
 
-import org.dukecon.server.adapter.doag.DoagJsonMapper
 import org.dukecon.server.conference.ConferencesConfiguration
+import org.dukecon.server.conference.ConferencesConfigurationService
 import org.springframework.beans.BeansException
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
 import org.springframework.beans.factory.support.BeanDefinitionBuilder
 import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor
-import org.springframework.core.env.ConfigurableEnvironment
-import org.springframework.core.env.EnumerablePropertySource
 import org.springframework.core.env.Environment
-import org.springframework.core.env.PropertySource
 
 /**
  * Reads all conferences from configuration file and generates a #ConferenceDataProvider for each.
@@ -22,19 +19,9 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
     private final ConferencesConfiguration configuration = new ConferencesConfiguration()
 
     DataProviderLoader(Environment env) {
-        configuration.conferences.addAll(ConferencesConfiguration.fromFile('conferences.yml', getAllKnownConfigurationProperties(env))?.conferences)
-    }
-
-    private static Map<String, Object> getAllKnownConfigurationProperties(ConfigurableEnvironment env) {
-        Map<String, Object> result = [:]
-        env.propertySources.each {PropertySource ps ->
-            if (ps instanceof EnumerablePropertySource) {
-                ((EnumerablePropertySource) ps).propertyNames.each {String name ->
-                    result[name] = ps.getProperty(name)
-                }
-            }
-        }
-        result
+        final ConferencesConfigurationService configurationService = new ConferencesConfigurationService(env)
+        configurationService.init()
+        this.configuration.conferences.addAll(configurationService.conferences)
     }
 
     @Override
@@ -59,6 +46,7 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
     private void createLocalResourceDataProviderForConference(ConferencesConfiguration.Conference config, BeanDefinitionRegistry beanDefinitionRegistry) {
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(LocalResourceDataProvider)
         builder.addConstructorArgReference("${config.name} data extractor")
+        builder.addConstructorArgValue(config.id)
         beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider", builder.beanDefinition)
     }
 
@@ -70,6 +58,7 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
 
         BeanDefinitionBuilder builderDataProvider = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProvider)
         builderDataProvider.addConstructorArgReference("${config.name} dataprovider remote")
+        builderDataProvider.addConstructorArgValue(config.id)
         beanDefinitionRegistry.registerBeanDefinition("${config.name} dataprovider", builderDataProvider.beanDefinition)
 
         BeanDefinitionBuilder builderHealthCheck = BeanDefinitionBuilder.genericBeanDefinition(WebResourceDataProviderHealthIndicator)

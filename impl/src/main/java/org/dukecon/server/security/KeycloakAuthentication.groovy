@@ -66,8 +66,8 @@ public class KeycloakAuthentication implements Authentication {
 
 		public static KeycloakAuthentication buildAuthentication(HttpServletRequest request) {
 			Principal principal = request?.userPrincipal
-			log.debug ("New session for '{}'", principal)
 			if(principal){
+				log.debug ("New session for '{}'", principal)
 				return new KeycloakAuthentication(principal)
 			} else {
 				return new KeycloakAuthentication(false)

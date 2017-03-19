@@ -13,9 +13,16 @@ import org.dukecon.model.Conference
 class LocalResourceDataProvider implements ConferenceDataProvider {
 
     private final ConferenceDataExtractor extractor
+    private final String conferenceId
 
-    LocalResourceDataProvider(ConferenceDataExtractor extractor) {
+    LocalResourceDataProvider(ConferenceDataExtractor extractor, String conferenceId) {
+        this.conferenceId = conferenceId
         this.extractor = extractor
+    }
+
+    @Override
+    String getConferenceId() {
+        return conferenceId
     }
 
     @Override

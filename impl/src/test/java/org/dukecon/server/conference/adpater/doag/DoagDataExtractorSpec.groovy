@@ -2,6 +2,7 @@ package org.dukecon.server.conference.adpater.doag
 
 import groovy.json.JsonSlurper
 import org.dukecon.model.Audience
+import org.dukecon.model.Conference
 import org.dukecon.model.Event
 import org.dukecon.model.Language
 import org.dukecon.model.Location
@@ -15,7 +16,6 @@ import org.dukecon.server.speaker.SpeakerImageService
 import spock.lang.Ignore
 import spock.lang.Specification
 
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -25,17 +25,24 @@ import java.time.format.DateTimeFormatter
 class DoagDataExtractorSpec extends Specification {
 
     private static ConferenceDataExtractor extractor
+    private static Conference conference
 
     void setupSpec() {
         extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jl2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'), new DoagJsonMapper(new RawDataResources('javaland-2016.raw_community')), new SpeakerImageService())
         extractor.rawDataMapper.initMapper()
-        extractor.buildConference()
+        conference = extractor.buildConference()
     }
 
-    private readJson() {
-        InputStream is = DoagDataExtractorSpec.class.getResourceAsStream('/javaland-2016.raw_community')
-        JsonSlurper slurper = new JsonSlurper()
-        slurper.parse(is, "ISO-8859-1")
+    void "should get all talks from Javaland 2017"() {
+        when:
+        def json = new JsonSlurper().parse(DoagDataExtractorSpec.class.getResourceAsStream('/javaland-2017.raw'), "ISO-8859-1")
+        then:
+        json.hits.hits._source.size() == 144
+        when:
+        def conference = DoagDataExtractor.fromFile('javaland-2017.raw', ConferencesConfiguration.Conference.of('jl2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu')).buildConference()
+        then:
+        conference.events.size() == 144
+
     }
 
     void "should get 9 tracks"() {
@@ -178,7 +185,7 @@ class DoagDataExtractorSpec extends Specification {
 
     void "should get all speakers with their events"() {
         when:
-        def speakers = extractor.speakersWithEvents.sort { it.id }
+        def speakers = conference.speakers.sort { it.id }
         then:
         assert speakers.size() >= 123
         assert speakers.first().name == 'Fried Saacke'
@@ -245,5 +252,21 @@ class DoagDataExtractorSpec extends Specification {
         assert events.first().speakers.first().id == '370942'
         assert events.first().type.names.de == 'Neuerscheinungen oder Features'
         assert !events.first().demo
+    }
+
+    void "should read time stamps from Java Forum Stuttgart"() {
+        given:
+        def extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jfs2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'), new DoagJsonMapper(new RawDataResources('jfs-2016-final-finished-conf.raw')), new SpeakerImageService())
+        when:
+        extractor.rawDataMapper.initMapper()
+        extractor.buildConference()
+        def events = extractor.events
+        then:
+        '2016-07-07T15:35' == events.first().start.toString()
+        '2016-07-07T16:20' == events.first().end.toString()
+        events.each {
+            assert it.start
+            assert it.end
+        }
     }
 }

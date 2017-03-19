@@ -2,6 +2,7 @@ package org.dukecon.server.conference.adpater.doag
 
 import groovy.json.JsonSlurper
 import org.dukecon.model.Speaker
+import org.dukecon.server.adapter.doag.DoagDataExtractor
 import org.dukecon.server.adapter.doag.DoagSingleSpeakerMapper
 import org.dukecon.server.adapter.doag.DoagSpeakersMapper
 import spock.lang.Specification
@@ -219,9 +220,8 @@ class DoagSpeakerMapperSpec extends Specification {
 
 
         when:
-        def mapper = new DoagSpeakersMapper(json.hits.hits._source)
+        def mapper = DoagSpeakersMapper.createFrom([:], json.hits.hits._source)
         then:
-        mapper.speakers.size() == 112
         assert mapper.speakers.size() == 112 : 'duplicate speakers are removed, 112 left over'
 
         when:
@@ -253,8 +253,11 @@ class DoagSpeakerMapperSpec extends Specification {
 
         and:
         DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(jsonEvents, jsonSpeaker)
+        DoagSpeakersMapper mapperEventsOnly = DoagSpeakersMapper.createFrom(jsonEvents, [:])
+        DoagSpeakersMapper mapperSpeakersOnly = DoagSpeakersMapper.createFrom([:], jsonSpeaker)
 
         then:
+        println(mapperEventsOnly.speakers.keySet() - mapperSpeakersOnly.speakers.keySet())
         assert jsonSpeaker.size() == 140 : "speaker input contains more speaker (140) than event input (128)"
         mapper.speakers.size() == 128
         println (jsonSpeaker.collect {"${it.VORNAME} ${it.NACHNAME}"})
@@ -263,7 +266,7 @@ class DoagSpeakerMapperSpec extends Specification {
         mapper.photos.size() == 7
 
         mapper.eventIds.size() == 124
-        mapper.speakerIds2EventsIds.size() == 141
+        mapper.speakerIds2EventIds.size() == 141
 
         !mapper.speakers.values().findAll { Speaker s -> !s.firstname || !s.lastname }
 
@@ -274,5 +277,50 @@ class DoagSpeakerMapperSpec extends Specification {
         mapper.speakers.'359390'.company == 'Niko Köbler IT-Beratung'
         mapper.speakers.'359390'.website == 'http://www.n-k.de'
         mapper.speakers.'359390'.bio.startsWith('Niko macht ')
+    }
+
+    void "should read twitter handles from csv"() {
+        when:
+        def handles = DoagDataExtractor.parseTwitterHandles()
+
+        then:
+        handles.size() == 117
+        handles.get('Maurice Naftalin') ==  'https://twitter.com/mauricenaftalin'
+    }
+
+    void "should merge additional twitter handles"() {
+        when:
+        def jsonEvents = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016-final-finished-conf.raw"), 'ISO-8859-1').hits.hits._source
+        def jsonSpeaker = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-speaker-2016.raw"), 'ISO-8859-1').hits.hits._source
+
+        and:
+        DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(jsonEvents, jsonSpeaker, ['Reinier Zwitserloot':'https://twitter.com/foobar'])
+
+        then:
+        mapper.speakers.'371991'.twitter == 'https://twitter.com/foobar'
+
+        when:
+        !mapper.speakers.'365616'.twitter
+
+        and:
+        mapper.mergeAdditionalTwitterHandles(['Marc Sluiter':'https://twitter.com/foobar2'])
+
+        then:
+        mapper.speakers.'365616'.twitter == 'https://twitter.com/foobar2'
+    }
+
+    void "should map event ids to speaker"() {
+        when:
+        def jsonEvents = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016-final-finished-conf.raw"), 'ISO-8859-1').hits.hits._source
+        def jsonSpeaker = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-speaker-2016.raw"), 'ISO-8859-1').hits.hits._source
+
+        and:
+        DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(jsonEvents, jsonSpeaker)
+
+        then:
+        mapper.eventIds.size() == 124
+        mapper.speakerIds2EventIds.size() == 141
+        mapper.speakers.size() == 128
+        mapper.forEventId("510867").name == 'Niko Köbler'
     }
 }
