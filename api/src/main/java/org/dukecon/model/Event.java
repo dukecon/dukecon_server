@@ -63,7 +63,7 @@ public class Event implements Identifyable {
     private boolean demo;
     private boolean simultan;
     /** flag if event will have many attendees */
-    private boolean willBecomeFull;
+    private boolean veryPopular;
     /** flag if event is fully booked */
     private boolean fullyBooked;
     /** number of people favoured this event */

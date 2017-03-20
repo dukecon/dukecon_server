@@ -231,7 +231,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
                 .audience(audiences.find { eventJson.AUDIENCE_EN == it.names.en })
                 .type(eventTypes.find { eventJson.VORTRAGSTYP_EN == it.names.en })
                 .location(locations.find { eventJson.RAUMNAME == it.names.en })
-                .willBecomeFull(eventJson.AUSGEBUCHT as boolean)
+                .veryPopular(eventJson.AUSGEBUCHT as boolean)
                 .fullyBooked(false)
                 .numberOfFavorites((favoritesPerEvent[eventJson.ID.toString()] ?: 0) as int)
                 .speakers([speakerLookup[eventJson.ID_PERSON?.toString()], speakerLookup[eventJson.ID_PERSON_COREF?.toString()], speakerLookup[eventJson.ID_PERSON_COCOREF?.toString()]].findAll {

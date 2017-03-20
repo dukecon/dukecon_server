@@ -53,10 +53,10 @@ class FavoritesRepositorySpec extends AbstractDukeConSpec {
         and:
             def events = preferencesRepository.allFavoritesPerEvent()
         then:
-            assert events.size() == 2
-            assert events.sort{it[0]}.first() == ['004', 1] as Object[]
-            assert events.sort{it[0]}.first().first().class == String
-            assert events.sort{it[0]}.first().last().class == Long
-            assert events.sort{it[0]}.last() == ['005', 2] as Object[]
+            assert events.size() >= 2
+            assert events.find {it.first() == '004'} == ['004', 1] as Object[]
+            assert events.find {it.first() == '004'}.first().class == String
+            assert events.find {it.first() == '004'}.last().class == Long
+            assert events.find {it.first() == '005'} == ['005', 2] as Object[]
     }
 }

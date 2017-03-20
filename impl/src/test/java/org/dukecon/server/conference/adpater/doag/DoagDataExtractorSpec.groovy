@@ -264,7 +264,7 @@ class DoagDataExtractorSpec extends Specification {
         assert events.first().type.names.de == 'Neuerscheinungen oder Features'
         assert !events.first().demo
 //        assert !events.first().fullyBooked
-//        assert events.first().willBecomeFull
+//        assert events.first().veryPopular
 //        assert events.first().numberOfFavorites == 0
     }
 

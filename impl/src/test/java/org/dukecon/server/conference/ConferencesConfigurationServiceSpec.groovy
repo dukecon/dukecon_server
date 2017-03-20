@@ -15,7 +15,8 @@ class ConferencesConfigurationServiceSpec extends AbstractDukeConSpec {
         then:
         jl2017.id == 'jl2017'
         jl2017.name == 'JavaLand 2017'
-        jl2017.url == 'http://programm.javaland.eu/2017'
+        jl2017.url.startsWith('http://')
+        jl2017.url.endsWith('/2017')
         jl2017.year == '2017'
     }
 
