@@ -46,3 +46,11 @@ HTTP status code `200` of the response tells you that everything is ok.
 * PostgreSQL with profile _"postgresql"_
   * activate with `-Dspring.profiles.active=postgresql`
   * to run the tests against the PostgreSQL db (and a previously reset of the db), you need the _"postgresql-test"_ profile (`-Dspring.profiles.active=postgresql-test`)
+
+## Dependency Management
+* Maven build fails in verify phase if declared dependencies are unused or used dependencies are undeclared
+  * mvn verify
+  * CI calls mvn deploy which includes verify
+  * the acutal goal is mvn dependency:analyze(-only) which may show warnings
+* dependency analyzing may cause problems because of Spring Boot starter dependencies
+  * configure <ignoredUnusedDeclaredDependencies> in pom.xml
