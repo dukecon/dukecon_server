@@ -205,7 +205,9 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
 
     @Deprecated
     private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries { [it.id, it] }) {
+        log.debug('favoritesPerEvent: ' + preferencesService)
         Map<String, Integer> favoritesPerEvent = preferencesService?.allEventFavorites ?: [:]
+        log.debug('favoritesPerEvent: ' + favoritesPerEvent)
         return talksJson
                 .collect { eventJson -> getEvent(eventJson, speakerLookup, favoritesPerEvent) }
                 .findAll { Event event ->
