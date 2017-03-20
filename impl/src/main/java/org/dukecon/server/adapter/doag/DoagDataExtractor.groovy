@@ -151,10 +151,10 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
     }
 
     List<Location> getLocations() {
-        return talksJson.findAll { it.RAUMNAME }.collect { [it.RAUM_NR, it.RAUMNAME] }.unique().sort {
+        return talksJson.findAll { it.RAUMNAME }.collect { [it.RAUM_NR, it.RAUMNAME, it.SITZPLATZ?.replace('.','')?.toInteger() ?: 0] }.unique().sort {
             it.first()
         }.withIndex().collect { room, index ->
-            Location.builder().id(index + 1 as String).order(room.first()?.toInteger()).capacity(0).names(de: room[1], en: room[1]).icon("location_${room.first()}.png").build()
+            Location.builder().id(index + 1 as String).order(room.first()?.toInteger()).capacity(room[2]).names(de: room[1], en: room[1]).icon("location_${room.first()}.png").build()
         }
     }
 
@@ -231,7 +231,8 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
                 .audience(audiences.find { eventJson.AUDIENCE_EN == it.names.en })
                 .type(eventTypes.find { eventJson.VORTRAGSTYP_EN == it.names.en })
                 .location(locations.find { eventJson.RAUMNAME == it.names.en })
-                .fullyBooked(eventJson.AUSGEBUCHT as boolean)
+                .willBecomeFull(eventJson.AUSGEBUCHT as boolean)
+                .fullyBooked(false)
                 .numberOfFavorites((favoritesPerEvent[eventJson.ID.toString()] ?: 0) as int)
                 .speakers([speakerLookup[eventJson.ID_PERSON?.toString()], speakerLookup[eventJson.ID_PERSON_COREF?.toString()], speakerLookup[eventJson.ID_PERSON_COCOREF?.toString()]].findAll {
             it

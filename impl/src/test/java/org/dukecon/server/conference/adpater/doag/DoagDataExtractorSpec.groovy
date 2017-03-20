@@ -42,7 +42,6 @@ class DoagDataExtractorSpec extends Specification {
         def conference = DoagDataExtractor.fromFile('javaland-2017.raw', ConferencesConfiguration.Conference.of('jl2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu')).buildConference()
         then:
         conference.events.size() == 144
-
     }
 
     void "should get 9 tracks"() {
@@ -118,6 +117,17 @@ class DoagDataExtractorSpec extends Specification {
         assert locations.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
         assert locations.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
         assert locations.icon.join(', ') == 'location_1.png, location_1.png, location_2.png, location_2.png, location_3.png, location_3.png, location_4.png, location_5.png, location_5.png, location_6.png, location_7.png'
+    }
+
+    void "should list room capacities"() {
+        when:
+        def doagDataExtractor = DoagDataExtractor.fromFile('javaland-2017.raw', ConferencesConfiguration.Conference.of('jl2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'))
+        and:
+        doagDataExtractor.buildConference()
+        then:
+        doagDataExtractor.locations.names.de.join(', ') == 'Silverado Theater, JUG-Café, Workshop-Raum Juno, JavaInnovationLab, Quantum 1, Quantum 2, Quantum 3, Quantum 4, Dambali (Hotel Matamba), Bambuti (Hotel Matamba), Wang Wei (Hotel Ling Bao), Wintergarten, Konfuzius (Hotel Ling Bao), Schauspielhaus, Quantum 1+2, Quantum 3+4, Eventhalle, Neptun, Quantum UG , Community Hall'
+        doagDataExtractor.locations.capacity.join(', ') == '1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 850, 0, 460, 250, 250, 400, 120, 60, 0'
+        doagDataExtractor.locations.collectEntries {[(it.names.de): it.capacity]}.inject([]){result, entry -> result << "${entry.key}: ${entry.value}"}.join(', ') == 'Silverado Theater: 1000, JUG-Café: 0, Workshop-Raum Juno: 0, JavaInnovationLab: 0, Quantum 1: 0, Quantum 2: 0, Quantum 3: 0, Quantum 4: 0, Dambali (Hotel Matamba): 0, Bambuti (Hotel Matamba): 0, Wang Wei (Hotel Ling Bao): 0, Wintergarten: 850, Konfuzius (Hotel Ling Bao): 0, Schauspielhaus: 460, Quantum 1+2: 250, Quantum 3+4: 250, Eventhalle: 400, Neptun: 120, Quantum UG : 60, Community Hall: 0'
     }
 
     void "should extract all meta data"() {
@@ -229,7 +239,8 @@ class DoagDataExtractorSpec extends Specification {
 
     void "should map one talk field by field"() {
         when:
-        def json = new JsonSlurper().parseText('{ "hits" : { "hits" : [ {"_source":{"ID_KONGRESS":499959,"ID":509632,"ID_SEMINAR":"509632","FARBCODE":335744,"TRACK":"Core Java & JVM basierte Sprachen","TRACK_EN":"Core Java & JVM based languages","ORDERT":2,"AUDIENCE":"Fortgeschrittene","AUDIENCE_EN":"advanced","DATUM":"2016-03-09T00:00:00.000+01:00","SIMULTAN":"0","DATUM_ES_EN":"2016-03-09","DATUM_ES":"09.03.2016","BEGINN":"09:00","ENDE":"09:40","TIMESTAMP":"0016-03-07T08:53:28.000+00:53:28","TIMESTAMP_ENDE":"0016-03-07T09:33:28.000+00:53:28","SEMINAR_NR":"63","RAUM_NR":"1","RAUMNAME":"Wintergarten","AREAID":"1/W","TITEL":"Java\'s Next Big Thing: Value Objects","TITEL_EN":null,"ABSTRACT_EN":null,"REFERENT_NAME":"Henning Schwentner","KEYWORDS":null,"REFERENT_NACHNAME":"Schwentner","REFERENT_FIRMA":"WPS - Workplace Solutions GmbH","ID_PERSON":370942,"ID_PERSON_COREF":null,"ID_PERSON_COCOREF":null,"VORTRAGSTYP":"Neuerscheinungen oder Features","VORTRAGSTYP_EN":"new releases or features ","COREFERENT_NAME":null,"COCOREFERENT_NAME":null,"COREFERENT_FIRMA":null,"COCOREFERENT_FIRMA":null,"ABSTRACT_TEXT":"Nach Lambdas und Co. mit Java 8 ist das \\"Next Big Thing\\" f�r Java die Unterst�tzung von Value Types direkt in der Programmiersprache. Damit bekommt Java ein Feature, das andere Programmiersprachen schon l�nger haben.\\r\\n\\r\\nIn diesem Vortrag schauen wir uns genau an:\\r\\n\\r\\n* was hinter dem Schlachtruf \\"Codes like a class, works like an int\\" steckt\\r\\n* warum value types gleichzeitig effizienteren wie auch besser lesbaren Code erm�glichen\\r\\n* wie der Stand des zugeh�rigen JEP 169 ist\\r\\n* den Unterschied zwischen Reference Types und Value Types\\r\\n* wie Value Types in anderen Sprachen (insbesondere C# und Swift) schon umgesetzt sind\\r\\n* was Vererbung f�r Value Types bedeutet\\r\\n* was die Vorteile von Speicherung auf dem Stack versus Speicherung auf dem Heap sind\\r\\n\\r\\nDer Vortrag wird im \\"Lessig-Style\\" gehalten werden. (https://www.youtube.com/watch?v=RrpajcAgR1E)","SPRACHE":"Deutsch","DEMO":"Nein","KEYWORDS_EN":null,"SPRACHE_EN":"German","DEMO_EN":"no","BEGINN_EN":null,"ENDE_EN":null}}]}}')
+        def json = new JsonSlurper().parseText('{ "hits" : { "hits" : [ {"_source":{"ID_KONGRESS":499959,"ID":509632,"ID_SEMINAR":"509632","FARBCODE":335744,"TRACK":"Core Java & JVM basierte Sprachen","TRACK_EN":"Core Java & JVM based languages","ORDERT":2,"AUDIENCE":"Fortgeschrittene","AUDIENCE_EN":"advanced","DATUM":"2016-03-09T00:00:00.000+01:00","SIMULTAN":"0","DATUM_ES_EN":"2016-03-09","DATUM_ES":"09.03.2016","BEGINN":"09:00","ENDE":"09:40","TIMESTAMP":"0016-03-07T08:53:28.000+00:53:28","TIMESTAMP_ENDE":"0016-03-07T09:33:28.000+00:53:28","SEMINAR_NR":"63","RAUM_NR":"1","RAUMNAME":"Wintergarten","AREAID":"1/W","TITEL":"Java\'s Next Big Thing: Value Objects","TITEL_EN":null,"ABSTRACT_EN":null,"REFERENT_NAME":"Henning Schwentner","KEYWORDS":null,"REFERENT_NACHNAME":"Schwentner","REFERENT_FIRMA":"WPS - Workplace Solutions GmbH","ID_PERSON":370942,"ID_PERSON_COREF":null,"ID_PERSON_COCOREF":null,"VORTRAGSTYP":"Neuerscheinungen oder Features","VORTRAGSTYP_EN":"new releases or features ","COREFERENT_NAME":null,"COCOREFERENT_NAME":null,"COREFERENT_FIRMA":null,"COCOREFERENT_FIRMA":null,"ABSTRACT_TEXT":"Nach Lambdas und Co. mit Java 8 ist das \\"Next Big Thing\\" f�r Java die Unterst�tzung von Value Types direkt in der Programmiersprache. Damit bekommt Java ein Feature, das andere Programmiersprachen schon l�nger haben.\\r\\n\\r\\nIn diesem Vortrag schauen wir uns genau an:\\r\\n\\r\\n* was hinter dem Schlachtruf \\"Codes like a class, works like an int\\" steckt\\r\\n* warum value types gleichzeitig effizienteren wie auch besser lesbaren Code erm�glichen\\r\\n* wie der Stand des zugeh�rigen JEP 169 ist\\r\\n* den Unterschied zwischen Reference Types und Value Types\\r\\n* wie Value Types in anderen Sprachen (insbesondere C# und Swift) schon umgesetzt sind\\r\\n* was Vererbung f�r Value Types bedeutet\\r\\n* was die Vorteile von Speicherung auf dem Stack versus Speicherung auf dem Heap sind\\r\\n\\r\\nDer Vortrag wird im \\"Lessig-Style\\" gehalten werden. (https://www.youtube.com/watch?v=RrpajcAgR1E)","SPRACHE":"Deutsch","DEMO":"Nein","KEYWORDS_EN":null,"SPRACHE_EN":"German","DEMO_EN":"no","BEGINN_EN":null,"ENDE_EN":null, "AUSGEBUCHT":1}}]}}')
+        // TODO: use DoagDataExtractor
         def extractor = new JavalandDataExtractor(talksJson: json.hits.hits._source)
         def events = extractor.events.sort { it.id }
         then:
@@ -252,6 +263,9 @@ class DoagDataExtractorSpec extends Specification {
         assert events.first().speakers.first().id == '370942'
         assert events.first().type.names.de == 'Neuerscheinungen oder Features'
         assert !events.first().demo
+//        assert !events.first().fullyBooked
+//        assert events.first().willBecomeFull
+//        assert events.first().numberOfFavorites == 0
     }
 
     void "should read time stamps from Java Forum Stuttgart"() {

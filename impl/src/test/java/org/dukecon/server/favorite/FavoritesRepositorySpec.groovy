@@ -47,16 +47,16 @@ class FavoritesRepositorySpec extends AbstractDukeConSpec {
 
     void "test all favorites per event"() {
         when:
-            preferencesRepository.save(new Preference (principalId : "0815", eventId: "001", version : 1))
-            preferencesRepository.save(new Preference (principalId : "0815", eventId: "002", version : 1))
-            preferencesRepository.save(new Preference (principalId : "4711", eventId: "002", version : 1))
+            preferencesRepository.save(new Preference (principalId : "0815", eventId: "004", version : 1))
+            preferencesRepository.save(new Preference (principalId : "0815", eventId: "005", version : 1))
+            preferencesRepository.save(new Preference (principalId : "4711", eventId: "005", version : 1))
         and:
             def events = preferencesRepository.allFavoritesPerEvent()
         then:
             assert events.size() == 2
-            assert events.sort{it[0]}.first() == ['001', 1] as Object[]
+            assert events.sort{it[0]}.first() == ['004', 1] as Object[]
             assert events.sort{it[0]}.first().first().class == String
             assert events.sort{it[0]}.first().last().class == Long
-            assert events.sort{it[0]}.last() == ['002', 2] as Object[]
+            assert events.sort{it[0]}.last() == ['005', 2] as Object[]
     }
 }
