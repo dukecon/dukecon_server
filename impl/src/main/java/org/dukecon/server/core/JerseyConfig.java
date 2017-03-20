@@ -2,6 +2,7 @@ package org.dukecon.server.core;
 
 import javax.ws.rs.ApplicationPath;
 
+import org.dukecon.server.admin.FullyBookedResource;
 import org.dukecon.server.conference.ConferencesResource;
 import org.dukecon.server.conference.CurrentConferenceResource;
 import org.dukecon.server.speaker.SpeakerImageResource;
@@ -29,6 +30,7 @@ public class JerseyConfig extends ResourceConfig {
         register(NoAuthPreferencesService.class);
         register(FiltersService.class);
         register(SpeakerImageResource.class);
+        register(FullyBookedResource.class);
 
         register(CorsFilter.class);
     }
