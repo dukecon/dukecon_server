@@ -84,7 +84,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
                 .homeUrl(conferenceHomeUrl)
                 .metaData(metaData)
                 .speakers(mapper.speakers.values() as List)
-                .events(this.events)
+                .events(this.getEvents())
                 .build()
         conf.speakers = getSpeakersWithEvents(conf.speakers)
         return conf
@@ -205,9 +205,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
 
     @Deprecated
     private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries { [it.id, it] }) {
-        log.debug('favoritesPerEvent: ' + preferencesService)
         Map<String, Integer> favoritesPerEvent = preferencesService?.allEventFavorites ?: [:]
-        log.debug('favoritesPerEvent: ' + favoritesPerEvent)
         return talksJson
                 .collect { eventJson -> getEvent(eventJson, speakerLookup, favoritesPerEvent) }
                 .findAll { Event event ->

@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap
 @Component
 @TypeChecked
 @Slf4j
-class FullyBookedService {
+class EventBookingService {
 
     final Set<String> fullyBooked = ConcurrentHashMap.newKeySet()
 

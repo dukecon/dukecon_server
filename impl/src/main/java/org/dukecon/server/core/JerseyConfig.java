@@ -2,9 +2,10 @@ package org.dukecon.server.core;
 
 import javax.ws.rs.ApplicationPath;
 
-import org.dukecon.server.admin.FullyBookedResource;
+import org.dukecon.server.admin.AdminResource;
 import org.dukecon.server.conference.ConferencesResource;
 import org.dukecon.server.conference.CurrentConferenceResource;
+import org.dukecon.server.conference.EventBookingResource;
 import org.dukecon.server.speaker.SpeakerImageResource;
 import org.dukecon.server.filter.FiltersService;
 import org.dukecon.server.security.KeycloakConfigService;
@@ -30,7 +31,8 @@ public class JerseyConfig extends ResourceConfig {
         register(NoAuthPreferencesService.class);
         register(FiltersService.class);
         register(SpeakerImageResource.class);
-        register(FullyBookedResource.class);
+        register(AdminResource.class);
+        register(EventBookingResource.class);
 
         register(CorsFilter.class);
     }

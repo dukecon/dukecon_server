@@ -2,7 +2,6 @@ package org.dukecon.server.admin
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
-import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject
@@ -11,30 +10,33 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
 /**
+ * Admin resource contains several endpoints for administration needs.
+ *
+ *
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Component
-@Path("admin/fullyBooked")
+@Path("admin/{conferenceId}")
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 @Slf4j
-class FullyBookedResource {
+class AdminResource {
 
-    private final FullyBookedService service
+    private final EventBookingService service
 
     @Inject
-    FullyBookedResource(final FullyBookedService service) {
+    AdminResource(final EventBookingService service) {
         this.service = service
     }
 
     @GET
-    Response getAllFullyBooked() {
+    Response getAllFullyBooked(@PathParam("conferenceId") String atTheMomentIgnoredConferenceId) {
         return Response.ok().entity(service.getFullyBooked()).build()
     }
 
     @POST
-    @Secured("ROLE_ADMIN")
-    public Response setFull(String eventId) {
+    @Path("{eventId}")
+    public Response setFull(@PathParam("eventId") String eventId) {
         if (this.service.isFull(eventId)) {
             return Response.status(Response.Status.NO_CONTENT).build()
         }
@@ -43,8 +45,8 @@ class FullyBookedResource {
     }
 
     @DELETE
-    @Secured("ROLE_ADMIN")
-    public Response removeFull(String eventId) {
+    @Path("{eventId}")
+    public Response removeFull(@PathParam("eventId") String eventId) {
         if (this.service.isFull(eventId)) {
             this.service.removeFull(eventId);
             return Response.status(Response.Status.OK).build()
