@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
-import org.dukecon.model.annotations.Relation;
 
 import java.util.List;
 
@@ -24,10 +23,7 @@ public class Conference implements Identifyable {
     private String homeUrl;
     private String icon;
 
-    @Relation(relationType = Relation.RelationType.ONE_TO_ONE)
     private MetaData metaData;
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Event.class)
     private List<Event> events;
-    @Relation(relationType = Relation.RelationType.ONE_TO_MANY, remoteType = Speaker.class)
     private List<Speaker> speakers;
 }

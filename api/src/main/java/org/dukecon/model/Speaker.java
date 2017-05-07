@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.dukecon.model.annotations.Relation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +36,5 @@ public class Speaker implements Identifyable {
     @JsonProperty(value = "eventIds")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
-    @Relation(relationType = Relation.RelationType.MANY_TO_MANY, remoteType = Event.class)
     private List<Event> events = new ArrayList<>();
 }
