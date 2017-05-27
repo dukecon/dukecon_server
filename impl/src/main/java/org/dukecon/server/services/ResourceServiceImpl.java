@@ -2,7 +2,9 @@ package org.dukecon.server.services;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.dukecon.model.AbstractCoreImages;
 import org.dukecon.model.Conference;
+import org.dukecon.model.CoreImages;
 import org.dukecon.model.Resources;
 import org.dukecon.model.Speaker;
 import org.dukecon.model.Styles;
@@ -58,44 +60,14 @@ public class ResourceServiceImpl implements ResourceService {
     public Resources getResourcesForConference(String conferenceId) {
         Resources result = Resources.builder().build();
 
-        Conference conference = conferenceService.read(conferenceId);
-
         // Styles
         Styles styles = conferenceService.getConferenceStyles(conferenceId);
         if(styles != null) {
             result.setStyles(styles);
         }
 
-        // Logo
-        Set<String> imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/conference");
-        if((imageResources != null) && !imageResources.isEmpty()) {
-            Map<String, byte[]> imageData = getImageData(imageResources);
-            result.setConferenceImage(imageData.get("logo"));
-        }
-
-        // Locations
-        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/locations");
-        if((imageResources != null) && !imageResources.isEmpty()) {
-            result.setLocationImages(getImageData(imageResources));
-        }
-
-        // Location Maps
-        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/location-maps");
-        if((imageResources != null) && !imageResources.isEmpty()) {
-            result.setLocationMapImages(getImageData(imageResources));
-        }
-
-        // Languages
-        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/languages");
-        if((imageResources != null) && !imageResources.isEmpty()) {
-            result.setLanguageImages(getImageData(imageResources));
-        }
-
-        // Streams
-        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/streams");
-        if((imageResources != null) && !imageResources.isEmpty()) {
-            result.setStreamImages(getImageData(imageResources));
-        }
+        Conference conference = conferenceService.read(conferenceId);
+        addCoreImages(conference, conferenceId, result);
 
         // Speakers
         result.setSpeakerImages(new HashMap<>());
@@ -131,4 +103,52 @@ public class ResourceServiceImpl implements ResourceService {
         return images;
     }
 
+    @Override
+    public CoreImages getCoreImagesForConference(String conferenceId) {
+        CoreImages result = CoreImages.builder().build();
+
+        Conference conference = conferenceService.read(conferenceId);
+        addCoreImages(conference, conferenceId, result, true);
+
+        return result;
+
+    }
+
+    private void addCoreImages(Conference conference, String conferenceId, AbstractCoreImages result) {
+        addCoreImages(conference, conferenceId, result, false);
+    }
+
+    private void addCoreImages(Conference conference, String conferenceId, AbstractCoreImages result, boolean base64) {
+
+        // Logo
+        Set<String> imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/conference");
+        if((imageResources != null) && !imageResources.isEmpty()) {
+            Map<String, byte[]> imageData = getImageData(imageResources);
+            result.setConferenceImage(imageData.get("logo"));
+        }
+
+        // Locations
+        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/locations");
+        if((imageResources != null) && !imageResources.isEmpty()) {
+            result.setLocationImages(getImageData(imageResources));
+        }
+
+        // Location Maps
+        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/location-maps");
+        if((imageResources != null) && !imageResources.isEmpty()) {
+            result.setLocationMapImages(getImageData(imageResources));
+        }
+
+        // Languages
+        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/languages");
+        if((imageResources != null) && !imageResources.isEmpty()) {
+            result.setLanguageImages(getImageData(imageResources));
+        }
+
+        // Streams
+        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/streams");
+        if((imageResources != null) && !imageResources.isEmpty()) {
+            result.setStreamImages(getImageData(imageResources));
+        }
+    }
 }

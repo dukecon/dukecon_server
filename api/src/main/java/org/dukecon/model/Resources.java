@@ -1,6 +1,7 @@
 package org.dukecon.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,14 +13,7 @@ import java.util.Map;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Resources {
-
+public class Resources extends AbstractCoreImages {
     private Styles styles;
-    private byte[] conferenceImage;
-    private Map<String, byte[]> locationImages;
-    private Map<String, byte[]> locationMapImages;
-    private Map<String, byte[]> languageImages;
-    private Map<String, byte[]> streamImages;
     private Map<String, byte[]> speakerImages;
-
 }
