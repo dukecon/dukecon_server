@@ -57,7 +57,8 @@ class CurrentConferenceResource {
                     homeUrl  : c.homeUrl,
                     homeTitle: c.homeTitle,
                     startDate: dtf.format(c.startDate),
-                    endDate  : dtf.format(c.endDate)
+                    endDate  : dtf.format(c.endDate),
+					authEnabled : c.authEnabled
             ] : [:]).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();

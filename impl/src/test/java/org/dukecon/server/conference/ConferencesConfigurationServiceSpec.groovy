@@ -18,6 +18,7 @@ class ConferencesConfigurationServiceSpec extends AbstractDukeConSpec {
         jl2017.url.startsWith('http://')
         jl2017.url.endsWith('/2017')
         jl2017.year == '2017'
+		jl2017.authEnabled == true
     }
 
     void "return null if conference does not exist"() {

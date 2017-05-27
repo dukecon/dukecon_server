@@ -68,6 +68,12 @@ class ConferencesConfiguration {
         LocalDate startDate
 
         LocalDate endDate
+		
+		/*
+		 * Authentication switch for client.
+		 */
+		@NotNull
+		Boolean authEnabled = false
 
         @NotNull
         Object talksUri

@@ -11,6 +11,7 @@
   name: JavaLand 2016
   startDate: 2016-03-08
   endDate: 2016-03-10
+  authEnabled: true
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
 -
@@ -24,6 +25,7 @@
   name: Java Forum Stuttgart 2016
   startDate: 2016-07-07
   endDate: 2016-07-07
+  authEnabled: false
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
 -
@@ -37,6 +39,7 @@
   homeUrl: http://www.herbstcampus.de/
   startDate: 2016-08-30
   endDate: 2016-09-01
+  authEnabled: false
   extractorClass: org.dukecon.server.adapter.heise.HeiseDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.heise.HeiseCsvInput
 #-
@@ -54,6 +57,7 @@
 #  name: ApacheCon Europe 2016
 #  startDate: 2016-11-16
 #  endDate: 2016-11-18
+#  authEnabled: false #default is false
 #  extractorClass: org.dukecon.server.adapter.sched.SchedDataExtractor
 -
   id: jl2017
@@ -70,6 +74,7 @@
   name: JavaLand 2017
   startDate: 2017-03-28
   endDate: 2017-03-30
+  authEnabled: true
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
 -
@@ -85,6 +90,7 @@
   name: APEX Connect 2017
   startDate: 2017-05-09
   endDate: 2017-05-11
+  authEnabled: true
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
 -
@@ -100,6 +106,7 @@
   name: DOAG Konferenz + Ausstellung 2016
   startDate: 2016-11-15
   endDate: 2016-11-18
+  authEnabled: true
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
 -
@@ -115,5 +122,6 @@
   name: DOAG Datavision 2017
   startDate: 2017-03-14
   endDate: 2017-03-15
+  authEnabled: true
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
