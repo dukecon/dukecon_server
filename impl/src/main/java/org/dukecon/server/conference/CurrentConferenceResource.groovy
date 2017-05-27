@@ -49,7 +49,16 @@ class CurrentConferenceResource {
     public Response getCurrentConference(@PathParam("conference") String conference, @PathParam("year") String year) {
         def c = configurationService.getConference(conference, year)
         if (c) {
-            return Response.ok().entity(c ? [id: c.id, name: c.name, year: c.year, url: c.url, homeUrl: c.homeUrl, homeTitle: c.homeTitle, startDate: dtf.format(c.startDate), endDate: dtf.format(c.endDate)] : [:]).build();
+            return Response.ok().entity(c ? [
+                    id       : c.id,
+                    name     : c.name,
+                    year     : c.year,
+                    url      : c.url,
+                    homeUrl  : c.homeUrl,
+                    homeTitle: c.homeTitle,
+                    startDate: dtf.format(c.startDate),
+                    endDate  : dtf.format(c.endDate)
+            ] : [:]).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
