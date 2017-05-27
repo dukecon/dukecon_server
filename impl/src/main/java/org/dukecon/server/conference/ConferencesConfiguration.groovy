@@ -63,6 +63,13 @@ class ConferencesConfiguration {
 
         @NotNull
         String homeUrl
+		
+		@NotNull
+		Map<String, String> imprint
+		
+		Map<String, String> termsOfUse
+		
+		Map<String, String> privacy
 
         @NotNull
         LocalDate startDate
