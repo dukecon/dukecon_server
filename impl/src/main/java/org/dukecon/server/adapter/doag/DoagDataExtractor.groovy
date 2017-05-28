@@ -108,7 +108,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
         return talksJson.findAll { it.TRACK }.collect { [it.ORDERT, it.TRACK, it.TRACK_EN] }.unique().sort {
             it.first()
         }.withIndex().collect { track, index ->
-            Track.builder().id(index + 1 as String).order(track.first()).names([de: track[1], en: track[2]]).icon("track_${track.first()}.png").build()
+            Track.builder().id(index + 1 as String).order(Integer.valueOf(track[0])).names([de: track[1], en: track[2]]).icon("track_${track[0]}.png").build()
         }
     }
 
