@@ -1,0 +1,27 @@
+-
+  id: jfs2016
+  internalId: 496615
+  conference: jfs
+  year: 2016
+  talksUri: jfs-2016-final-finished-conf.raw.json
+  url: https://jfs.dukecon.org/2016
+  homeUrl: http://www.java-forum-stuttgart.de
+# TODO
+  imprint:
+    de: https://www.java-forum-stuttgart.de/de/Impressum.html
+# german version only 2017-05-27
+    en: https://www.java-forum-stuttgart.de/de/Impressum.html
+#  termsOfUse:
+# missing links  
+#    de: https://www.java-forum-stuttgart.de
+#    en: https://www.java-forum-stuttgart.de
+#  privacy:
+# missing links
+#    de: https://www.java-forum-stuttgart.de
+#    en: https://www.java-forum-stuttgart.de
+  name: Java Forum Stuttgart 2016
+  startDate: 2016-07-07
+  endDate: 2016-07-07
+  authEnabled: false
+  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
