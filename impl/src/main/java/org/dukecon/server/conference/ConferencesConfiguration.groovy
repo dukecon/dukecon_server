@@ -16,7 +16,8 @@ import java.time.LocalDate
 class ConferencesConfiguration {
 
     static ConferencesConfiguration fromFile(String classpathName, Map<String, Object> allProperties) {
-        new ConferencesConfiguration(conferences: new Yaml(new YamlDateTimeConstructor()).load(new org.springframework.core.io.ClassPathResource(classpathName).inputStream).collect {
+        new ConferencesConfiguration(conferences: new Yaml(new YamlDateTimeConstructor()).load(
+                new org.springframework.core.io.ClassPathResource(classpathName).inputStream).collect {
             new Conference(substitutePlaceHolder(it, allProperties))
         })
     }
