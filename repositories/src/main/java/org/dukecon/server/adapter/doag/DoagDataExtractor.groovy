@@ -5,7 +5,7 @@ import org.dukecon.model.*
 import org.dukecon.server.adapter.ConferenceDataExtractor
 import org.dukecon.server.adapter.RawDataMapper
 import org.dukecon.server.conference.ConferencesConfiguration
-import org.dukecon.server.favorites.FavoritesService
+import org.dukecon.server.favorites.PreferencesService
 import org.dukecon.server.conference.SpeakerImageService
 import org.springframework.beans.BeansException
 import org.springframework.context.ApplicationContext
@@ -25,7 +25,7 @@ import static com.xlson.groovycsv.CsvParser.parseCsv
 class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAware {
 
     private SpeakerImageService speakerImageService
-    private FavoritesService preferencesService
+    private PreferencesService preferencesService
 
     private final RawDataMapper rawDataMapper
     def talksJson
@@ -53,7 +53,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
 
     @Override
     void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.preferencesService = applicationContext.getBean(FavoritesService)
+        this.preferencesService = applicationContext.getBean(PreferencesService)
     }
 
     @Override
