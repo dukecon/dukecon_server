@@ -8,17 +8,14 @@ import java.security.MessageDigest
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
-@Service
+@Service("speakerImageService")
 class SpeakerImageServiceImpl implements SpeakerImageService {
-
     Map<String, SpeakerImageService.ImageWithName> images = [:]
 
-    @Override
     String addImage(byte[] content, String filename = null) {
         return this.addImage(Base64.encoder.encodeToString(content), filename)
     }
 
-    @Override
     String addImage(String contentBase64, String filename = null) {
         String md5Hash = md5(contentBase64)
         images[md5Hash] = new SpeakerImageService.ImageWithName(filename ?: "${md5Hash}.${fileEnding(contentBase64)}", Base64.decoder.decode(contentBase64))

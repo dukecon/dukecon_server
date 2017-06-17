@@ -15,7 +15,9 @@ interface SpeakerImageService {
     }
 
     Map<String, SpeakerImageService.ImageWithName> getImages()
+    String addImage(byte[] content)
     String addImage(byte[] content, String filename)
+    String addImage(String contentBase64)
     String addImage(String contentBase64, String filename)
     ImageWithName getImage(String md5Hash)
 }
