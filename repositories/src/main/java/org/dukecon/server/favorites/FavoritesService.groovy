@@ -6,7 +6,8 @@ import javax.xml.ws.Response
 /**
  * Created by ascheman on 17.06.17.
  */
+// TODO Rename the path
 @Path("preferences")
-interface PreferencesService {
+interface FavoritesService {
     public Response getPreferences()
 }
