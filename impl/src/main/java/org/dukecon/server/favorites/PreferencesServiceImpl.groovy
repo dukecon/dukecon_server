@@ -15,7 +15,7 @@ import javax.ws.rs.Path
 @Component
 @Slf4j
 @TypeChecked
-@ConditionalOnProperty(name="preferencess.noauth.enable", havingValue="false", matchIfMissing = true)
+@ConditionalOnProperty(name="preferences.noauth.enable", havingValue="false", matchIfMissing = true)
 class PreferencesServiceImpl extends AbstractPreferencesService {
     protected String getAuthenticatedPrincipalId () {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -15,10 +15,10 @@ import javax.ws.rs.Path
 @Path("noauthpreferences")
 @Slf4j
 @TypeChecked
-@ConditionalOnProperty(name="preferencess.noauth.enable", havingValue="true", matchIfMissing = false)
+@ConditionalOnProperty(name="preferences.noauth.enable", havingValue="true", matchIfMissing = false)
 class NoAuthPreferencesServiceImpl extends AbstractPreferencesService {
 
-    @Value ("\${preferencess.noauth.principalId:dummyPrincipal}")
+    @Value ("\${preferences.noauth.principalId:dummyPrincipal}")
     String principalId
 
     protected String getAuthenticatedPrincipalId () {
