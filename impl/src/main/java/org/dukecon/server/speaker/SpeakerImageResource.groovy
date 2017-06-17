@@ -32,7 +32,9 @@ class SpeakerImageResource {
     @GET
     @Path("/")
     Response getAllConferences() {
-        return Response.ok().entity(speakerImageService.images.collect {k, v -> [filename: v.filename, id: k]}).build()
+        return Response.ok().entity(speakerImageService.getImages().collect {
+            String k, SpeakerImageService.ImageWithName v -> [filename: v.filename, id: k]
+        }).build()
     }
 
     @GET

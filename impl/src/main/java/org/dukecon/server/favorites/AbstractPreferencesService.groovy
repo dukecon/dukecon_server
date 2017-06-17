@@ -8,13 +8,10 @@ import org.springframework.stereotype.Component
 import javax.inject.Inject
 import javax.ws.rs.Consumes
 import javax.ws.rs.DELETE
-import javax.ws.rs.GET
 import javax.ws.rs.POST
 import javax.ws.rs.PUT
-import javax.ws.rs.Path
-import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
-import javax.ws.rs.core.Response
+import javax.ws.rs.core.Response;
 
 /**
  * @author Gerd Aschemann <gerd@aschemann.net>
@@ -22,14 +19,12 @@ import javax.ws.rs.core.Response
 @Component
 @Slf4j
 @TypeChecked
-abstract class AbstractPreferencesService implements PreferencesServiceImpl {
+abstract class AbstractPreferencesService implements PreferencesService {
     @Inject
     PreferencesRepository preferencesRepository
 
     abstract protected String getAuthenticatedPrincipalId()
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getPreferences() {
         String principalId = getAuthenticatedPrincipalId()
         if (!principalId) {
