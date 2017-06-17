@@ -9,7 +9,7 @@ import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.dukecon.model.Conference
 import org.dukecon.model.Styles
-import org.dukecon.server.adapter.ConferenceDataProvider
+import org.dukecon.server.repositories.ConferenceDataProvider
 import org.dukecon.services.ConferenceService
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.ResponseBody

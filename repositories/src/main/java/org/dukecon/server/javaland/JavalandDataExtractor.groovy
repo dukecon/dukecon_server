@@ -2,7 +2,7 @@ package org.dukecon.server.javaland
 
 import groovy.util.logging.Slf4j
 import org.dukecon.model.*
-import org.dukecon.server.adapter.ConferenceDataExtractor
+import org.dukecon.server.repositories.ConferenceDataExtractor
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

@@ -12,8 +12,8 @@
   name: JavaLand 2016
   startDate: 2016-03-08
   endDate: 2016-03-10
-  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
 -
   id: hc2016
   conference: herbstcampus
@@ -25,8 +25,8 @@
   homeUrl: http://www.herbstcampus.de/
   startDate: 2016-08-30
   endDate: 2016-09-01
-  extractorClass: org.dukecon.server.adapter.heise.HeiseDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  extractorClass: org.dukecon.server.repositories.heise.HeiseDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
 -
   id: apacheconeu2016
   internalId:
@@ -41,5 +41,5 @@
   name: ApacheCon Europe 2016
   startDate: 2016-11-16
   endDate: 2016-11-18
-  extractorClass: org.dukecon.server.adapter.sched.SchedDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.sched.SchedJsonMapper
+  extractorClass: org.dukecon.server.repositories.sched.SchedDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.sched.SchedJsonMapper

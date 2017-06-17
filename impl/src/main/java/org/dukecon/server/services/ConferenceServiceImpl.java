@@ -1,7 +1,7 @@
 package org.dukecon.server.services;
 
 import org.dukecon.model.*;
-import org.dukecon.server.adapter.ConferenceDataProvider;
+import org.dukecon.server.repositories.ConferenceDataProvider;
 import org.dukecon.services.ConferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

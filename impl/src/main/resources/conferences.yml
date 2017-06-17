@@ -21,8 +21,8 @@
   startDate: 2016-03-08
   endDate: 2016-03-10
   authEnabled: true
-  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
 -
   id: jfs2017
   internalId: 506707
@@ -48,8 +48,8 @@
   startDate: 2017-07-06
   endDate: 2017-07-06
   authEnabled: false
-  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
 -
   id: jfs2016
   internalId: 496615
@@ -75,8 +75,8 @@
   startDate: 2016-07-07
   endDate: 2016-07-07
   authEnabled: false
-  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
 -
   id: hc2016
   conference: herbstcampus
@@ -102,8 +102,8 @@
   startDate: 2016-08-30
   endDate: 2016-09-01
   authEnabled: false
-  extractorClass: org.dukecon.server.adapter.heise.HeiseDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.heise.HeiseCsvInput
+  extractorClass: org.dukecon.server.repositories.heise.HeiseDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.heise.HeiseCsvInput
 #-
 #  id: apacheconeu2016
 #  internalId:
@@ -129,7 +129,7 @@
 #  startDate: 2016-11-16
 #  endDate: 2016-11-18
 #  authEnabled: false #default is false
-#  extractorClass: org.dukecon.server.adapter.sched.SchedDataExtractor
+#  extractorClass: org.dukecon.server.repositories.sched.SchedDataExtractor
 -
   id: jl2017
   internalId: 522447
@@ -155,8 +155,8 @@
   startDate: 2017-03-28
   endDate: 2017-03-30
   authEnabled: true
-  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
 -
   id: apex2017
   internalId: 527880
@@ -181,8 +181,8 @@
   startDate: 2017-05-09
   endDate: 2017-05-11
   authEnabled: true
-  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
 -
   id: doag2016
   internalId: 512089
@@ -209,8 +209,8 @@
   startDate: 2016-11-15
   endDate: 2016-11-18
   authEnabled: true
-  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
 -
   id: doag2017
   internalId: 535509
@@ -237,5 +237,5 @@
   startDate: 2017-11-21
   endDate: 2017-11-24
   authEnabled: true
-  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper

@@ -1,31 +1,21 @@
-package org.dukecon.server.javaland
+package org.dukecon.server.repositories
 
 import groovy.transform.TypeChecked
-import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
-import org.dukecon.server.repositories.ConferenceDataProvider
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Component
 
-import javax.inject.Inject
 import java.time.Instant
 
 /**
- * Calls the remote service and caches the result as needed.
+ * Data provider for a resource file reachable through an url which may be updated periodically. For the sake of
+ * resilience there will be a backup of the last successful read of the web resource.
  *
- * @deprecated will be removed in favor for WebResourceDataProvider
- *
- * @author Niko Köbler, http://www.n-k.de, @dasniko
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
-@Slf4j
-//@Component
 @TypeChecked
-@Deprecated
-class JavalandDataProvider implements ConferenceDataProvider {
+class WebResourceDataProvider implements ConferenceDataProvider {
 
-    @Inject
-    JavalandDataRemote remote;
+    private final WebResourceDataProviderRemote remote
 
     @Value("\${talks.cache.expires:3600}")
     Integer cacheExpiresAfterSeconds
@@ -35,12 +25,19 @@ class JavalandDataProvider implements ConferenceDataProvider {
     volatile Conference conference;
 
     volatile Exception staleException;
+    private final String conferenceId
+
+    WebResourceDataProvider(WebResourceDataProviderRemote dataProviderRemote, String conferenceId) {
+        this.conferenceId = conferenceId
+        this.remote = dataProviderRemote
+    }
 
     @Override
     String getConferenceId() {
-        return "foobar"
+        return conferenceId
     }
 
+    @Override
     Conference getConference() {
         checkCache()
         return conference
@@ -71,7 +68,7 @@ class JavalandDataProvider implements ConferenceDataProvider {
         } catch (Exception e) {
             staleException = e
         }
-        if(conference == null) {
+        if (conference == null) {
             // no previously cached result exists
             throw staleException;
         }
@@ -85,4 +82,5 @@ class JavalandDataProvider implements ConferenceDataProvider {
     public boolean isBackupActive() {
         return remote.isBackupActive()
     }
+
 }

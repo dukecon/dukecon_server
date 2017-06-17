@@ -23,8 +23,8 @@
   startDate: 2017-07-06
   endDate: 2017-07-06
   authEnabled: false
-  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
 -
   id: jfs2016
   internalId: 496615
@@ -50,5 +50,5 @@
   startDate: 2016-07-07
   endDate: 2016-07-07
   authEnabled: false
-  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper

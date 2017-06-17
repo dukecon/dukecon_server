@@ -7,8 +7,8 @@ import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
-import org.dukecon.server.adapter.ConferenceDataExtractor
-import org.dukecon.server.adapter.WebResourceDataProviderRemote
+import org.dukecon.server.repositories.ConferenceDataExtractor
+import org.dukecon.server.repositories.WebResourceDataProviderRemote
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 

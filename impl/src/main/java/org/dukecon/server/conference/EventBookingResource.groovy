@@ -4,7 +4,7 @@ import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
 import org.dukecon.model.Event
-import org.dukecon.server.adapter.ConferenceDataProvider
+import org.dukecon.server.repositories.ConferenceDataProvider
 import org.dukecon.server.admin.EventBookingService
 import org.dukecon.server.favorites.PreferencesService
 import org.springframework.stereotype.Component

@@ -2,7 +2,7 @@ package org.dukecon
 
 import flex.messaging.MessageBroker
 import flex.messaging.io.SerializationContext
-import org.dukecon.server.adapter.DataProviderLoader
+import org.dukecon.server.repositories.DataProviderLoader
 import org.dukecon.server.conference.ConferencesConfigurationServiceImpl
 import org.flywaydb.core.Flyway
 import org.springframework.beans.factory.BeanFactory
