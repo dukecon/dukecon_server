@@ -10,7 +10,7 @@
 
 	<groupId>org.dukecon</groupId>
 	<artifactId>dukecon-server</artifactId>
-	<version>1.3-SNAPSHOT</version>
+	<version>1.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
     <developers>
