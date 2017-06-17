@@ -12,10 +12,9 @@ import javax.ws.rs.Path
  * @author Gerd Aschemann <gerd@aschemann.net>
  */
 @Component
-@Path("preferences")
 @Slf4j
 @TypeChecked
-class PreferencesService extends AbstractPreferencesService {
+class PreferencesServiceImpl extends AbstractPreferencesService {
     protected String getAuthenticatedPrincipalId () {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!auth) {

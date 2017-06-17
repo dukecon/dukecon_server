@@ -3,8 +3,6 @@ package org.dukecon.server.filter
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.user.UserFilters
-import org.dukecon.server.filter.Filters
-import org.dukecon.server.filter.FiltersRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component

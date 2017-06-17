@@ -8,7 +8,7 @@ import org.dukecon.model.CoreImages;
 import org.dukecon.model.Resources;
 import org.dukecon.model.Speaker;
 import org.dukecon.model.Styles;
-import org.dukecon.server.speaker.SpeakerImageService;
+import org.dukecon.server.conference.SpeakerImageService;
 import org.dukecon.services.ConferenceService;
 import org.dukecon.services.ResourceService;
 import org.springframework.flex.remoting.RemotingDestination;

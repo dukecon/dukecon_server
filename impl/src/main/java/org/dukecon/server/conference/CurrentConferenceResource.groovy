@@ -3,7 +3,6 @@ package org.dukecon.server.conference
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.CoreImages
-import org.dukecon.model.Resources
 import org.dukecon.services.ResourceService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component

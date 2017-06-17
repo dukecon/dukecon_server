@@ -5,7 +5,7 @@ import com.google.common.collect.Maps
 import com.google.common.collect.Multimap
 import org.dukecon.adapter.ResourceWrapper
 import org.dukecon.model.Speaker
-import org.dukecon.server.speaker.SpeakerImageService
+import org.dukecon.server.conference.SpeakerImageService
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack

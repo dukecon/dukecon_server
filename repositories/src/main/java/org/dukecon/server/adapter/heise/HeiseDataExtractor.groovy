@@ -4,7 +4,7 @@ import org.dukecon.model.Conference
 import org.dukecon.server.adapter.ConferenceDataExtractor
 import org.dukecon.server.adapter.RawDataMapper
 import org.dukecon.server.conference.ConferencesConfiguration
-import org.dukecon.server.speaker.SpeakerImageService
+import org.dukecon.server.conference.SpeakerImageService
 
 import java.time.LocalDate
 
@@ -23,11 +23,12 @@ class HeiseDataExtractor implements ConferenceDataExtractor {
         this.conference = fromInput(getInput(rawDataMapper), config.startDate, config.id, config.name, config.url)
     }
 
-    HeiseDataExtractor(String conferenceId, RawDataMapper rawDataMapper, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
-
-        this.speakerImageService = new SpeakerImageService()
-        this.conference = fromInput(getInput(rawDataMapper), startDate, conferenceId, conferenceName, conferenceUrl)
-    }
+    // TODO: Clean up
+//    HeiseDataExtractor(String conferenceId, RawDataMapper rawDataMapper, LocalDate startDate, String conferenceName = 'DukeCon Conference', String conferenceUrl = 'http://dukecon.org') {
+//
+//        this.speakerImageService = new SpeakerImageService()
+//        this.conference = fromInput(getInput(rawDataMapper), startDate, conferenceId, conferenceName, conferenceUrl)
+//    }
 
     private def getInput(RawDataMapper rawDataMapper) {
         rawDataMapper instanceof InputStream ? new HeiseCsvInput(rawDataMapper) : rawDataMapper

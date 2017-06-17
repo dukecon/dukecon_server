@@ -2,6 +2,7 @@ package org.dukecon.server.speaker
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
+import org.dukecon.server.conference.SpeakerImageService
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject

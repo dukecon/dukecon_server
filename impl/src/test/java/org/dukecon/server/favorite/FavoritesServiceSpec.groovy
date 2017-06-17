@@ -4,7 +4,7 @@ import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.user.UserPreference
 import org.dukecon.server.conference.AbstractDukeConSpec
-import org.dukecon.server.favorites.PreferencesService
+import org.dukecon.server.favorites.PreferencesServiceImpl
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 
@@ -19,7 +19,7 @@ import java.security.Principal
 @TypeChecked
 class FavoritesServiceSpec extends AbstractDukeConSpec {
     @Inject
-    PreferencesService preferencesService
+    PreferencesServiceImpl preferencesService
 
     void "test get without authorization" () {
         SecurityContextHolder.getContext().authentication = null

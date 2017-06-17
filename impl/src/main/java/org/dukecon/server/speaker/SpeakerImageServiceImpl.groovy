@@ -1,5 +1,6 @@
 package org.dukecon.server.speaker
 
+import org.dukecon.server.conference.SpeakerImageService
 import org.springframework.stereotype.Service
 
 import java.security.MessageDigest
@@ -8,31 +9,24 @@ import java.security.MessageDigest
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Service
-class SpeakerImageService {
+class SpeakerImageServiceImpl implements SpeakerImageService {
 
-    Map<String, ImageWithName> images = [:]
+    Map<String, SpeakerImageService.ImageWithName> images = [:]
 
-    static class ImageWithName {
-        final String filename
-        final byte[] content
-
-        ImageWithName(String filename, byte[] content) {
-            this.filename = filename
-            this.content = content
-        }
-    }
-
+    @Override
     String addImage(byte[] content, String filename = null) {
         return this.addImage(Base64.encoder.encodeToString(content), filename)
     }
 
+    @Override
     String addImage(String contentBase64, String filename = null) {
         String md5Hash = md5(contentBase64)
-        images[md5Hash] = new ImageWithName(filename ?: "${md5Hash}.${fileEnding(contentBase64)}", Base64.decoder.decode(contentBase64))
+        images[md5Hash] = new SpeakerImageService.ImageWithName(filename ?: "${md5Hash}.${fileEnding(contentBase64)}", Base64.decoder.decode(contentBase64))
         return md5Hash
     }
 
-    ImageWithName getImage(String md5Hash) {
+    @Override
+    SpeakerImageService.ImageWithName getImage(String md5Hash) {
         images.get(md5Hash)
     }
 

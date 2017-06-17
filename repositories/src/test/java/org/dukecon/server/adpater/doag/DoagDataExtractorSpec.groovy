@@ -12,7 +12,6 @@ import org.dukecon.server.adapter.doag.DoagDataExtractor
 import org.dukecon.server.adapter.doag.DoagJsonMapper
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.javaland.JavalandDataExtractor
-import org.dukecon.server.speaker.SpeakerImageService
 import spock.lang.Ignore
 import spock.lang.Specification
 
@@ -27,8 +26,12 @@ class DoagDataExtractorSpec extends Specification {
     private static ConferenceDataExtractor extractor
     private static Conference conference
 
+
     void setupSpec() {
-        extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jl2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'), new DoagJsonMapper(new RawDataResources('javaland-2016.raw_community')), new SpeakerImageService())
+        // TODO Rebuild without SpeakerImageService
+        extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jl2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
+                new DoagJsonMapper(new RawDataResources('javaland-2016.raw_community')), null // new SpeakerImageService()
+        )
         extractor.rawDataMapper.initMapper()
         conference = extractor.buildConference()
     }
@@ -270,7 +273,10 @@ class DoagDataExtractorSpec extends Specification {
 
     void "should read time stamps from Java Forum Stuttgart"() {
         given:
-        def extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jfs2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'), new DoagJsonMapper(new RawDataResources('jfs-2016-final-finished-conf.raw.json')), new SpeakerImageService())
+        // TODO Rebuild without SpeakerImageService
+        def extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jfs2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
+                new DoagJsonMapper(new RawDataResources('jfs-2016-final-finished-conf.raw.json')), null // new SpeakerImageService()
+        )
         when:
         extractor.rawDataMapper.initMapper()
         extractor.buildConference()

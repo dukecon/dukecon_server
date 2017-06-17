@@ -14,7 +14,7 @@ import javax.ws.rs.Path
 @Path("noauthpreferences")
 @Slf4j
 @TypeChecked
-class NoAuthPreferencesService extends AbstractPreferencesService {
+class NoAuthPreferencesServiceImpl extends AbstractPreferencesService {
     @Value ("\${preferencess.noauth.enable:false}")
     boolean noauthEnabled
 

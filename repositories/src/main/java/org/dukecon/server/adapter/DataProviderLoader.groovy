@@ -18,8 +18,7 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
 
     private final ConferencesConfiguration configuration = new ConferencesConfiguration()
 
-    DataProviderLoader(Environment env) {
-        final ConferencesConfigurationService configurationService = new ConferencesConfigurationService(env)
+    DataProviderLoader(final ConferencesConfigurationService configurationService) {
         configurationService.init()
         this.configuration.conferences.addAll(configurationService.conferences)
     }

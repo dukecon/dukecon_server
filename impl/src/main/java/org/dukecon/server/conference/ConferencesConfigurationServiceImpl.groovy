@@ -16,17 +16,19 @@ import javax.inject.Inject
 @TypeChecked
 @Slf4j
 @Service
-class ConferencesConfigurationService {
+class ConferencesConfigurationServiceImpl implements ConferencesConfigurationService {
     private final ConferencesConfiguration configuration = new ConferencesConfiguration()
     private final ConfigurableEnvironment env
     private String conferencesConfigurationFile
 
     @Inject
-    ConferencesConfigurationService(ConfigurableEnvironment env) {
+    ConferencesConfigurationServiceImpl(ConfigurableEnvironment env) {
         this.env = env
     }
 
+    // TODO Clean up - it is called twice!
     @PostConstruct
+    @Override
     void init() {
         Map<String, Object> configurationProperties = getAllKnownConfigurationProperties(env)
         conferencesConfigurationFile = configurationProperties["conferences.file"] ?: "conferences.yml"
@@ -48,10 +50,12 @@ class ConferencesConfigurationService {
         result
     }
 
+    @Override
     List<ConferencesConfiguration.Conference> getConferences() {
         configuration.conferences
     }
 
+    @Override
     ConferencesConfiguration.Conference getConference(String conference, String year) {
         configuration.conferences.find { ConferencesConfiguration.Conference config ->
             config.conference == conference && config.year == year

@@ -4,11 +4,9 @@ import groovy.util.logging.Slf4j
 import org.dukecon.model.*
 import org.dukecon.server.adapter.ConferenceDataExtractor
 import org.dukecon.server.adapter.RawDataMapper
-import org.dukecon.server.adapter.RawDataResources
 import org.dukecon.server.conference.ConferencesConfiguration
-import org.dukecon.server.favorites.AbstractPreferencesService
 import org.dukecon.server.favorites.PreferencesService
-import org.dukecon.server.speaker.SpeakerImageService
+import org.dukecon.server.conference.SpeakerImageService
 import org.springframework.beans.BeansException
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
@@ -27,7 +25,7 @@ import static com.xlson.groovycsv.CsvParser.parseCsv
 class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAware {
 
     private SpeakerImageService speakerImageService
-    private AbstractPreferencesService preferencesService
+    private PreferencesService preferencesService
 
     private final RawDataMapper rawDataMapper
     def talksJson
@@ -39,9 +37,9 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
     private final String conferenceHomeUrl = 'http://javaland.eu'
     private final String conferenceName = 'DukeCon Conference'
 
-    static DoagDataExtractor fromFile(String filename, ConferencesConfiguration.Conference config) {
-        new DoagDataExtractor(config, new DoagJsonMapper(new RawDataResources(filename)), new SpeakerImageService())
-    }
+//    static DoagDataExtractor fromFile(String filename, ConferencesConfiguration.Conference config) {
+//        new DoagDataExtractor(config, new DoagJsonMapper(new RawDataResources(filename)), new SpeakerImageService())
+//    }
 
     DoagDataExtractor(ConferencesConfiguration.Conference config, RawDataMapper rawDataMapper, SpeakerImageService speakerImageService) {
         this.conferenceId = config.id

@@ -3,6 +3,7 @@ package org.dukecon
 import flex.messaging.MessageBroker
 import flex.messaging.io.SerializationContext
 import org.dukecon.server.adapter.DataProviderLoader
+import org.dukecon.server.conference.ConferencesConfigurationServiceImpl
 import org.flywaydb.core.Flyway
 import org.springframework.beans.factory.BeanFactory
 import org.springframework.boot.SpringApplication
@@ -30,7 +31,7 @@ class DukeConServerApplication {
     static class DataProviderInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         @Override
         void initialize(ConfigurableApplicationContext ctx) {
-            ctx.addBeanFactoryPostProcessor(new DataProviderLoader(ctx.getEnvironment()))
+            ctx.addBeanFactoryPostProcessor(new DataProviderLoader(new ConferencesConfigurationServiceImpl(ctx.getEnvironment())))
         }
     }
 

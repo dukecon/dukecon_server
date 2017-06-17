@@ -1,0 +1,1 @@
+// Intentionally left blank - TODO Refactor Maven asciidoctor plugin usage

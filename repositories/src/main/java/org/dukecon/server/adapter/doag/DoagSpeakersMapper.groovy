@@ -4,7 +4,6 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import org.dukecon.model.Speaker
 import org.dukecon.server.adapter.doag.DoagSingleSpeakerMapper.Type
-import org.dukecon.server.speaker.SpeakerImageResource
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack

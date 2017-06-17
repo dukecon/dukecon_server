@@ -6,7 +6,7 @@ import org.dukecon.model.Conference
 import org.dukecon.model.Event
 import org.dukecon.server.adapter.ConferenceDataProvider
 import org.dukecon.server.admin.EventBookingService
-import org.dukecon.server.favorites.PreferencesService
+import org.dukecon.server.favorites.PreferencesServiceImpl
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject
@@ -28,12 +28,12 @@ import javax.ws.rs.core.Response
 class EventBookingResource {
     private final Map<String, Conference> conferences
     private final EventBookingService bookingService
-    private final PreferencesService preferencesService
+    private final PreferencesServiceImpl preferencesService
 
     @Inject
     EventBookingResource(
             final EventBookingService bookingService,
-            final List<ConferenceDataProvider> talkProviders, final PreferencesService preferencesService) {
+            final List<ConferenceDataProvider> talkProviders, final PreferencesServiceImpl preferencesService) {
         this.preferencesService = preferencesService
         this.bookingService = bookingService
         conferences = talkProviders.collectEntries { [it.conferenceId, it.conference] }

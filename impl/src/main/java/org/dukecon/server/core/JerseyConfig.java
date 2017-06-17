@@ -9,8 +9,8 @@ import org.dukecon.server.conference.EventBookingResource;
 import org.dukecon.server.speaker.SpeakerImageResource;
 import org.dukecon.server.filter.FiltersService;
 import org.dukecon.server.security.KeycloakConfigService;
-import org.dukecon.server.favorites.NoAuthPreferencesService;
-import org.dukecon.server.favorites.PreferencesService;
+import org.dukecon.server.favorites.NoAuthPreferencesServiceImpl;
+import org.dukecon.server.favorites.PreferencesServiceImpl;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
@@ -27,8 +27,8 @@ public class JerseyConfig extends ResourceConfig {
         register(CurrentConferenceResource.class);
         register(MetaService.class);
         register(KeycloakConfigService.class);
-        register(PreferencesService.class);
-        register(NoAuthPreferencesService.class);
+        register(PreferencesServiceImpl.class);
+        register(NoAuthPreferencesServiceImpl.class);
         register(FiltersService.class);
         register(SpeakerImageResource.class);
         register(AdminResource.class);
