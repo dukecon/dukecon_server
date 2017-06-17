@@ -2,6 +2,7 @@ package org.dukecon.server.favorites
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
@@ -14,6 +15,7 @@ import javax.ws.rs.Path
 @Component
 @Slf4j
 @TypeChecked
+@ConditionalOnProperty(name="preferencess.noauth.enable", havingValue="false", matchIfMissing = true)
 class PreferencesServiceImpl extends AbstractPreferencesService {
     protected String getAuthenticatedPrincipalId () {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

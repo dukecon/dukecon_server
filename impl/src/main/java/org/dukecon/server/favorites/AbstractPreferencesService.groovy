@@ -134,10 +134,7 @@ abstract class AbstractPreferencesService implements PreferencesService {
         return Response.status(Response.Status.OK).build()
     }
 
-    /**
-     * Retrieves all events with number of favored by users.
-     * @return map with event id as key and number of favored by users
-     */
+    @Override
     Map<String, Integer> getAllEventFavorites() {
         return preferencesRepository.allFavoritesPerEvent().collectEntries { Object[] event ->
             [(event.first()): event.last()]

@@ -1,8 +1,11 @@
 package org.dukecon.server.conference
 
+import org.springframework.stereotype.Service
+
 /**
  * Created by ascheman on 17.06.17.
  */
+@Service
 interface SpeakerImageService {
     static class ImageWithName {
         final String filename
