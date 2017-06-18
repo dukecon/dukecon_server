@@ -96,6 +96,7 @@
         <junit.version>4.12</junit.version>
         <keycloak.version>1.9.3.Final</keycloak.version>
         <lombok.version>1.16.16</lombok.version>
+        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
         <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
         <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
@@ -496,6 +497,10 @@
         </extensions>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
