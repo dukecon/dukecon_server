@@ -7,4 +7,5 @@ interface ConferencesConfigurationService {
     void init()
     List<ConferencesConfiguration.Conference> getConferences()
     ConferencesConfiguration.Conference getConference(String conference, String year)
+    ConferencesConfiguration.Conference getConference(String conferenceId)
 }

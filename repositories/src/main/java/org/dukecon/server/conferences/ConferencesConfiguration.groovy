@@ -101,6 +101,17 @@ class ConferencesConfiguration {
         @Deprecated
         Class rawDataResourcesClass = ResourceWrapper.class
 
+        @NotNull
+        Map<String, String> styles = [
+            dark: '#1aa3b1',
+            darkLink: '#1aa3b1',
+            hover: '#00c3d7',
+            hoverLink: '#00c3d7',
+            reverse: '#fff',
+            highlight: '#ddee55',
+            alternate: '#bf5a00',
+        ]
+
         Class rawDataMapperClass
 
         static Conference of(String id, String name, String url, String homeUrl) {

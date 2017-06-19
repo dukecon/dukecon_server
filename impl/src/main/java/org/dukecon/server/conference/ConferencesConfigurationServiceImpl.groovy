@@ -61,4 +61,11 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
             config.conference == conference && config.year == year
         }
     }
+
+    @Override
+    ConferencesConfiguration.Conference getConference(String conferenceId) {
+        configuration.conferences.find { ConferencesConfiguration.Conference config ->
+            config.id == conferenceId
+        }
+    }
 }

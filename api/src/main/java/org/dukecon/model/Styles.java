@@ -1,6 +1,6 @@
 package org.dukecon.model;
 
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * Created by christoferdutz on 16.10.16.
@@ -18,14 +18,14 @@ public class Styles {
     public Styles() {
     }
 
-    public Styles(Properties properties) {
-        dark = properties.getProperty("styles.dark");
-        darkLink = properties.getProperty("styles.darkLink");
-        hover = properties.getProperty("styles.hover");
-        hoverLink = properties.getProperty("styles.hoverLink");
-        reverse = properties.getProperty("styles.reverse");
-        highlight = properties.getProperty("styles.highlight");
-        alternate = properties.getProperty("styles.alternate");
+    public Styles(Map<String, String> styles) {
+        dark = styles.get("dark");
+        darkLink = styles.get("darkLink");
+        hover = styles.get("hover");
+        hoverLink = styles.get("hoverLink");
+        reverse = styles.get("reverse");
+        highlight = styles.get("highlight");
+        alternate = styles.get("alternate");
     }
 
     public String getDark() {

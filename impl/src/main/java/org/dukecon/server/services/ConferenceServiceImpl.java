@@ -1,7 +1,9 @@
 package org.dukecon.server.services;
 
 import org.dukecon.model.*;
+import org.dukecon.server.conference.ConferencesConfiguration;
 import org.dukecon.server.repositories.ConferenceDataProvider;
+import org.dukecon.server.conference.ConferencesConfigurationService;
 import org.dukecon.services.ConferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,9 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
     private final Logger log = LoggerFactory.getLogger(ConferenceServiceImpl.class);
 
     private ServletContext servletContext;
+
+    @Inject
+    private ConferencesConfigurationService conferenceConfigurationService;
 
     @Inject
     private List<ConferenceDataProvider> talkProviders;
@@ -154,18 +159,9 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
 
     @Override
     public Styles getConferenceStyles(String conferenceId) {
-        InputStream is = servletContext.getResourceAsStream(
-                "/WEB-INF/conferences/" + conferenceId + ".properties");
-        if(is != null) {
-            Properties conferenceProperties = new Properties();
-            try {
-                conferenceProperties.load(is);
-                return new Styles(conferenceProperties);
-            } catch (IOException e) {
-                return null;
-            }
-        }
-        return null;
+        ConferencesConfiguration.Conference conference
+                = conferenceConfigurationService.getConference(conferenceId);
+        return new Styles(conference.getStyles());
     }
 
 }
