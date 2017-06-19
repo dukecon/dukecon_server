@@ -20,7 +20,7 @@ class ConferencesConfiguration {
         log.debug ("Loading configuration data from '{}'", classpathName)
         new ConferencesConfiguration(conferences:
                 new Yaml(new org.dukecon.server.conference.YamlDateTimeConstructor()).load(
-                    new org.springframework.core.io.ClassPathResource(classpathName).inputStream
+                    ResourceWrapper.of(classpathName).stream
                 ).collect {
                     new Conference(substitutePlaceHolder(it, allProperties))
                 })
