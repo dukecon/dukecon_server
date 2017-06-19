@@ -11,7 +11,7 @@ import javax.validation.Valid
 import javax.validation.constraints.NotNull
 import java.time.LocalDate
 
-@ConfigurationProperties(locations = "classpath:conferences.yml")
+@ConfigurationProperties
 @Configuration
 @Slf4j
 class ConferencesConfiguration {
