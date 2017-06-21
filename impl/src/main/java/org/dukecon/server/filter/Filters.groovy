@@ -4,13 +4,11 @@ import groovy.transform.TypeChecked
 import groovy.transform.builder.Builder
 
 import javax.persistence.Column
+import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
-import javax.persistence.ElementCollection
-import javax.persistence.Table
-import javax.persistence.UniqueConstraint
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -30,14 +28,14 @@ class Filters {
     private boolean favourites = false
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> languages = []
+    private Set<String> languages = []
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> levels = []
+    private Set<String> levels = []
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> tracks = []
+    private Set<String> tracks = []
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> locations = []
+    private Set<String> locations = []
 }
