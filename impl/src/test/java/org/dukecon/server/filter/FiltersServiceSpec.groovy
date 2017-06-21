@@ -67,7 +67,9 @@ class FiltersServiceSpec extends AbstractDukeConSpec {
         Principal testerPrincipal = [toString: { "testerPrincipal" }] as Principal
         Authentication testerAuthentication = [getPrincipal: { testerPrincipal }] as Authentication
         SecurityContextHolder.getContext().authentication = testerAuthentication
-        def filters = UserFilters.builder().favourites(true).languages(["Hebräisch"]).tracks(["Track 1", "Track 2"]).build()
+        def filters = UserFilters.builder().favourites(true)
+                .languages(["Hebräisch"] as Set<String>)
+                .tracks(["Track 1", "Track 2"] as Set<String>).build()
         when:
         Response responseSet = service.saveFilter(filters)
         log.debug("Response (set): {}", responseSet)
