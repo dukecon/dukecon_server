@@ -88,4 +88,9 @@ public class ResourceWrapperTests {
     public void testWrapFromStringAsResourceAsStream() throws Exception {
         assertNotNull(ResourceWrapper.of("org/dukecon/model/Speaker.class").getStream());
     }
+
+    @Test
+    public void testWrapFromClasspathFile() throws Exception {
+        assertNotNull(ResourceWrapper.of("versioneye.properties").getStream());
+    }
 }
