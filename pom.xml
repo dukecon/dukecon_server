@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.4.RELEASE</version>
+		<version>1.5.4.RELEASE</version>
 	</parent>
 
 	<groupId>org.dukecon</groupId>
@@ -134,11 +134,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-        <!-- Don't use ${project.version} here - even if it is the same! -->
         <!-- Set this to localhost if you would like to test upload server -->
         <nexus.repository.host>dev.dukecon.org</nexus.repository.host>
         <nexus.repository.port />
         <nexus.repository.base>/nexus</nexus.repository.base>
+
+        <!-- Check automatic versions from time to time! -->
     </properties>
     
     <repositories>

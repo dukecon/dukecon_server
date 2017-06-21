@@ -1,7 +1,6 @@
 package org.dukecon.server.gui;
 
 import com.tngtech.jgiven.annotation.ScenarioStage;
-import org.dukecon.DukeConServerApplication;
 import org.dukecon.server.gui.stage.GivenStartPage;
 import org.dukecon.server.gui.stage.ThenStartPage;
 import org.dukecon.server.gui.stage.WhenLoginPage;
@@ -10,13 +9,11 @@ import org.dukecon.server.gui.tag.StartPageTag;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = DukeConServerApplication.class)
-@WebIntegrationTest({"server.port=0", "management.port=0"})
+@RunWith(SpringRunner.class)
+@SpringBootTest({"server.port=0", "management.port=0"})
 public class KeycloakLoginIT extends AbstractPageIT<GivenStartPage, WhenStartPage, ThenStartPage> {
 
     @ScenarioStage
