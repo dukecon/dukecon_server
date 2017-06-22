@@ -77,6 +77,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
         mapper.photos.each {
             speakerImageService.addImage(it)
         }
+        def events = this.getEvents()
         Conference conf = Conference.builder()
                 .id(conferenceId)
                 .name(conferenceName)
@@ -84,7 +85,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
                 .homeUrl(conferenceHomeUrl)
                 .metaData(metaData)
                 .speakers(mapper.speakers.values() as List)
-                .events(this.getEvents())
+                .events(events)
                 .build()
         conf.speakers = getSpeakersWithEvents(conf.speakers)
         return conf
@@ -108,7 +109,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
         return talksJson.findAll { it.TRACK }.collect { [it.ORDERT, it.TRACK, it.TRACK_EN] }.unique().sort {
             it.first()
         }.withIndex().collect { track, index ->
-            Track.builder().id(index + 1 as String).order(track.first()).names([de: track[1], en: track[2]]).icon("track_${track.first()}.png").build()
+            Track.builder().id(index + 1 as String).order(Integer.valueOf(track[0])).names([de: track[1], en: track[2]]).icon("track_${track[0]}.png").build()
         }
     }
 
@@ -206,14 +207,17 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
     @Deprecated
     private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries { [it.id, it] }) {
         Map<String, Integer> favoritesPerEvent = preferencesService?.allEventFavorites ?: [:]
-        return talksJson
-                .collect { eventJson -> getEvent(eventJson, speakerLookup, favoritesPerEvent) }
-                .findAll { Event event ->
+        List<Event> events = talksJson.collect {eventJson ->
+            getEvent(eventJson, speakerLookup, favoritesPerEvent)
+        }
+        List<Event> result = events.findAll {
+            Event event ->
             if (event.start.isAfter(event.end)) {
                 log.warn("Event '{}' will be ignored, because start time ({}) is behind end time ({})", event.title, event.start, event.end)
             }
             return event.start.until(event.end, ChronoUnit.MINUTES) > 0
         }
+        return result
     }
 
     private Event getEvent(eventJson, Map<String, Speaker> speakerLookup, Map<String, Integer> favoritesPerEvent) {

@@ -270,7 +270,7 @@ class DoagDataExtractorSpec extends Specification {
 
     void "should read time stamps from Java Forum Stuttgart"() {
         given:
-        def extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jfs2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'), new DoagJsonMapper(new RawDataResources('jfs-2016-final-finished-conf.raw')), new SpeakerImageService())
+        def extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jfs2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'), new DoagJsonMapper(new RawDataResources('jfs-2016-final-finished-conf.raw.json')), new SpeakerImageService())
         when:
         extractor.rawDataMapper.initMapper()
         extractor.buildConference()

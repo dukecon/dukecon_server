@@ -19,6 +19,7 @@ import javax.inject.Inject
 class ConferencesConfigurationService {
     private final ConferencesConfiguration configuration = new ConferencesConfiguration()
     private final ConfigurableEnvironment env
+    private String conferencesConfigurationFile
 
     @Inject
     ConferencesConfigurationService(ConfigurableEnvironment env) {
@@ -27,7 +28,12 @@ class ConferencesConfigurationService {
 
     @PostConstruct
     void init() {
-        configuration.conferences.addAll(ConferencesConfiguration.fromFile('conferences.yml', getAllKnownConfigurationProperties(env))?.conferences)
+        Map<String, Object> configurationProperties = getAllKnownConfigurationProperties(env)
+        conferencesConfigurationFile = configurationProperties["conferences.file"] ?: "conferences.yml"
+        log.debug ("Loading conferences file '{}'", conferencesConfigurationFile)
+        configuration.conferences.addAll(
+                ConferencesConfiguration.fromFile(conferencesConfigurationFile,
+                        configurationProperties)?.conferences)
     }
 
     private static Map<String, Object> getAllKnownConfigurationProperties(ConfigurableEnvironment env) {

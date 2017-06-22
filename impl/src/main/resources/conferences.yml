@@ -8,6 +8,15 @@
     speakersData: javaland-speaker-2016.raw
   url: http://javaland.dukecon.org/2016
   homeUrl: http://www.javaland.eu
+  imprint:
+    de: https://www.javaland.eu/de/impressum/
+    en: https://www.javaland.eu/en/imprint/
+  termsOfUse:
+    de: https://www.javaland.eu/de/nutzungsbedingungen/
+    en: https://www.javaland.eu/en/term-of-use/
+  privacy:
+    de: https://www.javaland.eu/de/datenschutz/
+    en: https://www.javaland.eu/en/privacy/
   name: JavaLand 2016
   startDate: 2016-03-08
   endDate: 2016-03-10
@@ -15,13 +24,53 @@
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
 -
+  id: jfs2017
+  internalId: 506707
+  conference: jfs
+  year: 2017
+  talksUri: jfs-2017.raw.json
+  url: https://jfs.dukecon.org/2017
+  homeUrl: http://www.java-forum-stuttgart.de
+# TODO
+  imprint:
+    de: https://www.java-forum-stuttgart.de/de/Impressum.html
+# german version only 2017-05-27
+    en: https://www.java-forum-stuttgart.de/de/Impressum.html
+#  termsOfUse:
+# missing links
+#    de: https://www.java-forum-stuttgart.de
+#    en: https://www.java-forum-stuttgart.de
+#  privacy:
+# missing links
+#    de: https://www.java-forum-stuttgart.de
+#    en: https://www.java-forum-stuttgart.de
+  name: Java Forum Stuttgart 2017
+  startDate: 2017-07-06
+  endDate: 2017-07-06
+  authEnabled: false
+  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+-
   id: jfs2016
   internalId: 496615
   conference: jfs
   year: 2016
-  talksUri: jfs-2016-final-finished-conf.raw
+  talksUri: jfs-2016-final-finished-conf.raw.json
   url: https://jfs.dukecon.org/2016
   homeUrl: http://www.java-forum-stuttgart.de
+# TODO
+  imprint:
+    de: https://www.java-forum-stuttgart.de/de/Impressum.html
+# german version only 2017-05-27
+    en: https://www.java-forum-stuttgart.de/de/Impressum.html
+#  termsOfUse:
+# missing links  
+#    de: https://www.java-forum-stuttgart.de
+#    en: https://www.java-forum-stuttgart.de
+#  privacy:
+# missing links
+#    de: https://www.java-forum-stuttgart.de
+#    en: https://www.java-forum-stuttgart.de
   name: Java Forum Stuttgart 2016
   startDate: 2016-07-07
   endDate: 2016-07-07
@@ -37,6 +86,19 @@
   name: Herbstcampus 2016
   homeTitle: Herbstcampus
   homeUrl: http://www.herbstcampus.de/
+# TODO
+  imprint:
+    de: https://www.herbstcampus.de/impressum.php
+# german version only 2017-05-27
+    en: https://www.herbstcampus.de/impressum.php
+  termsOfUse:
+# missing links
+    de: https://www.herbstcampus.de/impressum.php
+    en: https://www.herbstcampus.de/impressum.php
+  privacy:
+# missing links
+    de: https://www.herbstcampus.de/impressum.php
+    en: https://www.herbstcampus.de/impressum.php
   startDate: 2016-08-30
   endDate: 2016-09-01
   authEnabled: false
@@ -54,6 +116,15 @@
 ##  talksUri: apacheconeu2016-2017.raw
 #  url: http://apachecon.dukecon.org/${year}
 #  homeUrl: apacheconeu2016.sched.org
+#  imprint:
+#    de: https://./de/impressum/
+#    en: https://./en/imprint/
+#  termsOfUse:
+#    de: https://./de/nutzungsbedingungen/
+#    en: https://./en/terms-of-use/
+#  privacy:
+#    de: https://./de/datenschutz/
+#    en: https://./en/privacy/
 #  name: ApacheCon Europe 2016
 #  startDate: 2016-11-16
 #  endDate: 2016-11-18
@@ -71,6 +142,15 @@
   backupUri: javaland-2017-backup.raw
   url: http://${conference}.dukecon.org/${year}
   homeUrl: http://www.javaland.eu
+  imprint:
+    de: https://www.javaland.eu/de/impressum/
+    en: https://www.javaland.eu/en/imprint/
+  termsOfUse:
+    de: https://www.javaland.eu/de/nutzungsbedingungen/
+    en: https://www.javaland.eu/en/term-of-use/
+  privacy:
+    de: https://www.javaland.eu/de/datenschutz/
+    en: https://www.javaland.eu/en/privacy/
   name: JavaLand 2017
   startDate: 2017-03-28
   endDate: 2017-03-30
@@ -87,6 +167,16 @@
   backupUri: apex-2017-backup.raw
   url: http://${conference}.dukecon.org/${year}
   homeUrl: http://apex.doag.org/
+  imprint:
+    de: https://apex.doag.org/de/impressum/
+# use imprint? both get 404 response 2017-05-27
+    en: https://apex.doag.org/en/impressum/
+  termsOfUse:
+    de: https://apex.doag.org/de/nutzungsbedingungen/
+    en: https://apex.doag.org/en/term-of-use/
+  privacy:
+    de: https://apex.doag.org/de/datenschutz/
+    en: https://apex.doag.org/en/privacy/
   name: APEX Connect 2017
   startDate: 2017-05-09
   endDate: 2017-05-11
@@ -103,6 +193,18 @@
   backupUri: doag-2016-backup.raw
   url: https://programm.doag.org/${conference}/${year}
   homeUrl: http://2016.doag.org/
+# 404 response 2017-05-27
+  imprint:
+    de: https://2016.doag.org/de/impressum/
+    en: https://2016.doag.org/en/imprint/
+# missing links
+  termsOfUse:
+    de: https://2016.doag.org/de/nutzungsbedingungen/
+    en: https://2016.doag.org/en/term-of-use/
+# missing links  
+  privacy:
+    de: https://2016.doag.org/de/datenschutz/
+    en: https://2016.doag.org/en/privacy/
   name: DOAG Konferenz + Ausstellung 2016
   startDate: 2016-11-15
   endDate: 2016-11-18
@@ -110,18 +212,30 @@
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
 -
-  id: datavision2017
-  internalId: 531679
-  conference: datavision
+  id: doag2017
+  internalId: 535509
+  conference: doag
   year: 2017
   talksUri:
-    eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=531679
-  backupUri: datavision-2017-backup.raw
+    eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=535509
+  backupUri: doag-2017-backup.raw
   url: https://programm.doag.org/${conference}/${year}
-  homeUrl: http://datavision.doag.org/
-  name: DOAG Datavision 2017
-  startDate: 2017-03-14
-  endDate: 2017-03-15
+  homeUrl: http://2017.doag.org/
+  imprint:
+    de: https://2017.doag.org/de/impressum/
+# missing link
+    en: https://2017.doag.org/en/imprint/
+  termsOfUse:
+    de: https://2017.doag.org/de/nutzungsbedingungen/
+# missing link
+    en: https://2017.doag.org/en/term-of-use/
+  privacy:
+    de: https://2017.doag.org/de/datenschutz/
+# missing link
+    en: https://2017.doag.org/en/privacy/
+  name: DOAG Konferenz + Ausstellung 2017
+  startDate: 2017-11-21
+  endDate: 2017-11-24
   authEnabled: true
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
