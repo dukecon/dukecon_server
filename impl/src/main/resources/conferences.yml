@@ -36,7 +36,7 @@
   internalId: 506707
   conference: jfs
   year: 2017
-  talksUri: jfs-2017.raw.json
+  talksUri: jfs-2017-formes-dump.csv
   url: https://jfs.dukecon.org/2017
   homeUrl: http://www.java-forum-stuttgart.de
 # TODO
@@ -57,7 +57,7 @@
   endDate: 2017-07-06
   authEnabled: false
   extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagCsvMapper
   styles:
     dark: '#ffb300'
     darkLink: '#dd8800'

@@ -38,7 +38,7 @@ public interface ResourceWrapper {
      * @return wraps @{@link URL}, @{@link File} from resource name.
      */
     static ResourceWrapper of(final String resource) {
-        return () ->  resource.startsWith("http") ? ResourceWrapper.of(new URL(resource)).getStream() : resource.startsWith("file:") ? ResourceWrapper.of(new File(resource.split(":", 2)[1])).getStream() : ResourceWrapper.class.getResourceAsStream(String.format("/%s", resource));
+        return () ->  resource.startsWith("http") ? ResourceWrapper.of(new URL(resource)).getStream() : resource.startsWith("file:") ? ResourceWrapper.of(new File(resource.split(":", 2)[1])).getStream() : ResourceWrapper.class.getClassLoader().getResourceAsStream(resource);
     }
 
     /**
