@@ -184,34 +184,6 @@
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
 -
-  id: doag2016
-  internalId: 512089
-  conference: doag
-  year: 2016
-  talksUri:
-    eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=512089
-  backupUri: doag-2016-backup.raw
-  url: https://programm.doag.org/${conference}/${year}
-  homeUrl: http://2016.doag.org/
-# 404 response 2017-05-27
-  imprint:
-    de: https://2016.doag.org/de/impressum/
-    en: https://2016.doag.org/en/imprint/
-# missing links
-  termsOfUse:
-    de: https://2016.doag.org/de/nutzungsbedingungen/
-    en: https://2016.doag.org/en/term-of-use/
-# missing links  
-  privacy:
-    de: https://2016.doag.org/de/datenschutz/
-    en: https://2016.doag.org/en/privacy/
-  name: DOAG Konferenz + Ausstellung 2016
-  startDate: 2016-11-15
-  endDate: 2016-11-18
-  authEnabled: true
-  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
--
   id: doag2017
   internalId: 535509
   conference: doag
@@ -236,6 +208,34 @@
   name: DOAG Konferenz + Ausstellung 2017
   startDate: 2017-11-21
   endDate: 2017-11-24
+  authEnabled: true
+  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
+  -
+  id: doag2016
+  internalId: 512089
+  conference: doag
+  year: 2016
+  talksUri:
+    eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=512089
+  backupUri: doag-2016-backup.raw
+  url: https://programm.doag.org/${conference}/${year}
+  homeUrl: http://2016.doag.org/
+  imprint:
+      de: https://2016.doag.org/de/impressum/
+  # missing link
+      en: https://2016.doag.org/en/imprint/
+    termsOfUse:
+      de: https://2016.doag.org/de/nutzungsbedingungen/
+  # missing link
+      en: https://2016.doag.org/en/term-of-use/
+    privacy:
+      de: https://2016.doag.org/de/datenschutz/
+  # missing link
+      en: https://2016.doag.org/en/privacy/
+  name: DOAG 2016 Konferenz + Ausstellung
+  startDate: 2016-11-15
+  endDate: 2016-11-18
   authEnabled: true
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
