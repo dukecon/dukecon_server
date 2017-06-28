@@ -285,13 +285,5 @@
   startDate: 2017-11-21
   endDate: 2017-11-24
   authEnabled: true
-  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
-  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
-  styles:
-    dark: '#e30613'
-    darkLink: '#e30613'
-    hover: '#00c3d7'
-    hoverLink: '#00c3d7'
-    reverse: '#fff'
-    highlight: '#c5c5c5'
-    alternate: '#bf5a00'
+  extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
