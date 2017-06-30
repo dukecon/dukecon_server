@@ -211,7 +211,7 @@
   authEnabled: true
   extractorClass: org.dukecon.server.adapter.doag.DoagDataExtractor
   rawDataMapperClass: org.dukecon.server.adapter.doag.DoagJsonMapper
-  -
+-
   id: doag2016
   internalId: 512089
   conference: doag
@@ -222,17 +222,17 @@
   url: https://programm.doag.org/${conference}/${year}
   homeUrl: http://2016.doag.org/
   imprint:
-      de: https://2016.doag.org/de/impressum/
+    de: https://2016.doag.org/de/impressum/
   # missing link
-      en: https://2016.doag.org/en/imprint/
-    termsOfUse:
-      de: https://2016.doag.org/de/nutzungsbedingungen/
+    en: https://2016.doag.org/en/imprint/
+  termsOfUse:
+    de: https://2016.doag.org/de/nutzungsbedingungen/
   # missing link
-      en: https://2016.doag.org/en/term-of-use/
-    privacy:
-      de: https://2016.doag.org/de/datenschutz/
+    en: https://2016.doag.org/en/term-of-use/
+  privacy:
+    de: https://2016.doag.org/de/datenschutz/
   # missing link
-      en: https://2016.doag.org/en/privacy/
+    en: https://2016.doag.org/en/privacy/
   name: DOAG 2016 Konferenz + Ausstellung
   startDate: 2016-11-15
   endDate: 2016-11-18
