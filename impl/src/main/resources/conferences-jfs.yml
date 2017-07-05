@@ -3,7 +3,9 @@
   internalId: 506707
   conference: jfs
   year: 2017
-  talksUri: jfs-2017-formes-dump.csv
+  talksUri:
+    eventsData: jfs-2017-formes-dump.csv
+    speakersData: jfs-2017-speaker-formes-dump.csv
   url: https://jfs.dukecon.org/2017
   homeUrl: http://www.java-forum-stuttgart.de
 # TODO

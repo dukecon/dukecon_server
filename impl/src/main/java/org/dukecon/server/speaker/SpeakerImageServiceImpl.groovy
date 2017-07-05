@@ -17,6 +17,10 @@ class SpeakerImageServiceImpl implements SpeakerImageService {
     }
 
     String addImage(String contentBase64, String filename = null) {
+        if (!contentBase64.startsWith('/')) {
+            // if not base64 content, exit at the moment
+            return null
+        }
         String md5Hash = md5(contentBase64)
         images[md5Hash] = new SpeakerImageService.ImageWithName(filename ?: "${md5Hash}.${fileEnding(contentBase64)}", Base64.decoder.decode(contentBase64))
         return md5Hash
