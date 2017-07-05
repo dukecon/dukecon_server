@@ -40,12 +40,13 @@ public class CoreImagesSerializer extends StdSerializer<CoreImages> {
         }
 
         if (value.getStreamImages() != null && !value.getStreamImages().isEmpty()) {
-            jgen.writeArrayFieldStart("streamImages");
+            jgen.writeObjectFieldStart("streamImages");
             for (Map.Entry<String, byte[]> entry :
                     value.getStreamImages().entrySet()) {
+                jgen.writeFieldName(entry.getKey());
                 jgen.writeRawValue("\"data:image/png;base64," + new String(encoder.encode(entry.getValue())) + "\"");
             }
-            jgen.writeEndArray();
+            jgen.writeEndObject();
         }
 
         // TODO Add other core images to serialization
