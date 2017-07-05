@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * Created by ascheman on 27.05.17.
+ *
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 public class CoreImagesSerializer extends StdSerializer<CoreImages> {
@@ -27,16 +28,22 @@ public class CoreImagesSerializer extends StdSerializer<CoreImages> {
             CoreImages value, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
-        jgen.writeStartObject();
-        jgen.writeFieldName("conferenceImage");
         Base64.Encoder encoder = Base64.getEncoder();
-        jgen.writeRawValue("\"data:image/png;base64," + new String (encoder.encode(value.getConferenceImage())) + "\"");
+        jgen.writeStartObject();
+
+        jgen.writeFieldName("conferenceImage");
+        jgen.writeRawValue("\"data:image/png;base64," + new String(encoder.encode(value.getConferenceImage())) + "\"");
+
+        if (value.getConferenceFavIcon() != null) {
+            jgen.writeFieldName("conferenceFavIcon");
+            jgen.writeRawValue("\"data:image/ico;base64," + new String(encoder.encode(value.getConferenceFavIcon())) + "\"");
+        }
 
         if (value.getStreamImages() != null && !value.getStreamImages().isEmpty()) {
             jgen.writeArrayFieldStart("streamImages");
-            for (Map.Entry<String, byte[]> entry:
-                 value.getStreamImages().entrySet()) {
-                jgen.writeRawValue("\"data:image/png;base64," + new String (encoder.encode(entry.getValue())) + "\"");
+            for (Map.Entry<String, byte[]> entry :
+                    value.getStreamImages().entrySet()) {
+                jgen.writeRawValue("\"data:image/png;base64," + new String(encoder.encode(entry.getValue())) + "\"");
             }
             jgen.writeEndArray();
         }

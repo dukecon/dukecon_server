@@ -127,6 +127,13 @@ public class ResourceServiceImpl implements ResourceService {
             result.setConferenceImage(imageData.get("logo"));
         }
 
+        // FavIcon
+        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/favicon");
+        if((imageResources != null) && !imageResources.isEmpty()) {
+            Map<String, byte[]> imageData = getImageData(imageResources);
+            result.setConferenceFavIcon(imageData.get("favicon"));
+        }
+
         // Locations
         imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/locations");
         if((imageResources != null) && !imageResources.isEmpty()) {

@@ -16,6 +16,7 @@ import java.util.Map;
 public class AbstractCoreImages {
 
     private byte[] conferenceImage;
+    private byte[] conferenceFavIcon;
     private Map<String, byte[]> locationImages;
     private Map<String, byte[]> locationMapImages;
     private Map<String, byte[]> languageImages;
