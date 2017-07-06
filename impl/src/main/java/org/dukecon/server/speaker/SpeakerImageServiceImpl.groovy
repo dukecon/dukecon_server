@@ -1,8 +1,11 @@
 package org.dukecon.server.speaker
 
+import org.apache.commons.io.IOUtils
 import org.dukecon.server.conference.SpeakerImageService
 import org.springframework.stereotype.Service
 
+import javax.inject.Inject
+import javax.servlet.ServletContext
 import java.security.MessageDigest
 
 /**
@@ -10,6 +13,10 @@ import java.security.MessageDigest
  */
 @Service("speakerImageService")
 class SpeakerImageServiceImpl implements SpeakerImageService {
+
+    @Inject
+    private ServletContext context
+
     Map<String, SpeakerImageService.ImageWithName> images = [:]
 
     String addImage(byte[] content, String filename = null) {
@@ -17,12 +24,12 @@ class SpeakerImageServiceImpl implements SpeakerImageService {
     }
 
     String addImage(String contentBase64, String filename = null) {
-        if (!contentBase64.startsWith('/')) {
-            // if not base64 content, exit at the moment
-            return null
-        }
+        // TODO: special case for JFS2017, externalize image reading (base64 + file based) to caller and just call with byte[]
+        def imgStream = context.getResourceAsStream("public/img/jfs2017/speakers/${contentBase64}")
+        byte[] content = imgStream ? IOUtils.toByteArray(imgStream) : null
+
         String md5Hash = md5(contentBase64)
-        images[md5Hash] = new SpeakerImageService.ImageWithName(filename ?: "${md5Hash}.${fileEnding(contentBase64)}", Base64.decoder.decode(contentBase64))
+        images[md5Hash] = new SpeakerImageService.ImageWithName(filename ?: "${md5Hash}.${fileEnding(contentBase64)}", content ?: Base64.decoder.decode(contentBase64))
         return md5Hash
     }
 
