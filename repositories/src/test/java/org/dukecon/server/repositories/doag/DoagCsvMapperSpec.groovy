@@ -26,6 +26,26 @@ class DoagCsvMapperSpec extends Specification {
         firstTalk.ID == '507413'
         firstTalk.REFERENT_NAME == 'Nicolai Mainiero'
         firstTalk.TITEL == '[G4] Property Based Testing'
+    }
 
+    void "should get 61 speaker from single local speaker csv file"() {
+        given:
+        DoagCsvMapper mapper = new DoagCsvMapper(new RawDataResources(eventsData: 'jfs-2017-formes-dump.csv', speakersData: 'jfs-2017-speaker-formes-dump.csv'))
+        when:
+        mapper.initMapper()
+        def map = mapper.asMap()
+        then:
+        map.size() == 2
+        when:
+        def speakersData = map.speakersData
+        then:
+        speakersData.size() == 63
+        when:
+        def firstSpeaker = speakersData.first()
+        then:
+        firstSpeaker.NAME == 'Enno Schulte'
+        firstSpeaker.PROFILTEXT.startsWith('Enno Schulte')
+        firstSpeaker.ID_PERSON == '373833'
+        firstSpeaker.PROFILFOTO == 'EnnoSchulte.jpg'
     }
 }
