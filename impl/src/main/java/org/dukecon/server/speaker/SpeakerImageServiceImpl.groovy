@@ -25,8 +25,11 @@ class SpeakerImageServiceImpl implements SpeakerImageService {
 
     String addImage(String contentBase64, String filename = null) {
         // TODO: special case for JFS2017, externalize image reading (base64 + file based) to caller and just call with byte[]
-        def imgStream = context.getResourceAsStream("public/img/jfs2017/speakers/${contentBase64}")
-        byte[] content = imgStream ? IOUtils.toByteArray(imgStream) : null
+        byte[] content
+        if (!contentBase64.startsWith('/')) {
+            def imgStream = context.getResourceAsStream("public/img/jfs2017/speakers/${contentBase64}")
+            content = imgStream ? IOUtils.toByteArray(imgStream) : null
+        }
 
         String md5Hash = md5(contentBase64)
         images[md5Hash] = new SpeakerImageService.ImageWithName(filename ?: "${md5Hash}.${fileEnding(contentBase64)}", content ?: Base64.decoder.decode(contentBase64))
