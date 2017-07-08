@@ -12,6 +12,7 @@ import java.util.Map;
  * Created by ascheman on 27.05.17.
  *
  * @author Falk Sippach, falk@jug-da.de, @sippsack
+ * @author Gerd Aschemann, gerd@aschemann.net, @GerdAschemann
  */
 public class CoreImagesSerializer extends StdSerializer<CoreImages> {
 
