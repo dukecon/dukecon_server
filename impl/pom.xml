@@ -395,67 +395,95 @@
         <surefire.argline>-Djava.security.egd=file:/dev/./urandom</surefire.argline>
       </properties>
     </profile>
+    <profile>
+      <id>doc</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.kongchen</groupId>
+            <artifactId>swagger-maven-plugin</artifactId>
+            <configuration>
+              <apiSources>
+                <apiSource>
+                  <springmvc>false</springmvc>
+                  <locations>org.dukecon.server.conference</locations>
+                  <schemes>http,https</schemes>
+                  <host>dukecon.org</host>
+                  <basePath>/rest</basePath>
+                  <info>
+                    <title>DukeCon API</title>
+                    <version>v1</version>
+                    <description>Documentation of the DukeCon REST API.</description>
+                    <termsOfService>https://dukecon.org/</termsOfService>
+                  </info>
+                  <!-- Support classpath or file absolute path here.
+                      1) classpath e.g: "classpath:/markdown.hbs", "classpath:/templates/hello.html"
+                      2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
+                          "${basedir}/src/main/resources/template/hello.html"
+                  -->
+                  <!--
+                      <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
+                  -->
+                  <outputPath>${project.build.directory}/generated/document.html</outputPath>
+                  <swaggerDirectory>${project.build.directory}/swagger-ui</swaggerDirectory>
+                  <attachSwaggerArtifact>true</attachSwaggerArtifact>
+                </apiSource>
+              </apiSources>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>process-classes</phase>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>io.github.robwin</groupId>
+            <artifactId>swagger2markup-maven-plugin</artifactId>
+            <configuration>
+              <inputDirectory>${project.build.directory}/swagger-ui</inputDirectory>
+              <outputDirectory>${generated.asciidoc.directory}</outputDirectory>
+              <separateDefinitions>true</separateDefinitions>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>process-classes</phase>
+                <goals>
+                  <goal>process-swagger</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- Copy the static docs into build.outputDirectory to be included in the jar -->
+          <plugin>
+              <artifactId>maven-resources-plugin</artifactId>
+              <executions>
+                  <execution>
+                      <id>copy-resources</id>
+                      <phase>process-resources</phase>
+                      <goals>
+                          <goal>copy-resources</goal>
+                      </goals>
+                      <configuration>
+                          <outputDirectory>${project.build.directory}/docs</outputDirectory>
+                          <resources>
+                              <resource>
+                                  <directory>${asciidoctor.html.output.directory}</directory>
+                              </resource>
+                          </resources>
+                      </configuration>
+                  </execution>
+              </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>com.github.kongchen</groupId>
-        <artifactId>swagger-maven-plugin</artifactId>
-        <configuration>
-          <apiSources>
-            <apiSource>
-              <springmvc>false</springmvc>
-              <locations>org.dukecon.server.conference</locations>
-              <schemes>http,https</schemes>
-              <host>dukecon.org</host>
-              <basePath>/rest</basePath>
-              <info>
-                <title>DukeCon API</title>
-                <version>v1</version>
-                <description>Documentation of the DukeCon REST API.</description>
-                <termsOfService>https://dukecon.org/</termsOfService>
-              </info>
-              <!-- Support classpath or file absolute path here.
-                  1) classpath e.g: "classpath:/markdown.hbs", "classpath:/templates/hello.html"
-                  2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
-                      "${basedir}/src/main/resources/template/hello.html"
-              -->
-              <!--
-                  <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
-              -->
-              <outputPath>${project.build.directory}/generated/document.html</outputPath>
-              <swaggerDirectory>${project.build.directory}/swagger-ui</swaggerDirectory>
-              <attachSwaggerArtifact>true</attachSwaggerArtifact>
-            </apiSource>
-          </apiSources>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>io.github.robwin</groupId>
-        <artifactId>swagger2markup-maven-plugin</artifactId>
-        <configuration>
-          <inputDirectory>${project.build.directory}/swagger-ui</inputDirectory>
-          <outputDirectory>${generated.asciidoc.directory}</outputDirectory>
-          <separateDefinitions>true</separateDefinitions>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>process-swagger</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
 
       <plugin>
         <groupId>pl.project13.maven</groupId>
@@ -472,27 +500,6 @@
         </executions>
       </plugin>
 
-      <!-- Copy the static docs into build.outputDirectory to be included in the jar -->
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/docs</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${asciidoctor.html.output.directory}</directory>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
