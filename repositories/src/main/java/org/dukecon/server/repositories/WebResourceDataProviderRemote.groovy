@@ -8,6 +8,7 @@ import groovy.util.logging.Slf4j
 import org.dukecon.adapter.ResourceWrapper
 import org.dukecon.model.Conference
 import org.dukecon.server.conference.ConferencesConfiguration
+import org.springframework.beans.factory.annotation.Value
 
 import java.nio.charset.StandardCharsets
 
@@ -18,6 +19,9 @@ import java.nio.charset.StandardCharsets
 @TypeChecked
 class WebResourceDataProviderRemote {
 
+    @Value("\${backup.dir:backup/raw}")
+    private String backupDir
+
     // JsonOutput and JsonSlurper will encode/parse UTF characters as \\u anyway,
     // but to be sure choosing UTF-8 here.
     private final static String BACKUP_CHARSET = StandardCharsets.UTF_8.toString();
@@ -26,7 +30,7 @@ class WebResourceDataProviderRemote {
     private final ConferencesConfiguration.Conference config
 
     volatile boolean backupActive = false
-    Exception staleException
+    Exception staleException = null
     volatile Conference conference
 
     WebResourceDataProviderRemote(ConferencesConfiguration.Conference config, ConferenceDataExtractor extractor) {
@@ -34,34 +38,51 @@ class WebResourceDataProviderRemote {
         this.config = config
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
+    private File backupFile () {
+        File backupDirectory = new File (backupDir)
+        return new File(backupDirectory, config.backupUri)
+    }
+
     // @HystrixCommand(groupKey = "doag", commandKey = "readConferenceData", fallbackMethod = "readConferenceDataFallback")
     public Conference readConferenceData() {
         try {
             log.info("Rereading data from '{}'", config.talksUri)
             Conference conference = extractor.getConference()
             try {
-                File backupFile = new File(config.backupUri)
+                File backupDirectory = new File (backupDir)
+                if (backupDirectory.exists()) {
+                    if (!backupDirectory.isDirectory()) {
+                        log.error ("Cannot backup to '{}' - it is not a directory", backupDir)
+                        return
+                    }
+                } else {
+                    if (!backupDirectory.mkdirs()) {
+                        log.error ("Cannot create backup directory '{}'", backupDir)
+                        return
+                    }
+                }
+                File backupFile = backupFile()
+                log.info ("Creating backup in '{}'", backupFile)
                 backupFile.write(JsonOutput.toJson(extractor.rawDataMapper.asMap()), BACKUP_CHARSET)
             } catch (IOException e) {
-                log.error("unable to write backup file '{}': {}", config.backupUri, e.message, e)
+                log.error("Unable to write backup file '{}': {}", config.backupUri, e.message, e)
             }
             backupActive = false
             staleException = null
             return conference;
         } catch (RuntimeException e) {
             // TODO: Either log an error or re-throw it!
-            log.error("unable to read data: {}", e.message, e)
+            log.error("Unable to read data: {}", e.message, e)
             staleException = e
             throw e
         }
     }
 
-    @TypeChecked(TypeCheckingMode.SKIP)
     public Conference readConferenceDataFallback() {
         try {
-            log.info("Rereading JSON data from backup '{}'", config.backupUri)
-            extractor.rawDataMapper.useBackup(ResourceWrapper.of("file:${this.config.backupUri}"))
+            File backupFile = backupFile()
+            log.info("Rereading JSON data from backup '{}'", backupFile)
+            extractor.rawDataMapper.useBackup(ResourceWrapper.of(backupFile))
             Conference conference = extractor.getConference()
             backupActive = true
             return conference
