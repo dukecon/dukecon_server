@@ -84,7 +84,7 @@ class  JavalandDataExtractor {
         } catch (MissingPropertyException) {
             // Usually: "German & English
             iso = language.toLowerCase().replaceAll("[^a-z]", "");
-            log.warn("unknown language {}", language);
+            log.debug("unknown language {}", language);
         }
         return iso;
     }
