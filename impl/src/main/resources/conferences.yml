@@ -1,5 +1,5 @@
 -
-  id: jl2016
+  id: javaland2016
   internalId: 499959
   conference: javaland
   year: 2016
@@ -157,7 +157,7 @@
 #  authEnabled: false #default is false
 #  extractorClass: org.dukecon.server.repositories.sched.SchedDataExtractor
 -
-  id: jl2017
+  id: javaland2017
   internalId: 522447
   conference: javaland
   year: 2017

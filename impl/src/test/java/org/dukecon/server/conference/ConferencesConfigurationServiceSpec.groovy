@@ -11,27 +11,27 @@ class ConferencesConfigurationServiceSpec extends AbstractDukeConSpec {
 
     void "get javaland 2017 configuration"() {
         when:
-        def jl2017 = configurationService.getConference('javaland', '2017')
+        def javaland2017 = configurationService.getConference('javaland', '2017')
         then:
-        jl2017.id == 'jl2017'
-        jl2017.name == 'JavaLand 2017'
-        jl2017.url.startsWith('http://')
-        jl2017.url.endsWith('/2017')
-		jl2017.imprint.de == "https://www.javaland.eu/de/impressum/"
-		jl2017.imprint.en == "https://www.javaland.eu/en/imprint/"
-		jl2017.termsOfUse.de == "https://www.javaland.eu/de/nutzungsbedingungen/"
-		jl2017.termsOfUse.en == "https://www.javaland.eu/en/term-of-use/"
-		jl2017.privacy.de == "https://www.javaland.eu/de/datenschutz/"
-		jl2017.privacy.en == "https://www.javaland.eu/en/privacy/"
-        jl2017.year == '2017'
-		jl2017.authEnabled == true
+        javaland2017.id == 'javaland2017'
+        javaland2017.name == 'JavaLand 2017'
+        javaland2017.url.startsWith('http://')
+        javaland2017.url.endsWith('/2017')
+		javaland2017.imprint.de == "https://www.javaland.eu/de/impressum/"
+		javaland2017.imprint.en == "https://www.javaland.eu/en/imprint/"
+		javaland2017.termsOfUse.de == "https://www.javaland.eu/de/nutzungsbedingungen/"
+		javaland2017.termsOfUse.en == "https://www.javaland.eu/en/term-of-use/"
+		javaland2017.privacy.de == "https://www.javaland.eu/de/datenschutz/"
+		javaland2017.privacy.en == "https://www.javaland.eu/en/privacy/"
+        javaland2017.year == '2017'
+		javaland2017.authEnabled == true
     }
 	
     void "return null if conference does not exist"() {
         when:
-        def jl2010 = configurationService.getConference('javaland', '2010')
+        def javaland2010 = configurationService.getConference('javaland', '2010')
         then:
-        !jl2010
+        !javaland2010
 
         when:
         def foobar2010 = configurationService.getConference('foobar', '2010')

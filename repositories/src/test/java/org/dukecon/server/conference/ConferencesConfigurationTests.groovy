@@ -34,12 +34,12 @@ class ConferencesConfigurationTests {
 
     @Test
     public void substitutePlaceholder() throws Exception {
-        assert conferences.find {it.id == 'jl2016'}.url == 'http://javaland.dukecon.org/2016'
+        assert conferences.find {it.id == 'javaland2016'}.url == 'http://javaland.dukecon.org/2016'
     }
 
     @Test
     public void multipleRawDataResourcesJavaLand() throws Exception {
-        def confernece = conferences.find {it.id == 'jl2016'}
+        def confernece = conferences.find {it.id == 'javaland2016'}
         assert confernece.talksUri instanceof Map
         assert confernece.talksUri.eventsData == 'javaland-2016.raw'
         assert confernece.talksUri.speakersData == 'javaland-speaker-2016.raw'

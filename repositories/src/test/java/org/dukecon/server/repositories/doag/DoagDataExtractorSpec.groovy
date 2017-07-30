@@ -29,7 +29,7 @@ class DoagDataExtractorSpec extends Specification {
 
     void setupSpec() {
         // TODO Rebuild without SpeakerImageService
-        extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jl2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
+        extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
                 new DoagJsonMapper(new RawDataResources('javaland-2016.raw_community')), null // new SpeakerImageService()
         )
         extractor.rawDataMapper.initMapper()
@@ -42,7 +42,7 @@ class DoagDataExtractorSpec extends Specification {
         then:
         json.hits.hits._source.size() == 144
         when:
-        def conference = DoagDataExtractor.fromFile('javaland-2017.raw', ConferencesConfiguration.Conference.of('jl2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu')).buildConference()
+        def conference = DoagDataExtractor.fromFile('javaland-2017.raw', ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu')).buildConference()
         then:
         conference.events.size() == 144
     }
@@ -124,7 +124,7 @@ class DoagDataExtractorSpec extends Specification {
 
     void "should list room capacities"() {
         when:
-        def doagDataExtractor = DoagDataExtractor.fromFile('javaland-2017.raw', ConferencesConfiguration.Conference.of('jl2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'))
+        def doagDataExtractor = DoagDataExtractor.fromFile('javaland-2017.raw', ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'))
         and:
         doagDataExtractor.buildConference()
         then:
@@ -158,7 +158,7 @@ class DoagDataExtractorSpec extends Specification {
         when:
         def conference = extractor.buildConference()
         then:
-        assert conference.id == 'jl2016-test'
+        assert conference.id == 'javaland2016-test'
         assert conference.name == 'DukeCon Conference'
         assert conference.url == 'http://dukecon.org'
         assert conference.homeUrl == 'http://javaland.eu'
