@@ -707,10 +707,6 @@
           </items>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.asciidoctor</groupId>
-        <artifactId>asciidoctor-maven-plugin</artifactId>
-      </plugin>
     </plugins>
   </build>
 </project>
