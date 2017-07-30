@@ -608,7 +608,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <!-- For now this makes the BlazeDS integration work in the tests -->
-          <forkMode>always</forkMode>
+          <forkCount>1</forkCount>
           <argLine>${surefire.argline}</argLine>
           <useFile>false</useFile>
           <includes>
