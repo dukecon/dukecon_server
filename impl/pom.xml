@@ -612,8 +612,6 @@
           <argLine>${surefire.argline}</argLine>
           <useFile>false</useFile>
           <includes>
-            <include>**/*Spec.java</include>
-            <include>**/*Spec.groovy</include>
             <include>**/*Test*.java</include>
             <include>**/*Test*.groovy</include>
           </includes>
@@ -632,7 +630,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>2.18.1</version>
         <executions>
           <execution>
             <goals>
@@ -644,6 +641,8 @@
         <configuration>
           <argLine>${surefire.argline}</argLine>
           <includes>
+            <include>**/*Spec.java</include>
+            <include>**/*Spec.groovy</include>
             <include>**/*IT.java</include>
             <include>**/*IT.groovy</include>
           </includes>
