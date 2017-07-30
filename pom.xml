@@ -136,6 +136,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
         <!-- Set this to localhost if you would like to test upload server -->
+        <nexus.repository.prot>https</nexus.repository.prot>
         <nexus.repository.host>dev.dukecon.org</nexus.repository.host>
         <nexus.repository.port />
         <nexus.repository.base>/nexus</nexus.repository.base>
@@ -146,7 +147,7 @@
     <repositories>
         <repository>
             <id>dukecon</id>
-            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/</url>
+            <url>${nexus.repository.prot}://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
