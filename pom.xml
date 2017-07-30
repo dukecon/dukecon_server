@@ -159,7 +159,7 @@
             <!-- Make the site plugin happy: It needs to find some information about GEMs -->
             <id>gemfire-repository</id>
             <name>Gemfire Repository</name>
-            <url>${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/gemfire-release-proxy/</url>
+            <url>${nexus.repository.prot}://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/gemfire-release-proxy/</url>
         </repository>
     </repositories>
     
