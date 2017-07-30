@@ -22,9 +22,6 @@ class KeycloakConfigService {
 	@Value("\${keycloak.realm}")
 	private String realm
 
-	@Value("\${keycloak.realmKey}")
-	private String realmKey
-	
 	@Value("\${keycloak.auth-server-url}")
 	private String authServerUrl
 	
@@ -45,7 +42,6 @@ class KeycloakConfigService {
 	Response getKeycloakConfig () {
         Map<String, String> keyCloakConfig = [
 			'realm': realm,
-			'realm-public-key': realmKey,
 			'auth-server-url': authServerUrl,
 			'ssl-required':	sslRequired,
 			'resource': resource,
