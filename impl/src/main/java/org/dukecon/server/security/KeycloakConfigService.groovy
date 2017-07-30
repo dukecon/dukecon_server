@@ -50,7 +50,8 @@ class KeycloakConfigService {
 			'ssl-required':	sslRequired,
 			'resource': resource,
 			'redirectUri': redirectUri,
-            'useAccountManagement': "${useAccountManagement}"
+			// Use toString() since JSON serializer otherwise makes a GString representation out ouf it!
+            'useAccountManagement': useAccountManagement.toString()
         ]
 		log.debug ("keycloak.json = '{}'", keyCloakConfig)
 		
