@@ -54,3 +54,7 @@ HTTP status code `200` of the response tells you that everything is ok.
   * the acutal goal is mvn dependency:analyze(-only) which may show warnings
 * dependency analyzing may cause problems because of Spring Boot starter dependencies
   * configure <ignoredUnusedDeclaredDependencies> in pom.xml
+  
+## Development
+
+Start _org.dukecon.DukeConServerApplication_ from your IDE. 
