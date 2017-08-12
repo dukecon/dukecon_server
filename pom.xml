@@ -657,6 +657,7 @@
                             <ignoredUnusedDeclaredDependencies>
                                 <ignoredUnusedDeclaredDependency>com.h2database:h2</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.apache.flex.blazeds:blazeds-spring-boot-starter</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.dukecon:dukecon-html5-client</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.keycloak:keycloak-spring-boot-starter</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-configuration-processor</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-actuator</ignoredUnusedDeclaredDependency>
