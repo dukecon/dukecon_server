@@ -482,7 +482,6 @@
 
   <build>
     <plugins>
-
       <plugin>
         <groupId>pl.project13.maven</groupId>
         <artifactId>git-commit-id-plugin</artifactId>
@@ -491,53 +490,38 @@
             <goals>
               <goal>revision</goal>
             </goals>
-            <configuration>
-              <injectAllReactorProjects>true</injectAllReactorProjects>
-            </configuration>
           </execution>
         </executions>
       </plugin>
-
       <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <configuration>
-          <webResources>
-            <resource>
-              <directory>src/main/webapp</directory>
-              <filtering>true</filtering>
-              <includes>
-                <include>**/*.txt</include>
-              </includes>
-            </resource>
-          </webResources>
-          <archive>
-            <manifest>
-              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-            </manifest>
-            <manifestEntries>
-              <Implementation-Build>${project.artifactId}-${project.version}-r${buildNumber}</Implementation-Build>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <!-- Servlet API is provided by Tomcat -->
-            <exclude>
-              <groupId>javax.servlet</groupId>
-              <artifactId>javax.servlet-api</artifactId>
-            </exclude>
-            <!-- exclude lombok specifically and for all Spring Boot applications
-            It isn't needed and repackage WILL package "provided" dependencies -->
-            <exclude>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-            </exclude>
-          </excludes>
-        </configuration>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>filter-git-ids</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+            <configuration>
+              <filters>
+                <filter>${project.build.outputDirectory}/git.properties</filter>
+              </filters>
+              <delimiters>
+                <delimiter>${*}</delimiter>
+              </delimiters>
+              <resources>
+              <resource>
+                <directory>src/main/resources-filtered</directory>
+                <filtering>true</filtering>
+                <includes>
+                  <include>**/*.txt</include>
+                  <include>**/*.html</include>
+                </includes>
+              </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -671,6 +655,25 @@
           <items>
             <item>timestamp</item>
           </items>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <!-- Servlet API is provided by Tomcat -->
+            <exclude>
+              <groupId>javax.servlet</groupId>
+              <artifactId>javax.servlet-api</artifactId>
+            </exclude>
+            <!-- exclude lombok specifically and for all Spring Boot applications
+            It isn't needed and repackage WILL package "provided" dependencies -->
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
         </configuration>
       </plugin>
     </plugins>
