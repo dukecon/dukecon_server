@@ -13,10 +13,8 @@ import org.dukecon.server.repositories.ConferenceDataProvider
 import org.dukecon.services.ConferenceService
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.context.ServletContextAware
 
 import javax.inject.Inject
-import javax.servlet.ServletContext
 import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
@@ -31,12 +29,11 @@ import java.time.format.DateTimeFormatter
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 @Slf4j
-class ConferencesResource implements ServletContextAware {
+class ConferencesResource {
     private final DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE
 
     ConferenceService conferenceService
     Map<String, ConferenceDataProvider> talkProviders = new HashMap<>()
-    ServletContext servletContext
     private final ConferencesConfigurationService configurationService
 
     @Inject
@@ -44,11 +41,6 @@ class ConferencesResource implements ServletContextAware {
         this.configurationService = configurationService
         this.conferenceService = conferenceService
         talkProviders.each { this.talkProviders[it.conferenceId] = it }
-    }
-
-    @Override
-    void setServletContext(ServletContext servletContext) {
-        this.servletContext = servletContext
     }
 
     @GET
@@ -109,7 +101,7 @@ class ConferencesResource implements ServletContextAware {
         }
         try {
             final Configuration cfg = new Configuration()
-            cfg.setServletContextForTemplateLoading(servletContext, "/WEB-INF/templates")
+            cfg.setClassForTemplateLoading(getClass(), "/templates")
 
             // Get the template instance.
             final Template temp = cfg.getTemplate("styles.ftl")
