@@ -42,6 +42,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
 //    }
 
     DoagDataExtractor(ConferencesConfiguration.Conference config, RawDataMapper rawDataMapper, SpeakerImageService speakerImageService) {
+        log.debug ("Extracting data for '{}'", config)
         this.conferenceId = config.id
         this.rawDataMapper = rawDataMapper
         this.startDate = config.startDate
@@ -67,7 +68,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
     }
 
     Conference buildConference() {
-        log.debug("Building conferences '{}' (name: {}, url: {})", conferenceId, conferenceName, conferenceUrl)
+        log.debug("Building conference '{}' (name: {}, url: {})", conferenceId, conferenceName, conferenceUrl)
         this.rawDataMapper.initMapper()
         this.talksJson = this.rawDataMapper.asMap().eventsData
         this.speakersJson = this.rawDataMapper.asMap().speakersData
