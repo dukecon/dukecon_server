@@ -1,21 +1,18 @@
 package org.dukecon.server.speaker
 
-import org.apache.commons.io.IOUtils
+import groovy.util.logging.Slf4j
+import org.dukecon.adapter.ResourceWrapper
 import org.dukecon.server.conference.SpeakerImageService
 import org.springframework.stereotype.Service
 
-import javax.inject.Inject
-import javax.servlet.ServletContext
 import java.security.MessageDigest
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Service("speakerImageService")
+@Slf4j
 class SpeakerImageServiceImpl implements SpeakerImageService {
-
-    @Inject
-    private ServletContext context
 
     Map<String, SpeakerImageService.ImageWithName> images = [:]
 
@@ -25,21 +22,10 @@ class SpeakerImageServiceImpl implements SpeakerImageService {
 
     String addImage(String contentBase64, String filename = null) {
         // TODO: special case for JFS2017, externalize image reading (base64 + file based) to caller and just call with byte[]
+        log.debug ("Adding speaker image from file '{}' (starting with '{}')", filename, contentBase64?.substring(0, 10))
         byte[] content
         if (contentBase64.contains('.')) {
-            // try to find file locally and avoid exceptions if not found
-            def imgStream = context.getResourceAsStream("public/img/jfs2017/speakers/${contentBase64}")
-            if (imgStream == null) {
-                try {
-                    imgStream = new FileInputStream("impl/src/main/webapp/public/img/jfs2017/speakers/${contentBase64}")
-                } catch (FileNotFoundException e) {
-                    // nothing to do
-                }
-            }
-            content = imgStream ? IOUtils.toByteArray(imgStream) : null
-            if (imgStream != null) {
-                imgStream.close()
-            }
+            content = ResourceWrapper.of("public/images/jfs/2017/speakers/${contentBase64}").stream?.bytes
         }
 
         String md5Hash = md5(contentBase64)
