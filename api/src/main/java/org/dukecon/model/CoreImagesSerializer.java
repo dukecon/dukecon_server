@@ -32,8 +32,10 @@ public class CoreImagesSerializer extends StdSerializer<CoreImages> {
         Base64.Encoder encoder = Base64.getEncoder();
         jgen.writeStartObject();
 
-        jgen.writeFieldName("conferenceImage");
-        jgen.writeRawValue("\"data:image/png;base64," + new String(encoder.encode(value.getConferenceImage())) + "\"");
+        if (value.getConferenceImage() != null) {
+            jgen.writeFieldName("conferenceImage");
+            jgen.writeRawValue("\"data:image/png;base64," + new String(encoder.encode(value.getConferenceImage())) + "\"");
+        }
 
         if (value.getConferenceFavIcon() != null) {
             jgen.writeFieldName("conferenceFavIcon");
