@@ -304,7 +304,7 @@
   year: 2018
   talksUri:
 #    eventsData: javaland-2017.raw
-    eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=522447
+    eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=541512
     speakersData: https://www.javaland.eu/api/schedule/JavaLand/referenten.php/?key=JL-EOPTGB-DR
   backupUri: javaland-2018-backup.raw
   url: http://${conference}.dukecon.org/${year}
