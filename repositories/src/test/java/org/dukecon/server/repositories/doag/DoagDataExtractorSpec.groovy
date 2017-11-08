@@ -1,4 +1,4 @@
-package org.dukecon.server.conference.adpater.doag
+package org.dukecon.server.repositories.doag
 
 import groovy.json.JsonSlurper
 import org.dukecon.model.Audience
@@ -8,8 +8,6 @@ import org.dukecon.model.Language
 import org.dukecon.model.Location
 import org.dukecon.server.repositories.ConferenceDataExtractor
 import org.dukecon.server.repositories.RawDataResources
-import org.dukecon.server.repositories.doag.DoagDataExtractor
-import org.dukecon.server.repositories.doag.DoagJsonMapper
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.javaland.JavalandDataExtractor
 import spock.lang.Ignore
@@ -29,11 +27,21 @@ class DoagDataExtractorSpec extends Specification {
 
     void setupSpec() {
         // TODO Rebuild without SpeakerImageService
-        extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
-                new DoagJsonMapper(new RawDataResources('javaland-2016.raw_community')), null // new SpeakerImageService()
-        )
+        extractor = createExtractor('javaland-2016.raw')
         extractor.rawDataMapper.initMapper()
         conference = extractor.buildConference()
+    }
+
+    private DoagDataExtractor createExtractor(String filename) {
+        new DoagDataExtractor(ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
+                new DoagJsonMapper(new RawDataResources(filename)), null // new SpeakerImageService()
+        )
+    }
+
+    private DoagDataExtractor createExtractor(Map files) {
+        new DoagDataExtractor(ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
+                new DoagJsonMapper(new RawDataResources(files)), null // new SpeakerImageService()
+        )
     }
 
     void "should get all talks from Javaland 2017"() {
@@ -42,7 +50,8 @@ class DoagDataExtractorSpec extends Specification {
         then:
         json.hits.hits._source.size() == 144
         when:
-        def conference = DoagDataExtractor.fromFile('javaland-2017.raw', ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu')).buildConference()
+//        def conference = DoagDataExtractor.fromFile('javaland-2017.raw', ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu')).buildConference()
+        def conference = createExtractor('javaland-2017.raw').buildConference()
         then:
         conference.events.size() == 144
     }
@@ -51,12 +60,12 @@ class DoagDataExtractorSpec extends Specification {
         when:
         def tracks = extractor.tracks
         then:
-        assert tracks.size() == 9
-        assert tracks.order == [1] + (1..8)
-        assert tracks.id == ("1".."9")
-        assert tracks.names["de"].join(", ") == "Community, Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer"
-        assert tracks.names["en"].join(", ") == "Community, container & microservices, Core Java & JVM based languages, enterprise Java & cloud, frontend & mobile, IDEs & tools, internet of things, architecture & security, newcomer"
-        assert tracks.icon.join(', ') == 'track_1.png, track_1.png, track_2.png, track_3.png, track_4.png, track_5.png, track_6.png, track_7.png, track_8.png'
+        assert tracks.size() == 8
+        assert tracks.order == (1..8)
+        assert tracks.id == ("1".."8")
+        assert tracks.names["de"].join(", ") == "Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer"
+        assert tracks.names["en"].join(", ") == "container & microservices, Core Java & JVM based languages, enterprise Java & cloud, frontend & mobile, IDEs & tools, internet of things, architecture & security, newcomer"
+        assert tracks.icon.join(', ') == 'track_1.png, track_2.png, track_3.png, track_4.png, track_5.png, track_6.png, track_7.png, track_8.png'
     }
 
     void "should default language be 'de'"() {
@@ -94,7 +103,7 @@ class DoagDataExtractorSpec extends Specification {
         when:
         List<Audience> audiences = extractor.audiences
         then:
-        assert audiences.size() == 3
+        assert audiences.size() == 2
         assert audiences[0].id == "1"
         assert audiences[0].order == 1
         assert audiences[0].names.de == 'Anfänger'
@@ -103,28 +112,25 @@ class DoagDataExtractorSpec extends Specification {
         assert audiences[1].order == 2
         assert audiences[1].names.de == 'Fortgeschrittene'
         assert audiences[1].names.en == 'advanced'
-        assert audiences[2].id == "3"
-        assert audiences[2].order == 3
-        assert audiences[2].names.de == 'alle'
-        assert audiences[2].names.en == 'all'
 
-        assert audiences.icon.join(', ') == 'audience_1.png, audience_2.png, audience_3.png'
+        assert audiences.icon.join(', ') == 'audience_1.png, audience_2.png'
     }
 
     void "should list 7 locations"() {
         when:
         List<Location> locations = extractor.locations
         then:
-        assert locations.size() == 11
-        assert locations.id.join(', ') == '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11'
-        assert locations.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
-        assert locations.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
-        assert locations.icon.join(', ') == 'location_1.png, location_1.png, location_2.png, location_2.png, location_3.png, location_3.png, location_4.png, location_5.png, location_5.png, location_6.png, location_7.png'
+        assert locations.size() == 7
+        assert locations.id.join(', ') == '1, 2, 3, 4, 5, 6, 7'
+        assert locations.order.join(', ') == '1, 2, 3, 4, 5, 6, 7'
+        assert locations.names.de.join(', ') == 'Wintergarten, Schauspielhaus, Quantum 1+2, Quantum 3, Quantum 4, Lilaque, Neptun'
+        assert locations.icon.join(', ') == 'location_1.png, location_2.png, location_3.png, location_4.png, location_5.png, location_6.png, location_7.png'
     }
 
     void "should list room capacities"() {
         when:
-        def doagDataExtractor = DoagDataExtractor.fromFile('javaland-2017.raw', ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'))
+//        def doagDataExtractor = DoagDataExtractor.fromFile('javaland-2017.raw', ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'))
+        def doagDataExtractor = createExtractor('javaland-2017.raw')
         and:
         doagDataExtractor.buildConference()
         then:
@@ -139,19 +145,19 @@ class DoagDataExtractorSpec extends Specification {
 
         then:
         assert conference
-        assert conference.metaData.locations.size() == 11
-        assert conference.metaData.locations.order.join(', ') == '1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 7'
-        assert conference.metaData.locations.names.de.join(', ') == 'Wintergarten, Quantum Saal, Seitenraum Quantum, Schauspielhaus, Tagungsraum Hotel, Quantum 1+2, Quantum 3, Quantum 4, JUG Café, Lilaque, Neptun'
-        assert conference.metaData.tracks.size() == 9
-        assert conference.metaData.tracks.names['de'].join(', ') == 'Community, Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer'
+        assert conference.metaData.locations.size() == 7
+        assert conference.metaData.locations.order.join(', ') == '1, 2, 3, 4, 5, 6, 7'
+        assert conference.metaData.locations.names.de.join(', ') == 'Wintergarten, Schauspielhaus, Quantum 1+2, Quantum 3, Quantum 4, Lilaque, Neptun'
+        assert conference.metaData.tracks.size() == 8
+        assert conference.metaData.tracks.names['de'].join(', ') == 'Container & Microservices, Core Java & JVM basierte Sprachen, Enterprise Java & Cloud, Frontend & Mobile, IDEs & Tools, Internet der Dinge, Architektur & Sicherheit, Newcomer'
         assert conference.metaData.defaultLanguage.code == 'de'
         assert conference.metaData.defaultIcon == 'Unknown.png'
         assert conference.metaData.languages.size() == 2
         assert conference.metaData.languages.names.de.join(', ') == 'Deutsch, Englisch'
         assert conference.metaData.languages.names.en.join(', ') == 'German, English'
-        assert conference.metaData.audiences.size() == 3
-        assert conference.metaData.audiences.names.de.join(', ') == 'Anfänger, Fortgeschrittene, alle'
-        assert conference.metaData.audiences.names.en.join(', ') == 'beginners, advanced, all'
+        assert conference.metaData.audiences.size() == 2
+        assert conference.metaData.audiences.names.de.join(', ') == 'Anfänger, Fortgeschrittene'
+        assert conference.metaData.audiences.names.en.join(', ') == 'beginners, advanced'
     }
 
     void "should get conference infos"() {
@@ -168,31 +174,31 @@ class DoagDataExtractorSpec extends Specification {
         when:
         def eventTypes = extractor.eventTypes
         then:
-        assert eventTypes.size() == 7
-        assert eventTypes.id.join('') == ('1'..'7').join('')
-        assert eventTypes.order.join('') == ('1'..'7').join('')
-        assert eventTypes.names.de.join(', ') == 'Best Practices, Community, Keynote, Neuerscheinungen oder Features, Projektbericht, Schulungstag, Tipps & Tricks'
-        assert eventTypes.names.en.join(', ') == 'best practices, Community, keynote, new releases or features , project report, training day, tips & tricks'
-        assert eventTypes.icon.join(', ') == 'eventType_1.png, eventType_2.png, eventType_3.png, eventType_4.png, eventType_5.png, eventType_6.png, eventType_7.png'
+        assert eventTypes.size() == 5
+        assert eventTypes.id.join('') == ('1'..'5').join('')
+        assert eventTypes.order.join('') == ('1'..'5').join('')
+        assert eventTypes.names.de.join(', ') == 'Best Practices, Keynote, Neuerscheinungen oder Features, Projektbericht, Tipps & Tricks'
+        assert eventTypes.names.en.join(', ') == 'best practices, keynote, new releases or features , project report, tips & tricks'
+        assert eventTypes.icon.join(', ') == 'eventType_1.png, eventType_2.png, eventType_3.png, eventType_4.png, eventType_5.png'
     }
 
     void "should get events"() {
         when:
         def events = extractor.events.sort { it.id }
         then:
-        assert events.size() == 121
-        assert events.first().title == 'Community Testeintrag'
-        assert events.first().location.names.de == 'Quantum Saal'
+        assert events.size() == 110
+        assert events.first().title == 'Behavioral Diff als neues Testparadigma'
+        assert events.first().location.names.de == 'Neptun'
     }
 
     void "should get all speakers"() {
         when:
         def speakers = extractor.speakers.sort { it.id }
         then:
-        assert speakers.size() >= 123
-        assert speakers.first().name == 'Fried Saacke'
-        assert speakers.first().company == 'DOAG Dienstleistungen GmbH'
-        assert speakers.first().id == '136700'
+        assert speakers.size() >= 116
+        assert speakers.first().name == 'Matthias Faix'
+        assert speakers.first().company == 'IPM Köln'
+        assert speakers.first().id == '146723'
         assert !speakers.first().events
     }
 
@@ -200,10 +206,10 @@ class DoagDataExtractorSpec extends Specification {
         when:
         def speakers = conference.speakers.sort { it.id }
         then:
-        assert speakers.size() >= 123
-        assert speakers.first().name == 'Fried Saacke'
-        assert speakers.first().company == 'DOAG Dienstleistungen GmbH'
-        assert speakers.first().id == '136700'
+        assert speakers.size() >= 116
+        assert speakers.first().name == 'Matthias Faix'
+        assert speakers.first().company == 'IPM Köln'
+        assert speakers.first().id == '146723'
         assert speakers.first().events.size() == 1
         assert speakers.first().events.first().class == Event
         assert speakers.find { it.name == 'Roel Spilker' }.events.size() == 2
@@ -274,9 +280,10 @@ class DoagDataExtractorSpec extends Specification {
     void "should read time stamps from Java Forum Stuttgart"() {
         given:
         // TODO Rebuild without SpeakerImageService
-        def extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jfs2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
-                new DoagJsonMapper(new RawDataResources('jfs-2016-final-finished-conf.raw.json')), null // new SpeakerImageService()
-        )
+//        def extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jfs2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
+//                new DoagJsonMapper(new RawDataResources('jfs-2016-final-finished-conf.raw.json')), null // new SpeakerImageService()
+//        )
+        def extractor = createExtractor('jfs-2016-final-finished-conf.raw.json')
         when:
         extractor.rawDataMapper.initMapper()
         extractor.buildConference()
@@ -288,5 +295,20 @@ class DoagDataExtractorSpec extends Specification {
             assert it.start
             assert it.end
         }
+    }
+
+    void "read keywords and additional documents"() {
+        given:
+        def extractor = createExtractor([eventsData: 'javaland-2017.raw', additionalData: 'javaland-additional-2016.raw'])
+        when:
+        extractor.rawDataMapper.initMapper()
+        def conference = extractor.buildConference()
+        then:
+        conference.events.size() == 144
+        conference.events.findAll {e -> e.keywords.en}.size() == 81
+        conference.events.findAll {e -> e.keywords.en}.first().keywords.en == ['Cloud Computing', 'GlassFish (Application Server)', 'Java Enterprise Edition (Java EE)', 'Middleware', 'WebLogic (Application Server)', 'Wildfly (Application Server)']
+        conference.events.findAll {e -> e.documents.slides}.size() == 74
+        conference.events.findAll {e -> e.documents.manuscript}.size() == 0
+        conference.events.findAll {e -> e.documents.other}.size() == 7
     }
 }

@@ -1,0 +1,1034 @@
+{
+  "took" : 5,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 5,
+    "successful" : 5,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : 170,
+    "max_score" : 1.0,
+    "hits" : [ {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5bz",
+      "_score" : 1.0,
+      "_source":{"ID":7864344,"SEMINAR_ID":509821,"TITLE":"Continuous Performance: Automated Load Testing with Gatling","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7864344/2016-nn-bert_jan_schrijver-continuous_performance__automated_load_testing_with_gatling-praesentation.pdf","AUTHOR":"Bert Jan Schrijver, JPoint","PID":null,"CHANGED_D":"2016-05-17T14:22:14.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b4",
+      "_score" : 1.0,
+      "_source":{"ID":7879476,"SEMINAR_ID":509540,"TITLE":"Feature Toggles on Steroids","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879476/2016-nn-michael_tamm-feature_toggles_on_steroids-praesentation.pdf","AUTHOR":"Michael Tamm, optivo GmbH","PID":371792,"CHANGED_D":"2017-09-13T10:18:50.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b9",
+      "_score" : 1.0,
+      "_source":{"ID":7876631,"SEMINAR_ID":509429,"TITLE":"Docker Orchestration in a Cluster - Introducing Kubernetes","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7876631/2016-nn-marc_sluiter-docker_orchestration_in_a_cluster_-_introducing_kubernetes-praesentation.pdf","AUTHOR":"Marc Sluiter, Luminis Technologies","PID":365616,"CHANGED_D":"2017-09-13T10:18:41.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cE",
+      "_score" : 1.0,
+      "_source":{"ID":7879474,"SEMINAR_ID":509741,"TITLE":"Real life innovative way to use Infinispan within your application","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879474/2016-nn-romain_pelisse-real_life_innovative_way_to_use_infinispan_within_your_application-praesentation.pdf","AUTHOR":"Romain Pelisse, Red Hat","PID":371652,"CHANGED_D":"2017-09-13T10:18:59.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cJ",
+      "_score" : 1.0,
+      "_source":{"ID":7879482,"SEMINAR_ID":509715,"TITLE":"REST No More, Use an Actor","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879482/2016-nn-johan_janssen-rest_no_more,_use_an_actor-praesentation.pdf","AUTHOR":"Johan Janssen, Info Support","PID":368448,"CHANGED_D":"2017-09-13T10:18:32.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cO",
+      "_score" : 1.0,
+      "_source":{"ID":7879541,"SEMINAR_ID":509795,"TITLE":"Der perfekte Microservice","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879541/2016-nn-lars_roewekamp-der_perfekte_microservice-praesentation.pdf","AUTHOR":"Lars Röwekamp, open knowledge GmbH","PID":371813,"CHANGED_D":"2017-09-13T10:18:38.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cT",
+      "_score" : 1.0,
+      "_source":{"ID":7853249,"SEMINAR_ID":509399,"TITLE":"Funktionale Programmierung: Jenseits des objektorientierten Architekturmodells","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7853249/2016-nn-michael_sperber-funktionale_programmierung__jenseits_des_objektorientierten_architekturmodells-praesentation.pdf","AUTHOR":"Michael Sperber, Active Group GmbH","PID":364341,"CHANGED_D":"2017-09-13T10:18:50.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cY",
+      "_score" : 1.0,
+      "_source":{"ID":7879458,"SEMINAR_ID":509535,"TITLE":"Java Modularity: Life after Java 9","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879458/2016-nn-sander_mak-java_modularity__life_after_java_9-praesentation.pdf","AUTHOR":"Sander Mak, Luminis Technologies","PID":364697,"CHANGED_D":"2017-09-13T10:19:00.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cc",
+      "_score" : 1.0,
+      "_source":{"ID":7879723,"SEMINAR_ID":509369,"TITLE":"IoT with Apache ActiveMQ, Camel & Spark","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879723/2016-nn-burr_sutter-iot_with_apache_activemq,_camel___spark-praesentation.pdf","AUTHOR":"Burr Sutter, Red Hat","PID":371801,"CHANGED_D":"2017-09-13T10:18:05.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5ch",
+      "_score" : 1.0,
+      "_source":{"ID":7879399,"SEMINAR_ID":509505,"TITLE":"Spring Data Repositories - Best Practices","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879399/2016-nn-thomas_darimont-spring_data_repositories_-_best_practices-praesentation.pdf","AUTHOR":"Thomas Darimont, eurodata AG","PID":null,"CHANGED_D":"2017-03-30T12:56:12.000+02:00","MANUSCRIPT":null,"OTHER":"https://www.javaland.eu/formes/pubfiles/7879397/2016-nn-thomas_darimont-spring_data_repositories_-_best_practices-andere.zip","KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cm",
+      "_score" : 1.0,
+      "_source":{"ID":8009756,"SEMINAR_ID":518971,"TITLE":"Sponsored Session: TypeScript für Java Programmierer","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8009756/2016-nn-roman_roelofsen-sponsored_session__typescript_fuer_java_programmierer-praesentation.pdf","AUTHOR":"Roman Roelofsen, w11k GmbH","PID":371564,"CHANGED_D":"2017-09-13T10:18:59.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cr",
+      "_score" : 1.0,
+      "_source":{"ID":7865349,"SEMINAR_ID":509660,"TITLE":"What's up with JMS 2.1?","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7865349/2016-nn-ivar_grimstad-what_s_up_with_jms_2_1_-praesentation.pdf","AUTHOR":"Ivar Grimstad, Cybercom Sweden","PID":364707,"CHANGED_D":"2017-09-13T10:18:28.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cw",
+      "_score" : 1.0,
+      "_source":{"ID":7901361,"SEMINAR_ID":509621,"TITLE":"Sinn und Nutzen von RESTful Hypermedia APIs","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7901361/2016-nn-kai_toedter-sinn_und_nutzen_von_restful_hypermedia_apis-praesentation.pdf","AUTHOR":"Kai Tödter, Siemens AG","PID":364385,"CHANGED_D":"2017-09-13T10:18:35.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c1",
+      "_score" : 1.0,
+      "_source":{"ID":7960417,"SEMINAR_ID":509488,"TITLE":"When Microservices Meet Real-World Projects: Lessons Learned","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7960417/2016-nn-alexander_heusingfeld-when_microservices_meet_real-world_projects__lessons_learned-praesentation.pdf","AUTHOR":"Alexander Heusingfeld, innoQ","PID":363955,"CHANGED_D":"2017-09-13T10:17:57.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c6",
+      "_score" : 1.0,
+      "_source":{"ID":7876487,"SEMINAR_ID":509764,"TITLE":"Ninja Tricks for Groovy System Scripting","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7876487/2016-nn-andrey_adamovich-ninja_tricks_for_groovy_system_scripting-praesentation.pdf","AUTHOR":"Andrey Adamovich, Aestas/IT","PID":368455,"CHANGED_D":"2017-09-13T10:18:00.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dB",
+      "_score" : 1.0,
+      "_source":{"ID":8890431,"SEMINAR_ID":529692,"TITLE":"Microservices mit Java – OSGi ist doch die Lösung","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890431/2017-nn-uwe_schulz-microservices_mit_java___osgi_ist_doch_die_loesung-praesentation.pdf","AUTHOR":"Uwe Schulz, n-design GmbH","PID":374992,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":"https://www.javaland.eu/formes/pubfiles/8890433/2017-nn-uwe_schulz-microservices_mit_java___osgi_ist_doch_die_loesung-andere.zip","KEYWORDS":"API; Architektur"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dG",
+      "_score" : 1.0,
+      "_source":{"ID":8847443,"SEMINAR_ID":529632,"TITLE":"Responsive Testing mit dem Galen Framework","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8847443/2017-frontend-martin_reinhardt-responsive_testing_mit_dem_galen_framework-praesentation.pdf","AUTHOR":"Martin Reinhardt, Holisticon AG","PID":374697,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":"https://www.javaland.eu/formes/pubfiles/8847445/2017-frontend-martin_reinhardt-responsive_testing_mit_dem_galen_framework-andere.zip","KEYWORDS":"JavaScript (JS); UX (User Experience); Web-Applikation; Web-Technologien"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dL",
+      "_score" : 1.0,
+      "_source":{"ID":8894720,"SEMINAR_ID":529508,"TITLE":"Cloud Native und Java EE: Freund oder Feind?","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8894720/2017-eec-josef_adersberger-cloud_native_und_java_ee__freund_oder_feind_-praesentation.pdf","AUTHOR":"Josef Adersberger, QAware GmbH","PID":374844,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Cloud Computing; Java Enterprise Edition (Java EE)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dQ",
+      "_score" : 1.0,
+      "_source":{"ID":8909779,"SEMINAR_ID":529412,"TITLE":"Bau dir einen SuperPiBoy","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909779/2017-iot-mark_paluch-bau_dir_einen_superpiboy-praesentation.pdf","AUTHOR":"Mark Paluch, Pivotal Software, Inc.","PID":375165,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"IoT (Internet of Things); Rasberry Pi (Einplatinencomputer)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dV",
+      "_score" : 1.0,
+      "_source":{"ID":8909791,"SEMINAR_ID":529416,"TITLE":"Avatar - Telepräsenzrobotik mit Nao und Kinect","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909791/2017-iot-martin_foertsch-avatar_-_telepraesenzrobotik_mit_nao_und_kinect-praesentation.pdf","AUTHOR":"Martin Förtsch, TNG Technology Consulting GmbH","PID":371592,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Augmented Reality; IoT (Internet of Things); Rasberry Pi (Einplatinencomputer); Roboter"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5de",
+      "_score" : 1.0,
+      "_source":{"ID":8909833,"SEMINAR_ID":529268,"TITLE":"Fallacies of Distributed Computing: What If Networks Fail?","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909833/2017-eec-bert_ertman-fallacies_of_distributed_computing__what_if_networks_fail_-praesentation.pdf","AUTHOR":"Bert Ertman, Luminis","PID":364675,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Cloud Computing; Messaging; Middleware"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dj",
+      "_score" : 1.0,
+      "_source":{"ID":8909839,"SEMINAR_ID":529329,"TITLE":"From Pair Programming to Mob Architecting ","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909839/2017-asec-carola_lilienthal-from_pair_programming_to_mob_architecting_-praesentation.pdf","AUTHOR":"Carola Lilienthal, WPS - Workplace Solutions GmbH","PID":371855,"CHANGED_D":"2017-09-18T04:26:56.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Agile Software-Entwicklung; XP (Extreme Programming)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5do",
+      "_score" : 1.0,
+      "_source":{"ID":8909872,"SEMINAR_ID":529616,"TITLE":"Resilient Software Design Patterns","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909872/2017-asec-thorsten_maier-resilient_software_design_patterns-praesentation.pdf","AUTHOR":"Thorsten Maier, Orientation in Objects GmbH","PID":364571,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dt",
+      "_score" : 1.0,
+      "_source":{"ID":8939316,"SEMINAR_ID":529701,"TITLE":"Caching mit Spring über JCache hinaus","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8939316/2017-nn-andreas_wirth-caching_mit_spring_ueber_jcache_hinaus-praesentation.pdf","AUTHOR":"Andreas Wirth, Bitech AG","PID":366596,"CHANGED_D":"2017-08-09T10:09:57.000+02:00","MANUSCRIPT":null,"OTHER":"https://www.javaland.eu/formes/pubfiles/8890251/2017-nn-andreas_wirth-caching_mit_spring_ueber_jcache_hinaus-andere.zip","KEYWORDS":"Java Enterprise Edition (Java EE); Spring (Framework)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dy",
+      "_score" : 1.0,
+      "_source":{"ID":8890266,"SEMINAR_ID":529294,"TITLE":"Railway-oriented Programming mit Java","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890266/2017-core-stefan_macke-railway-oriented_programming_mit_java-praesentation.pdf","AUTHOR":"Stefan Macke, ALTE OLDENBURGER Krankenversicherung AG","PID":373295,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Standard Edition (Java SE)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d3",
+      "_score" : 1.0,
+      "_source":{"ID":8909787,"SEMINAR_ID":529250,"TITLE":"Schatten der Vergangenheit - Analyse von Git-Repositories","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909787/2017-ide-dirk_mahler-schatten_der_vergangenheit_-_analyse_von_git-repositories-praesentation.pdf","AUTHOR":"Dirk Mahler, buschmais GbR","PID":364586,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d8",
+      "_score" : 1.0,
+      "_source":{"ID":8915967,"SEMINAR_ID":529341,"TITLE":"Dokumentation & Slides mit Git, Gradle, AsciiDoc und Reveal.js","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8915967/2017-ide-jens_schauder-dokumentation___slides_mit_git,_gradle,_asciidoc_und_reveal_js-praesentation.pdf","AUTHOR":"Jens Schauder, T-Systems on site services GmbH","PID":354836,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Gradle"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eD",
+      "_score" : 1.0,
+      "_source":{"ID":8915969,"SEMINAR_ID":529384,"TITLE":"JUnit 5: Next Generation Testing on the JVM","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8915969/2017-core-nicolai_parlog-junit_5__next_generation_testing_on_the_jvm-praesentation.pdf","AUTHOR":"Nicolai Parlog, CodeFX","PID":374910,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eI",
+      "_score" : 1.0,
+      "_source":{"ID":9479755,"SEMINAR_ID":545187,"TITLE":"Endlich mehr Memory Management mit 12.2","PRESENTATION":"https://www.doag.org/formes/pubfiles/9479755/2017-db-sebastian_winkler-endlich_mehr_memory_management_mit_12_2-praesentation.pdf","AUTHOR":"Sebastian Winkler, CarajanDB GmbH","PID":363671,"CHANGED_D":"2017-09-29T09:05:13.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9479102/2017-db-sebastian_winkler-endlich_mehr_memory_management_mit_12_2-manuskript.pdf","OTHER":null,"KEYWORDS":"Database In-Memory; Datenbank; Datenbank Enterprise Edition; Monitoring; Multitenant; Tuning"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eN",
+      "_score" : 1.0,
+      "_source":{"ID":9462439,"SEMINAR_ID":545698,"TITLE":"Oracle Smart Home","PRESENTATION":"https://www.doag.org/formes/pubfiles/9462439/2017-mw-nicolae-ciprian_iancu-oracle_smart_home-praesentation.pdf","AUTHOR":"Nicolae-Ciprian Iancu, virtual7 GmbH","PID":378123,"CHANGED_D":"2017-09-27T09:05:09.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9462441/2017-mw-nicolae-ciprian_iancu-oracle_smart_home-manuskript.pdf","OTHER":null,"KEYWORDS":"Java Cloud Service; Node.js; PaaS (Platform as a Service)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eS",
+      "_score" : 1.0,
+      "_source":{"ID":9462950,"SEMINAR_ID":545507,"TITLE":"Aktive Unternehmensentwicklung durch motivierte Mitarbeiter","PRESENTATION":"https://www.doag.org/formes/pubfiles/9462950/2017-sbp-ellen_trapp-aktive_unternehmensentwicklung_durch_motivierte_mitarbeiter-praesentation.pdf","AUTHOR":"Ellen Trapp, Dale Carnegie Deutschland","PID":374743,"CHANGED_D":"2017-09-28T09:05:08.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9462952/2017-sbp-ellen_trapp-aktive_unternehmensentwicklung_durch_motivierte_mitarbeiter-manuskript.pdf","OTHER":null,"KEYWORDS":"Business; Softskills; Strategie"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eX",
+      "_score" : 1.0,
+      "_source":{"ID":9460915,"SEMINAR_ID":544783,"TITLE":"Histograms are Evil like Chocolate is Evil","PRESENTATION":"https://www.doag.org/formes/pubfiles/9460915/2017-db-neil_chandler-histograms_are_evil_like_chocolate_is_evil-praesentation.pdf","AUTHOR":"Neil Chandler, Chandler Systems Ltd","PID":374263,"CHANGED_D":"2017-09-26T09:05:08.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Tuning"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5by",
+      "_score" : 1.0,
+      "_source":{"ID":7879295,"SEMINAR_ID":509676,"TITLE":"What's New in CDI 2.0 (JSR 365)","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879295/2016-nn-mark_paluch-what_s_new_in_cdi_2_0__jsr_365_-praesentation.pdf","AUTHOR":"Mark Paluch, PALUCH.biz","PID":null,"CHANGED_D":"2016-05-17T14:22:14.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b3",
+      "_score" : 1.0,
+      "_source":{"ID":7879394,"SEMINAR_ID":510135,"TITLE":"Java (in)security","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879394/2016-nn-adam_gowdiak-java__in_security-praesentation.pdf","AUTHOR":"Adam Gowdiak, Security Explorations","PID":371531,"CHANGED_D":"2017-09-13T10:17:56.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b8",
+      "_score" : 1.0,
+      "_source":{"ID":7866468,"SEMINAR_ID":509856,"TITLE":"Flux-Architektur abseits von JavaScript","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7866468/2016-nn-manuel_mauky-flux-architektur_abseits_von_javascript-praesentation.pdf","AUTHOR":"Manuel Mauky, Saxonia Systems AG","PID":368536,"CHANGED_D":"2017-09-13T10:18:40.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cD",
+      "_score" : 1.0,
+      "_source":{"ID":7879463,"SEMINAR_ID":509455,"TITLE":"Patterns für Docker ","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879463/2016-nn-roland_huss-patterns_fuer_docker_-praesentation.pdf","AUTHOR":"Roland Huß, Red Hat","PID":364576,"CHANGED_D":"2017-09-13T10:18:59.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cI",
+      "_score" : 1.0,
+      "_source":{"ID":7879480,"SEMINAR_ID":509720,"TITLE":"ToTP or Not ToTP, That Is the Question!","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879480/2016-nn-reinier_zwitserloot-totp_or_not_totp,_that_is_the_question_-praesentation.pdf","AUTHOR":"Reinier Zwitserloot, medipc.nl","PID":371991,"CHANGED_D":"2017-09-13T10:18:58.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cN",
+      "_score" : 1.0,
+      "_source":{"ID":7879472,"SEMINAR_ID":509726,"TITLE":"PhantomJS - Schweizer Taschenmesser der WWW-Automatisierung","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879472/2016-nn-andreas_knuth-phantomjs_-_schweizer_taschenmesser_der_www-automatisierung-praesentation.pdf","AUTHOR":"Andreas Knuth, Deutsche WertpapierService Bank AG","PID":369968,"CHANGED_D":"2017-09-13T10:17:59.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cS",
+      "_score" : 1.0,
+      "_source":{"ID":7894208,"SEMINAR_ID":509395,"TITLE":"Technische Schulden in Architekturen erkennen und beseitigen","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7894208/2016-nn-carola_lilienthal-technische_schulden_in_architekturen_erkennen_und_beseitigen-praesentation.pdf","AUTHOR":"Carola Lilienthal, WPS - Workplace Solutions GmbH","PID":371855,"CHANGED_D":"2017-09-13T10:18:05.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cX",
+      "_score" : 1.0,
+      "_source":{"ID":7853299,"SEMINAR_ID":509547,"TITLE":"Spock und Geb: Übersichtliche und nachvollziehbare Tests!","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7853299/2016-nn-tobias_kraft-spock_und_geb__uebersichtliche_und_nachvollziehbare_tests_-praesentation.pdf","AUTHOR":"Tobias Kraft, exensio GmbH","PID":354580,"CHANGED_D":"2017-09-13T10:19:08.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cb",
+      "_score" : 1.0,
+      "_source":{"ID":7863193,"SEMINAR_ID":509345,"TITLE":"Behavioral Diff als neues Testparadigma","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7863193/2016-nn-jeremias_roessler-behavioral_diff_als_neues_testparadigma-praesentation.pdf","AUTHOR":"Jeremias Rößler, ReTest","PID":369973,"CHANGED_D":"2017-09-17T02:25:05.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cg",
+      "_score" : 1.0,
+      "_source":{"ID":7853315,"SEMINAR_ID":509403,"TITLE":"Domain Driven Design & hexagonale Architektur – ein unschlagbares Team?","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7853315/2016-nn-torben_fojuth-domain_driven_design___hexagonale_architektur___ein_unschlagbares_team_-praesentation.pdf","AUTHOR":"Torben Fojuth, Neuland Bremen gmbh","PID":369852,"CHANGED_D":"2017-09-13T10:19:09.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cl",
+      "_score" : 1.0,
+      "_source":{"ID":7866127,"SEMINAR_ID":509557,"TITLE":"JUnit Lambda - the Next Generation","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7866127/2016-nn-jens_schauder-junit_lambda_-_the_next_generation-praesentation.pdf","AUTHOR":"Jens Schauder, T-Systems on site services GmbH","PID":354836,"CHANGED_D":"2017-09-13T10:18:30.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cq",
+      "_score" : 1.0,
+      "_source":{"ID":7863698,"SEMINAR_ID":510010,"TITLE":"Pay It Forward: Open Source","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7863698/2016-nn-jason_porter-pay_it_forward__open_source-praesentation.pdf","AUTHOR":"Jason Porter, Red Hat Inc","PID":368627,"CHANGED_D":"2017-09-13T10:18:30.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cv",
+      "_score" : 1.0,
+      "_source":{"ID":7879730,"SEMINAR_ID":509415,"TITLE":"Container-Konfiguration mit Apache Tamaya","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879730/2016-nn-anatole_tresch-container-konfiguration_mit_apache_tamaya-praesentation.pdf","AUTHOR":"Anatole Tresch, Trivadis AG","PID":364340,"CHANGED_D":"2017-09-13T10:17:58.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c0",
+      "_score" : 1.0,
+      "_source":{"ID":7894210,"SEMINAR_ID":509433,"TITLE":"Microservices: From Dream to Reality in an Hour","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7894210/2016-nn-holly_cummins-microservices__from_dream_to_reality_in_an_hour-praesentation.pdf","AUTHOR":"Holly Cummins, IBM","PID":368507,"CHANGED_D":"2017-09-13T10:18:27.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c5",
+      "_score" : 1.0,
+      "_source":{"ID":7864350,"SEMINAR_ID":509520,"TITLE":"Fürs Karma: Konfiguration zur Laufzeit","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7864350/2016-nn-alexander_schwartz-fuers_karma__konfiguration_zur_laufzeit-praesentation.pdf","AUTHOR":"Alexander Schwartz, msg systems ag","PID":368442,"CHANGED_D":"2017-09-13T10:17:57.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dA",
+      "_score" : 1.0,
+      "_source":{"ID":8887478,"SEMINAR_ID":529709,"TITLE":"Combinator als funktionales Entwurfsmuster in Java 8","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8887478/2017-nn-gregor_trefs-combinator_als_funktionales_entwurfsmuster_in_java_8-praesentation.pdf","AUTHOR":"Gregor Trefs, Unabhängig","PID":371318,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dF",
+      "_score" : 1.0,
+      "_source":{"ID":8890912,"SEMINAR_ID":529636,"TITLE":"Einführung in Web Components - Was ist das und wie geht das?","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890912/2017-frontend-marcus_fihlon-einfuehrung_in_web_components_-_was_ist_das_und_wie_geht_das_-praesentation.pdf","AUTHOR":"Marcus Fihlon, CSS Versicherung","PID":364465,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"CSS; CSS3; HTML; HTML5; Hybride Entwicklung; Mobile; Web-Applikation; Web-Technologien"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dK",
+      "_score" : 1.0,
+      "_source":{"ID":8894710,"SEMINAR_ID":537971,"TITLE":"Beyond EE 8: Configuration API","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8894710/2017-nn-anatole_tresch-beyond_ee_8__configuration_api-praesentation.pdf","AUTHOR":"Anatole Tresch, Trivadis AG","PID":364340,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dP",
+      "_score" : 1.0,
+      "_source":{"ID":8909773,"SEMINAR_ID":529396,"TITLE":"Application Performance Management with Open-Source-Tooling","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909773/2017-ide-mario_mann-application_performance_management_with_open-source-tooling-praesentation.pdf","AUTHOR":"Mario Mann, Novatec Consulting GmbH","PID":375162,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Monitoring; Performance"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dU",
+      "_score" : 1.0,
+      "_source":{"ID":8909785,"SEMINAR_ID":529603,"TITLE":"Eclipse 3.x to Eclipse 4.x Migration","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909785/2017-ide-dirk_fauth-eclipse_3_x_to_eclipse_4_x_migration-praesentation.pdf","AUTHOR":"Dirk Fauth, Robert Bosch GmbH","PID":368440,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Eclipse (IDE)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dZ",
+      "_score" : 1.0,
+      "_source":{"ID":8915971,"SEMINAR_ID":529430,"TITLE":"Migrating to Java 9 Modules","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8915971/2017-core-sander_mak-migrating_to_java_9_modules-praesentation.pdf","AUTHOR":"Sander Mak, Luminis Technologies","PID":364697,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Development Kit (JDK); Java Standard Edition (Java SE); Java Virtual Machine (JVM); Modularität"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dd",
+      "_score" : 1.0,
+      "_source":{"ID":8894724,"SEMINAR_ID":529366,"TITLE":"Mobile Apps mit React Native","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8894724/2017-frontend-manuel_mauky-mobile_apps_mit_react_native-praesentation.pdf","AUTHOR":"Manuel Mauky, Saxonia Systems AG","PID":368536,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Android; Hybride Entwicklung; iOS; JavaScript (JS); Mobile; Native Entwicklung; Web-Technologien"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5di",
+      "_score" : 1.0,
+      "_source":{"ID":8909818,"SEMINAR_ID":529492,"TITLE":"From Legacy to modern Web - ein Reisebericht","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909818/2017-asec-mirko_sertic-from_legacy_to_modern_web_-_ein_reisebericht-praesentation.pdf","AUTHOR":"Mirko Sertic, ","PID":375026,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dn",
+      "_score" : 1.0,
+      "_source":{"ID":8909849,"SEMINAR_ID":529566,"TITLE":"Reactive Domain Driven Design","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909849/2017-cms-jochen_mader-reactive_domain_driven_design-praesentation.pdf","AUTHOR":"Jochen Mader, codecentric AG","PID":364537,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"API; Architektur; Designer; Reactive"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5ds",
+      "_score" : 1.0,
+      "_source":{"ID":8931702,"SEMINAR_ID":529957,"TITLE":"Keynote: The role of the CDO as Chief Product Owner","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8931702/2017-asec-jean-jacques_van_oosten-keynote__the_role_of_the_cdo_as_chief_product_owner-praesentation.pdf","AUTHOR":"Jean-Jacques van Oosten, REWE Group","PID":375413,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dx",
+      "_score" : 1.0,
+      "_source":{"ID":8890133,"SEMINAR_ID":529362,"TITLE":"Java 6++: Moderne Android-Entwicklung mit Kotlin","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890133/2017-frontend-benjamin_schmid-java_6____moderne_android-entwicklung_mit_kotlin-praesentation.pdf","AUTHOR":"Benjamin Schmid, eXXcellent solutions GmbH","PID":363920,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":"https://www.javaland.eu/formes/pubfiles/8890137/2017-frontend-benjamin_schmid-java_6____moderne_android-entwicklung_mit_kotlin-andere.zip","KEYWORDS":"Java Virtual Machine (JVM)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d2",
+      "_score" : 1.0,
+      "_source":{"ID":8909783,"SEMINAR_ID":529380,"TITLE":"A Tour of the (Advanced) Akka Features in 40 Minutes","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909783/2017-core-johan_janssen-a_tour_of_the__advanced__akka_features_in_40_minutes-praesentation.pdf","AUTHOR":"Johan Janssen, Info Support","PID":368448,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Scala (JVM Language)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d7",
+      "_score" : 1.0,
+      "_source":{"ID":8915857,"SEMINAR_ID":531911,"TITLE":"Legacy Code Retreat","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8915857/2017-jvm-falk_sippach-legacy_code_retreat-praesentation.pdf","AUTHOR":"Falk Sippach, Orientation in Objects GmbH","PID":363284,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d-",
+      "_score" : 1.0,
+      "_source":{"ID":8890476,"SEMINAR_ID":529254,"TITLE":"Produktiver programmieren - Aha-Erlebnisse mit Multi-Clipboards, Application Launcher und Editor-Shortcuts","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890476/2017-ide-dominik_hirt-produktiver_programmieren_-_aha-erlebnisse_mit_multi-clipboards,_application_launcher_und_editor-shortcuts-praesentation.pdf","AUTHOR":"Dominik Hirt, todo42 Software GmbH","PID":368393,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d_",
+      "_score" : 1.0,
+      "_source":{"ID":8909814,"SEMINAR_ID":529333,"TITLE":"Security im Entwicklerteam","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909814/2017-asec-stefan_schlott-security_im_entwicklerteam-praesentation.pdf","AUTHOR":"Stefan Schlott, BeOne Stuttgart GmbH","PID":364378,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Agile Software-Entwicklung; Continuous Delivery; Sicherheit"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eC",
+      "_score" : 1.0,
+      "_source":{"ID":8915854,"SEMINAR_ID":529480,"TITLE":"Kontinuierliche Architektur-Dokumentation","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8915854/2017-asec-falk_sippach-kontinuierliche_architektur-dokumentation-praesentation.pdf","AUTHOR":"Falk Sippach, Orientation in Objects GmbH","PID":363284,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eH",
+      "_score" : 1.0,
+      "_source":{"ID":9460904,"SEMINAR_ID":545541,"TITLE":"Oracle 12c for Developers","PRESENTATION":"https://www.doag.org/formes/pubfiles/9460904/2017-dev-alex_nuijten-oracle_12c_for_developers-praesentation.pdf","AUTHOR":"Alex Nuijten, allAPEX","PID":367444,"CHANGED_D":"2017-09-26T09:05:08.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"PL/SQL; SQL"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eM",
+      "_score" : 1.0,
+      "_source":{"ID":9453225,"SEMINAR_ID":545033,"TITLE":"OVM3: Threads, Cores, Hard-Partitioning; und die Performance?","PRESENTATION":"https://www.doag.org/formes/pubfiles/9453225/2017-inf-martin_bracher-ovm3__threads,_cores,_hard-partitioning__und_die_performance_-praesentation.pdf","AUTHOR":"Martin Bracher, Trivadis AG","PID":265585,"CHANGED_D":"2017-09-19T09:05:07.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9453227/2017-inf-martin_bracher-ovm3__threads,_cores,_hard-partitioning__und_die_performance_-manuskript.pdf","OTHER":null,"KEYWORDS":"Betriebssysteme; Hardware; Oracle Linux; Sun x86-Serversysteme; Virtualisierung"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eR",
+      "_score" : 1.0,
+      "_source":{"ID":9462423,"SEMINAR_ID":544709,"TITLE":"Oracle Resource Manager – Ein unterschätztes Feature","PRESENTATION":"https://www.doag.org/formes/pubfiles/9462423/2017-db-peter_fritz-oracle_resource_manager___ein_unterschaetztes_feature-praesentation.pdf","AUTHOR":"Peter Fritz, DB Masters GmbH","PID":376057,"CHANGED_D":"2017-09-27T09:05:09.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Datenbank; Datenbank Enterprise Edition; Multitenant; Nutzerverwaltung; Tuning"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eW",
+      "_score" : 1.0,
+      "_source":{"ID":9483138,"SEMINAR_ID":545724,"TITLE":"EU-DSGVO. Beitrag von Oracle-Lösungen zur Datensicherheit","PRESENTATION":"https://www.doag.org/formes/pubfiles/9483138/2017-sbp-ernst_lorenz-eu-dsgvo__beitrag_von_oracle-loesungen_zur_datensicherheit-praesentation.pdf","AUTHOR":"Ernst Lorenz, ORACLE Deutschland B.V. & Co. KG","PID":358489,"CHANGED_D":"2017-09-30T09:05:08.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9483228/2017-sbp-ernst_lorenz-eu-dsgvo__beitrag_von_oracle-loesungen_zur_datensicherheit-manuskript.pdf","OTHER":null,"KEYWORDS":"Architektur; Business; Strategie"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5bx",
+      "_score" : 1.0,
+      "_source":{"ID":7877239,"SEMINAR_ID":509841,"TITLE":"Token statt Cookies dank JWT","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7877239/2016-nn-markus_schlichting-token_statt_cookies_dank_jwt-praesentation.pdf","AUTHOR":"Markus Schlichting, Canoo Engineering AG","PID":363832,"CHANGED_D":"2017-09-13T10:18:45.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b2",
+      "_score" : 1.0,
+      "_source":{"ID":7859151,"SEMINAR_ID":517634,"TITLE":"Sponsored Session: Milliarden Aktionen effizient verwalten und intelligent auswerten ","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7859151/2016-nn-frank_closheim-sponsored_session__milliarden_aktionen_effizient_verwalten_und_intelligent_auswerten_-praesentation.pdf","AUTHOR":"Frank Closheim, inxire GmbH","PID":294716,"CHANGED_D":"2017-09-13T10:18:20.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b7",
+      "_score" : 1.0,
+      "_source":{"ID":7853283,"SEMINAR_ID":509680,"TITLE":"Ein Prozess lernt laufen: LEGO-Mindstorms-Steuerung mit BPMN","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7853283/2016-nn-oliver_hock-ein_prozess_lernt_laufen__lego-mindstorms-steuerung_mit_bpmn-praesentation.pdf","AUTHOR":"Oliver Hock, Videa Project Services GmbH","PID":370163,"CHANGED_D":"2017-09-13T10:18:52.000+02:00","MANUSCRIPT":"https://www.javaland.eu/formes/pubfiles/7853281/2016-nn-oliver_hock-ein_prozess_lernt_laufen__lego-mindstorms-steuerung_mit_bpmn-manuskript.pdf","OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b-",
+      "_score" : 1.0,
+      "_source":{"ID":7876633,"SEMINAR_ID":509499,"TITLE":"Event Sourcing - wenn CRUD nicht reicht","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7876633/2016-nn-joerg_herbst-event_sourcing_-_wenn_crud_nicht_reicht-praesentation.pdf","AUTHOR":"Jörg Herbst, 10m GmbH","PID":368414,"CHANGED_D":"2017-09-13T10:18:33.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b_",
+      "_score" : 1.0,
+      "_source":{"ID":7853287,"SEMINAR_ID":509672,"TITLE":"Effiziente Datenpersistierung mit JPA 2.1 und Hibernate","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7853287/2016-nn-thorben_janssen-effiziente_datenpersistierung_mit_jpa_2_1_und_hibernate-praesentation.pdf","AUTHOR":"Thorben Janssen, Qualitype GmbH","PID":369887,"CHANGED_D":"2017-09-13T10:19:07.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cC",
+      "_score" : 1.0,
+      "_source":{"ID":7879567,"SEMINAR_ID":509580,"TITLE":"Are You Aware of /bin of Your JDK?","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879567/2016-nn-andrzej_grzesik-are_you_aware_of__bin_of_your_jdk_-praesentation.pdf","AUTHOR":"Andrzej Grzesik, (&#9583;°&#9633;°&#65289;&#9583;&#65077; &#9531;&#9473;&#9531;","PID":371840,"CHANGED_D":"2017-09-13T10:18:01.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cH",
+      "_score" : 1.0,
+      "_source":{"ID":7879478,"SEMINAR_ID":509814,"TITLE":"Lombok: The Boilerplate Buster. It's a Kind of Magic!","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879478/2016-nn-roel_spilker-lombok__the_boilerplate_buster__it_s_a_kind_of_magic_-praesentation.pdf","AUTHOR":"Roel Spilker, TOPdesk","PID":371581,"CHANGED_D":"2017-09-13T10:18:59.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cM",
+      "_score" : 1.0,
+      "_source":{"ID":7859120,"SEMINAR_ID":509411,"TITLE":"UI Composition für Microservices","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7859120/2016-nn-arek_czarnik-ui_composition_fuer_microservices-praesentation.pdf","AUTHOR":"Arek Czarnik, Rewe-Digital","PID":371791,"CHANGED_D":"2017-09-13T10:18:01.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cR",
+      "_score" : 1.0,
+      "_source":{"ID":7890967,"SEMINAR_ID":509924,"TITLE":"Hacking Java","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7890967/2016-nn-sean_floyd-hacking_java-praesentation.pdf","AUTHOR":"Sean Floyd, Zalando","PID":371994,"CHANGED_D":"2017-09-13T10:19:00.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cW",
+      "_score" : 1.0,
+      "_source":{"ID":7887511,"SEMINAR_ID":509471,"TITLE":"Die Konvergenz heterogener Sensorprotokolle (Embeedded Java, OSGi, IoT) ","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7887511/2016-nn-oliver_heuser_software_ag-die_konvergenz_heterogener_sensorprotokolle__embeedded_java,_osgi,_iot__-praesentation.pdf","AUTHOR":"Oliver Heuser Software AG, Heuser Software AG","PID":null,"CHANGED_D":"2016-05-17T14:22:14.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5ca",
+      "_score" : 1.0,
+      "_source":{"ID":7862533,"SEMINAR_ID":509837,"TITLE":"Java Flight Recorder - Production Time Profiling On-Demand ","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7862533/2016-nn-klara_ward-java_flight_recorder_-_production_time_profiling_on-demand_-praesentation.pdf","AUTHOR":"Klara Ward, Oracle Corporation","PID":371963,"CHANGED_D":"2017-09-13T10:18:37.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cf",
+      "_score" : 1.0,
+      "_source":{"ID":7901286,"SEMINAR_ID":509810,"TITLE":"Praktisches Mutation Testing","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7901286/2016-nn-sven_ruppert-praktisches_mutation_testing-praesentation.pdf","AUTHOR":"Sven Ruppert, Macros Reply GmbH","PID":366636,"CHANGED_D":"2017-09-13T10:19:04.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5ck",
+      "_score" : 1.0,
+      "_source":{"ID":7865844,"SEMINAR_ID":517655,"TITLE":"Sponsored Session: Pipeline-as-Code mit Jenkins Pipeline","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7865844/2016-nn-_-sponsored_session__pipeline-as-code_mit_jenkins_pipeline-praesentation.pdf","AUTHOR":" , ","PID":null,"CHANGED_D":"2016-05-17T14:22:14.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cp",
+      "_score" : 1.0,
+      "_source":{"ID":7856569,"SEMINAR_ID":509442,"TITLE":"Modernes JavaScript mit ECMAScript 2015","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7856569/2016-nn-christian_kaltepoth-modernes_javascript_mit_ecmascript_2015-praesentation.pdf","AUTHOR":"Christian Kaltepoth, ingenit GmbH & Co. KG","PID":368392,"CHANGED_D":"2017-09-13T10:18:07.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cu",
+      "_score" : 1.0,
+      "_source":{"ID":7876623,"SEMINAR_ID":509606,"TITLE":"Nanoservices und Microservices mit Java","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7876623/2016-nn-eberhard_wolff-nanoservices_und_microservices_mit_java-praesentation.pdf","AUTHOR":"Eberhard Wolff, innoQ","PID":368565,"CHANGED_D":"2017-09-13T10:18:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cz",
+      "_score" : 1.0,
+      "_source":{"ID":7879725,"SEMINAR_ID":509586,"TITLE":"Using JMH in a Real World Project","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879725/2016-nn-dmytro_vyazelenko-using_jmh_in_a_real_world_project-praesentation.pdf","AUTHOR":"Dmytro Vyazelenko, Sowatec AG","PID":null,"CHANGED_D":"2016-05-17T14:22:14.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c4",
+      "_score" : 1.0,
+      "_source":{"ID":7876621,"SEMINAR_ID":509451,"TITLE":"Neue JVM-Concurrency-Modelle wie Aktoren und Verticles","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7876621/2016-nn-lutz_huehnken-neue_jvm-concurrency-modelle_wie_aktoren_und_verticles-praesentation.pdf","AUTHOR":"Lutz Hühnken, Typesafe, Inc.","PID":371651,"CHANGED_D":"2017-09-13T10:18:39.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c9",
+      "_score" : 1.0,
+      "_source":{"ID":8890320,"SEMINAR_ID":529302,"TITLE":"Logs mit Kontext - Log4j im Vergleich mit Zipkin","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890320/2017-cms-alexander_schwartz-logs_mit_kontext_-_log4j_im_vergleich_mit_zipkin-praesentation.pdf","AUTHOR":"Alexander Schwartz, msg systems ag","PID":368442,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Architektur"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dE",
+      "_score" : 1.0,
+      "_source":{"ID":8890462,"SEMINAR_ID":529697,"TITLE":"Microservice-Anwendungen mit Docker","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890462/2017-nn-thomas_bauer-microservice-anwendungen_mit_docker-praesentation.pdf","AUTHOR":"Thomas Bauer, Xaidat GmbH","PID":364068,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Architektur; Docker; Orchestrierung; Spring (Framework)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dJ",
+      "_score" : 1.0,
+      "_source":{"ID":8890204,"SEMINAR_ID":529337,"TITLE":"Rocket Science: Agilität und DevOps vor 50 Jahren und heute","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890204/2017-asec-thomas_much-rocket_science__agilitaet_und_devops_vor_50_jahren_und_heute-praesentation.pdf","AUTHOR":"Thomas Much, Freiberufler","PID":368551,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Agile Software-Entwicklung; DevOps"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dO",
+      "_score" : 1.0,
+      "_source":{"ID":8890473,"SEMINAR_ID":529286,"TITLE":"Multiplexing und Server Push - HTTP/2 in Java 9","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890473/2017-core-jan_weinschenker-multiplexing_und_server_push_-_http_2_in_java_9-praesentation.pdf","AUTHOR":"Jan Weinschenker, Holisticon AG","PID":371632,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Development Kit (JDK); Java Standard Edition (Java SE); Nebenläufigkeit"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dT",
+      "_score" : 1.0,
+      "_source":{"ID":8894452,"SEMINAR_ID":529705,"TITLE":"Kotlin-based Build Scripts: New Opportunities in Gradle 3.0","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8894452/2017-nn-tim_riemer-kotlin-based_build_scripts__new_opportunities_in_gradle_3_0-praesentation.pdf","AUTHOR":"Tim Riemer, lbase software GmbH","PID":373981,"CHANGED_D":"2017-09-17T13:44:49.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Gradle"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dY",
+      "_score" : 1.0,
+      "_source":{"ID":8909775,"SEMINAR_ID":529443,"TITLE":"Continuous Delivery im Enterprise-Umfeld mit Docker, Ansible und Jenkins","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909775/2017-cms-marcel_birkner-continuous_delivery_im_enterprise-umfeld_mit_docker,_ansible_und_jenkins-praesentation.pdf","AUTHOR":"Marcel Birkner, codecentric AG","PID":366040,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Docker; Java Enterprise Edition (Java EE); Orchestrierung"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dc",
+      "_score" : 1.0,
+      "_source":{"ID":8890355,"SEMINAR_ID":529488,"TITLE":"Config-Management mit Vault und Spring Cloud","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890355/2017-asec-daniel_eichten-config-management_mit_vault_und_spring_cloud-praesentation.pdf","AUTHOR":"Daniel Eichten, adidas AG","PID":363771,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"DevOps; Sicherheit; Verschlüsselung"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dh",
+      "_score" : 1.0,
+      "_source":{"ID":8909812,"SEMINAR_ID":529570,"TITLE":"Lagom - die richtige Dosis Microservice","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909812/2017-cms-stefan_schlott-lagom_-_die_richtige_dosis_microservice-praesentation.pdf","AUTHOR":"Stefan Schlott, BeOne Stuttgart GmbH","PID":364378,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"API; Architektur; Reactive"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dm",
+      "_score" : 1.0,
+      "_source":{"ID":8890403,"SEMINAR_ID":529472,"TITLE":"Detaillierte Zeitmessungen für Web-Tests","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890403/2017-frontend-christian_kumpe-detaillierte_zeitmessungen_fuer_web-tests-praesentation.pdf","AUTHOR":"Christian Kumpe, diva-e","PID":375169,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"HTML; JavaScript (JS); Web-Applikation; Web-Technologien"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dr",
+      "_score" : 1.0,
+      "_source":{"ID":8918470,"SEMINAR_ID":529951,"TITLE":"Keynote: Listening to the Design Pressures","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8918470/2017-asec-_-keynote__listening_to_the_design_pressures-praesentation.pdf","AUTHOR":" , ","PID":null,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dw",
+      "_score" : 1.0,
+      "_source":{"ID":8958922,"SEMINAR_ID":529542,"TITLE":"&quot;So, ihr macht dann mal Microservices!&quot; ... und nu?","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8958922/2017-cms-andre_goliath-_quot_so,_ihr_macht_dann_mal_microservices__quot______und_nu_-praesentation.pdf","AUTHOR":"Andre Goliath, Senacor Technologies","PID":371212,"CHANGED_D":"2017-05-08T09:30:02.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Architektur; Methodik; Prozesse; Spring (Framework)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d1",
+      "_score" : 1.0,
+      "_source":{"ID":8890282,"SEMINAR_ID":529718,"TITLE":"Domänenspezifische Sprachen: Sprich domänisch!","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890282/2017-nn-markus_amshove-domaenenspezifische_sprachen__sprich_domaenisch_-praesentation.pdf","AUTHOR":"Markus Amshove, ALTE OLDENBURGER Krankenversicherung AG","PID":373381,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Eclipse (IDE); IntelliJ (IDE)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d6",
+      "_score" : 1.0,
+      "_source":{"ID":8890293,"SEMINAR_ID":529388,"TITLE":"AsciiDoctor mal Groovy","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890293/2017-ide-stephan_classen-asciidoctor_mal_groovy-praesentation.pdf","AUTHOR":"Stephan Classen, Canoo Engineering AG ","PID":371796,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":"https://www.javaland.eu/formes/pubfiles/8890296/2017-ide-stephan_classen-asciidoctor_mal_groovy-andere.zip","KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eB",
+      "_score" : 1.0,
+      "_source":{"ID":8915852,"SEMINAR_ID":529534,"TITLE":"Reaktive Anwendungen mit RxJava","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8915852/2017-core-michael_menzel-reaktive_anwendungen_mit_rxjava-praesentation.pdf","AUTHOR":"Michael Menzel, Senacor Technologies AG","PID":368503,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Development Kit (JDK); Java Standard Edition (Java SE); Nebenläufigkeit"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eG",
+      "_score" : 1.0,
+      "_source":{"ID":8890394,"SEMINAR_ID":529400,"TITLE":"Securing MQTT","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890394/2017-asec-dominik_obermaier-securing_mqtt-praesentation.pdf","AUTHOR":"Dominik Obermaier, dc-square GmbH","PID":364375,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Sicherheit; TLS (Transport Layer Security); Verschlüsselung"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eL",
+      "_score" : 1.0,
+      "_source":{"ID":9483089,"SEMINAR_ID":546346,"TITLE":"How VMware Support can help Oracle Customers","PRESENTATION":"https://www.doag.org/formes/pubfiles/9483089/2017-mw-yvonne_murphy-how_vmware_support_can_help_oracle_customers-praesentation.pdf","AUTHOR":"Yvonne Murphy, VMware","PID":378684,"CHANGED_D":"2017-09-30T09:05:08.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eQ",
+      "_score" : 1.0,
+      "_source":{"ID":9479075,"SEMINAR_ID":545360,"TITLE":"Web Components, the Oracle Way","PRESENTATION":"https://www.doag.org/formes/pubfiles/9479075/2017-dev-duncan_mills-web_components,_the_oracle_way-praesentation.pdf","AUTHOR":"Duncan Mills, Oracle Corporation","PID":297854,"CHANGED_D":"2017-09-29T09:05:13.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"CSS3; HTML5; JavaScript (JS); Oracle JET"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eV",
+      "_score" : 1.0,
+      "_source":{"ID":9403504,"SEMINAR_ID":544369,"TITLE":"Provisioning the Oracle Database in the Cloud.","PRESENTATION":"https://www.doag.org/formes/pubfiles/9403504/2017-db-frits_hoogland-provisioning_the_oracle_database_in_the_cloud_-praesentation.pdf","AUTHOR":"Frits Hoogland, Accenture Enkitec Group","PID":363112,"CHANGED_D":"2017-09-13T09:05:08.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9403502/2017-db-frits_hoogland-provisioning_the_oracle_database_in_the_cloud_-manuskript.pdf","OTHER":null,"KEYWORDS":"Database Cloning; Database Cloud Services; Database; Database Enterprise Edition"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5bw",
+      "_score" : 1.0,
+      "_source":{"ID":7833698,"SEMINAR_ID":509407,"TITLE":"Hacking the Juice Shop (&quot;So ein Saftladen!&quot;)","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7833698/2016-nn-bjoern_kimminich-hacking_the_juice_shop___quot_so_ein_saftladen__quot__-praesentation.pdf","AUTHOR":"Björn Kimminich, Kuehne + Nagel (AG & Co.) KG","PID":368146,"CHANGED_D":"2017-09-13T10:18:04.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b1",
+      "_score" : 1.0,
+      "_source":{"ID":7876731,"SEMINAR_ID":509731,"TITLE":"Containerized End-2-End-Testing","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7876731/2016-nn-tobias_schneck-containerized_end-2-end-testing-praesentation.pdf","AUTHOR":"Tobias Schneck, ConSol* Consulting & Solutions Software GmbH","PID":366253,"CHANGED_D":"2017-09-13T10:19:09.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b6",
+      "_score" : 1.0,
+      "_source":{"ID":7845602,"SEMINAR_ID":509757,"TITLE":"Sehen wie Terminator - Augmented Reality mit der Oculus Rift","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7845602/2016-nn-martin_foertsch-sehen_wie_terminator_-_augmented_reality_mit_der_oculus_rift-praesentation.pdf","AUTHOR":"Martin Förtsch, TNG Technology Consulting GmbH","PID":null,"CHANGED_D":"2017-09-05T05:58:00.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cB",
+      "_score" : 1.0,
+      "_source":{"ID":7876649,"SEMINAR_ID":509382,"TITLE":"Quantified Social - Fitness-Geräte und -Portale mit Agorava","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7876649/2016-nn-werner_keil-quantified_social_-_fitness-geraete_und_-portale_mit_agorava-praesentation.pdf","AUTHOR":"Werner Keil, Creative Arts & Technologies","PID":364760,"CHANGED_D":"2017-09-13T10:19:12.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cG",
+      "_score" : 1.0,
+      "_source":{"ID":7856561,"SEMINAR_ID":509529,"TITLE":"Westy Tracking Platform Based on Vert.x, Redis and Angular","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7856561/2016-nn-rob_brinkman-westy_tracking_platform_based_on_vert_x,_redis_and_angular-praesentation.pdf","AUTHOR":"Rob Brinkman, JDriven","PID":371848,"CHANGED_D":"2017-09-13T10:18:58.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cL",
+      "_score" : 1.0,
+      "_source":{"ID":7856566,"SEMINAR_ID":509804,"TITLE":"Tränen lügen nicht - Dashboards schon!","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7856566/2016-nn-harm_gnoyke-traenen_luegen_nicht_-_dashboards_schon_-praesentation.pdf","AUTHOR":"Harm Gnoyke, embarc","PID":371805,"CHANGED_D":"2017-09-13T10:18:25.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cQ",
+      "_score" : 1.0,
+      "_source":{"ID":7879593,"SEMINAR_ID":509364,"TITLE":"A Post-Apocalyptic sun.misc.Unsafe World","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879593/2016-nn-christoph_engelbert-a_post-apocalyptic_sun_misc_unsafe_world-praesentation.pdf","AUTHOR":"Christoph Engelbert, Hazelcast, Inc.","PID":356789,"CHANGED_D":"2017-09-13T10:18:09.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cV",
+      "_score" : 1.0,
+      "_source":{"ID":7900041,"SEMINAR_ID":509590,"TITLE":"Eclipse Platform - Rise and Shine","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7900041/2016-nn-lars_vogel-eclipse_platform_-_rise_and_shine-praesentation.pdf","AUTHOR":"Lars Vogel, vogella GmbH","PID":null,"CHANGED_D":"2016-05-17T14:22:14.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5ce",
+      "_score" : 1.0,
+      "_source":{"ID":7887545,"SEMINAR_ID":509664,"TITLE":"Java EE 8 – The Foundation Is Here! ","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7887545/2016-nn-david_delabassee-java_ee_8___the_foundation_is_here__-praesentation.pdf","AUTHOR":"David Delabassee, Oracle","PID":368443,"CHANGED_D":"2017-09-13T10:18:11.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cj",
+      "_score" : 1.0,
+      "_source":{"ID":7887530,"SEMINAR_ID":509570,"TITLE":"Active Glass","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7887530/2016-nn-matthias_faix-active_glass-praesentation.pdf","AUTHOR":"Matthias Faix, IPM Köln","PID":146723,"CHANGED_D":"2017-09-13T10:18:47.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5co",
+      "_score" : 1.0,
+      "_source":{"ID":7853297,"SEMINAR_ID":509511,"TITLE":"Bean-Mapping mit MapStruct","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7853297/2016-nn-thomas_much-bean-mapping_mit_mapstruct-praesentation.pdf","AUTHOR":"Thomas Much, muchsoft.com","PID":368551,"CHANGED_D":"2017-09-13T10:19:06.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5ct",
+      "_score" : 1.0,
+      "_source":{"ID":7876619,"SEMINAR_ID":509860,"TITLE":"HTML5 für JSF-Entwickler: AngularFaces und BootsFaces","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7876619/2016-nn-stephan_rauh-html5_fuer_jsf-entwickler__angularfaces_und_bootsfaces-praesentation.pdf","AUTHOR":"Stephan Rauh, OPITZ CONSULTING Deutschland GmbH","PID":371155,"CHANGED_D":"2017-09-25T00:37:02.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cy",
+      "_score" : 1.0,
+      "_source":{"ID":7887514,"SEMINAR_ID":509626,"TITLE":"Mit Vert.x vom Monolithen zum reaktiven Microservice ","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7887514/2016-nn-jochen_mader-mit_vert_x_vom_monolithen_zum_reaktiven_microservice_-praesentation.pdf","AUTHOR":"Jochen Mader, codecentric AG","PID":364537,"CHANGED_D":"2017-09-13T10:18:31.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c3",
+      "_score" : 1.0,
+      "_source":{"ID":7845607,"SEMINAR_ID":515755,"TITLE":"Rapid Application Development in the Cloud and On-Premises with Docker","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7845607/2016-nn-niklas_heidloff-rapid_application_development_in_the_cloud_and_on-premises_with_docker-praesentation.pdf","AUTHOR":"Niklas Heidloff, IBM Deutschland Research & Development GmbH","PID":369805,"CHANGED_D":"2017-09-13T10:18:51.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c8",
+      "_score" : 1.0,
+      "_source":{"ID":7864346,"SEMINAR_ID":509615,"TITLE":"Guard your Logs from Microservice Madness","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7864346/2016-nn-daniel_wegener-guard_your_logs_from_microservice_madness-praesentation.pdf","AUTHOR":"Daniel Wegener, Holisticon AG","PID":371631,"CHANGED_D":"2017-09-13T10:18:11.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dD",
+      "_score" : 1.0,
+      "_source":{"ID":8845544,"SEMINAR_ID":529595,"TITLE":"Last- & Performance-Tests mit &#8206;JMeter oder Gatling","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8845544/2017-ide-frank_pientka-last-___performance-tests_mit___8206_jmeter_oder_gatling-praesentation.pdf","AUTHOR":"Frank Pientka, MATERNA GmbH Information & Communications","PID":358568,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":"https://www.javaland.eu/formes/pubfiles/8845546/2017-ide-frank_pientka-last-___performance-tests_mit___8206_jmeter_oder_gatling-andere.zip","KEYWORDS":"Gradle; Maven"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dI",
+      "_score" : 1.0,
+      "_source":{"ID":8894665,"SEMINAR_ID":529516,"TITLE":"Everything as code","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8894665/2017-core-mario-leander_reimer-everything_as_code-praesentation.pdf","AUTHOR":"Mario-Leander Reimer, QAware GmbH","PID":374893,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":"https://www.javaland.eu/formes/pubfiles/8894726/2017-core-mario-leander_reimer-everything_as_code-andere.zip","KEYWORDS":"Groovy (JVM-Sprache); Java Standard Edition (Java SE); Java Virtual Machine (JVM); jRuby (JVM-Sprache); Scala (JVM-Sprache)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dN",
+      "_score" : 1.0,
+      "_source":{"ID":8909771,"SEMINAR_ID":529349,"TITLE":"Lesbare Tests mit AssertJ","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909771/2017-ide-goerge_albrecht-lesbare_tests_mit_assertj-praesentation.pdf","AUTHOR":"Görge Albrecht, Code Mentor","PID":374903,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dS",
+      "_score" : 1.0,
+      "_source":{"ID":8890397,"SEMINAR_ID":529316,"TITLE":"A Reactive Take on Pokémon GO with Spring Reactive","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890397/2017-eec-riccardo_lippolis-a_reactive_take_on_pok_mon_go_with_spring_reactive-praesentation.pdf","AUTHOR":"Riccardo Lippolis, JDriven BV","PID":374958,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Cloud Computing; Spring (Framework)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dX",
+      "_score" : 1.0,
+      "_source":{"ID":8909798,"SEMINAR_ID":529448,"TITLE":"JavaScript im Jahr 2017","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909798/2017-frontend-christian_kaltepoth-javascript_im_jahr_2017-praesentation.pdf","AUTHOR":"Christian Kaltepoth, ingenit GmbH & Co. KG","PID":368392,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"JavaScript (JS); Web-Applikation; Web-Technologien"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5db",
+      "_score" : 1.0,
+      "_source":{"ID":8890149,"SEMINAR_ID":529599,"TITLE":"TDD mit JUnit und Mockito","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890149/2017-ide-tobias_trelle-tdd_mit_junit_und_mockito-praesentation.pdf","AUTHOR":"Tobias Trelle, codecentric AG","PID":364344,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dg",
+      "_score" : 1.0,
+      "_source":{"ID":8909806,"SEMINAR_ID":529258,"TITLE":"Bean Validation 2.0 - Support für Java 8 und mehr","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909806/2017-eec-gunnar_morling-bean_validation_2_0_-_support_fuer_java_8_und_mehr-praesentation.pdf","AUTHOR":"Gunnar Morling, Red Hat","PID":374916,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Enterprise Edition (Java EE); Middleware"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dl",
+      "_score" : 1.0,
+      "_source":{"ID":8909843,"SEMINAR_ID":529290,"TITLE":"Asynchrone Anwendungen mit CompletableFuture","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909843/2017-core-thilo_frotscher-asynchrone_anwendungen_mit_completablefuture-praesentation.pdf","AUTHOR":"Thilo Frotscher, Freiberufler","PID":366601,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Development Kit (JDK); Java Standard Edition (Java SE); Nebenläufigkeit"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dq",
+      "_score" : 1.0,
+      "_source":{"ID":8918468,"SEMINAR_ID":529273,"TITLE":"Serverless Application - Who the heck needs a Server?","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8918468/2017-eec-lars_roewekamp-serverless_application_-_who_the_heck_needs_a_server_-praesentation.pdf","AUTHOR":"Lars Röwekamp, open knowledge GmbH","PID":371813,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Cloud Computing; Messaging; Middleware; PaaS (Platform as a Service)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dv",
+      "_score" : 1.0,
+      "_source":{"ID":8958904,"SEMINAR_ID":529435,"TITLE":"It's Java, Jim, But Not As We Know It!","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8958904/2017-core-simon_ritter-it_s_java,_jim,_but_not_as_we_know_it_-praesentation.pdf","AUTHOR":"Simon Ritter, Azul Systems","PID":357053,"CHANGED_D":"2017-05-08T09:30:02.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Development Kit (JDK); Java Standard Edition (Java SE)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d0",
+      "_score" : 1.0,
+      "_source":{"ID":8894707,"SEMINAR_ID":529529,"TITLE":"Java Memory Model für Fortgeschrittene","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8894707/2017-core-vadym_kazulkin-java_memory_model_fuer_fortgeschrittene-praesentation.pdf","AUTHOR":"Vadym Kazulkin, ip.labs GmbH","PID":374966,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Virtual Machine (JVM); Nebenläufigkeit; Performance"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d5",
+      "_score" : 1.0,
+      "_source":{"ID":8890291,"SEMINAR_ID":529591,"TITLE":"Robuste, lesbare Web-UI-Tests mit Page Object Pattern, Geb und Spock","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890291/2017-ide-stephan_classen-robuste,_lesbare_web-ui-tests_mit_page_object_pattern,_geb_und_spock-praesentation.pdf","AUTHOR":"Stephan Classen, Canoo Engineering AG ","PID":371796,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eA",
+      "_score" : 1.0,
+      "_source":{"ID":8909826,"SEMINAR_ID":537051,"TITLE":"Sponsored Session: Eine Einführung in ReactiveX für Browser-Anwendungen","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909826/2017-asec-roman_roelofsen-sponsored_session__eine_einfuehrung_in_reactivex_fuer_browser-anwendungen-praesentation.pdf","AUTHOR":"Roman Roelofsen, w11k GmbH","PID":371564,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eF",
+      "_score" : 1.0,
+      "_source":{"ID":8890341,"SEMINAR_ID":529575,"TITLE":"Setzen wir unsere Qualitätsanalysen wirklich sinnvoll ein?","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890341/2017-ide-elmar_juergens-setzen_wir_unsere_qualitaetsanalysen_wirklich_sinnvoll_ein_-praesentation.pdf","AUTHOR":"Elmar Juergens, TU München und CQSE GmbH","PID":374707,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eK",
+      "_score" : 1.0,
+      "_source":{"ID":9460906,"SEMINAR_ID":545520,"TITLE":"Regular Expressions: Say What?","PRESENTATION":"https://www.doag.org/formes/pubfiles/9460906/2017-dev-alex_nuijten-regular_expressions__say_what_-praesentation.pdf","AUTHOR":"Alex Nuijten, allAPEX","PID":367444,"CHANGED_D":"2017-09-26T09:05:08.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"PL/SQL; SQL"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eP",
+      "_score" : 1.0,
+      "_source":{"ID":9473653,"SEMINAR_ID":544510,"TITLE":"Application Container – Mandantenfähigkeit für Applikationen","PRESENTATION":"https://www.doag.org/formes/pubfiles/9473653/2017-db-markus_flechtner-application_container___mandantenfaehigkeit_fuer_applikationen-praesentation.pdf","AUTHOR":"Markus Flechtner, Trivadis GmbH","PID":226735,"CHANGED_D":"2017-09-29T09:05:13.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9473649/2017-db-markus_flechtner-application_container___mandantenfaehigkeit_fuer_applikationen-manuskript.pdf","OTHER":"https://www.doag.org/formes/pubfiles/9473651/2017-db-markus_flechtner-application_container___mandantenfaehigkeit_fuer_applikationen-andere.zip","KEYWORDS":"Datenbank; Multitenant"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eU",
+      "_score" : 1.0,
+      "_source":{"ID":9479851,"SEMINAR_ID":545932,"TITLE":"Oracle Cloud und Container Frameworks","PRESENTATION":"https://www.doag.org/formes/pubfiles/9479851/2017-mw-andreas_chatziantoniou-oracle_cloud_und_container_frameworks-praesentation.pdf","AUTHOR":"Andreas Chatziantoniou, Foxglove-IT","PID":358824,"CHANGED_D":"2017-09-29T09:05:13.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9479849/2017-mw-andreas_chatziantoniou-oracle_cloud_und_container_frameworks-manuskript.pdf","OTHER":null,"KEYWORDS":"Application Server; Cloud Anwendungen; Infrastructure as a Service (IaaS); Java Cloud Service"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eZ",
+      "_score" : 1.0,
+      "_source":{"ID":9400695,"SEMINAR_ID":544373,"TITLE":"Multitenant dictionary internals","PRESENTATION":"https://www.doag.org/formes/pubfiles/9400695/2017-db-franck_pachot-multitenant_dictionary_internals-praesentation.pdf","AUTHOR":"Franck Pachot, dbi services","PID":365492,"CHANGED_D":"2017-09-09T09:05:08.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9400693/2017-db-franck_pachot-multitenant_dictionary_internals-manuskript.pdf","OTHER":"https://www.doag.org/formes/pubfiles/9400697/2017-db-franck_pachot-multitenant_dictionary_internals-andere.zip","KEYWORDS":"Database; Multitenant"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b0",
+      "_score" : 1.0,
+      "_source":{"ID":7865052,"SEMINAR_ID":509447,"TITLE":"Netflix OSS and HATEOAS Deployed on Production","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7865052/2016-nn-andreas_evers-netflix_oss_and_hateoas_deployed_on_production-praesentation.pdf","AUTHOR":"Andreas Evers, Ordina","PID":371560,"CHANGED_D":"2017-09-13T10:17:59.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5b5",
+      "_score" : 1.0,
+      "_source":{"ID":7839642,"SEMINAR_ID":509373,"TITLE":"Running a BLE/MQTT Gateway as an App on Android","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7839642/2016-nn-sven_haiges-running_a_ble_mqtt_gateway_as_an_app_on_android-praesentation.pdf","AUTHOR":"Sven Haiges, hybris GmbH","PID":371600,"CHANGED_D":"2017-09-13T10:19:04.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cA",
+      "_score" : 1.0,
+      "_source":{"ID":7853291,"SEMINAR_ID":509701,"TITLE":"Introduction to Agile Documentation","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7853291/2016-nn-daniel_grycman-introduction_to_agile_documentation-praesentation.pdf","AUTHOR":"Daniel Grycman, Ferdinand Bilstein GmbH & Co. KG","PID":377168,"CHANGED_D":"2017-09-28T01:20:48.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cF",
+      "_score" : 1.0,
+      "_source":{"ID":7853313,"SEMINAR_ID":509423,"TITLE":"CU! - Continuous Usability mit offline-fähigen Apps ","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7853313/2016-nn-susanne_braun-cu__-_continuous_usability_mit_offline-faehigen_apps_-praesentation.pdf","AUTHOR":"Susanne Braun, Fraunhofer IESE","PID":null,"CHANGED_D":"2017-08-16T06:46:00.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cK",
+      "_score" : 1.0,
+      "_source":{"ID":7879484,"SEMINAR_ID":509656,"TITLE":"Build and Monitor Cloud PaaS with JVM’s Nashorn JavaScripts","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879484/2016-nn-wolfgang_weigend-build_and_monitor_cloud_paas_with_jvm_s_nashorn_javascripts-praesentation.pdf","AUTHOR":"Wolfgang Weigend, ORACLE Deutschland B.V. & Co. KG","PID":270784,"CHANGED_D":"2017-09-13T10:19:13.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cP",
+      "_score" : 1.0,
+      "_source":{"ID":7879559,"SEMINAR_ID":509706,"TITLE":"Stream-Up your life!","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879559/2016-nn-guido_oelmann-stream-up_your_life_-praesentation.pdf","AUTHOR":"Guido Oelmann, Freiberufler","PID":371867,"CHANGED_D":"2017-09-13T10:18:23.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cU",
+      "_score" : 1.0,
+      "_source":{"ID":7859110,"SEMINAR_ID":509684,"TITLE":"Mobile Analytics mit Elasticsearch und Kibana","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7859110/2016-nn-dominik_helleberg-mobile_analytics_mit_elasticsearch_und_kibana-praesentation.pdf","AUTHOR":"Dominik Helleberg, inovex GmbH","PID":368613,"CHANGED_D":"2017-09-13T10:18:13.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cZ",
+      "_score" : 1.0,
+      "_source":{"ID":7856608,"SEMINAR_ID":509643,"TITLE":"Decoding the Air around You with Java and $7 Hardware","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7856608/2016-nn-bert_jan_schrijver-decoding_the_air_around_you_with_java_and__7_hardware-praesentation.pdf","AUTHOR":"Bert Jan Schrijver, JPoint","PID":null,"CHANGED_D":"2016-05-17T14:22:14.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cd",
+      "_score" : 1.0,
+      "_source":{"ID":7864348,"SEMINAR_ID":509610,"TITLE":"Flyway vs. LiquiBase - Battle der Datenbankmigrationstools","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7864348/2016-nn-stephan_kaps-flyway_vs__liquibase_-_battle_der_datenbankmigrationstools-praesentation.pdf","AUTHOR":"Stephan Kaps, Bundesversicherungsamt / kitenco","PID":null,"CHANGED_D":"2016-05-17T14:22:14.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5ci",
+      "_score" : 1.0,
+      "_source":{"ID":7879539,"SEMINAR_ID":509845,"TITLE":"Mut zur Fachlichkeit","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879539/2016-nn-lars_roewekamp-mut_zur_fachlichkeit-praesentation.pdf","AUTHOR":"Lars Röwekamp, open knowledge GmbH","PID":371813,"CHANGED_D":"2017-09-13T10:18:38.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cn",
+      "_score" : 1.0,
+      "_source":{"ID":7853279,"SEMINAR_ID":509692,"TITLE":"Named Queries Strike Back","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7853279/2016-nn-mario_voehl-named_queries_strike_back-praesentation.pdf","AUTHOR":"Mario Vöhl, privat","PID":371138,"CHANGED_D":"2017-09-13T10:18:43.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cs",
+      "_score" : 1.0,
+      "_source":{"ID":7853163,"SEMINAR_ID":509668,"TITLE":"Aliens und Zitronen im Kampf gegen Bugs","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7853163/2016-nn-christoph_deppisch-aliens_und_zitronen_im_kampf_gegen_bugs-praesentation.pdf","AUTHOR":"Christoph Deppisch, ConSol* Consulting & Solutions Software GmbH","PID":364567,"CHANGED_D":"2017-09-13T10:18:09.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5cx",
+      "_score" : 1.0,
+      "_source":{"ID":7900039,"SEMINAR_ID":509437,"TITLE":"Demystifying AngularJS 2 - SPAs für das Web von morgen","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7900039/2016-nn-philipp_tarasiewicz-demystifying_angularjs_2_-_spas_fuer_das_web_von_morgen-praesentation.pdf","AUTHOR":"Philipp Tarasiewicz, Freiberuflicher Trainer u. Berater im Bereich moderner Web-Technologien","PID":364349,"CHANGED_D":"2017-09-13T10:18:55.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c2",
+      "_score" : 1.0,
+      "_source":{"ID":7853295,"SEMINAR_ID":509850,"TITLE":"Threat Modeling - von Anfang an sichere Webanwendungen","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7853295/2016-nn-dominik_schadow-threat_modeling_-_von_anfang_an_sichere_webanwendungen-praesentation.pdf","AUTHOR":"Dominik Schadow, BridgingIT GmbH","PID":362727,"CHANGED_D":"2017-09-13T10:18:14.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c7",
+      "_score" : 1.0,
+      "_source":{"ID":7879444,"SEMINAR_ID":517784,"TITLE":"Faster Java By Adding Structs (Sort Of)","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/7879444/2016-nn-simon_ritter-faster_java_by_adding_structs__sort_of_-praesentation.pdf","AUTHOR":"Simon Ritter, Oracle Corporation","PID":357053,"CHANGED_D":"2017-09-13T10:19:01.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c-",
+      "_score" : 1.0,
+      "_source":{"ID":8976448,"SEMINAR_ID":529550,"TITLE":"Kotlin für den Build Master","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8976448/2017-core-dirk_dittert-kotlin_fuer_den_build_master-praesentation.pdf","AUTHOR":"Dirk Dittert, 24objects GmbH","PID":359567,"CHANGED_D":"2017-05-08T09:30:02.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Development Kit (JDK); Java Standard Edition (Java SE); Java Virtual Machine (JVM)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5c_",
+      "_score" : 1.0,
+      "_source":{"ID":8847321,"SEMINAR_ID":529345,"TITLE":"Müssen sich Feature Branches und Continuous Integration widersprechen?","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8847321/2017-ide-steffen_schluff-muessen_sich_feature_branches_und_continuous_integration_widersprechen_-praesentation.pdf","AUTHOR":"Steffen Schluff, Orientation in Objects GmbH","PID":356621,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dC",
+      "_score" : 1.0,
+      "_source":{"ID":8890448,"SEMINAR_ID":529520,"TITLE":"Javaslang - Functional Java the Easy Way","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890448/2017-core-david_schmitz-javaslang_-_functional_java_the_easy_way-praesentation.pdf","AUTHOR":"David Schmitz, Senacor Technologies AG","PID":374947,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Standard Edition (Java SE); Java Virtual Machine (JVM)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dH",
+      "_score" : 1.0,
+      "_source":{"ID":8894523,"SEMINAR_ID":529221,"TITLE":"Pipeline as code: Continuous Delivery with Jenkins 2","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8894523/2017-ide-bert_jan_schrijver-pipeline_as_code__continuous_delivery_with_jenkins_2-praesentation.pdf","AUTHOR":"Bert Jan Schrijver, JPoint","PID":371530,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Maven"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dM",
+      "_score" : 1.0,
+      "_source":{"ID":8894755,"SEMINAR_ID":529282,"TITLE":"Hysterie in verteilten Systemen - Hystrix im Einsatz","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8894755/2017-cms-benjamin_wilms-hysterie_in_verteilten_systemen_-_hystrix_im_einsatz-praesentation.pdf","AUTHOR":"Benjamin Wilms, codecentric AG","PID":367991,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Architektur; Methodik; Spring (Framework)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dR",
+      "_score" : 1.0,
+      "_source":{"ID":8909781,"SEMINAR_ID":529421,"TITLE":"Welcome Alexa, Your Personal Assistant","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909781/2017-iot-johan_janssen-welcome_alexa,_your_personal_assistant-praesentation.pdf","AUTHOR":"Johan Janssen, Info Support","PID":368448,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"IoT (Internet of Things); Rasberry Pi (single board computer)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dW",
+      "_score" : 1.0,
+      "_source":{"ID":8909795,"SEMINAR_ID":529587,"TITLE":"Code Quality Metrics Demystified","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909795/2017-ide-jeroen_resoort-code_quality_metrics_demystified-praesentation.pdf","AUTHOR":"Jeroen Resoort, JDriven","PID":374949,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5da",
+      "_score" : 1.0,
+      "_source":{"ID":8890453,"SEMINAR_ID":529713,"TITLE":"Ich bin dein Nachbar – Graphenverarbeitung mit Apache Flink","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890453/2017-nn-kristian_kottke-ich_bin_dein_nachbar___graphenverarbeitung_mit_apache_flink-praesentation.pdf","AUTHOR":"Kristian Kottke, iteratec GmbH","PID":374951,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"BigData; Hadoop; MapReduce"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5df",
+      "_score" : 1.0,
+      "_source":{"ID":8909804,"SEMINAR_ID":529512,"TITLE":"Hibernate Search und Elasticsearch: Von 0 auf 100 in 40 Minuten","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909804/2017-eec-gunnar_morling-hibernate_search_und_elasticsearch__von_0_auf_100_in_40_minuten-praesentation.pdf","AUTHOR":"Gunnar Morling, Red Hat","PID":374916,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Datenbank; Java Enterprise Edition (Java EE); Middleware; NoSQL; Wildfly (Anwendungsserver)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dk",
+      "_score" : 1.0,
+      "_source":{"ID":8909841,"SEMINAR_ID":529612,"TITLE":"It's all about the domain, honey - Erfahrungen aus 10 Jahren Domain Driven Design","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909841/2017-asec-carola_lilienthal-it_s_all_about_the_domain,_honey_-_erfahrungen_aus_10_jahren_domain_driven_design-praesentation.pdf","AUTHOR":"Carola Lilienthal, WPS - Workplace Solutions GmbH","PID":371855,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":null}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dp",
+      "_score" : 1.0,
+      "_source":{"ID":8915973,"SEMINAR_ID":529245,"TITLE":"Java 9 Modularity in Action","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8915973/2017-core-sander_mak-java_9_modularity_in_action-praesentation.pdf","AUTHOR":"Sander Mak, Luminis Technologies","PID":364697,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Development Kit (JDK); Java Standard Edition (Java SE); Modularität"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5du",
+      "_score" : 1.0,
+      "_source":{"ID":8939318,"SEMINAR_ID":529500,"TITLE":"Open Source Identity Management mit Keycloak","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8939318/2017-asec-thomas_darimont-open_source_identity_management_mit_keycloak-praesentation.pdf","AUTHOR":"Thomas Darimont, eurodata AG","PID":368549,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Sicherheit; TLS (Transport Layer Security); Verschlüsselung"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5dz",
+      "_score" : 1.0,
+      "_source":{"ID":8890119,"SEMINAR_ID":529558,"TITLE":"Building a Spring Boot Application: Ask the Audience!","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8890119/2017-eec-hanno_embregts-building_a_spring_boot_application__ask_the_audience_-praesentation.pdf","AUTHOR":"Hanno Embregts, Info Support","PID":371568,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Spring (Framework)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d4",
+      "_score" : 1.0,
+      "_source":{"ID":8909862,"SEMINAR_ID":536425,"TITLE":"How to Create a New JVM Language in Under an Hour","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8909862/2017-core-oleg_shelajev-how_to_create_a_new_jvm_language_in_under_an_hour-praesentation.pdf","AUTHOR":"Oleg Shelajev, ZeroTurnaround","PID":371809,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Standard Edition (Java SE); Java Virtual Machine (JVM)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5d9",
+      "_score" : 1.0,
+      "_source":{"ID":8958924,"SEMINAR_ID":529439,"TITLE":"Performance-Tuning von Spring-Boot- und Cloud-Anwendungen","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8958924/2017-cms-ingo_dueppe-performance-tuning_von_spring-boot-_und_cloud-anwendungen-praesentation.pdf","AUTHOR":"Ingo Düppe, Crowdcode GmbH & Co. KG","PID":364381,"CHANGED_D":"2017-05-08T09:30:02.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Architektur; Java Enterprise Edition (Java EE); Methodik; Rest; Spring (Framework)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eE",
+      "_score" : 1.0,
+      "_source":{"ID":8885890,"SEMINAR_ID":529321,"TITLE":"Java EE 8 - Java EE Security API ","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/8885890/2017-eec-rudy_de_busscher-java_ee_8_-_java_ee_security_api_-praesentation.pdf","AUTHOR":"Rudy De Busscher, C4J","PID":374706,"CHANGED_D":"2017-04-10T08:00:17.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Java Enterprise Edition (Java EE)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eJ",
+      "_score" : 1.0,
+      "_source":{"ID":9483204,"SEMINAR_ID":545402,"TITLE":"Don't Worry Be Happy! Automate Your Environment with Ease","PRESENTATION":"https://www.doag.org/formes/pubfiles/9483204/2017-db-noelle_stimely-don_t_worry_be_happy__automate_your_environment_with_ease-praesentation.pdf","AUTHOR":"Noelle Stimely, University of California - Berkeley","PID":378138,"CHANGED_D":"2017-09-30T09:05:08.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9483207/2017-db-noelle_stimely-don_t_worry_be_happy__automate_your_environment_with_ease-manuskript.pdf","OTHER":null,"KEYWORDS":"Backup & Recovery; Database Cloning; Database; Database Enterprise Edition; Enterprise Manager (OEM); Monitoring; Administration; Tuning"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eO",
+      "_score" : 1.0,
+      "_source":{"ID":9460892,"SEMINAR_ID":545472,"TITLE":"Docker for Dummies","PRESENTATION":"https://www.doag.org/formes/pubfiles/9460892/2017-dev-roel_hartman-docker_for_dummies-praesentation.pdf","AUTHOR":"Roel Hartman, APEX Consulting","PID":373034,"CHANGED_D":"2017-09-26T09:05:08.000+02:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Deployment; Oracle Application Express (APEX)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eT",
+      "_score" : 1.0,
+      "_source":{"ID":9479847,"SEMINAR_ID":544210,"TITLE":"Brauchen wir Java in der Cloud?","PRESENTATION":"https://www.doag.org/formes/pubfiles/9479847/2017-java-andreas_chatziantoniou-brauchen_wir_java_in_der_cloud_-praesentation.pdf","AUTHOR":"Andreas Chatziantoniou, Foxglove-IT","PID":358824,"CHANGED_D":"2017-09-29T09:05:13.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9479845/2017-java-andreas_chatziantoniou-brauchen_wir_java_in_der_cloud_-manuskript.pdf","OTHER":null,"KEYWORDS":"Java Enterprise Edition (Java EE); Java Standard Edition (Java SE); PaaS (Platform as a Service)"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AV7SOn3Az3_S2HozU5eY",
+      "_score" : 1.0,
+      "_source":{"ID":9310154,"SEMINAR_ID":544603,"TITLE":"Schnelles Backup & Restore mit Section Size","PRESENTATION":"https://www.doag.org/formes/pubfiles/9310154/2017-db-sinan_petrus_toma-schnelles_backup___restore_mit_section_size-praesentation.pdf","AUTHOR":"Sinan Petrus Toma, Finanz Informatik GmbH & Co. KG","PID":377304,"CHANGED_D":"2017-08-13T09:05:08.000+02:00","MANUSCRIPT":"https://www.doag.org/formes/pubfiles/9310152/2017-db-sinan_petrus_toma-schnelles_backup___restore_mit_section_size-manuskript.pdf","OTHER":null,"KEYWORDS":"Backup & Recovery; Datenbank"}
+    } ]
+  }
+}

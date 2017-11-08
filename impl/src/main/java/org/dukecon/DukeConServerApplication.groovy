@@ -2,6 +2,7 @@ package org.dukecon
 
 import flex.messaging.MessageBroker
 import flex.messaging.io.SerializationContext
+import org.dukecon.server.core.MyShallowEtagHeaderFilter
 import org.dukecon.server.repositories.DataProviderLoader
 import org.dukecon.server.conference.ConferencesConfigurationServiceImpl
 import org.flywaydb.core.Flyway
@@ -43,7 +44,7 @@ class DukeConServerApplication {
 
     @Bean
     Filter shallowEtagHeaderFilter() {
-        return new ShallowEtagHeaderFilter()
+        return new MyShallowEtagHeaderFilter()
     }
 
     @Bean

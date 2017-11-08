@@ -2,15 +2,11 @@ package org.dukecon.server.services;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.dukecon.model.AbstractCoreImages;
-import org.dukecon.model.Conference;
-import org.dukecon.model.CoreImages;
-import org.dukecon.model.Resources;
-import org.dukecon.model.Speaker;
-import org.dukecon.model.Styles;
+import org.dukecon.model.*;
 import org.dukecon.server.conference.SpeakerImageService;
 import org.dukecon.services.ConferenceService;
 import org.dukecon.services.ResourceService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +27,9 @@ import java.util.Set;
 @RemotingDestination
 public class ResourceServiceImpl implements ResourceService {
 
+    @Value("${servlet.resource.dir:/WEB-INF/classes/public/img/}")
+    private String resourceDir = "/WEB-INF/classes/public/img/";
+
     @Inject
     private ServletContext servletContext;
 
@@ -44,12 +43,12 @@ public class ResourceServiceImpl implements ResourceService {
     public Map<String, byte[]> getLogosForConferences() {
         Map<String, byte[]> result = new HashMap<>();
         Set<String> conferenceImageResources = servletContext.getResourcePaths("/public/img");
-        for(String conferenceResourcesRoot : conferenceImageResources) {
+        for (String conferenceResourcesRoot : conferenceImageResources) {
             String conferenceId = StringUtils.substringAfterLast(
                     StringUtils.substringBeforeLast(conferenceResourcesRoot, "/"), "/");
             Set<String> conferenceResources = servletContext.getResourcePaths(conferenceResourcesRoot + "/conference");
             Map<String, byte[]> confResources = getImageData(conferenceResources);
-            if(confResources.containsKey("logo")) {
+            if (confResources.containsKey("logo")) {
                 result.put(conferenceId, confResources.get("logo"));
             }
         }
@@ -62,7 +61,7 @@ public class ResourceServiceImpl implements ResourceService {
 
         // Styles
         Styles styles = conferenceService.getConferenceStyles(conferenceId);
-        if(styles != null) {
+        if (styles != null) {
             result.setStyles(styles);
         }
 
@@ -71,9 +70,9 @@ public class ResourceServiceImpl implements ResourceService {
 
         // Speakers
         result.setSpeakerImages(new HashMap<>());
-        for(Speaker speaker : conference.getSpeakers()) {
+        for (Speaker speaker : conference.getSpeakers()) {
             SpeakerImageService.ImageWithName image = speakerImageService.getImage(speaker.getPhotoId());
-            if(image != null) {
+            if (image != null) {
                 result.getSpeakerImages().put(speaker.getId(), image.getContent());
             }
         }
@@ -83,7 +82,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     private Map<String, byte[]> getImageData(Set<String> imageResources) {
         Map<String, byte[]> images = new HashMap<>();
-        if(imageResources != null) {
+        if (imageResources != null) {
             for (String imageResource : imageResources) {
                 String id = StringUtils.substringBefore(StringUtils.substringAfterLast(imageResource, "/"), ".");
                 try {
@@ -119,42 +118,41 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     private void addCoreImages(Conference conference, String conferenceId, AbstractCoreImages result, boolean base64) {
-
         // Logo
-        Set<String> imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/conference");
-        if((imageResources != null) && !imageResources.isEmpty()) {
+        Set<String> imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/conference");
+        if ((imageResources != null) && !imageResources.isEmpty()) {
             Map<String, byte[]> imageData = getImageData(imageResources);
             result.setConferenceImage(imageData.get("logo"));
         }
 
         // FavIcon
-        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/favicon");
-        if((imageResources != null) && !imageResources.isEmpty()) {
+        imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/favicon");
+        if ((imageResources != null) && !imageResources.isEmpty()) {
             Map<String, byte[]> imageData = getImageData(imageResources);
             result.setConferenceFavIcon(imageData.get("favicon"));
         }
 
         // Locations
-        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/locations");
-        if((imageResources != null) && !imageResources.isEmpty()) {
+        imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/locations");
+        if ((imageResources != null) && !imageResources.isEmpty()) {
             result.setLocationImages(getImageData(imageResources));
         }
 
         // Location Maps
-        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/location-maps");
-        if((imageResources != null) && !imageResources.isEmpty()) {
+        imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/location-maps");
+        if ((imageResources != null) && !imageResources.isEmpty()) {
             result.setLocationMapImages(getImageData(imageResources));
         }
 
         // Languages
-        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/languages");
-        if((imageResources != null) && !imageResources.isEmpty()) {
+        imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/languages");
+        if ((imageResources != null) && !imageResources.isEmpty()) {
             result.setLanguageImages(getImageData(imageResources));
         }
 
         // Streams
-        imageResources = servletContext.getResourcePaths("/public/img/" + conferenceId + "/streams");
-        if((imageResources != null) && !imageResources.isEmpty()) {
+        imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/streams");
+        if ((imageResources != null) && !imageResources.isEmpty()) {
             result.setStreamImages(getImageData(imageResources));
         }
     }

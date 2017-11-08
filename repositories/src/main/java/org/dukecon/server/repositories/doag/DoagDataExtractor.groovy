@@ -2,11 +2,11 @@ package org.dukecon.server.repositories.doag
 
 import groovy.util.logging.Slf4j
 import org.dukecon.model.*
+import org.dukecon.server.conference.ConferencesConfiguration
+import org.dukecon.server.conference.SpeakerImageService
+import org.dukecon.server.favorites.PreferencesService
 import org.dukecon.server.repositories.ConferenceDataExtractor
 import org.dukecon.server.repositories.RawDataMapper
-import org.dukecon.server.conference.ConferencesConfiguration
-import org.dukecon.server.favorites.PreferencesService
-import org.dukecon.server.conference.SpeakerImageService
 import org.springframework.beans.BeansException
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
@@ -30,6 +30,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
     private final RawDataMapper rawDataMapper
     def talksJson
     def speakersJson
+    def additionalDataJson
     private final String conferenceId
     private final Class<? extends ConferenceDataExtractor> extractorClass
     private final LocalDate startDate
@@ -72,6 +73,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
         this.rawDataMapper.initMapper()
         this.talksJson = this.rawDataMapper.asMap().eventsData
         this.speakersJson = this.rawDataMapper.asMap().speakersData
+        this.additionalDataJson = this.rawDataMapper.asMap().additionalData
         DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(talksJson, speakersJson, parseTwitterHandles())
         mapper.photos.each {
             speakerImageService.addImage(it)
@@ -206,8 +208,9 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
     @Deprecated
     private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries { [it.id, it] }) {
         Map<String, Integer> favoritesPerEvent = preferencesService?.allEventFavorites ?: [:]
+        Map<Integer, Map<String, String>> additionalDataPerEvent = additionalDataJson?.collectEntries {[it.SEMINAR_ID, it]} ?: [:]
         List<Event> events = talksJson.collect {eventJson ->
-            getEvent(eventJson, speakerLookup, favoritesPerEvent)
+            getEvent(eventJson, speakerLookup, favoritesPerEvent, additionalDataPerEvent)
         }
         List<Event> result = events.findAll {
             Event event ->
@@ -219,7 +222,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
         return result
     }
 
-    private Event getEvent(eventJson, Map<String, Speaker> speakerLookup, Map<String, Integer> favoritesPerEvent) {
+    private Event getEvent(eventJson, Map<String, Speaker> speakerLookup, Map<String, Integer> favoritesPerEvent, Map<Integer, Map<String, String>> additionalDataPerEvent) {
         Event.builder()
                 .id(eventJson.ID.toString())
         // TODO: parse TIMESTAMP and TIMESTAMP_ENDE
@@ -237,9 +240,11 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
                 .veryPopular(eventJson.AUSGEBUCHT as boolean)
                 .fullyBooked(false)
                 .numberOfFavorites((favoritesPerEvent[eventJson.ID.toString()] ?: 0) as int)
+                .keywords([de: eventJson.KEYWORDS?.tokenize(',') ?: [], en: eventJson.KEYWORDS_EN?.tokenize(',') ?: []])
+                .documents([slides: additionalDataPerEvent[eventJson.ID]?.PRESENTATION, manuscript: additionalDataPerEvent[eventJson.ID]?.MANUSCRIPT, other: additionalDataPerEvent[eventJson.ID]?.OTHER])
                 .speakers([speakerLookup[eventJson.ID_PERSON?.toString()], speakerLookup[eventJson.ID_PERSON_COREF?.toString()], speakerLookup[eventJson.ID_PERSON_COCOREF?.toString()]].findAll {
-            it
-        })
+                    it
+                })
                 .build()
     }
 }

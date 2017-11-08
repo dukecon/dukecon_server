@@ -18,10 +18,11 @@ class RawDataResourcesTests {
 
     @Test
     void testMultipleResourcesAsMap() {
-        Map<String, ResourceWrapper> resources = new RawDataResources([eventsData: 'javaland-2016.raw', speakersData: 'javaland-speaker-2016.raw']).get()
-        assert resources.size() == 2
+        Map<String, ResourceWrapper> resources = new RawDataResources([eventsData: 'javaland-2016.raw', speakersData: 'javaland-speaker-2016.raw', additionalData: 'javaland-additional-2016.raw']).get()
+        assert resources.size() == 3
         assert resources.eventsData.getStream() instanceof InputStream
         // TODO Rebuild without SpeakerImageService
 //        assert resources.speakersData.getStream() instanceof InputStream
+        assert resources.additionalData.getStream() instanceof InputStream
     }
 }

@@ -1,4 +1,4 @@
-package org.dukecon.server.conference.adpater.doag
+package org.dukecon.server.repositories.doag
 
 import groovy.json.JsonSlurper
 import org.dukecon.model.Speaker
@@ -234,7 +234,7 @@ class DoagSpeakerMapperSpec extends Specification {
 
     void "should extract all speaker and co speaker from event input of javaland 2016"() {
         when:
-        def json = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016-final-finished-conf.raw"), 'ISO-8859-1').hits.hits._source
+        def json = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016.raw"), 'ISO-8859-1').hits.hits._source
 
         and:
         def map = [:]
@@ -243,12 +243,12 @@ class DoagSpeakerMapperSpec extends Specification {
         map.putAll new DoagSpeakersMapper(json, DoagSingleSpeakerMapper.Type.COCOREFERENT).speakers
 
         then:
-        map.size() == 128
+        map.size() == 116
     }
 
     void "should extract all speaker and co speaker from event and speaker input from javaland 2016"() {
         when:
-        def jsonEvents = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016-final-finished-conf.raw"), 'ISO-8859-1').hits.hits._source
+        def jsonEvents = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016.raw"), 'ISO-8859-1').hits.hits._source
         def jsonSpeaker = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-speaker-2016.raw"), 'ISO-8859-1').hits.hits._source
 
         and:
@@ -259,24 +259,24 @@ class DoagSpeakerMapperSpec extends Specification {
         then:
         println(mapperEventsOnly.speakers.keySet() - mapperSpeakersOnly.speakers.keySet())
         assert jsonSpeaker.size() == 140 : "speaker input contains more speaker (140) than event input (128)"
-        mapper.speakers.size() == 128
+        mapper.speakers.size() == 116
         println (jsonSpeaker.collect {"${it.VORNAME} ${it.NACHNAME}"})
         println (mapper.speakers.values().name.sort())
         println (jsonSpeaker.collect {"${it.VORNAME} ${it.NACHNAME}"} - mapper.speakers.values().name.sort())
         mapper.photos.size() == 7
 
-        mapper.eventIds.size() == 124
-        mapper.speakerIds2EventIds.size() == 141
+        mapper.eventIds.size() == 110
+        mapper.speakerIds2EventIds.size() == 123
 
         !mapper.speakers.values().findAll { Speaker s -> !s.firstname || !s.lastname }
 
-        mapper.speakers.'359390'.name == 'Niko Köbler'
-        mapper.speakers.'359390'.firstname == 'Niko'
-        mapper.speakers.'359390'.lastname == 'Köbler'
-        mapper.speakers.'359390'.twitter == 'https://twitter.com/dasniko'
-        mapper.speakers.'359390'.company == 'Niko Köbler IT-Beratung'
-        mapper.speakers.'359390'.website == 'http://www.n-k.de'
-        mapper.speakers.'359390'.bio.startsWith('Niko macht ')
+        mapper.speakers.'146723'.name == 'Matthias Faix'
+        mapper.speakers.'146723'.firstname == 'Matthias'
+        mapper.speakers.'146723'.lastname == 'Faix'
+        mapper.speakers.'146723'.twitter == null
+        mapper.speakers.'146723'.company == 'IPM Köln'
+        mapper.speakers.'146723'.website == null
+        mapper.speakers.'146723'.bio == null
     }
 
     void "should read twitter handles from csv"() {
@@ -290,7 +290,7 @@ class DoagSpeakerMapperSpec extends Specification {
 
     void "should merge additional twitter handles"() {
         when:
-        def jsonEvents = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016-final-finished-conf.raw"), 'ISO-8859-1').hits.hits._source
+        def jsonEvents = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016.raw"), 'ISO-8859-1').hits.hits._source
         def jsonSpeaker = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-speaker-2016.raw"), 'ISO-8859-1').hits.hits._source
 
         and:
@@ -311,16 +311,16 @@ class DoagSpeakerMapperSpec extends Specification {
 
     void "should map event ids to speaker"() {
         when:
-        def jsonEvents = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016-final-finished-conf.raw"), 'ISO-8859-1').hits.hits._source
+        def jsonEvents = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-2016.raw"), 'ISO-8859-1').hits.hits._source
         def jsonSpeaker = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-speaker-2016.raw"), 'ISO-8859-1').hits.hits._source
 
         and:
         DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(jsonEvents, jsonSpeaker)
 
         then:
-        mapper.eventIds.size() == 124
-        mapper.speakerIds2EventIds.size() == 141
-        mapper.speakers.size() == 128
-        mapper.forEventId("510867").name == 'Niko Köbler'
+        mapper.eventIds.size() == 110
+        mapper.speakerIds2EventIds.size() == 123
+        mapper.speakers.size() == 116
+        mapper.forEventId("509570").name == 'Matthias Faix'
     }
 }

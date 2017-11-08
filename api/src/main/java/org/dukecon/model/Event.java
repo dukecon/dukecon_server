@@ -8,6 +8,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
@@ -61,4 +62,7 @@ public class Event implements Identifyable {
     private boolean fullyBooked;
     /** number of people favoured this event */
     private Integer numberOfFavorites;
+    private Map<String, List<String>> keywords;
+    /** additional documents as slides, manuscript, other */
+    private Map<String, String> documents;
 }
