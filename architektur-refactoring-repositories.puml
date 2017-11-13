@@ -5,6 +5,4 @@ artifact api
 artifact repositories
 artifact spring_boot_server
 
-
-
 @enduml

@@ -1,36 +1,10 @@
-== Agenda
+= Architektur-Refactoring Dukecon-Server
 
-. Input-Daten-Adapter rausziehen
-* Herbstcampus (inkl. Resources) in separates Modul, aber zur Zeit nicht bauen
-* DOAG Adapter in Formes umbenennen und CSVMapper für JFS hinzufügen
-. Admin-Schnittstelle rausziehen/aufräumen/Daten persistieren
-* EventBookingResource nach admin verschieben
-. Sliced Events entfernen
-. BlazeDS Server Logik rausziehen
-* mehrere Server-Varianten, eine mit und eine ohne BlazeDS
-. core Package umbenennen (rein technische Aspekte)
-* MetaService wegwerfen?
-. Favorites rausziehen und richtig nennen (statt Preferences)
-. Filter rausziehen
-. alte Javaland-Dataprovider löschen
-. security in core umziehen?
-* Service in Resource umbenennen
-. Image Resourcen Service aufräumen
-* Ablage der Dateien im Filesystem, Konfiguration über yml-Datei
-* Default-Resourcen und Überschreiben je Konferenz möglich
-. Package speaker nach conference umziehen
-. Start-Flag um Remote-Konferenzen zum Testen von den lokalen Raw-Daten
-. Twitter-Handles in eigenes Modul rausziehen und weiter pflegen als Fallback
-. Selenium/Integrations-Tests in eigenes Maven-Modul rausziehen
-. Daten-Diff zum Client schicken (nur bei Änderungen)
-
-== Umbau Input-Daten-Adapter
-
-=== Ziel
+== Ziel
 
 * ein Maven-Modul `repositories-api`
 * je Konferenz-Typ ein Modul, z. B. `repository-formes`
-* Laden bei SPI
+* Laden als SPI
 
 TODO: Grafik fertigstellen
 
@@ -39,9 +13,41 @@ TODO: Grafik fertigstellen
 include::architektur-refactoring-repositories.puml[]
 ------------------------------------------------
 
-=== Schritt 1: alles in ein Projekt rausziehen
+== Offene Punkte
 
-1. alle Klassen im Package adapter in neues Maven Modul `repositories` verschieben
-2. fehlende Dependencies (Spring Cloud, Spring, Guava usw.) hinzufügen
-3. zyklische Dependencies angeschaut (JDepend, IntelliJ IDEA)
-4. Interfaces aus den abhängigen Klassen rausgezogen und nach `repositories` verschoben
+* [ ] Ressourcen-Service aufräumen (Images, Styles etc.) -> Gerd
+** [ ] Ablage der Dateien im Filesystem, Konfiguration über yml-Datei
+** [ ] Default-Resourcen und Überschreiben je Konferenz möglich
+* [ ] Admin-Schnittstelle rausziehen/aufräumen/Daten persistieren -> Gerd
+** [ ] EventBookingResource nach admin verschieben
+* [ ] Sliced Events entfernen
+* [ ] BlazeDS Server Logik rausziehen
+** [ ] mehrere Server-Varianten, eine mit und eine ohne BlazeDS
+* [ ] core Package umbenennen (rein technische Aspekte)
+* [ ] MetaService wegwerfen?
+* [ ] Favorites rausziehen und richtig nennen (statt Preferences)
+* [ ] Filter rausziehen
+* [ ] alte Javaland-Dataprovider löschen
+* [ ] security in core umziehen?
+** [ ] Service in Resource umbenennen
+* [ ] Package speaker nach conference umziehen
+* [ ] Start-Flag einführen, zum Testen von den lokalen Raw-Daten statt Remote-Konferenzen einlesen
+* [ ] Twitter-Handles in CSV-Datei pro Datei auslagern (als Ressource) und als Fallback verwenden
+* [ ] Selenium/Integrations-Tests in eigenes Maven-Modul rausziehen
+* [ ] Daten-Diff zum Client schicken (nur bei Änderungen)
+
+== In Arbeit
+
+* [ ] Transformationen (Data-Extractor) trennen -> Falk
+** [ ] Herbstcampus (ohne Ressourcen)
+** [ ] DOAG Adapter in Formes umbenennen
+** [ ] ApacheCon
+** [ ] Java Forum Nord (ICS)
+
+== Erledigte Punkte
+
+* [x] alle Klassen im Package adapter in neues Maven Modul `repositories` verschieben
+* [x] fehlende Dependencies (Spring Cloud, Spring, Guava usw.) hinzufügen
+* [x] zyklische Dependencies geprüft (JDepend, IntelliJ IDEA)
+* [x] Interfaces aus den abhängigen Klassen rausgezogen und nach `repositories` verschoben
+* [x] CSVMapper für JFS hinzufügen
