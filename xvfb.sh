@@ -4,4 +4,6 @@
 #   mvn -Djvm="./xvfb.sh"
 # so that Surefire runs your tests in a Xvfb wrapped Java process
 XDG_RUNTIME_DIR=/run/user/$UID
+
+: ${JAVA_HOME:="/usr"}
 exec /usr/bin/xvfb-run -a -e $PWD/xvfb.err $JAVA_HOME/bin/java $@
