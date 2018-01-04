@@ -229,6 +229,41 @@
     highlight: '#bed7eb'
     alternate: '#bf5a00'
 -
+  id: apex2018
+  internalId: 543336
+  conference: apex
+  year: 2018
+  talksUri:
+    eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=543336
+    speakersData: https://www.javaland.eu/api/referenten_apex.php?key=JL-EOPTGB-DR
+  backupUri: apex-2018-backup.raw
+  url: http://${conference}.dukecon.org/${year}
+  homeUrl: http://apex.doag.org/
+  imprint:
+    de: https://apex.doag.org/de/impressum/
+# use imprint? both get 404 response 2017-05-27
+    en: https://apex.doag.org/en/impressum/
+  termsOfUse:
+    de: https://apex.doag.org/de/nutzungsbedingungen/
+    en: https://apex.doag.org/en/term-of-use/
+  privacy:
+    de: https://apex.doag.org/de/datenschutz/
+    en: https://apex.doag.org/en/privacy/
+  name: APEX Connect 2018
+  startDate: 2018-04-24
+  endDate: 2018-04-26
+  authEnabled: true
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
+  styles:
+    dark: '#287abe'
+    darkLink: '#287abe'
+    hover: '#00c3d7'
+    hoverLink: '#00c3d7'
+    reverse: '#fff'
+    highlight: '#bed7eb'
+    alternate: '#bf5a00'
+-
   id: doag2016
   internalId: 512089
   conference: doag
