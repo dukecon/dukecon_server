@@ -306,7 +306,7 @@
   year: 2017
   talksUri:
     eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=535509
-    speakersData: https://www.javaland.eu/api/schedule/JavaLand/referenten.php?key=JL-EOPTGB-DR
+    speakersData: https://www.javaland.eu/api/referenten.php?key=JL-EOPTGB-DR
   backupUri: doag-2017-backup.raw
   url: https://programm.doag.org/${conference}/${year}
   homeUrl: http://2017.doag.org/
