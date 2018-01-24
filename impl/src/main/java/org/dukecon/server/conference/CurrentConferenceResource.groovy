@@ -60,21 +60,21 @@ class CurrentConferenceResource {
         def c = configurationService.getConference(conference, year)
         if (c) {
             return Response.ok().entity(c ? [
-                    id       : c.id,
-                    name     : c.name,
-                    year     : c.year,
-                    url      : c.url,
-                    homeUrl  : c.homeUrl,
-                    homeTitle: c.homeTitle,
-					imprint:[
-						de: c.imprint.de,
-						en: c.imprint.en
-					],
-					termsOfUse: c.termsOfUse,
-					privacy: c.privacy,
-                    startDate: dtf.format(c.startDate),
-                    endDate  : dtf.format(c.endDate),
-					authEnabled : c.authEnabled,
+                    id          : c.id,
+                    name        : c.name,
+                    year        : c.year,
+                    url         : c.url,
+                    homeUrl     : c.homeUrl,
+                    homeTitle   : c.homeTitle,
+                    imprint     : [
+                        de      : c.imprint.de,
+                        en      : c.imprint.en
+                    ],
+                    termsOfUse  : c.termsOfUse,
+                    privacy     : c.privacy,
+                    startDate   : dtf.format(c.startDate),
+                    endDate     : dtf.format(c.endDate),
+                    authEnabled : c.authEnabled
             ] : [:]).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
