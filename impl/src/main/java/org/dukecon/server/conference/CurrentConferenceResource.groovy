@@ -74,7 +74,12 @@ class CurrentConferenceResource {
                     privacy     : c.privacy,
                     startDate   : dtf.format(c.startDate),
                     endDate     : dtf.format(c.endDate),
-                    authEnabled : c.authEnabled
+                    authEnabled : c.authEnabled,
+
+                    admin       : "../rest/admin/${c.id}",
+                    conferences : "../rest/conferences/${c.id}",
+                    events      : "../rest/eventsBooking/${c.id}",
+                    keycloak    : "../rest/keycloak.json",
             ] : [:]).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
