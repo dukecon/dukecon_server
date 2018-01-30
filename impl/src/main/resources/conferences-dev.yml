@@ -1,0 +1,33 @@
+-
+  id: javaland2016
+  internalId: 499959
+  conference: javaland
+  year: 2016
+  talksUri:
+    eventsData: javaland-2016-final-finished-conf.raw
+    speakersData: javaland-speaker-2016.raw
+  url: http://javaland.dukecon.org/2016
+  homeUrl: http://www.javaland.eu
+  imprint:
+    de: https://www.javaland.eu/de/impressum/
+    en: https://www.javaland.eu/en/imprint/
+  termsOfUse:
+    de: https://www.javaland.eu/de/nutzungsbedingungen/
+    en: https://www.javaland.eu/en/term-of-use/
+  privacy:
+    de: https://www.javaland.eu/de/datenschutz/
+    en: https://www.javaland.eu/en/privacy/
+  name: JavaLand 2016
+  startDate: 2016-03-08
+  endDate: 2016-03-10
+  authEnabled: true
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
+  styles:
+    dark: '#1aa3b1'
+    darkLink: '#1aa3b1'
+    hover: '#00c3d7'
+    hoverLink: '#00c3d7'
+    reverse: '#fff'
+    highlight: '#ddee55'
+    alternate: '#bf5a00'
