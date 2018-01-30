@@ -347,25 +347,6 @@
       <artifactId>spring-security-web</artifactId>
     </dependency>
 
-    <!-- Add support for Spring Flex integration using BlazeDS -->
-    <dependency>
-      <groupId>org.apache.flex.blazeds</groupId>
-      <artifactId>blazeds-spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.flex.blazeds</groupId>
-      <artifactId>flex-messaging-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.flex</groupId>
-      <artifactId>spring-flex-core</artifactId>
-    </dependency>
-    <!--dependency>
-        <groupId>org.apache.activemq</groupId>
-        <artifactId>activemq-core</artifactId>
-        <scope>runtime</scope>
-    </dependency-->
-
     <dependency>
       <groupId>xml-apis</groupId>
       <artifactId>xml-apis</artifactId>

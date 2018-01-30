@@ -126,10 +126,6 @@
         <asciidoctor.input.directory>${project.basedir}/src/docs/asciidoc</asciidoctor.input.directory>
         <asciidoctor.html.output.directory>${base.generated.docs.dir}/html</asciidoctor.html.output.directory>
         <asciidoctor.pdf.output.directory>${base.generated.docs.dir}/pdf</asciidoctor.pdf.output.directory>
-        <!-- Libs needed for the spring-flex integration using BlazeDS -->
-        <blazeds.version>4.7.3</blazeds.version>
-        <spring-flex.version>1.5.2.RELEASE</spring-flex.version>
-        <!--activemq.version>5.7.0</activemq.version-->
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -420,58 +416,6 @@
                 <version>${xml-apis.version}</version>
             </dependency>
 
-            <!-- Libs needed for the spring-flex integration using BlazeDS -->
-            <dependency>
-                <groupId>org.apache.flex.blazeds</groupId>
-                <artifactId>blazeds-spring-boot-starter</artifactId>
-                <version>${blazeds.version}</version>
-                <exclusions>
-                    <!-- Per default BlazeDS uses jetty, cause it uses streaming connections nicer -->
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-jetty</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.flex.blazeds</groupId>
-                <artifactId>flex-messaging-core</artifactId>
-                <version>${blazeds.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.apache.activemq</groupId>
-                        <artifactId>activemq-core</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.flex</groupId>
-                <artifactId>spring-flex-core</artifactId>
-                <version>${spring-flex.version}</version>
-                <exclusions>
-                    <!-- Spring-Flex still references old BlazeDS versions -->
-                    <exclusion>
-                        <groupId>com.adobe.blazeds</groupId>
-                        <artifactId>blazeds-common</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.adobe.blazeds</groupId>
-                        <artifactId>blazeds-core</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.adobe.blazeds</groupId>
-                        <artifactId>blazeds-proxy</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.adobe.blazeds</groupId>
-                        <artifactId>blazeds-remoting</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.apache.activemq</groupId>
-                        <artifactId>activemq-core</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
             <!-- This is sometimes needed at runtime -->
             <!--dependency>
                 <groupId>org.apache.activemq</groupId>
@@ -660,7 +604,6 @@
                             <!-- Most of the following dependencies are used in groovy code - so the plugin cannot detect it currently -->
                             <ignoredUnusedDeclaredDependencies>
                                 <ignoredUnusedDeclaredDependency>com.h2database:h2</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.apache.flex.blazeds:blazeds-spring-boot-starter</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.keycloak:keycloak-spring-boot-starter</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-configuration-processor</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-actuator</ignoredUnusedDeclaredDependency>

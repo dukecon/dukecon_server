@@ -7,14 +7,11 @@ import org.dukecon.server.conference.ConferencesConfigurationService;
 import org.dukecon.services.ConferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.ServletContextAware;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,7 +20,6 @@ import java.util.stream.Collectors;
  */
 
 @Service("conferenceService")
-@RemotingDestination
 public class ConferenceServiceImpl implements ConferenceService, ServletContextAware {
     private final Logger log = LoggerFactory.getLogger(ConferenceServiceImpl.class);
 

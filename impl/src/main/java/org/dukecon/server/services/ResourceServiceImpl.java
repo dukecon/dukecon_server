@@ -7,7 +7,6 @@ import org.dukecon.server.conference.SpeakerImageService;
 import org.dukecon.services.ConferenceService;
 import org.dukecon.services.ResourceService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -24,7 +23,6 @@ import java.util.Set;
  * Created by christoferdutz on 24.08.16.
  */
 @Service("resourceService")
-@RemotingDestination
 public class ResourceServiceImpl implements ResourceService {
 
     @Value("${servlet.resource.dir:/WEB-INF/classes/public/img/}")

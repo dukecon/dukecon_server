@@ -21,8 +21,6 @@ include::architektur-refactoring-repositories.puml[]
 * [ ] Admin-Schnittstelle rausziehen/aufräumen/Daten persistieren -> Gerd
 ** [ ] EventBookingResource nach admin verschieben
 * [ ] Sliced Events entfernen
-* [ ] BlazeDS Server Logik rausziehen
-** [ ] mehrere Server-Varianten, eine mit und eine ohne BlazeDS
 * [ ] core Package umbenennen (rein technische Aspekte)
 * [ ] MetaService wegwerfen?
 * [ ] Favorites rausziehen und richtig nennen (statt Preferences)
