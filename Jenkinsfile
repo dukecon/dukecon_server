@@ -13,23 +13,15 @@ pipeline {
 
     stages {
         stage('Build') {
-            when {
-                not {
-                    branch "develop"
-                }
-            }
             steps {
                 withMaven {
-                    sh 'mvn clean verify'
-                }
-            }
-            // There should be an "otherwise"
-            when {
-                    branch "develop"
-            }
-            steps {
-                withMaven {
-                    sh 'mvn clean deploy'
+                    script {
+                        if (env.BRANCH_NAME == "develop") {
+                            sh 'mvn clean deploy'
+                        } else {
+                            sh 'mvn clean verify'
+                        }
+                    }
                 }
             }
         }
