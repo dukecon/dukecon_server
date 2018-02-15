@@ -1,7 +1,5 @@
 package org.dukecon.server.conference
 
-import spock.lang.Ignore
-
 import javax.inject.Inject
 
 /**
@@ -11,10 +9,6 @@ class ConferencesConfigurationServiceSpec extends AbstractDukeConSpec {
     @Inject
     private ConferencesConfigurationService configurationService
 
-    // FIXME We need to skip this test, since the 'conferences-dev.yml' is read during initialization though
-    // for integration tests only the 'conferences-integration.yml' is configured! In fact the later is read at first
-    // but then the dev version is also read and overrides the conference configurations from the integration version.
-    @Ignore
     void "get javaland 2017 configuration"() {
         when:
         def javaland2017 = configurationService.getConference('javaland', '2017')
