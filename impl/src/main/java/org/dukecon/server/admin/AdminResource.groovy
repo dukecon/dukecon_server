@@ -1,6 +1,5 @@
 package org.dukecon.server.admin
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.springframework.stereotype.Component
@@ -67,7 +66,6 @@ class AdminResource {
         return Response.status(Response.Status.NOT_FOUND).build()
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
     static class EventCapacity {
         String eventId
         int numberOccupied
@@ -82,15 +80,18 @@ class AdminResource {
      * Sets number of occupied seats for a event.
      *
      * @param eventId
-     * @param capacity {"numberOccupied":850,"fullyBooked":false}
-     * @return
+     * @param capacity e.g. {"numberOccupied":850,"fullyBooked":false}
+     * @return response
      */
     @POST
     @Path("capacity/{eventId}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response setCapacity(@PathParam("eventId") String eventId, EventCapacity capacity) {
-        println capacity
+        Response.Status status = Response.Status.CREATED
+        if (service.capacities.containsKey(eventId)) {
+            status = Response.Status.NO_CONTENT
+        }
         this.service.setCapacity(eventId, capacity)
-        return Response.status(Response.Status.CREATED).build()
+        return Response.status(status.CREATED).build()
     }
 }
