@@ -2,6 +2,7 @@ package org.dukecon.server.admin
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
+import org.dukecon.server.admin.AdminResource.EventCapacity
 import org.springframework.stereotype.Component
 
 import java.util.concurrent.ConcurrentHashMap
@@ -15,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap
 class EventBookingService {
 
     final Set<String> fullyBooked = ConcurrentHashMap.newKeySet()
+    final Map<String, AdminResource.EventCapacity> capacities = ConcurrentHashMap.newInstance()
 
     void setFull(String eventId) {
         this.fullyBooked.add(eventId)
@@ -26,5 +28,10 @@ class EventBookingService {
 
     void removeFull(String eventId) {
         this.fullyBooked.remove(eventId)
+    }
+
+    void setCapacity(String eventId, EventCapacity capacity) {
+        capacity.eventId = eventId
+        capacities.put(eventId, capacity)
     }
 }

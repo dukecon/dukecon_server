@@ -41,14 +41,23 @@ class EventBookingResource {
 
     static class EventBooking {
         String eventId
-        int numberOfFavorites
+        int locationCapacity
+        int numberOccupied
         boolean fullyBooked
+        int numberOfFavorites
+
+        void setNumberOccupied(int numberOccupied) {
+            this.numberOccupied = numberOccupied
+            if (locationCapacity && numberOccupied >= locationCapacity) {
+                fullyBooked = true
+            }
+        }
     }
 
     @GET
     Response getBookingInformation(@PathParam("conferenceId") String conferenceId) {
         def events = conferences[conferenceId].events.collect { Event e ->
-            new EventBooking(eventId: e.id, numberOfFavorites: preferencesService.allEventFavorites[e.id] ?: 0, fullyBooked: bookingService.isFull(e.id))
+            new EventBooking(eventId: e.id, locationCapacity: e.location?.capacity, numberOccupied: 10, fullyBooked: bookingService.isFull(e.id), numberOfFavorites: preferencesService.allEventFavorites[e.id] ?: 0)
         }
         return Response.ok(events).build()
     }
