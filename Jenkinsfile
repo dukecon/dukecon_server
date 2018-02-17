@@ -28,10 +28,12 @@ pipeline {
         stage('Docker Promote') {
             steps {
                 withMaven {
-                    if (env.BRANCH_NAME == "develop") {
-                        sh 'mvn -Pdocker docker:push'
-                    } else {
-                        echo 'No Docker action required'
+                    script {
+                        if (env.BRANCH_NAME == "develop") {
+                            sh 'mvn -Pdocker docker:push'
+                        } else {
+                            echo 'No Docker action required'
+                        }
                     }
                 }
             }
