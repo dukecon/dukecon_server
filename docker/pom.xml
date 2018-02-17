@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>dukecon-server</artifactId>
+        <groupId>org.dukecon</groupId>
+        <version>1.4-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <packaging>pom</packaging>
+    <artifactId>dukecon-server-docker</artifactId>
+    <name>DukeCon Server Docker</name>
+
+    <properties>
+        <!-- Max 120 seconds to wait until docker start finished -->
+        <uptime-max>120000</uptime-max>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.dukecon</groupId>
+            <artifactId>dukecon-server-springboot</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <defaultGoal>docker:build</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <configuration>
+                            <imagePullPolicy>always</imagePullPolicy>
+                            <images>
+                                <image>
+                                    <name>dukecon/dukecon-server:${project.version}</name>
+                                    <build>
+                                        <from>openjdk:8-jre-alpine</from>
+                                        <maintainer>gerd@aschemann.net</maintainer>
+                                        <tags>
+                                            <tag>${project.version}</tag>
+                                            <tag>latest</tag>
+                                        </tags>
+                                        <ports>
+                                            <port>8080</port>
+                                        </ports>
+                                        <volumes>
+                                            <volume>/var/cache/dukecon</volume>
+                                        </volumes>
+                                        <env>
+                                            <JAVA_DEFAULT_OPTS>-Xms768M -Xmx1536M</JAVA_DEFAULT_OPTS>
+                                        </env>
+                                        <cmd>
+                                            <shell>java -Djava.security.egd=file:/dev/./urandom ${JAVA_DEFAULT_OPTS} ${JAVA_OPTS} -jar /opt/dukecon/dukecon.war ${DUKECON_ARGS}</shell>
+                                        </cmd>
+                                        <workdir>/opt/dukecon</workdir>
+                                        <cleanup>false</cleanup>
+                                        <assembly>
+                                            <basedir>/opt/dukecon</basedir>
+                                            <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+                                                <id>dukecon-server</id>
+                                                <dependencySets>
+                                                    <dependencySet>
+                                                        <includes>
+                                                            <include>org.dukecon:dukecon-server-springboot</include>
+                                                        </includes>
+                                                        <outputDirectory>.</outputDirectory>
+                                                        <outputFileNameMapping>dukecon.war</outputFileNameMapping>
+                                                    </dependencySet>
+                                                </dependencySets>
+                                            </inline>
+                                        </assembly>
+                                    </build>
+                                    <run>
+                                        <ports>
+                                            <!-- Port mappings: Container internal
+                                                port (which must be exposed) will be dynamically mapped and this (random)
+                                                port will be assigned to the maven variable ${tomcat.port}. Multiple port
+                                                mapping can be specified here -->
+                                            <port>dukecon.port:8080</port>
+                                        </ports>
+                                        <env>
+                                            <DUKECON_ARGS>--conferences.file=conferences-integrationtest.yml</DUKECON_ARGS>
+                                        </env>
+                                        <wait>
+                                            <!-- The plugin waits until this URL is reachable via HTTP ... -->
+                                            <url>http://${docker.host.address}:${dukecon.port}/health</url>
+                                            <time>${uptime-max}</time>
+                                        </wait>
+                                        <log>
+                                            <color>BLUE</color>
+                                            <file>docker.log</file>
+                                        </log>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                        <!-- Connect this plugin to the maven lifecycle around the
+                            integration-test phase. I.e. start the container in pre-integration-test
+                            and stop it in post-integration-test. -->
+                        <executions>
+                            <execution>
+                                <id>start</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>stop</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
