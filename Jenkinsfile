@@ -25,12 +25,13 @@ pipeline {
                 }
             }
         }
-        stage('Docker Promote') {
+        stage('Docker Push') {
             steps {
                 withMaven {
                     script {
                         if (env.BRANCH_NAME == "develop") {
                             sh 'mvn -Pdocker docker:push'
+                            build 'docker_restart_develop_latest'
                         } else {
                             echo 'No Docker action required'
                         }
