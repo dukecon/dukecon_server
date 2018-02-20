@@ -17,9 +17,23 @@ pipeline {
                 withMaven {
                     script {
                         if (env.BRANCH_NAME == "develop") {
-                            sh 'mvn clean deploy'
+                            sh 'mvn -Pdocker clean deploy'
                         } else {
                             sh 'mvn clean verify'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Docker Push') {
+            steps {
+                withMaven {
+                    script {
+                        if (env.BRANCH_NAME == "develop") {
+                            sh 'mvn -Pdocker docker:push'
+                            build 'docker_restart_develop_latest'
+                        } else {
+                            echo 'No Docker action required'
                         }
                     }
                 }
