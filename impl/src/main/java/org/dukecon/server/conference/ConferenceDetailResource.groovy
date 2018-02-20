@@ -33,6 +33,12 @@ class ConferenceDetailResource {
     }
 
     @GET
+    @Path("short")
+    List<Map<String, String>> shortInfos() {
+        conference.events.collect {e -> [title: e.title, speaker: e.speakers.name.join(', '), room: e.location.names['de'], from: e.start.toString(), to: e.end.toString()]}
+    }
+
+    @GET
     @Path("speakers")
     @ApiOperation(value="returns list of conference speakers",
             response = Speaker.class,
