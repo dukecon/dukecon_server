@@ -163,5 +163,4 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
                 = conferenceConfigurationService.getConference(conferenceId);
         return new Styles(conference.getStyles());
     }
-
 }

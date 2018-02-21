@@ -35,6 +35,8 @@ public class JerseyConfig extends ResourceConfig {
         register(EventBookingResource.class);
 
         register(CorsFilter.class);
+
+        register(new CsvMessageBodyWriter());
     }
 
 }

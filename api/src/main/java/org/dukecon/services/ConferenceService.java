@@ -9,5 +9,4 @@ import org.dukecon.model.Styles;
 public interface ConferenceService extends CrudService<Conference> {
 
     Styles getConferenceStyles(String conferenceId);
-
 }
