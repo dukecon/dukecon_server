@@ -63,20 +63,4 @@ class ConferenceDetailResource {
     public Response getMeta() {
         return Response.ok().entity(conference.metaData).build();
     }
-
-    @GET
-    @Path("eventSlices")
-    @Deprecated
-    public Response getEventSlices() {
-        Map<Event, List<String>> slices = conference.events.inject([:]) { map, Event e -> map[e.id] = SliceEventHelper.timeSlotsOf(e); map }
-        return Response.ok().entity(slices.findAll { k, v -> v.size() > 1 }).build();
-    }
-
-    @GET
-    @Path("slicedEvents")
-    @Deprecated
-    public Response getSlicedEvents() {
-        List<Event> slicedEvents = conference.events.collect { Event e -> SliceEventHelper.sliceEvent(e) }.flatten()
-        return Response.ok().entity(slicedEvents).build();
-    }
 }
