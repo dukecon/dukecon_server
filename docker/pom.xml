@@ -60,6 +60,15 @@
                                         <cmd>
                                             <shell>java -Djava.security.egd=file:/dev/./urandom ${JAVA_DEFAULT_OPTS} ${JAVA_OPTS} -jar /opt/dukecon/dukecon.war ${DUKECON_ARGS}</shell>
                                         </cmd>
+                                        <healthCheck>
+                                            <!-- 2 minutes should be sufficient to start up the container -->
+                                            <!-- <startPeriod>120s</startPeriod> -->
+                                            <!-- Start with an interval of 1 minute and 5 retries until startPeriod is available, cf. https://github.com/fabric8io/docker-maven-plugin/issues/961 -->
+                                            <interval>60s</interval>
+                                            <timeout>5s</timeout>
+                                            <retries>5</retries>
+                                            <cmd>wget -q -O /dev/null http://localhost:8080/rest/conferences</cmd>
+                                        </healthCheck>
                                         <workdir>/opt/dukecon</workdir>
                                         <cleanup>false</cleanup>
                                         <assembly>
