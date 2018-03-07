@@ -80,6 +80,6 @@ class EventBookingResource {
     @Path("{eventId}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response setCapacity(@PathParam("conferenceId") String conferenceId, @PathParam("eventId") String eventId, EventCapacityInput capacity) {
-        return Response.status(this.bookingService.setCapacity(conferenceId, eventId, capacity) ? Response.Status.NO_CONTENT : Response.Status.CREATED).build()
+        return Response.status(this.bookingService.setCapacity(conferenceId, eventId, capacity) ? Response.Status.NO_CONTENT : Response.Status.CREATED).entity(capacity).build()
     }
 }
