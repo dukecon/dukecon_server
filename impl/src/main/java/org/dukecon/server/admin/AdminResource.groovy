@@ -2,6 +2,8 @@ package org.dukecon.server.admin
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
+import org.dukecon.server.eventbooking.EventBookingResource
+import org.dukecon.server.eventbooking.EventBookingService
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject
@@ -23,15 +25,17 @@ import javax.ws.rs.core.Response
 class AdminResource {
 
     private final EventBookingService service
+    private final EventBookingResource resource
 
     @Inject
-    AdminResource(final EventBookingService service) {
+    AdminResource(final EventBookingService service, final EventBookingResource resource) {
         this.service = service
+        this.resource = resource
     }
 
     @GET
-    Response getAllCapacities(@PathParam("conferenceId") String atTheMomentIgnoredConferenceId) {
-        return Response.ok().entity(service.capacities.values()).build()
+    Response getAllCapacities(@PathParam("conferenceId") String conferenceId) {
+        return Response.ok().entity(service.getAllCapacities(conferenceId)).build()
     }
 
     /**
@@ -42,12 +46,8 @@ class AdminResource {
     @POST
     @Path("{eventId}")
     @Deprecated
-    public Response setFull(@PathParam("eventId") String eventId) {
-        if (this.service.isFull(eventId)) {
-            return Response.status(Response.Status.NO_CONTENT).build()
-        }
-        this.service.setFull(eventId);
-        return Response.status(Response.Status.CREATED).build()
+    public Response setFull(@PathParam("conferenceId") String conferenceId, @PathParam("eventId") String eventId) {
+        return resource.setCapacity(conferenceId, eventId, new EventBookingResource.EventCapacityInput(fullyBooked: true))
     }
 
     /**
@@ -58,40 +58,7 @@ class AdminResource {
     @DELETE
     @Path("{eventId}")
     @Deprecated
-    public Response removeFull(@PathParam("eventId") String eventId) {
-        if (this.service.isFull(eventId)) {
-            this.service.removeFull(eventId);
-            return Response.status(Response.Status.OK).build()
-        }
-        return Response.status(Response.Status.NOT_FOUND).build()
-    }
-
-    static class EventCapacity {
-        String eventId
-        int numberOccupied
-        boolean fullyBooked
-
-        String toString() {
-            "$numberOccupied occupied, fully booked: $fullyBooked"
-        }
-    }
-
-    /**
-     * Sets number of occupied seats for a event.
-     *
-     * @param eventId
-     * @param capacity e.g. {"numberOccupied":850,"fullyBooked":false}
-     * @return response
-     */
-    @POST
-    @Path("capacity/{eventId}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response setCapacity(@PathParam("eventId") String eventId, EventCapacity capacity) {
-        Response.Status status = Response.Status.CREATED
-        if (service.capacities.containsKey(eventId)) {
-            status = Response.Status.NO_CONTENT
-        }
-        this.service.setCapacity(eventId, capacity)
-        return Response.status(status.CREATED).build()
+    public Response removeFull(@PathParam("conferenceId") String conferenceId, @PathParam("eventId") String eventId) {
+        return resource.setCapacity(conferenceId, eventId, new EventBookingResource.EventCapacityInput(fullyBooked: false))
     }
 }

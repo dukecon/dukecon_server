@@ -75,7 +75,6 @@ class CurrentConferenceResource {
                     startDate   : dtf.format(c.startDate),
                     endDate     : dtf.format(c.endDate),
                     authEnabled : c.authEnabled,
-
                     admin       : "../rest/admin/${c.id}".toString(),
                     conferences : "../rest/conferences/${c.id}".toString(),
                     events      : "../rest/eventsBooking/${c.id}".toString(),
