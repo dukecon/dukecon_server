@@ -39,7 +39,7 @@ class CurrentConferenceResource {
     @Value("\${conferences.default.shortname:javaland}")
     String defaultConferenceName
 
-    @Value("\${conferences.default.year:2017}")
+    @Value("\${conferences.default.year:2016}")
     String defaultConferenceYear
 
     @Inject
