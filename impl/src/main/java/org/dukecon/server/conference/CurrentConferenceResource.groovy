@@ -39,7 +39,7 @@ class CurrentConferenceResource {
     @Value("\${conferences.default.shortname:javaland}")
     String defaultConferenceName
 
-    @Value("\${conferences.default.year:2017}")
+    @Value("\${conferences.default.year:2016}")
     String defaultConferenceYear
 
     @Inject
@@ -75,8 +75,8 @@ class CurrentConferenceResource {
                     startDate   : dtf.format(c.startDate),
                     endDate     : dtf.format(c.endDate),
                     authEnabled : c.authEnabled,
-
                     admin       : "../rest/admin/${c.id}".toString(),
+                    forceUpdate : "../rest/conferences/update/${c.id}".toString(),
                     conferences : "../rest/conferences/${c.id}".toString(),
                     events      : "../rest/eventsBooking/${c.id}".toString(),
                     keycloak    : "../rest/keycloak.json",

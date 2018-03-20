@@ -31,7 +31,7 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
     @Override
     void init() {
         Map<String, Object> configurationProperties = getAllKnownConfigurationProperties(env)
-        conferencesConfigurationFile = configurationProperties["conferences.file"] ?: "conferences.yml"
+        conferencesConfigurationFile = configurationProperties["conferences.file"] ?: "conferences-dev.yml"
         log.debug ("Loading conferences file '{}'", conferencesConfigurationFile)
         configuration.conferences.addAll(
                 ConferencesConfiguration.fromFile(conferencesConfigurationFile,

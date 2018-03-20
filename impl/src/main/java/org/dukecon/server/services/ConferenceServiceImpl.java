@@ -99,7 +99,7 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
                     languageMap.put(language.getId(), language);
                 }
             }
-            conference.getMetaData().setDefaultLanguage(languageMap.get(conference.getMetaData().getDefaultLanguage().getId()));
+            conference.getMetaData().setDefaultLanguage(languageMap.get(conference.getMetaData().getDefaultLanguage() != null ? conference.getMetaData().getDefaultLanguage().getId() : null));
             if(conference.getMetaData().getLocations() != null) {
                 for (Location location : conference.getMetaData().getLocations()) {
                     locationMap.put(location.getId(), location);
@@ -159,5 +159,4 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
                 = conferenceConfigurationService.getConference(conferenceId);
         return new Styles(conference.getStyles());
     }
-
 }

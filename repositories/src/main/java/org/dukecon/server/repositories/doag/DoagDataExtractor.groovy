@@ -137,7 +137,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
     }
 
     Language getDefaultLanguage() {
-        return languages.first()
+        return languages.isEmpty() ? null : languages.first()
     }
 
     Language getLanguage(String name) {
