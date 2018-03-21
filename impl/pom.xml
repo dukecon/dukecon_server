@@ -462,6 +462,34 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>include-frontend</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-war-plugin</artifactId>
+            <configuration>
+              <overlays>
+                <overlay>
+                  <groupId>org.dukecon</groupId>
+                  <artifactId>dukecon-html5-client</artifactId>
+                </overlay>
+              </overlays>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+
+      <dependencies>
+        <dependency>
+          <groupId>org.dukecon</groupId>
+          <artifactId>dukecon-html5-client</artifactId>
+          <version>1.3-SNAPSHOT</version>
+          <type>war</type>
+          <scope>runtime</scope>
+        </dependency>
+      </dependencies>
+    </profile>
   </profiles>
 
   <build>

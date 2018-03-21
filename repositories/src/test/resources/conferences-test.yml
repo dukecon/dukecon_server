@@ -28,18 +28,17 @@
   extractorClass: org.dukecon.server.repositories.heise.HeiseDataExtractor
   rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
 -
-  id: apacheconeu2016
-  internalId:
-  conference: apachecon
-  year: eu2016
+  id: acna2018
+  conference: apachecon-na
+  year: 2018
   talksUri:
     conferenceData: https://${conferenceId}.sched.org/api/site/sync?api_key=${conferenceApiKey}
     eventsData: https://${conferenceId}.sched.org/api/session/list?api_key=${conferenceApiKey}&custom_data=Y&format=json
-  backupUri: apacheconeu2016-2017-backup.raw
-  url: http://apachecon.dukecon.org/${year}
-  homeUrl: apacheconeu2016.sched.org
-  name: ApacheCon Europe 2016
-  startDate: 2016-11-16
-  endDate: 2016-11-18
-  extractorClass: org.dukecon.server.repositories.sched.SchedDataExtractor
-  rawDataMapperClass: org.dukecon.server.repositories.sched.SchedJsonMapper
+  backupUri: apachecon-na-2018.json
+  url: http://apachecon-na.dukecon.org/${year}
+  homeUrl: http://apachecon.com/
+  name: ApacheCon North America 2018
+  startDate: 2018-09-24
+  endDate: 2018-09-29
+  extractorClass: org.dukecon.server.repositories.apache.ApacheDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.apache.ApacheJsonMapper

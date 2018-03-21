@@ -16,14 +16,14 @@ class ConferencesConfigurationTests {
     @Before
     public void setUp() throws Exception {
         config = ConferencesConfiguration.fromFile('conferences-test.yml',
-                [conferenceId:'apacheconeu2016', conferenceApiKey:'foobar'])
+                [conferenceId:'acna2018', conferenceApiKey:'foobar'])
         conferences = config.conferences
     }
 
     @Test
     public void parseConferencesFromYml() {
         assert conferences.size() == 3
-        assert conferences.name == ['JavaLand 2016', 'Herbstcampus 2016', 'ApacheCon Europe 2016']
+        assert conferences.name == ['JavaLand 2016', 'Herbstcampus 2016', 'ApacheCon North America 2018']
         assert conferences[0].url == 'http://javaland.dukecon.org/2016'
         assert conferences[0].talksUri instanceof Map
         assert conferences[0].startDate.class == LocalDate
