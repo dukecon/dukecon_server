@@ -157,6 +157,10 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
     public Styles getConferenceStyles(String conferenceId) {
         ConferencesConfiguration.Conference conference
                 = conferenceConfigurationService.getConference(conferenceId);
+        if(conference == null) {
+            log.warn("Conference with id {} not found", conferenceId);
+            return null;
+        }
         return new Styles(conference.getStyles());
     }
 }

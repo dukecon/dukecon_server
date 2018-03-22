@@ -63,14 +63,23 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
         this.rawDataMapper.initMapper()
         this.conferenceJson = this.rawDataMapper.asMap().eventsData.rooms
         ParseContext ctx = new ParseContext()
-        ctx.languages.put("EN", new Language("EN", "EN", 1, [EN: "English"], null))
+        ctx.languages.put("en", new Language("en", "en", 1, [en: "English"], null))
         parseRooms(ctx, conferenceJson)
+
+        MetaData metaData = MetaData.builder()
+                .languages(new ArrayList<Speaker>(ctx.languages.values()))
+                .eventTypes(new ArrayList<Speaker>(ctx.eventTypes.values()))
+                .tracks(new ArrayList<Speaker>(ctx.tracks.values()))
+                .locations(new ArrayList<Speaker>(ctx.locations.values()))
+                .audiences(new ArrayList<Speaker>(ctx.audiences.values()))
+                .build()
         Conference conference = Conference.builder().id(conferenceId)
                 .name(conferenceName)
                 .url(conferenceUrl)
                 .homeUrl(conferenceHomeUrl)
                 .events(new ArrayList<Event>(ctx.events.values()))
                 .speakers(new ArrayList<Speaker>(ctx.speakers.values()))
+                .metaData(metaData)
                 .build()
         return conference
     }
@@ -110,7 +119,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                 Location location = Location.builder()
                         .id(roomName)
                         .order(1)
-                        .names([EN: roomName])
+                        .names([en: roomName])
                         .build()
                 ctx.locations.put(roomName, location)
             }
@@ -119,7 +128,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                 Track track = Track.builder()
                         .id(trackName)
                         .order(1)
-                        .names([EN: trackName])
+                        .names([en: trackName])
                         .build()
                 ctx.tracks.put(trackName, track)
             }
@@ -128,9 +137,17 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                 EventType type = EventType.builder()
                         .id(eventType)
                         .order(1)
-                        .names([EN: eventType])
+                        .names([en: eventType])
                         .build()
                 ctx.eventTypes.put(eventType, type)
+            }
+            if(!ctx.audiences.containsKey("dev")) {
+                Audience audience = Audience.builder()
+                        .id("dev")
+                        .order(1)
+                        .names([en: "Devlopers"])
+                        .build()
+                ctx.audiences.put("dev", audience);
             }
 
             String eventId = json.talk.id
@@ -140,11 +157,12 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                     .type(ctx.eventTypes.get(eventType))
                     .location(ctx.locations.get(roomName))
                     .start(LocalDateTime.ofInstant(
-                        new Date(Long.valueOf((String) json.starttime)).toInstant(), ZoneId.systemDefault()))
+                        new Date(Long.valueOf((String) json.starttime) * 1000).toInstant(), ZoneId.systemDefault()))
                     .end(LocalDateTime.ofInstant(
-                        new Date(Long.valueOf((String) json.endtime)).toInstant(), ZoneId.systemDefault()))
+                        new Date(Long.valueOf((String) json.endtime) * 1000).toInstant(), ZoneId.systemDefault()))
                     .speakers(Collections.singletonList(ctx.speakers.get(speakerName)))
-                    .language(ctx.languages.get("EN"))
+                    .language(ctx.languages.get("en"))
+                    .audience(ctx.audiences.get("dev"))
                     .title((String) json.talk.title)
                     .abstractText((String) json.talk.description)
                     .build()
@@ -153,11 +171,12 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
     }
 
     private static class ParseContext {
+        private Map<String, Audience> audiences = new HashMap<>()
         private Map<String, Event> events = new HashMap<>()
+        private Map<String, EventType> eventTypes = new HashMap<>()
         private Map<String, Location> locations = new HashMap<>()
         private Map<String, Speaker> speakers = new HashMap<>()
         private Map<String, Track> tracks = new HashMap<>()
-        private Map<String, EventType> eventTypes = new HashMap<>()
         private Map<String, Language> languages = new HashMap<>()
     }
 
