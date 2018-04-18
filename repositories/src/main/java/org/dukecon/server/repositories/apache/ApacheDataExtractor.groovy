@@ -96,9 +96,11 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
     }
 
     private static void parseDay(ParseContext ctx, String roomName, def json) {
-        List<Map> slots = json.get("slots")
-        for(Map slot : slots) {
-            parseSlot(ctx, roomName, slot)
+        if(json.slots) {
+            List<Map> slots = json.slots
+            for (Map slot : slots) {
+                parseSlot(ctx, roomName, slot)
+            }
         }
     }
 
@@ -106,11 +108,20 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
         if(json.talk) {
             String speakerName = json.talk.speaker
             if (!ctx.speakers.containsKey(speakerName)) {
+                String firstName
+                String lastName
+                if(speakerName.contains(" ")) {
+                    firstName = speakerName.split(" ")[0]
+                    lastName = speakerName.split(" ")[1]
+                } else {
+                    firstName = speakerName
+                    lastName = ""
+                }
                 Speaker speaker = Speaker.builder()
                         .id(speakerName)
                         .name(speakerName)
-                        .firstname(speakerName.split(" ")[0])
-                        .lastname(speakerName.split(" ")[1])
+                        .firstname(firstName)
+                        .lastname(lastName)
                         .bio((String) json.talk.bio)
                         .build()
                 ctx.speakers.put(speakerName, speaker)
