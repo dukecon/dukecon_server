@@ -31,3 +31,6 @@
     reverse: '#fff'
     highlight: '#ddee55'
     alternate: '#bf5a00'
+  feedbackServer:
+    url: 'http://localhost:8080/rest/feedback/event/javaland2016'
+    timeSlotVisible: 120 # in minutes from start of the talk, -1 means at any time (testing only)

@@ -115,6 +115,10 @@ class ConferencesConfiguration {
 
         Class rawDataMapperClass
 
+        Map<String, String> feedbackServer = [
+                timeSlotVisible: 120
+        ]
+
         static Conference of(String id, String name, String url, String homeUrl) {
             new Conference(id: id, name: name, url: url, homeUrl: homeUrl)
         }
