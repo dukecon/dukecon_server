@@ -10,4 +10,4 @@ alter table filters_languages add constraint FK_gyvmwtcb5t1ffcib3u14ypmdk foreig
 alter table filters_levels add constraint FK_dy28tlci377xqsgosftuce6li foreign key (filters_id) references filters;
 alter table filters_locations add constraint FK_dv4jhsj5ot1jpic6yedya1770 foreign key (filters_id) references filters;
 alter table filters_tracks add constraint FK_e4jnka1m8nnq02h3refgwjic2 foreign key (filters_id) references filters;
-create sequence if not exists hibernate_sequence;
+create sequence hibernate_sequence;
