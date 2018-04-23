@@ -80,6 +80,10 @@ class CurrentConferenceResource {
                     conferences : "../rest/conferences/${c.id}".toString(),
                     events      : "../rest/eventsBooking/${c.id}".toString(),
                     keycloak    : "../rest/keycloak.json",
+                    feedbackServer: [
+                            active: c.feedbackServer.active,
+                            timeSlotVisible: c.feedbackServer.timeSlotVisible as int
+                    ]
             ] : [:]).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();

@@ -30,3 +30,6 @@
     reverse: '#fff'
     highlight: '#ddee55'
     alternate: '#bf5a00'
+  feedbackServer:
+    active: true
+    timeSlotVisible: -1 # in minutes from start of the talk, -1 means at any time (testing only)
