@@ -177,9 +177,9 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                     .type(ctx.eventTypes.get(eventType))
                     .location(ctx.locations.get(roomName))
                     .start(LocalDateTime.ofInstant(
-                        new Date(Long.valueOf((String) json.starttime) * 1000).toInstant(), ZoneId.systemDefault()))
+                        new Date((Long.valueOf((String) json.starttime) * 1000)-86400).toInstant(), ZoneId.systemDefault()))
                     .end(LocalDateTime.ofInstant(
-                        new Date(Long.valueOf((String) json.endtime) * 1000).toInstant(), ZoneId.systemDefault()))
+                        new Date((Long.valueOf((String) json.endtime) * 1000-86400)).toInstant(), ZoneId.systemDefault()))
                     .speakers(curTalksSpeakers)
                     .language(ctx.languages.get("en"))
                     .audience(ctx.audiences.get("dev"))
