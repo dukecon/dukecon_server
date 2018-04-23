@@ -18,6 +18,8 @@ pipeline {
                     script {
                         if (env.BRANCH_NAME == "develop") {
                             sh 'mvn -Pdocker clean deploy'
+                        else if (env.BRANCH_NAME == "feature/apachecon") {
+                            sh 'mvn -Pdocker clean package docker:build'
                         } else {
                             sh 'mvn clean verify'
                         }
@@ -32,6 +34,8 @@ pipeline {
                         if (env.BRANCH_NAME == "develop") {
                             sh 'mvn -Pdocker docker:push'
                             build 'docker_restart_develop_latest'
+                        else if (env.BRANCH_NAME == "feature/apachecon") {
+                            sh 'mvn -Pdocker docker:push'
                         } else {
                             echo 'No Docker action required'
                         }
