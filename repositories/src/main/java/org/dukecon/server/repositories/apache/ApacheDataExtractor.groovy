@@ -1,6 +1,7 @@
 package org.dukecon.server.repositories.apache
 
 import groovy.util.logging.Slf4j
+import org.apache.commons.lang3.text.WordUtils
 import org.dukecon.model.*
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.conference.SpeakerImageService
@@ -107,30 +108,38 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
     private static void parseSlot(ParseContext ctx, String roomName, def json) {
         if(json.talk) {
             String speakerName = json.talk.speaker
-            if (!ctx.speakers.containsKey(speakerName)) {
-                String firstName
-                String lastName
-                if(speakerName.contains(" ")) {
-                    firstName = speakerName.split(" ")[0]
-                    lastName = speakerName.split(" ")[1]
-                } else {
-                    firstName = speakerName
-                    lastName = ""
+            String[] speakers = speakerName.split(",")
+            List<Speaker> curTalksSpeakers = new LinkedList<>()
+            for(String speakerString : speakers) {
+                speakerString = speakerString.trim()
+                if (!ctx.speakers.containsKey(speakerString)) {
+                    String firstName
+                    String lastName
+                    if(speakerString.contains(" ")) {
+                        firstName = WordUtils.capitalizeFully(speakerString.split(" ")[0].trim())
+                        lastName = WordUtils.capitalizeFully(speakerString.substring(firstName.length()).trim())
+                    } else {
+                        firstName = WordUtils.capitalizeFully(speakerString)
+                        lastName = ""
+                    }
+                    Speaker speaker = Speaker.builder()
+                            .id(speakerString)
+                            .name(speakerString)
+                            .firstname(firstName)
+                            .lastname(lastName)
+                            .bio((String) json.talk.bio)
+                            .build()
+                    ctx.speakers.put(speakerString, speaker)
+                    curTalksSpeakers.add(speaker)
                 }
-                Speaker speaker = Speaker.builder()
-                        .id(speakerName)
-                        .name(speakerName)
-                        .firstname(firstName)
-                        .lastname(lastName)
-                        .bio((String) json.talk.bio)
-                        .build()
-                ctx.speakers.put(speakerName, speaker)
             }
             if (!ctx.locations.containsKey(roomName)) {
                 Location location = Location.builder()
                         .id(roomName)
                         .order(1)
                         .names([en: roomName])
+                        // TODO: Dummy for now ...
+                        .capacity(100)
                         .build()
                 ctx.locations.put(roomName, location)
             }
@@ -171,11 +180,12 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                         new Date(Long.valueOf((String) json.starttime) * 1000).toInstant(), ZoneId.systemDefault()))
                     .end(LocalDateTime.ofInstant(
                         new Date(Long.valueOf((String) json.endtime) * 1000).toInstant(), ZoneId.systemDefault()))
-                    .speakers(Collections.singletonList(ctx.speakers.get(speakerName)))
+                    .speakers(curTalksSpeakers)
                     .language(ctx.languages.get("en"))
                     .audience(ctx.audiences.get("dev"))
                     .title((String) json.talk.title)
                     .abstractText((String) json.talk.description)
+                    .documents(new HashMap<String, String>())
                     .build()
             ctx.events.put(eventId, event)
         }
