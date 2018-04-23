@@ -45,8 +45,7 @@
                                         <from>openjdk:8-jre-alpine</from>
                                         <maintainer>gerd@aschemann.net</maintainer>
                                         <tags>
-                                            <tag>${project.version}</tag>
-                                            <tag>latest</tag>
+                                            <tag>apachecon</tag>
                                         </tags>
                                         <ports>
                                             <port>8080</port>
