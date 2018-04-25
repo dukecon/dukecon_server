@@ -134,7 +134,8 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                             .bio((String) json.talk.bio)
                             .build()
                     ctx.speakers.put(speakerString, speaker)
-                    curTalksSpeakers.add(speaker)
+                } else {
+                    curTalksSpeakers.add(ctx.speakers.get(speakerString))
                 }
             }
             if (!ctx.locations.containsKey(roomName)) {
@@ -225,6 +226,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
             entry.value.order = i
             i++
         }
+
     }
 
     private static class ParseContext {
