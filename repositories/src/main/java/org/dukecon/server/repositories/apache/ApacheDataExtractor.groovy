@@ -82,6 +82,10 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                 .speakers(new ArrayList<Speaker>(ctx.speakers.values()))
                 .metaData(metaData)
                 .build()
+
+        // Tweak the import ...
+        postProcess(conference)
+
         return conference
     }
 
@@ -167,7 +171,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                         .order(1)
                         .names([en: "Devlopers"])
                         .build()
-                ctx.audiences.put("dev", audience);
+                ctx.audiences.put("dev", audience)
             }
 
             String eventId = json.talk.id
@@ -187,7 +191,39 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                     .abstractText((String) json.talk.description)
                     .documents(new HashMap<String, String>())
                     .build()
+
+            for(Speaker speaker : curTalksSpeakers) {
+                if(speaker.events == null) {
+                    speaker.events = new LinkedList<>()
+                }
+                speaker.events.add(event)
+            }
+
             ctx.events.put(eventId, event)
+        }
+    }
+
+    private static void postProcess(Conference conference) {
+        // Sort the location names
+        Map<String, Location> locations = new TreeMap<>(new AlphabeticalComparator())
+        for(Location location : conference.metaData.locations) {
+            locations.put(location.names.get("en"), location)
+        }
+        int i = 0
+        for(Map.Entry<String, Location> entry : locations.entrySet()) {
+            entry.value.order = i
+            i++
+        }
+
+        // Sort the track names
+        Map<String, Track> tracks = new TreeMap<>(new AlphabeticalComparator())
+        for(Track track : conference.metaData.tracks) {
+            tracks.put(track.names.get("en"), track)
+        }
+        i = 0
+        for(Map.Entry<String, Track> entry : tracks.entrySet()) {
+            entry.value.order = i
+            i++
         }
     }
 
@@ -199,6 +235,22 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
         private Map<String, Speaker> speakers = new HashMap<>()
         private Map<String, Track> tracks = new HashMap<>()
         private Map<String, Language> languages = new HashMap<>()
+    }
+
+    private static class AlphabeticalComparator implements Comparator<String> {
+        @Override
+        int compare(String o1, String o2) {
+            if (o1 == null) {
+                return -1
+            }
+            if (o2 == null) {
+                return 1
+            }
+            if (o1.equals( o2 )) {
+                return 0
+            }
+            return o1.compareToIgnoreCase(o2)
+        }
     }
 
 }
