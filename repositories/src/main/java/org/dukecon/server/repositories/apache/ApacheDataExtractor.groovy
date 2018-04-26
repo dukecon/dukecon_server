@@ -206,8 +206,8 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
 
     private static int getCapacity(String roomName) {
         switch (roomName) {
-            case "Ball room": return 250
-            case "Salle De Bal": return 250
+            case "Ballroom": return 250
+            case "Keynotes": return 250
             case "Viger A": return 60
             case "Viger B": return 60
             case "Viger C": return 60
