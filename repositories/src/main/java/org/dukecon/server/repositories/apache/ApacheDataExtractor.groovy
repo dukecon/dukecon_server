@@ -144,8 +144,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                         .id(roomName)
                         .order(1)
                         .names([en: roomName])
-                        // TODO: Dummy for now ...
-                        .capacity(100)
+                        .capacity(getCapacity(roomName))
                         .build()
                 ctx.locations.put(roomName, location)
             }
@@ -205,6 +204,18 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
         }
     }
 
+    private static int getCapacity(String roomName) {
+        switch (roomName) {
+            case "Ball room": return 250
+            case "Salle De Bal": return 250
+            case "Viger A": return 60
+            case "Viger B": return 60
+            case "Viger C": return 60
+            case "Terrasse" : return 30
+            default: return 100
+        }
+    }
+
     private static void postProcess(Conference conference) {
         // Sort the location names
         Map<String, Location> locations = new TreeMap<>(new AlphabeticalComparator())
@@ -227,7 +238,6 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
             entry.value.order = i
             i++
         }
-
     }
 
     private static class ParseContext {
