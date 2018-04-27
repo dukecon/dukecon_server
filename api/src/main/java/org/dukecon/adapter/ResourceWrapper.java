@@ -18,7 +18,17 @@ public interface ResourceWrapper {
      * @return wrapped @{@link URL} resource
      */
     static ResourceWrapper of(final URL url) {
-        return () -> url.openStream();
+        return new ResourceWrapper() {
+            @Override
+            public InputStream getStream() throws IOException {
+                return url.openStream();
+            }
+
+            @Override
+            public String name() {
+                return String.format("URL: %s", url.toString());
+            }
+        };
     }
 
     /**
@@ -26,7 +36,17 @@ public interface ResourceWrapper {
      * @return wrapped @{@link File} resource
      */
     static ResourceWrapper of(final File file) {
-        return () ->  new FileInputStream(file);
+        return new ResourceWrapper() {
+            @Override
+            public InputStream getStream() throws IOException {
+                return new FileInputStream(file);
+            }
+
+            @Override
+            public String name() {
+                return String.format("File: %s", file.getName());
+            }
+        };
     }
 
     /**
@@ -38,7 +58,17 @@ public interface ResourceWrapper {
      * @return wraps @{@link URL}, @{@link File} from resource name.
      */
     static ResourceWrapper of(final String resource) {
-        return () ->  resource.startsWith("http") ? ResourceWrapper.of(new URL(resource)).getStream() : resource.startsWith("file:") ? ResourceWrapper.of(new File(resource.split(":", 2)[1])).getStream() : ResourceWrapper.class.getClassLoader().getResourceAsStream(resource);
+        return new ResourceWrapper() {
+            @Override
+            public InputStream getStream() throws IOException {
+                return resource.startsWith("http") ? ResourceWrapper.of(new URL(resource)).getStream() : resource.startsWith("file:") ? ResourceWrapper.of(new File(resource.split(":", 2)[1])).getStream() : ResourceWrapper.class.getClassLoader().getResourceAsStream(resource);
+            }
+
+            @Override
+            public String name() {
+                return String.format("Resource: %s", resource);
+            }
+        };
     }
 
     /**
@@ -48,4 +78,8 @@ public interface ResourceWrapper {
      * @throws IOException if inputstream could not be loaded from resource name
      */
     InputStream getStream() throws IOException;
+
+    default String name() {
+        return "unknown";
+    }
 }

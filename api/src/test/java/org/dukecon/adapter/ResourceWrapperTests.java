@@ -19,6 +19,7 @@ public class ResourceWrapperTests {
     @Test
     public void testWrapFromExistingUrl() throws IOException {
         assertNotNull(ResourceWrapper.of(new URL(GOOGLE_URL)).getStream());
+        assertEquals("URL: http://www.google.com", ResourceWrapper.of(new URL(GOOGLE_URL)).name());
     }
 
     @Test
@@ -30,12 +31,14 @@ public class ResourceWrapperTests {
             fail("may not create stream of not existing URL");
         } catch (IOException e) {
             assertEquals("doesnotexist", e.getMessage());
+            assertEquals("URL: http://doesnotexist", wrapper.name());
         }
     }
 
     @Test
     public void testWrapFromExistingFile() throws Exception {
         assertNotNull(ResourceWrapper.of(new File("pom.xml")).getStream());
+        assertEquals("File: pom.xml", ResourceWrapper.of(new File("pom.xml")).name());
     }
 
     @Test
@@ -47,12 +50,14 @@ public class ResourceWrapperTests {
             fail("may not create stream of not existing file");
         } catch (IOException e) {
             assertTrue(e.getMessage().startsWith("notexists.txt ("));
+            assertEquals("File: notexists.txt", wrapper.name());
         }
     }
 
     @Test
     public void testWrapFromStringAsUrl() throws Exception {
         assertNotNull(ResourceWrapper.of(GOOGLE_URL).getStream());
+        assertEquals("Resource: http://www.google.com", ResourceWrapper.of(GOOGLE_URL).name());
     }
 
     @Test
@@ -64,6 +69,7 @@ public class ResourceWrapperTests {
             fail("may not create stream of not existing URL");
         } catch (IOException e) {
             assertEquals("doesnotexist", e.getMessage());
+            assertEquals("Resource: http://doesnotexist", wrapper.name());
         }
     }
 
@@ -81,16 +87,19 @@ public class ResourceWrapperTests {
             fail("may not create stream of not existing file");
         } catch (IOException e) {
             assertTrue(e.getMessage().startsWith("notexists.txt ("));
+            assertEquals("Resource: file:notexists.txt", wrapper.name());
         }
     }
 
     @Test
     public void testWrapFromStringAsResourceAsStream() throws Exception {
         assertNotNull(ResourceWrapper.of("org/dukecon/model/Speaker.class").getStream());
+        assertEquals("Resource: org/dukecon/model/Speaker.class", ResourceWrapper.of("org/dukecon/model/Speaker.class").name());
     }
 
     @Test
     public void testWrapFromClasspathFile() throws Exception {
         assertNotNull(ResourceWrapper.of("versioneye.properties").getStream());
+        assertEquals("Resource: versioneye.properties", ResourceWrapper.of("versioneye.properties").name());
     }
 }
