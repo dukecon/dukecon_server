@@ -81,7 +81,7 @@ class CurrentConferenceResource {
                     events      : "../rest/eventsBooking/${c.id}".toString(),
                     keycloak    : "../rest/keycloak.json",
                     feedbackServer: [
-                            active: c.feedbackServer.active,
+                            active: c.feedbackServer.active instanceof String ? c.feedbackServer.active.toBoolean() : (c.feedbackServer.active ?: true),
                             timeSlotVisible: c.feedbackServer.timeSlotVisible as int
                     ]
             ] : [:]).build();
