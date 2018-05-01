@@ -113,9 +113,11 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
         if(json.talk) {
             String speakerName = json.talk.speaker
             String[] speakers = speakerName.split(",")
+            String[] speakerBios = ((String) json.talk.bio).split("\\|")
             List<Speaker> curTalksSpeakers = new LinkedList<>()
-            for(String speakerString : speakers) {
-                speakerString = speakerString.trim()
+            for(int i = 0; i < speakers.length; i++) {
+                String speakerString = speakers[i].trim()
+                String speakerBio = speakerBios[Math.min(i, speakerBios.length - 1)].trim()
                 if (!ctx.speakers.containsKey(speakerString)) {
                     String firstName
                     String lastName
@@ -131,7 +133,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                             .name(speakerString)
                             .firstname(firstName)
                             .lastname(lastName)
-                            .bio((String) json.talk.bio)
+                            .bio(speakerBio)
                             .build()
                     ctx.speakers.put(speakerString, speaker)
                     curTalksSpeakers.add(speaker)
