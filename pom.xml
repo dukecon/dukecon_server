@@ -10,7 +10,7 @@
 
 	<groupId>org.dukecon</groupId>
 	<artifactId>dukecon-server</artifactId>
-	<version>1.4-SNAPSHOT</version>
+	<version>1.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
     <developers>
@@ -76,7 +76,7 @@
         <docker-maven-plugin.version>0.24.0</docker-maven-plugin.version>
         <flyway-maven-plugin.version>4.0.1</flyway-maven-plugin.version>
         <freemarker.version>2.3.23</freemarker.version>
-        <git-commit-id-plugin.version>2.2.1</git-commit-id-plugin.version>
+        <git-commit-id-plugin.version>2.2.3</git-commit-id-plugin.version>
         <gitlog-maven-plugin.version>1.13.2</gitlog-maven-plugin.version>
         <google-guava.version>19.0</google-guava.version>
         <graphene-webdriver.version>2.0.3.Final</graphene-webdriver.version>
@@ -640,6 +640,9 @@
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
                 <version>${git-commit-id-plugin.version}</version>
+                <configuration>
+                    <excludeProperties>tags</excludeProperties>
+                </configuration>
             </plugin>
         </plugins>
     </build>
