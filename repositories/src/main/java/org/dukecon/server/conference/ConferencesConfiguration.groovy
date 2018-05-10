@@ -117,7 +117,7 @@ class ConferencesConfiguration {
 
         Map<String, String> feedbackServer = [
                 timeSlotVisible: -1,
-                active: true
+                active: false
         ]
 
         static Conference of(String id, String name, String url, String homeUrl) {
