@@ -1,0 +1,35 @@
+-
+  id: acna18
+  internalId: 123456
+  conference: acna
+  year: 2018
+  talksUri:
+    eventsData: https://cfp.apachecon.com/api/slots.lua?conference=apachecon-north-america-2018&token=pPZh4h7uEDfLq0A3Z3eA
+#    eventsData: https://cfp.apachecon.com/api/slots.lua?conference=apachecon-north-america-2018
+#    speakersData: https://${conferenceId}.sched.org/api/session/list?api_key=${conferenceApiKey}&custom_data=Y&format=json
+  backupUri: apachecon-na-2018.json
+  url: http://apachecon-na.dukecon.org/${year}
+  homeUrl: http://apachecon.com/
+  imprint:
+    en: https://www.javaland.eu/en/imprint/
+  termsOfUse:
+    en: https://www.javaland.eu/en/term-of-use/
+  privacy:
+    en: https://www.javaland.eu/en/privacy/
+  name: ApacheCon North America 2018
+  startDate: 2018-09-24
+  endDate: 2018-09-27
+  authEnabled: true
+  extractorClass: org.dukecon.server.repositories.apache.ApacheDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.apache.ApacheJsonMapper
+  styles:
+    dark: '#1aa3b1'
+    darkLink: 'gray'
+    hover: '#00c3d7'
+    hoverLink: '#00c3d7'
+    reverse: '#fff'
+    highlight: '#ddee55'
+    alternate: '#bf5a00'
+  feedbackServer:
+    active: true
+    timeSlotVisible: -1 # in minutes from start of the talk, -1 means at any time (testing only)

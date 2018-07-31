@@ -1,5 +1,8 @@
 package org.dukecon.server.repositories.apache
 
+import com.timgroup.jgravatar.Gravatar
+import com.timgroup.jgravatar.GravatarDefaultImage
+import com.timgroup.jgravatar.GravatarRating
 import groovy.util.logging.Slf4j
 import org.apache.commons.lang3.text.WordUtils
 import org.dukecon.model.*
@@ -140,6 +143,13 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                 } else {
                     curTalksSpeakers.add(ctx.speakers.get(speakerString))
                 }
+                // If this is the first speaker, set the email address.
+                if((i == 0) && (ctx.speakers.get(speakerString).getEmail() == null)) {
+                    String email = json.email
+                    if(email != null) {
+                        ctx.speakers.get(speakerString).setEmail(email)
+                    }
+                }
             }
             if (!ctx.locations.containsKey(roomName)) {
                 Location location = Location.builder()
@@ -218,7 +228,20 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
         }
     }
 
-    private static void postProcess(Conference conference) {
+    private void postProcess(Conference conference) {
+        // Try to get Gravatar images for each speaker with an email.
+        for(Speaker speaker : conference.speakers) {
+            if(speaker.email != null) {
+                Gravatar gravatar = new Gravatar().setSize(275)
+                        .setRating(GravatarRating.GENERAL_AUDIENCES)
+                        .setDefaultImage(GravatarDefaultImage.IDENTICON)
+                byte[] jpg = gravatar.download(speaker.email)
+                if(jpg != null) {
+                    speaker.photoId = speakerImageService.addImage(jpg)
+                }
+            }
+        }
+
         // Sort the location names
         Map<String, Location> locations = new TreeMap<>(new AlphabeticalComparator())
         for(Location location : conference.metaData.locations) {
