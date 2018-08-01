@@ -1,6 +1,7 @@
 package org.dukecon.server.repositories.doag
 
 import groovy.util.logging.Slf4j
+import org.apache.commons.lang3.StringUtils
 import org.dukecon.model.*
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.conference.SpeakerImageService
@@ -153,11 +154,17 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
     }
 
     List<Location> getLocations() {
-        return talksJson.findAll { it.RAUMNAME }.collect { [it.RAUM_NR, it.RAUMNAME, it.SITZPLATZ?.replace('.','')?.toInteger() ?: 0] }.unique().sort {
-            it.first()
-        }.withIndex().collect { room, index ->
-            Location.builder().id(index + 1 as String).order(room.first()?.toInteger()).capacity(room[2]).names(de: room[1], en: room[1]).icon("location_${room.first()}.png").build()
-        }
+        return talksJson.findAll {
+            it.RAUMNAME }.collect {
+                [it.RAUM_NR,
+                 it.RAUMNAME,
+                 StringUtils.isNumeric(it.SITZPLATZ ?: "") ? it.SITZPLATZ?.replace('.','')?.toInteger() : 0
+                ]
+            }.unique().sort {
+                    it.first()
+            }.withIndex().collect { room, index ->
+                Location.builder().id(index + 1 as String).order(room.first()?.toInteger()).capacity(room[2]).names(de: room[1], en: room[1]).icon("location_${room.first()}.png").build()
+            }
     }
 
     List<EventType> getEventTypes() {

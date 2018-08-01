@@ -105,6 +105,10 @@
                     <groupId>com.netflix.archaius</groupId>
                     <artifactId>archaius-core</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
