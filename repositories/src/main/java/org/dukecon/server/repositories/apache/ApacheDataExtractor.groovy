@@ -239,6 +239,8 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                 if(jpg != null) {
                     speaker.photoId = speakerImageService.addImage(jpg)
                 }
+                // Reset the email as we don't want to display it.
+                speaker.email = null
             }
         }
 
