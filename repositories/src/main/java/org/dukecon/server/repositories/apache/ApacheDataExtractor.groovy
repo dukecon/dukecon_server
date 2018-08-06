@@ -188,6 +188,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
             }
 
             String eventId = json.talk.id
+
             Event event = Event.builder()
                     .id(eventId)
                     .track(ctx.tracks.get(trackName))
@@ -204,6 +205,12 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                     .abstractText((String) json.talk.description)
                     .documents(new HashMap<String, String>())
                     .build()
+
+            // Check if a zip with presentation content exists. If if does, add a document to the list.
+            String presentationUrl = "https://apachecon.com/acna18/presentations/" + eventId + ".zip"
+            if(getResponseCode(presentationUrl) == HttpURLConnection.HTTP_OK) {
+                event.documents = [Presentation: presentationUrl]
+            }
 
             for(Speaker speaker : curTalksSpeakers) {
                 if(speaker.events == null) {
@@ -291,6 +298,15 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
             }
             return o1.compareToIgnoreCase(o2)
         }
+    }
+
+    private static int getResponseCode(String urlString) throws MalformedURLException, IOException {
+        URL u = new URL(urlString);
+        HttpURLConnection huc =  (HttpURLConnection)  u.openConnection();
+        huc.setRequestMethod("GET");
+        huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
+        huc.connect();
+        return huc.getResponseCode();
     }
 
 }
