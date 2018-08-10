@@ -250,7 +250,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                     // Try to get Gravatar images for each speaker with an email.
                     Gravatar gravatar = new Gravatar().setSize(275)
                             .setRating(GravatarRating.GENERAL_AUDIENCES)
-                            .setDefaultImage(GravatarDefaultImage.IDENTICON)
+                            .setDefaultImage(GravatarDefaultImage.HTTP_404)
                     image = gravatar.download(speaker.email)
                 } else if (speaker.email.startsWith("http")) {
                     // Try to fetch the image.
