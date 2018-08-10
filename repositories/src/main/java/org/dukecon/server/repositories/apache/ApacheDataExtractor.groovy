@@ -146,7 +146,8 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                 // If this is the first speaker, set the email address.
                 if ((i == 0) && (ctx.speakers.get(speakerString).getEmail() == null)) {
                     String email = json.email
-                    if (email != null) {
+                    // Prevent Rich's Gravatar from appearing everywhere.
+                    if ((email != null) && !email.contains("rbowen")) {
                         ctx.speakers.get(speakerString).setEmail(email)
                     }
                 }
@@ -195,9 +196,9 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                     .type(ctx.eventTypes.get(eventType))
                     .location(ctx.locations.get(roomName))
                     .start(LocalDateTime.ofInstant(
-                    new Date((Long.valueOf((String) json.starttime) - 86400) * 1000).toInstant(), ZoneId.systemDefault()))
+                        new Date((Long.valueOf((String) json.starttime) - 86400) * 1000).toInstant(), ZoneId.systemDefault()))
                     .end(LocalDateTime.ofInstant(
-                    new Date((Long.valueOf((String) json.endtime) - 86400) * 1000).toInstant(), ZoneId.systemDefault()))
+                        new Date((Long.valueOf((String) json.endtime) - 86400) * 1000).toInstant(), ZoneId.systemDefault()))
                     .speakers(curTalksSpeakers)
                     .language(ctx.languages.get("en"))
                     .audience(ctx.audiences.get("dev"))
