@@ -37,7 +37,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
     private final String conferenceName
 
     ApacheDataExtractor(ConferencesConfiguration.Conference config, RawDataMapper rawDataMapper, SpeakerImageService speakerImageService) {
-        log.debug ("Extracting data for '{}'", config)
+        log.debug("Extracting data for '{}'", config)
         this.conferenceId = config.id
         this.rawDataMapper = rawDataMapper
         this.startDate = config.startDate
@@ -97,14 +97,14 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
         for (Map room : rooms) {
             String roomName = room.get("name")
             List<Map> days = (List<Map>) room.get("days")
-            for(Map day : days) {
+            for (Map day : days) {
                 parseDay(ctx, roomName, day)
             }
         }
     }
 
     private static void parseDay(ParseContext ctx, String roomName, def json) {
-        if(json.slots) {
+        if (json.slots) {
             List<Map> slots = json.slots
             for (Map slot : slots) {
                 parseSlot(ctx, roomName, slot)
@@ -113,18 +113,18 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
     }
 
     private static void parseSlot(ParseContext ctx, String roomName, def json) {
-        if(json.talk) {
+        if (json.talk) {
             String speakerName = json.talk.speaker
             String[] speakers = speakerName.split(",")
             String[] speakerBios = ((String) json.talk.bio).split("\\|")
             List<Speaker> curTalksSpeakers = new LinkedList<>()
-            for(int i = 0; i < speakers.length; i++) {
+            for (int i = 0; i < speakers.length; i++) {
                 String speakerString = speakers[i].trim()
                 String speakerBio = speakerBios[Math.min(i, speakerBios.length - 1)].trim()
                 if (!ctx.speakers.containsKey(speakerString)) {
                     String firstName
                     String lastName
-                    if(speakerString.contains(" ")) {
+                    if (speakerString.contains(" ")) {
                         firstName = WordUtils.capitalizeFully(speakerString.split(" ")[0].trim())
                         lastName = WordUtils.capitalizeFully(speakerString.substring(firstName.length()).trim())
                     } else {
@@ -144,9 +144,9 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                     curTalksSpeakers.add(ctx.speakers.get(speakerString))
                 }
                 // If this is the first speaker, set the email address.
-                if((i == 0) && (ctx.speakers.get(speakerString).getEmail() == null)) {
+                if ((i == 0) && (ctx.speakers.get(speakerString).getEmail() == null)) {
                     String email = json.email
-                    if(email != null) {
+                    if (email != null) {
                         ctx.speakers.get(speakerString).setEmail(email)
                     }
                 }
@@ -178,7 +178,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                         .build()
                 ctx.eventTypes.put(eventType, type)
             }
-            if(!ctx.audiences.containsKey("dev")) {
+            if (!ctx.audiences.containsKey("dev")) {
                 Audience audience = Audience.builder()
                         .id("dev")
                         .order(1)
@@ -195,9 +195,9 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                     .type(ctx.eventTypes.get(eventType))
                     .location(ctx.locations.get(roomName))
                     .start(LocalDateTime.ofInstant(
-                        new Date((Long.valueOf((String) json.starttime)-86400) * 1000).toInstant(), ZoneId.systemDefault()))
+                    new Date((Long.valueOf((String) json.starttime) - 86400) * 1000).toInstant(), ZoneId.systemDefault()))
                     .end(LocalDateTime.ofInstant(
-                        new Date((Long.valueOf((String) json.endtime)-86400) * 1000).toInstant(), ZoneId.systemDefault()))
+                    new Date((Long.valueOf((String) json.endtime) - 86400) * 1000).toInstant(), ZoneId.systemDefault()))
                     .speakers(curTalksSpeakers)
                     .language(ctx.languages.get("en"))
                     .audience(ctx.audiences.get("dev"))
@@ -208,15 +208,22 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
 
             // Check if a zip with presentation content exists. If if does, add a document to the list.
             String presentationUrl = "https://apachecon.com/acna18/presentations/" + eventId + ".zip"
-            if(getResponseCode(presentationUrl) == HttpURLConnection.HTTP_OK) {
+            if (getResponseCode(presentationUrl) == HttpURLConnection.HTTP_OK) {
                 event.documents = [Presentation: presentationUrl]
             }
 
-            for(Speaker speaker : curTalksSpeakers) {
-                if(speaker.events == null) {
+            for (Speaker speaker : curTalksSpeakers) {
+                if (speaker.events == null) {
                     speaker.events = new LinkedList<>()
                 }
                 speaker.events.add(event)
+            }
+
+            String pictureUrl = json.talk.photo
+            if (pictureUrl != null) {
+                // We are mis-using this field as we are resetting it back to null later on
+                // It would be great if it was possible to add properties to Speakers.
+                curTalksSpeakers.get(0).email = pictureUrl
             }
 
             ctx.events.put(eventId, event)
@@ -230,21 +237,27 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
             case "Viger A": return 60
             case "Viger B": return 60
             case "Viger C": return 60
-            case "Terrasse" : return 30
+            case "Terrasse": return 30
             default: return 100
         }
     }
 
     private void postProcess(Conference conference) {
-        // Try to get Gravatar images for each speaker with an email.
-        for(Speaker speaker : conference.speakers) {
-            if(speaker.email != null) {
-                Gravatar gravatar = new Gravatar().setSize(275)
-                        .setRating(GravatarRating.GENERAL_AUDIENCES)
-                        .setDefaultImage(GravatarDefaultImage.IDENTICON)
-                byte[] jpg = gravatar.download(speaker.email)
-                if(jpg != null) {
-                    speaker.photoId = speakerImageService.addImage(jpg)
+        for (Speaker speaker : conference.speakers) {
+            if (speaker.email != null) {
+                byte[] image = null;
+                if (speaker.email.contains("@")) {
+                    // Try to get Gravatar images for each speaker with an email.
+                    Gravatar gravatar = new Gravatar().setSize(275)
+                            .setRating(GravatarRating.GENERAL_AUDIENCES)
+                            .setDefaultImage(GravatarDefaultImage.IDENTICON)
+                    image = gravatar.download(speaker.email)
+                } else if (speaker.email.startsWith("http")) {
+                    // Try to fetch the image.
+                    image = downloadUrl(speaker.email)
+                }
+                if(image != null) {
+                    speaker.photoId = speakerImageService.addImage(image)
                 }
                 // Reset the email as we don't want to display it.
                 speaker.email = null
@@ -253,22 +266,22 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
 
         // Sort the location names
         Map<String, Location> locations = new TreeMap<>(new AlphabeticalComparator())
-        for(Location location : conference.metaData.locations) {
+        for (Location location : conference.metaData.locations) {
             locations.put(location.names.get("en"), location)
         }
         int i = 0
-        for(Map.Entry<String, Location> entry : locations.entrySet()) {
+        for (Map.Entry<String, Location> entry : locations.entrySet()) {
             entry.value.order = i
             i++
         }
 
         // Sort the track names
         Map<String, Track> tracks = new TreeMap<>(new AlphabeticalComparator())
-        for(Track track : conference.metaData.tracks) {
+        for (Track track : conference.metaData.tracks) {
             tracks.put(track.names.get("en"), track)
         }
         i = 0
-        for(Map.Entry<String, Track> entry : tracks.entrySet()) {
+        for (Map.Entry<String, Track> entry : tracks.entrySet()) {
             entry.value.order = i
             i++
         }
@@ -293,7 +306,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
             if (o2 == null) {
                 return 1
             }
-            if (o1.equals( o2 )) {
+            if (o1.equals(o2)) {
                 return 0
             }
             return o1.compareToIgnoreCase(o2)
@@ -301,12 +314,38 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
     }
 
     private static int getResponseCode(String urlString) throws MalformedURLException, IOException {
-        URL u = new URL(urlString);
-        HttpURLConnection huc =  (HttpURLConnection)  u.openConnection();
-        huc.setRequestMethod("GET");
-        huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
-        huc.connect();
-        return huc.getResponseCode();
+        URL u = new URL(urlString)
+        HttpURLConnection huc = (HttpURLConnection) u.openConnection()
+        huc.setRequestMethod("GET")
+        huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)")
+        huc.connect()
+        return huc.getResponseCode()
+    }
+
+    private static byte[] downloadUrl(String url) {
+        URL u = new URL(url);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        InputStream is = null
+        try {
+            is = u.openStream()
+            byte[] byteChunk = new byte[4096]; // Or whatever size you want to read in at a time.
+            int n
+
+            while ((n = is.read(byteChunk)) > 0) {
+                baos.write(byteChunk, 0, n)
+            }
+        }
+        catch (IOException e) {
+            System.err.printf("Failed while reading bytes from %s: %s", url.toExternalForm(), e.getMessage())
+            e.printStackTrace()
+            // Perform any other exception handling that's appropriate.
+        }
+        finally {
+            if (is != null) {
+                is.close()
+            }
+        }
+        return baos.toByteArray()
     }
 
 }
