@@ -9,4 +9,6 @@ import org.dukecon.model.Styles;
 public interface ConferenceService extends CrudService<Conference> {
 
     Styles getConferenceStyles(String conferenceId);
+    Conference getConference(String conferenceId);
+    boolean refreshConference(String conferenceId);
 }

@@ -33,14 +33,14 @@ class ConferencesResource {
     private final DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE
 
     ConferenceService conferenceService
-    Map<String, ConferenceDataProvider> talkProviders = new HashMap<>()
+//    Map<String, ConferenceDataProvider> talkProviders = new HashMap<>()
     private final ConferencesConfigurationService configurationService
 
     @Inject
     ConferencesResource(ConferenceService conferenceService, ConferencesConfigurationService configurationService, List<ConferenceDataProvider> talkProviders) {
         this.configurationService = configurationService
         this.conferenceService = conferenceService
-        talkProviders.each { this.talkProviders[it.conferenceId] = it }
+//        talkProviders.each { this.talkProviders[it.conferenceId] = it }
     }
 
     @GET
@@ -62,17 +62,18 @@ class ConferencesResource {
     @Path("update/{id}")
     Response updateConference(@PathParam("id") String id) {
         try {
-            if (talkProviders[id] == null)
+            if (conferenceService.getConference(id) == null)
                 return Response.status(Response.Status.NOT_FOUND).build()
-            if (talkProviders[id].update()) {
+            if (conferenceService.refreshConference(id)) {
                 return Response.ok().entity([message: "ok"]).build()
             }
-            if (talkProviders[id].isBackupActive()) {
-                return Response.status(Response.Status.SERVICE_UNAVAILABLE)
-                        .entity([message: "backup active"]).build()
-            }
+//            if (talkProviders[id].isBackupActive()) {
+//                return Response.status(Response.Status.SERVICE_UNAVAILABLE)
+//                        .entity([message: "backup active"]).build()
+//            }
             return Response.status(Response.Status.SERVICE_UNAVAILABLE)
-                    .entity([message: talkProviders[id].staleException.toString()]).build()
+//                    .entity([message: talkProviders[id].staleException.toString()])
+                    .build()
         } catch (RuntimeException e) {
             return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity([message: e.toString()]).build()
         }
@@ -81,9 +82,8 @@ class ConferencesResource {
     @Path("{id}")
     @ApiOperation(value = "Conference details")
     ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
-        def conference = talkProviders[id.replace(".json", "")]?.getConference()
+        def conference = conferenceService.read(id.replace(".json", ""))
         if (conference == null) {
-            log.warn("Conference with id {} not found", id)
             throw new WebApplicationException(Response.Status.NOT_FOUND)
         }
         return new ConferenceDetailResource(conference)
