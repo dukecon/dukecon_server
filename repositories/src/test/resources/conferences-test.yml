@@ -17,7 +17,20 @@
 -
   id: hc2016
   conference: herbstcampus
-  year: 2016
+  year: 2016 # empty on testing purpose
+  talksUri: herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv
+  url: https://herbstcampus.dukecon.org/2016
+  name: Herbstcampus 2016
+  homeTitle: Herbstcampus
+  homeUrl: http://www.herbstcampus.de/
+  startDate: 2016-08-30
+  endDate: 2016-09-01
+  extractorClass: org.dukecon.server.repositories.heise.HeiseDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
+-
+  id: hc2016_kaputt
+  conference: herbstcampus
+#  year: 2016 # empty on testing purpose
   talksUri: herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv
   url: https://herbstcampus.dukecon.org/2016
   name: Herbstcampus 2016
@@ -42,3 +55,5 @@
   endDate: 2018-09-29
   extractorClass: org.dukecon.server.repositories.apache.ApacheDataExtractor
   rawDataMapperClass: org.dukecon.server.repositories.apache.ApacheJsonMapper
+  conference: duplicate key
+- # empty conference

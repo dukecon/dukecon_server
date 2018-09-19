@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.validation.annotation.Validated
 import org.yaml.snakeyaml.Yaml
 
-import javax.validation.Valid
+import javax.validation.*
+import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
 import java.time.LocalDate
 
@@ -19,24 +20,46 @@ import java.time.LocalDate
 class ConferencesConfiguration {
 
     static ConferencesConfiguration fromFile(String classpathName, Map<String, Object> allProperties) {
-        log.debug ("Loading configuration data from '{}'", classpathName)
+        log.debug("Loading configuration data from '{}'", classpathName)
         new ConferencesConfiguration(conferences:
-                new Yaml(new org.dukecon.server.conference.YamlDateTimeConstructor()).load(
-                    ResourceWrapper.of(classpathName).stream
-                ).collect {
-                    new Conference(substitutePlaceHolder(it, allProperties))
-                })
+                readConferences(classpathName, allProperties))
+    }
+
+    private static List<Conference> readConferences(String classpathName, Map<String, Object> allProperties) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        def yaml = readYaml(classpathName)
+        yaml.findAll { !it }.each { log.error("Could not read conference: ${it}") }
+        def x = yaml.findAll {it}.findResults {
+            def conference = new Conference(substitutePlaceHolder(it ?: [:], allProperties))
+            Set<ConstraintViolation<Conference>> violations = validator.validate(conference);
+            for (ConstraintViolation<Conference> violation : violations) {
+                log.error("{}.{} {}", violation.getRootBeanClass().getSimpleName(), violation.propertyPath, violation.getMessage());
+            }
+            violations?.isEmpty() ? conference : null
+        }.findAll {it}
+        return x
+    }
+
+    private static Object readYaml(String classpathName) {
+        try {
+            return new Yaml(new YamlDateTimeConstructor())
+                    .load(ResourceWrapper.of(classpathName).stream)
+        } catch (Exception e) {
+            log.error("Could not read conference configuration yaml file: {}", e, classpathName)
+            throw new IllegalStateException("Could not read conference configuration yaml file: " + classpathName, e)
+        }
     }
 
     private static Map substitutePlaceHolder(Map properties, Map allConfigProperties) {
         def substitutor = new StrSubstitutor(properties + allConfigProperties)
-        properties.each {k, v ->
+        properties.each { k, v ->
             if (v instanceof String) {
                 properties[k] = substitutor.replace(v)
             }
             if (v instanceof Map) {
                 def substitutor2 = new StrSubstitutor(properties + allConfigProperties)
-                v.each {k1, v1 ->
+                v.each { k1, v1 ->
                     v[k1] = substitutor.replace(v1)
                 }
             }
@@ -70,24 +93,23 @@ class ConferencesConfiguration {
 
         @NotNull
         String homeUrl
-		
-		@NotNull
-		Map<String, String> imprint
-		
-		Map<String, String> termsOfUse
-		
-		Map<String, String> privacy
+
+        Map<String, String> imprint
+
+        Map<String, String> termsOfUse
+
+        Map<String, String> privacy
 
         @NotNull
         LocalDate startDate
 
         LocalDate endDate
-		
-		/*
-		 * Authentication switch for client.
-		 */
-		@NotNull
-		Boolean authEnabled = false
+
+        /*
+         * Authentication switch for client.
+         */
+        @NotNull
+        Boolean authEnabled = false
 
         @NotNull
         Object talksUri
@@ -104,20 +126,20 @@ class ConferencesConfiguration {
 
         @NotNull
         Map<String, String> styles = [
-            dark: '#1aa3b1',
-            darkLink: '#1aa3b1',
-            hover: '#00c3d7',
-            hoverLink: '#00c3d7',
-            reverse: '#fff',
-            highlight: '#ddee55',
-            alternate: '#bf5a00',
+                dark     : '#1aa3b1',
+                darkLink : '#1aa3b1',
+                hover    : '#00c3d7',
+                hoverLink: '#00c3d7',
+                reverse  : '#fff',
+                highlight: '#ddee55',
+                alternate: '#bf5a00',
         ]
 
         Class rawDataMapperClass
 
         Map<String, String> feedbackServer = [
                 timeSlotVisible: -1,
-                active: false
+                active         : false
         ]
 
         static Conference of(String id, String name, String url, String homeUrl) {

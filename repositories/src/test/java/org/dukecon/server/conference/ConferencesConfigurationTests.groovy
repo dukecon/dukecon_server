@@ -3,6 +3,7 @@ package org.dukecon.server.conference
 import org.dukecon.adapter.ResourceWrapper
 import org.junit.Before
 import org.junit.Test
+import sun.reflect.annotation.ExceptionProxy
 
 import java.time.LocalDate
 
@@ -43,13 +44,16 @@ class ConferencesConfigurationTests {
         assert confernece.talksUri instanceof Map
         assert confernece.talksUri.eventsData == 'javaland-2016.raw'
         assert confernece.talksUri.speakersData == 'javaland-speaker-2016.raw'
-
-
     }
 
     @Test
     public void singleRawDataResourceHerbstcampus() throws Exception {
         def conference = conferences.find {it.id == 'hc2016'}
         assert conference.talksUri instanceof String
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void emptyConferenceListWhenYamlIsBroken() {
+        config = ConferencesConfiguration.fromFile('conferences-test-broken.yml', [:])
     }
 }

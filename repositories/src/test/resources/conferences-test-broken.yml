@@ -1,0 +1,30 @@
+-
+  id: javaland2016
+  internalId: 499959
+  conference: javaland
+  year: 2016
+  talksUri:
+    eventsData: javaland-2016.raw
+    speakersData: javaland-speaker-2016.raw
+  talksUriEncoding: ISO-8859-1
+  url: http://${conference}.dukecon.org/${year}
+  homeUrl: http://www.javaland.eu
+  name: JavaLand 2016
+  startDate: 2016-03-08
+  endDate: 2016-03-10
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
+  -
+  id: hc2016
+  conference: herbstcampus
+  year: 2016 # empty on testing purpose
+  talksUri: herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv
+  url: https://herbstcampus.dukecon.org/2016
+  name: Herbstcampus 2016
+  homeTitle: Herbstcampus
+  homeUrl: http://www.herbstcampus.de/
+  startDate: 2016-08-30
+  endDate: 2016-09-01
+  extractorClass: org.dukecon.server.repositories.heise.HeiseDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
+- # empty conference
