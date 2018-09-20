@@ -27,7 +27,10 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
     }
 
     // TODO Clean up - it is called twice!
-    @PostConstruct
+    // looks like, it is called the 2nd time because of @PostConstruct. Unfortunately contains
+    // configurationProperties["conferences.file"] different values between the both calls, one time from the
+    // profile settings and the second time from a local application.properties
+//    @PostConstruct
     @Override
     void init() {
         Map<String, Object> configurationProperties = getAllKnownConfigurationProperties(env)
