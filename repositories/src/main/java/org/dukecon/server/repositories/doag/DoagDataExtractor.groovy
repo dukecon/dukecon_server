@@ -158,13 +158,18 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
             it.RAUMNAME }.collect {
                 [it.RAUM_NR,
                  it.RAUMNAME,
-                 StringUtils.isNumeric(it.SITZPLATZ ?: "") ? it.SITZPLATZ?.replace('.','')?.toInteger() : 0
+                 parseInt(it.SITZPLATZ)
                 ]
             }.unique().sort {
                     it.first()
             }.withIndex().collect { room, index ->
                 Location.builder().id(index + 1 as String).order(room.first()?.toInteger()).capacity(room[2]).names(de: room[1], en: room[1]).icon("location_${room.first()}.png").build()
             }
+    }
+
+    private static int parseInt(String value) {
+        def number = value?.replace('.', '') ?: ""
+        number.isInteger() ? number.toInteger() : 0
     }
 
     List<EventType> getEventTypes() {
