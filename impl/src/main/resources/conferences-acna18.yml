@@ -5,8 +5,8 @@
   year: 2018
   talksUri:
     eventsData: https://cfp.apachecon.com/api/slots.lua?conference=apachecon-north-america-2018&token=pPZh4h7uEDfLq0A3Z3eA
-#    eventsData: https://cfp.apachecon.com/api/slots.lua?conference=apachecon-north-america-2018
-#    speakersData: https://${conferenceId}.sched.org/api/session/list?api_key=${conferenceApiKey}&custom_data=Y&format=json
+#    eventsData: https://cfp.apachecon.com/api/slots.lua?conference=apache-na-roadshow-2018&token=pPZh4h7uEDfLq0A3Z3eA
+#    eventsData: https://cfp.apachecon.com/api/slots.lua?conference=apachecon-north-america-2018&token=pPZh4h7uEDfLq0A3Z3eA
   backupUri: apachecon-na-2018.json
   url: http://apachecon-na.dukecon.org/${year}
   homeUrl: http://apachecon.com/
