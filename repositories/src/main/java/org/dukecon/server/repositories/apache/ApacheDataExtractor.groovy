@@ -208,9 +208,11 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
                     .build()
 
             // Check if a zip with presentation content exists. If if does, add a document to the list.
-            String presentationUrl = "https://apachecon.com/acna18/presentations/" + eventId + ".zip"
-            if (getResponseCode(presentationUrl) == HttpURLConnection.HTTP_OK) {
-                event.documents = [Presentation: presentationUrl]
+            if(ctx.slidesUrls == null) {
+                ctx.slidesUrls = getSlidesMap("https://apachecon.com/acna18/presentations")
+            }
+            if (ctx.slidesUrls[eventId] != null) {
+                event.documents = [Presentation: ctx.slidesUrls[eventId]]
             }
 
             for (Speaker speaker : curTalksSpeakers) {
@@ -239,6 +241,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
             case "Viger B": return 60
             case "Viger C": return 60
             case "Terrasse": return 30
+            case "Expo Area": return 2000
             default: return 100
         }
     }
@@ -246,7 +249,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
     private void postProcess(Conference conference) {
         for (Speaker speaker : conference.speakers) {
             if (speaker.email != null) {
-                byte[] image = null;
+                byte[] image = null
                 if (speaker.email.contains("@")) {
                     // Try to get Gravatar images for each speaker with an email.
                     Gravatar gravatar = new Gravatar().setSize(275)
@@ -296,6 +299,7 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
         private Map<String, Speaker> speakers = new HashMap<>()
         private Map<String, Track> tracks = new HashMap<>()
         private Map<String, Language> languages = new HashMap<>()
+        private Map<String, String> slidesUrls = null;
     }
 
     private static class AlphabeticalComparator implements Comparator<String> {
@@ -307,29 +311,47 @@ class ApacheDataExtractor implements ConferenceDataExtractor, ApplicationContext
             if (o2 == null) {
                 return 1
             }
-            if (o1.equals(o2)) {
+            if (o1 == o2) {
                 return 0
             }
             return o1.compareToIgnoreCase(o2)
         }
     }
 
-    private static int getResponseCode(String urlString) throws MalformedURLException, IOException {
+    private static Map<String, String> getSlidesMap(String urlString) throws MalformedURLException, IOException {
+        Map<String, String> result = new HashMap<>()
         URL u = new URL(urlString)
         HttpURLConnection huc = (HttpURLConnection) u.openConnection()
         huc.setRequestMethod("GET")
         huc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)")
         huc.connect()
-        return huc.getResponseCode()
+        int status = huc.getResponseCode()
+        if(status == HttpURLConnection.HTTP_OK) {
+            BufferedReader ir = new BufferedReader(
+                    new InputStreamReader(huc.getInputStream()))
+            String inputLine
+            while ((inputLine = ir.readLine()) != null) {
+                if(inputLine.contains("<a href=\"")) {
+                    inputLine = inputLine.substring(inputLine.indexOf("<a href=\"") + 9)
+                    String fileName = inputLine.substring(0, inputLine.indexOf("\""))
+                    if(fileName.contains(".")) {
+                        String id = fileName.substring(0, fileName.indexOf("."))
+                        result.put(id, urlString + "/" + fileName)
+                    }
+                }
+            }
+            ir.close()
+        }
+        return result
     }
 
     private static byte[] downloadUrl(String url) {
-        URL u = new URL(url);
+        URL u = new URL(url)
         ByteArrayOutputStream baos = new ByteArrayOutputStream()
         InputStream is = null
         try {
             is = u.openStream()
-            byte[] byteChunk = new byte[4096]; // Or whatever size you want to read in at a time.
+            byte[] byteChunk = new byte[4096] // Or whatever size you want to read in at a time.
             int n
 
             while ((n = is.read(byteChunk)) > 0) {
