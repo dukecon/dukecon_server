@@ -30,7 +30,9 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
     // looks like, it is called the 2nd time because of @PostConstruct. Unfortunately contains
     // configurationProperties["conferences.file"] different values between the both calls, one time from the
     // profile settings and the second time from a local application.properties
-//    @PostConstruct
+    // it is called twice because of first manually instantiation in DukeConServerApplication and as @Service annotated
+    // class, we need @Service for the spring container to manage an (other) instance of this class
+    @PostConstruct
     @Override
     void init() {
         Map<String, Object> configurationProperties = getAllKnownConfigurationProperties(env)
