@@ -40,16 +40,25 @@ class ConferencesConfigurationTests {
 
     @Test
     public void multipleRawDataResourcesJavaLand() throws Exception {
-        def confernece = conferences.find {it.id == 'javaland2016'}
-        assert confernece.talksUri instanceof Map
-        assert confernece.talksUri.eventsData == 'javaland-2016.raw'
-        assert confernece.talksUri.speakersData == 'javaland-speaker-2016.raw'
+        def conference = conferences.find {it.id == 'javaland2016'}
+        assert conference.talksUri instanceof Map
+        assert conference.talksUri.eventsData == 'javaland-2016.raw'
+        assert conference.talksUri.speakersData == 'javaland-speaker-2016.raw'
+        assert !conference.isRemoteTalksUri()
     }
 
     @Test
     public void singleRawDataResourceHerbstcampus() throws Exception {
         def conference = conferences.find {it.id == 'hc2016'}
         assert conference.talksUri instanceof String
+        assert !conference.isRemoteTalksUri()
+    }
+
+    @Test
+    public void multipleRawDataResourcesApacheCon() throws Exception {
+        def conference = conferences.find {it.id == 'acna2018'}
+        assert conference.talksUri instanceof Map
+        assert conference.isRemoteTalksUri()
     }
 
     @Test(expected = IllegalStateException.class)

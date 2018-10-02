@@ -20,7 +20,6 @@ import javax.servlet.Filter
 @SpringBootApplication
 @ComponentScan("org.dukecon.server")
 @EnableCircuitBreaker
-@EnableAutoConfiguration
 class DukeConServerApplication {
 
     static class DataProviderInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {

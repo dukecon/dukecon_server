@@ -146,6 +146,13 @@ class ConferencesConfiguration {
             new Conference(id: id, name: name, url: url, homeUrl: homeUrl)
         }
 
+        /**
+         * @return true if talks URI is a remote URL and no local file
+         */
+        boolean isRemoteTalksUri() {
+            talksUri.toString().contains("http")
+        }
+
         @Override
         String toString() {
             return "$id: $name"

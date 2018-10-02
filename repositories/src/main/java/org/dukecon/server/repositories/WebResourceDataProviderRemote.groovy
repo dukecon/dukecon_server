@@ -1,6 +1,6 @@
 package org.dukecon.server.repositories
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand
+
 import groovy.json.JsonOutput
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
@@ -10,6 +10,8 @@ import org.dukecon.model.Conference
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.springframework.beans.factory.annotation.Value
 
+import java.nio.channels.Channels
+import java.nio.channels.ReadableByteChannel
 import java.nio.charset.StandardCharsets
 
 /**
@@ -38,8 +40,8 @@ class WebResourceDataProviderRemote {
         this.config = config
     }
 
-    private File backupFile () {
-        File backupDirectory = new File (backupDir)
+    private File backupFile() {
+        File backupDirectory = new File(backupDir)
         return new File(backupDirectory, config.backupUri)
     }
 
@@ -47,22 +49,12 @@ class WebResourceDataProviderRemote {
     public Conference readConferenceData() {
         try {
             log.info("Rereading data from '{}'", config.talksUri)
+            backupInputFiles(config)
             Conference conference = extractor.getConference()
             try {
-                File backupDirectory = new File (backupDir)
-                if (backupDirectory.exists()) {
-                    if (!backupDirectory.isDirectory()) {
-                        log.error ("Cannot backup to '{}' - it is not a directory", backupDir)
-                        return
-                    }
-                } else {
-                    if (!backupDirectory.mkdirs()) {
-                        log.error ("Cannot create backup directory '{}'", backupDir)
-                        return
-                    }
-                }
+                checkIfDirExists(backupDir)
                 File backupFile = backupFile()
-                log.info ("Creating backup in '{}'", backupFile)
+                log.info("Creating backup in '{}'", backupFile)
                 backupFile.write(JsonOutput.toJson(extractor.rawDataMapper.asMap()), BACKUP_CHARSET)
             } catch (IOException e) {
                 log.error("Unable to write backup file '{}': {}", config.backupUri, e.message, e)
@@ -75,6 +67,41 @@ class WebResourceDataProviderRemote {
             log.error("Unable to read data: {}", e.message, e)
             staleException = e
             throw e
+        }
+    }
+
+    void checkIfDirExists(String backupDir) {
+        File backupDirectory = new File(backupDir)
+        if (backupDirectory.exists()) {
+            if (!backupDirectory.isDirectory()) {
+                log.error("Cannot backup to '{}' - it is not a directory", backupDir)
+            }
+        } else {
+            if (!backupDirectory.mkdirs()) {
+                log.error("Cannot create backup directory '{}'", backupDir)
+            }
+        }
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    private void backupInputFiles(ConferencesConfiguration.Conference config) {
+        backupInputFiles(config.talksUri, config.id)
+    }
+
+    private void backupInputFiles(Map<String, String> fileUrls, String name) {
+        fileUrls.each { type, url -> backupInputFiles(url, "${name}_${type}".toString()) }
+    }
+
+    private void backupInputFiles(String fileUrl, String name) {
+        log.info("Try to backup input file from ${fileUrl} (${name})")
+        try {
+            checkIfDirExists(backupDir)
+            URL website = new URL(fileUrl)
+            ReadableByteChannel rbc = Channels.newChannel(website.openStream())
+            FileOutputStream fos = new FileOutputStream("${backupDir}/${name}.json")
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE)
+        } catch (Exception e) {
+            log.warn("Could not backup input file ${fileUrl} (${name}) because of ${e.getClass().getName()} (${e.getMessage()})")
         }
     }
 

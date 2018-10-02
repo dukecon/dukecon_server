@@ -34,7 +34,7 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
             builderDataExtractor.addConstructorArgReference('speakerImageService')
             beanDefinitionRegistry.registerBeanDefinition("${config.name} data extractor", builderDataExtractor.beanDefinition)
 
-            if (config.backupUri) {
+            if (config.isRemoteTalksUri()) {
                 createWebResourceDataProviderForConference(config, beanDefinitionRegistry)
             } else {
                 createLocalResourceDataProviderForConference(config, beanDefinitionRegistry)
