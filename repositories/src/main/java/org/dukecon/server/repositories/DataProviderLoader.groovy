@@ -7,7 +7,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
 import org.springframework.beans.factory.support.BeanDefinitionBuilder
 import org.springframework.beans.factory.support.BeanDefinitionRegistry
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor
-import org.springframework.core.env.Environment
 
 /**
  * Reads all conferences from configuration file and generates a #ConferenceDataProvider for each.
@@ -18,15 +17,18 @@ class DataProviderLoader implements BeanDefinitionRegistryPostProcessor {
 
     private final ConferencesConfiguration configuration = new ConferencesConfiguration()
 
+    private String backupDir
+
     DataProviderLoader(final ConferencesConfigurationService configurationService) {
         configurationService.init()
         this.configuration.conferences.addAll(configurationService.conferences)
+        this.backupDir = configurationService.getBackupDir() ?: 'backup/raw'
     }
 
     @Override
     void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         configuration.conferences.each { ConferencesConfiguration.Conference config ->
-            def rawDataMapper = config.rawDataMapperClass.newInstance(new RawDataResources(config.talksUri))
+            def rawDataMapper = config.rawDataMapperClass.newInstance(RawDataResources.of(config, backupDir))
 
             BeanDefinitionBuilder builderDataExtractor = BeanDefinitionBuilder.genericBeanDefinition(config.extractorClass)
             builderDataExtractor.addConstructorArgValue(config)

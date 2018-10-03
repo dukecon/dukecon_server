@@ -34,13 +34,13 @@ class DoagDataExtractorSpec extends Specification {
 
     private DoagDataExtractor createExtractor(String filename) {
         new DoagDataExtractor(ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
-                new DoagJsonMapper(new RawDataResources(filename)), null // new SpeakerImageService()
+                new DoagJsonMapper(RawDataResources.of(filename)), null // new SpeakerImageService()
         )
     }
 
     private DoagDataExtractor createExtractor(Map files) {
         new DoagDataExtractor(ConferencesConfiguration.Conference.of('javaland2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
-                new DoagJsonMapper(new RawDataResources(files)), null // new SpeakerImageService()
+                new DoagJsonMapper(RawDataResources.of(files)), null // new SpeakerImageService()
         )
     }
 
@@ -281,7 +281,7 @@ class DoagDataExtractorSpec extends Specification {
         given:
         // TODO Rebuild without SpeakerImageService
 //        def extractor = new DoagDataExtractor(ConferencesConfiguration.Conference.of('jfs2016-test', 'DukeCon Conference', 'http://dukecon.org', 'http://javaland.eu'),
-//                new DoagJsonMapper(new RawDataResources('jfs-2016-final-finished-conf.raw.json')), null // new SpeakerImageService()
+//                new DoagJsonMapper(RawDataResources.of('jfs-2016-final-finished-conf.raw.json')), null // new SpeakerImageService()
 //        )
         def extractor = createExtractor('jfs-2016-final-finished-conf.raw.json')
         when:

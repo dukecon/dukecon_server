@@ -10,7 +10,7 @@ class DoagCsvMapperSpec extends Specification {
 
     void "should get 49 events from single local csv file"() {
         given:
-        DoagCsvMapper mapper = new DoagCsvMapper(new RawDataResources('jfs-2017-formes-dump.csv'))
+        DoagCsvMapper mapper = new DoagCsvMapper(RawDataResources.of('jfs-2017-formes-dump.csv'))
         when:
         mapper.initMapper()
         def map = mapper.asMap()
@@ -30,7 +30,7 @@ class DoagCsvMapperSpec extends Specification {
 
     void "should get 61 speaker from single local speaker csv file"() {
         given:
-        DoagCsvMapper mapper = new DoagCsvMapper(new RawDataResources(eventsData: 'jfs-2017-formes-dump.csv', speakersData: 'jfs-2017-speaker-formes-dump.csv'))
+        DoagCsvMapper mapper = new DoagCsvMapper(RawDataResources.of(eventsData: 'jfs-2017-formes-dump.csv', speakersData: 'jfs-2017-speaker-formes-dump.csv'))
         when:
         mapper.initMapper()
         def map = mapper.asMap()

@@ -8,4 +8,5 @@ interface ConferencesConfigurationService {
     List<ConferencesConfiguration.Conference> getConferences()
     ConferencesConfiguration.Conference getConference(String conference, String year)
     ConferencesConfiguration.Conference getConference(String conferenceId)
+    String getBackupDir()
 }

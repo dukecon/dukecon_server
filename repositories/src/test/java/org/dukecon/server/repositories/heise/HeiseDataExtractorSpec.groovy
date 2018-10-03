@@ -31,7 +31,7 @@ class HeiseDataExtractorSpec extends Specification {
     }
 
     private static readCsv() {
-        new HeiseCsvInput(new RawDataResources('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv'))
+        new HeiseCsvInput(RawDataResources.of('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv'))
     }
 
     void "should contain metadata"() {

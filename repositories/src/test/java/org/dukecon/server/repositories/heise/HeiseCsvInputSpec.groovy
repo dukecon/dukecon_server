@@ -13,7 +13,7 @@ class HeiseCsvInputSpec extends Specification {
     private HeiseCsvInput input
 
     void setup() {
-        input = new HeiseCsvInput(new RawDataResources('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv'))
+        input = new HeiseCsvInput(RawDataResources.of('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv'))
     }
 
     void "should 51 lines"() {

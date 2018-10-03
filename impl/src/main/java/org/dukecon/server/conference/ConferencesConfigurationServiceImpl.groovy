@@ -20,6 +20,7 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
     private final ConferencesConfiguration configuration = new ConferencesConfiguration()
     private final ConfigurableEnvironment env
     private String conferencesConfigurationFile
+    Map<String, Object> configurationProperties = [:]
 
     @Inject
     ConferencesConfigurationServiceImpl(ConfigurableEnvironment env) {
@@ -35,7 +36,7 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
     @PostConstruct
     @Override
     void init() {
-        Map<String, Object> configurationProperties = getAllKnownConfigurationProperties(env)
+        this.configurationProperties = getAllKnownConfigurationProperties(env)
         conferencesConfigurationFile = configurationProperties["conferences.file"] ?: "conferences-dev.yml"
         log.debug ("Loading conferences file '{}'", conferencesConfigurationFile)
         configuration.conferences.addAll(
@@ -72,5 +73,10 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
         configuration.conferences.find { ConferencesConfiguration.Conference config ->
             config.id == conferenceId
         }
+    }
+
+    @Override
+    String getBackupDir() {
+        return configurationProperties['backup.dir']
     }
 }
