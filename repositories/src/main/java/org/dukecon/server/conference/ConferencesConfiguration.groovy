@@ -29,9 +29,8 @@ class ConferencesConfiguration {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory()
         Validator validator = factory.getValidator()
         def yaml = readYaml(classpathName)
-        yaml.findAll { !it }.each { log.error("Could not read conference: ${it}") }
         if (yaml instanceof List) {
-            yaml = yaml.collectEntries{[(it.id): it]}
+            yaml = yaml.findAll{it}.collectEntries{[(it.id): it]}
         }
         def x = yaml.findAll {k, v -> k ==~ /^.*\d+$/}.findResults {k, v ->
             def conferenceProperties = v << [id: k]
