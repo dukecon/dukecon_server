@@ -39,7 +39,7 @@ class FileBackuper {
         checkIfDirExists(destDir)
         try {
             ReadableByteChannel rbc = Channels.newChannel(url.openStream())
-            file = new File("${destDir}/${name}.json")
+            file = new File("${destDir}/${name}")
             FileOutputStream fos = new FileOutputStream(file)
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE)
         } catch (Exception e) {

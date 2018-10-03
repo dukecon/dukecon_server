@@ -26,18 +26,22 @@ class ConferencesConfiguration {
     }
 
     private static List<Conference> readConferences(String classpathName, Map<String, Object> allProperties) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory()
+        Validator validator = factory.getValidator()
         def yaml = readYaml(classpathName)
         yaml.findAll { !it }.each { log.error("Could not read conference: ${it}") }
-        def x = yaml.findAll {it}.findResults {
-            def conference = new Conference(substitutePlaceHolder(it ?: [:], allProperties))
-            Set<ConstraintViolation<Conference>> violations = validator.validate(conference);
+        if (yaml instanceof List) {
+            yaml = yaml.collectEntries{[(it.id): it]}
+        }
+        def x = yaml.findAll {k, v -> k ==~ /^.*\d+$/}.findResults {k, v ->
+            def conferenceProperties = v << [id: k]
+            def conference = new Conference(substitutePlaceHolder(conferenceProperties ?: [:], allProperties))
+            Set<ConstraintViolation<Conference>> violations = validator.validate(conference)
             for (ConstraintViolation<Conference> violation : violations) {
-                log.error("{}.{} {}", violation.getRootBeanClass().getSimpleName(), violation.propertyPath, violation.getMessage());
+                log.error("{}.{} {}", violation.getRootBeanClass().getSimpleName(), violation.propertyPath, violation.getMessage())
             }
             violations?.isEmpty() ? conference : null
-        }.findAll {it}
+        }
         return x
     }
 
@@ -69,7 +73,7 @@ class ConferencesConfiguration {
 
     @NotNull
     @Valid
-    List<Conference> conferences = [];
+    List<Conference> conferences = []
 
     static class Conference {
         @NotNull
