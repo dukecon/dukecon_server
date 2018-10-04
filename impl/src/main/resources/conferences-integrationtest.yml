@@ -4,9 +4,9 @@
   conference: javaland
   year: 2017
   talksUri:
-#    eventsData: javaland-2017.raw
-    eventsData: https://www.javaland.eu/api/schedule/programm/jl.php?key=TestJL&id=522447
-    speakersData: https://www.javaland.eu/api/schedule/JavaLand/referenten.php/?key=JL-EOPTGB-DR
+    eventsData: javaland-2017.raw
+    speakersData: javaland-speaker-2017.raw
+    additionalData: javaland-additional-2017.raw
   backupUri: javaland-2017-backup.raw
   url: http://${conference}.dukecon.org/${year}
   homeUrl: http://www.javaland.eu
