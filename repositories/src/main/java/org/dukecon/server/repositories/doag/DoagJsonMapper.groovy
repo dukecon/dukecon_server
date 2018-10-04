@@ -41,6 +41,7 @@ class DoagJsonMapper implements RawDataMapper {
     @TypeChecked(TypeCheckingMode.SKIP)
     private List parseResource(ResourceWrapper wrapper) {
         try {
+            log.debug("Try to parse from resource ${wrapper.name()}")
             return new JsonSlurper().parse(wrapper.getStream() ?: new ByteArrayInputStream("{}".getBytes()), "ISO-8859-1")?.hits?.hits?._source
         } catch (Exception e) {
             log.error("Could not parse inputstream " + wrapper.name(), e)
