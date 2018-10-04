@@ -32,7 +32,7 @@ class ConferencesConfiguration {
         if (yaml instanceof List) {
             yaml = yaml.findAll{it}.collectEntries{[(it.id): it]}
         }
-        def x = yaml.findAll {k, v -> k ==~ /^.*\d+$/}.findResults {k, v ->
+        def x = deepCopy(yaml).findAll {k, v -> k ==~ /^.*\d+$/}.findResults {k, v ->
             def conferenceProperties = v << [id: k]
             def conference = new Conference(substitutePlaceHolder(conferenceProperties ?: [:], allProperties))
             Set<ConstraintViolation<Conference>> violations = validator.validate(conference)
@@ -42,6 +42,18 @@ class ConferencesConfiguration {
             violations?.isEmpty() ? conference : null
         }
         return x
+    }
+
+    /**
+     * Make a deep copy of each (sub) map because of referenced sub maps (copy by reference) between different conferences.
+     * While substitution the placeholder in referenced sub maps would be replaced only once and further reference would
+     * contain the wrong value.
+     *
+     * @param m to copy deeply
+     * @return new map
+     */
+    private static Map deepCopy(Map m) {
+        new HashMap(m).collectEntries {k, v -> [k, v instanceof Map ? deepCopy(v) : v]}
     }
 
     private static Object readYaml(String classpathName) {
