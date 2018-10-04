@@ -24,6 +24,7 @@ class ConferencesConfigurationTests {
     @Test
     public void parseConferencesFromYml() {
         assert conferences.size() == 3
+        conferences.sort {c1, c2 -> c2.name <=> c1.name}
         assert conferences.name == ['JavaLand 2016', 'Herbstcampus 2016', 'ApacheCon North America 2018']
         assert conferences[0].url == 'http://javaland.dukecon.org/2016'
         assert conferences[0].talksUri instanceof Map
