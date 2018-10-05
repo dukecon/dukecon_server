@@ -9,22 +9,22 @@ import spock.lang.Specification
  */
 class DoagJsonMapperSpec extends Specification {
 
-    void "should get 110 events from single local file"() {
+    void "should get 111 events from single local file"() {
         when:
         DoagJsonMapper mapper = new DoagJsonMapper(RawDataResources.of('javaland-2016.raw'))
         mapper.initMapper()
         then:
         mapper.asMap().size() == 1
-        mapper.asMap().eventsData.size() == 110
+        mapper.asMap().eventsData.size() == 111
     }
 
-    void "should get 110 events from multiple local files"() {
+    void "should get 111 events from multiple local files"() {
         when:
         DoagJsonMapper mapper = new DoagJsonMapper(RawDataResources.of([eventsData: 'javaland-2016.raw', speakersData: 'javaland-speaker-2016.raw']))
         mapper.initMapper()
         then:
         mapper.asMap().size() == 2
-        mapper.asMap().eventsData.size() == 142
+        mapper.asMap().eventsData.size() == 111
         mapper.asMap().speakersData.size() == 140
     }
 

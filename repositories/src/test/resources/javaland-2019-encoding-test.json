@@ -1,0 +1,20 @@
+{
+  "took" : 3,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 5,
+    "successful" : 5,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : 154,
+    "max_score" : 1.0,
+    "hits" : [ {
+      "_index" : "561658",
+      "_type" : "jdbc",
+      "_id" : "AWYV9wG2D8Uxq8u0Q_hX",
+      "_score" : 1.0,
+      "_source":{"ID_KONGRESS":561658,"ID":569936,"ID_SEMINAR":"569936","FARBCODE":338063,"TRACK":"Qualität & Testen","TRACK_EN":"Quality & Testing","ORDERT":6,"AUDIENCE":"Anfänger","AUDIENCE_EN":"Beginners","DATUM":"2019-03-19T00:00:00.000+01:00","SIMULTAN":"0","AUSGEBUCHT":1,"DATUM_ES_EN":"2019-03-19","DATUM_ES":"19.03.2019","BEGINN":"16:00","ENDE":"16:40","TIMESTAMP":"0019-03-17T15:53:28.000+00:53:28","TIMESTAMP_ENDE":"0019-03-17T16:33:28.000+00:53:28","SEMINAR_NR":"128","RAUM_NR":"9","RAUMNAME":"Lecture Tent","SITZPLATZ":"90","AREAID":"9/L","TITEL":"Edit’n’P(r)ay? Oder vielleicht doch besser testen?","TITEL_ES":"Edit’n’P(r)ay? Oder vielleicht doch besser testen?","TITEL_EN":null,"ABSTRACT_EN":null,"REFERENT_NAME":"Anja Papenfuß-Straub","REFERENT_VORNAME":"Anja","COREFERENT_VORNAME":null,"COCOREFERENT_VORNAME":null,"COREFERENT_NACHNAME":null,"COCOREFERENT_NACHNAME":null,"KEYWORDS":",Software Craftsmanship,Testen,Unit Testing","REFERENT_NACHNAME":"Papenfuß-Straub","REFERENT_FIRMA":"ING DiBa AG","ID_PERSON":380275,"ID_PERSON_COREF":null,"ID_PERSON_COCOREF":null,"VORTRAGSTYP":"Newcomer","VORTRAGSTYP_EN":"newcomer","COREFERENT_NAME":null,"COCOREFERENT_NAME":null,"COREFERENT_FIRMA":null,"COCOREFERENT_FIRMA":null,"ABSTRACT_TEXT":"Ach, wie schön war die Welt damals! Wir haben lange vor uns hin programmiert und dann kurz vor dem Live-Gang noch ein Stoßgebet gen Himmel geschickt. Es ist jedoch relativ selten, dass wir Entwickler einen direkten Draht zum Allmächtigen haben. Daher ging ab und an auch mal &quot;mächtig&quot; was schief.\r\n\r\nHeute läuft es anders: Jetzt müssen wir zuverlässigere und immer bessere Software noch schneller ausliefern. Damit ist &quot;Edit’n‘Pray&quot; in der Softwareentwicklung endgültig in die Jahre gekommen. Und das ist gut so!\r\n\r\nAber warum fällt es uns trotzdem immer noch so schwer, gute und wartbare Tests zu schreiben? Was macht einen guten Test überhaupt aus?\r\n\r\nAnhand von praktischen Beispielen in Java zeige ich, wo uns Testen noch Probleme bereitet, wie es besser geht und welchen Nutzen wir daraus ziehen können.","SPRACHE":"Deutsch","DEMO":"Nein","KEYWORDS_EN":",Software Craftsmanship,Testing,Unit Testing","SPRACHE_EN":"German","DEMO_EN":"no","BEGINN_EN":null,"ENDE_EN":null}
+    } ]
+  }
+}

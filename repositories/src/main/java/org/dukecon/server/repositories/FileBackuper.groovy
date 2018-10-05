@@ -24,13 +24,13 @@ class FileBackuper {
     }
 
     private FileBackuper(String content, String destDir, String name) {
-        log.info("Backup text (${content.substring(0, Math.min(content.length(), 10))}) to ${destDir}/${name}")
         checkIfDirExists(destDir)
+        file = new File("${destDir}/${name}")
+        log.info("Backup text (${content.substring(0, Math.min(content.length(), 10))}) to ${file.canonicalPath}")
         try {
-            file = new File("${destDir}/${name}")
             file.write(content, BACKUP_CHARSET)
         } catch (Exception e) {
-            log.warn("Could not backup text (${content.substring(0, Math.min(content.length(), 10))}) to ${destDir}/${name} because of ${e.getClass().getName()} (${e.getMessage()})")
+            log.warn("Could not backup text (${content.substring(0, Math.min(content.length(), 10))}) to ${file.canonicalPath} because of ${e.getClass().getName()} (${e.getMessage()})")
         }
     }
 

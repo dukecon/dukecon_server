@@ -136,7 +136,9 @@ class DoagDataExtractorSpec extends Specification {
         then:
         doagDataExtractor.locations.names.de.join(', ') == 'Silverado Theater, JUG-Café, Workshop-Raum Juno, JavaInnovationLab, Quantum 1, Quantum 2, Quantum 3, Quantum 4, Dambali (Hotel Matamba), Bambuti (Hotel Matamba), Wang Wei (Hotel Ling Bao), Wintergarten, Konfuzius (Hotel Ling Bao), Schauspielhaus, Quantum 1+2, Quantum 3+4, Eventhalle, Neptun, Quantum UG , Community Hall'
         doagDataExtractor.locations.capacity.join(', ') == '1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 850, 0, 460, 250, 250, 400, 120, 60, 0'
-        doagDataExtractor.locations.collectEntries {[(it.names.de): it.capacity]}.inject([]){result, entry -> result << "${entry.key}: ${entry.value}"}.join(', ') == 'Silverado Theater: 1000, JUG-Café: 0, Workshop-Raum Juno: 0, JavaInnovationLab: 0, Quantum 1: 0, Quantum 2: 0, Quantum 3: 0, Quantum 4: 0, Dambali (Hotel Matamba): 0, Bambuti (Hotel Matamba): 0, Wang Wei (Hotel Ling Bao): 0, Wintergarten: 850, Konfuzius (Hotel Ling Bao): 0, Schauspielhaus: 460, Quantum 1+2: 250, Quantum 3+4: 250, Eventhalle: 400, Neptun: 120, Quantum UG : 60, Community Hall: 0'
+        doagDataExtractor.locations.collectEntries {
+            [(it.names.de): it.capacity]
+        }.inject([]) { result, entry -> result << "${entry.key}: ${entry.value}" }.join(', ') == 'Silverado Theater: 1000, JUG-Café: 0, Workshop-Raum Juno: 0, JavaInnovationLab: 0, Quantum 1: 0, Quantum 2: 0, Quantum 3: 0, Quantum 4: 0, Dambali (Hotel Matamba): 0, Bambuti (Hotel Matamba): 0, Wang Wei (Hotel Ling Bao): 0, Wintergarten: 850, Konfuzius (Hotel Ling Bao): 0, Schauspielhaus: 460, Quantum 1+2: 250, Quantum 3+4: 250, Eventhalle: 400, Neptun: 120, Quantum UG : 60, Community Hall: 0'
     }
 
     void "should extract all meta data"() {
@@ -186,7 +188,7 @@ class DoagDataExtractorSpec extends Specification {
         when:
         def events = extractor.events.sort { it.id }
         then:
-        assert events.size() == 110
+        assert events.size() == 111
         assert events.first().title == 'Behavioral Diff als neues Testparadigma'
         assert events.first().location.names.de == 'Neptun'
     }
@@ -196,10 +198,13 @@ class DoagDataExtractorSpec extends Specification {
         def speakers = extractor.speakers.sort { it.id }
         then:
         assert speakers.size() >= 116
-        assert speakers.first().name == 'Matthias Faix'
-        assert speakers.first().company == 'IPM Köln'
-        assert speakers.first().id == '146723'
-        assert !speakers.first().events
+        when:
+        def speaker = speakers.find { it.name == 'Matthias Faix' }
+        then:
+        assert speaker.name == 'Matthias Faix'
+        assert speaker.company == 'IPM Köln'
+        assert speaker.id == '146723'
+        assert !speaker.events
     }
 
     void "should get all speakers with their events"() {
@@ -207,11 +212,15 @@ class DoagDataExtractorSpec extends Specification {
         def speakers = conference.speakers.sort { it.id }
         then:
         assert speakers.size() >= 116
-        assert speakers.first().name == 'Matthias Faix'
-        assert speakers.first().company == 'IPM Köln'
-        assert speakers.first().id == '146723'
-        assert speakers.first().events.size() == 1
-        assert speakers.first().events.first().class == Event
+        when:
+        def speaker = speakers.find { it.name == 'Matthias Faix' }
+        then:
+        assert speaker.name == 'Matthias Faix'
+        assert speaker.company == 'IPM Köln'
+        assert speaker.id == '146723'
+        assert speaker.events.size() == 1
+        assert speaker.events.first().class == Event
+
         assert speakers.find { it.name == 'Roel Spilker' }.events.size() == 2
         assert speakers.find { it.name == 'Thorben Janssen' }.events.size() == 2
     }
@@ -305,10 +314,24 @@ class DoagDataExtractorSpec extends Specification {
         def conference = extractor.buildConference()
         then:
         conference.events.size() == 144
-        conference.events.findAll {e -> e.keywords.en}.size() == 81
-        conference.events.findAll {e -> e.keywords.en}.first().keywords.en == ['Cloud Computing', 'GlassFish (Application Server)', 'Java Enterprise Edition (Java EE)', 'Middleware', 'WebLogic (Application Server)', 'Wildfly (Application Server)']
-        conference.events.findAll {e -> e.documents.slides}.size() == 74
-        conference.events.findAll {e -> e.documents.manuscript}.size() == 0
-        conference.events.findAll {e -> e.documents.other}.size() == 7
+        conference.events.findAll { e -> e.keywords.en }.size() == 81
+        conference.events.findAll { e -> e.keywords.en }.first().keywords.en == ['Cloud Computing', 'GlassFish (Application Server)', 'Java Enterprise Edition (Java EE)', 'Middleware', 'WebLogic (Application Server)', 'Wildfly (Application Server)']
+        conference.events.findAll { e -> e.documents.slides }.size() == 74
+        conference.events.findAll { e -> e.documents.manuscript }.size() == 0
+        conference.events.findAll { e -> e.documents.other }.size() == 7
+    }
+
+    void "encoding with Windows-1252 special apostroph"() {
+        given:
+        def extractor = createExtractor('javaland-2019-encoding-test.json')
+        when:
+        extractor.rawDataMapper.initMapper()
+        def conference = extractor.buildConference()
+        then:
+        conference.events.size() == 1
+        conference.events.first().speakers.first().name == 'Anja Papenfuß-Straub'
+        conference.events.first().speakers.first().company == 'ING DiBa AG'
+        conference.events.first().id == '569936'
+        conference.events.first().title == 'Edit’n’P(r)ay? Oder vielleicht doch besser testen?'
     }
 }

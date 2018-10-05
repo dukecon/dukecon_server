@@ -243,7 +243,7 @@ class DoagSpeakerMapperSpec extends Specification {
         map.putAll new DoagSpeakersMapper(json, DoagSingleSpeakerMapper.Type.COCOREFERENT).speakers
 
         then:
-        map.size() == 116
+        map.size() == 117
     }
 
     void "should extract all speaker and co speaker from event and speaker input from javaland 2016"() {
@@ -259,14 +259,14 @@ class DoagSpeakerMapperSpec extends Specification {
         then:
         println(mapperEventsOnly.speakers.keySet() - mapperSpeakersOnly.speakers.keySet())
         assert jsonSpeaker.size() == 140 : "speaker input contains more speaker (140) than event input (128)"
-        mapper.speakers.size() == 116
+        mapper.speakers.size() == 117
         println (jsonSpeaker.collect {"${it.VORNAME} ${it.NACHNAME}"})
         println (mapper.speakers.values().name.sort())
         println (jsonSpeaker.collect {"${it.VORNAME} ${it.NACHNAME}"} - mapper.speakers.values().name.sort())
         mapper.photos.size() == 7
 
-        mapper.eventIds.size() == 110
-        mapper.speakerIds2EventIds.size() == 123
+        mapper.eventIds.size() == 111
+        mapper.speakerIds2EventIds.size() == 124
 
         !mapper.speakers.values().findAll { Speaker s -> !s.firstname || !s.lastname }
 
@@ -318,9 +318,9 @@ class DoagSpeakerMapperSpec extends Specification {
         DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(jsonEvents, jsonSpeaker)
 
         then:
-        mapper.eventIds.size() == 110
-        mapper.speakerIds2EventIds.size() == 123
-        mapper.speakers.size() == 116
+        mapper.eventIds.size() == 111
+        mapper.speakerIds2EventIds.size() == 124
+        mapper.speakers.size() == 117
         mapper.forEventId("509570").name == 'Matthias Faix'
     }
 }
