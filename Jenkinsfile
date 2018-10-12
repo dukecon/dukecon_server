@@ -1,4 +1,5 @@
 #!/usr/bin/env groovy
+@Library('jenkins-library@master') _
 
 pipeline {
     agent {
@@ -41,6 +42,9 @@ pipeline {
         }
     }
     post {
+        always {
+            sendNotification currentBuild.result
+        }
         failure {
             // notify users when the Pipeline fails
             mail to: 'gerd@aschemann.net',
