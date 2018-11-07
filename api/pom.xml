@@ -6,6 +6,7 @@
         <groupId>org.dukecon</groupId>
         <artifactId>dukecon-server</artifactId>
         <version>1.5-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
 
     <artifactId>dukecon-server-api</artifactId>

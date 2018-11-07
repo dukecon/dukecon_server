@@ -7,6 +7,7 @@
     <groupId>org.dukecon</groupId>
     <artifactId>dukecon-server</artifactId>
     <version>1.5-SNAPSHOT</version>
+    <relativePath>../</relativePath>
   </parent>
 
   <artifactId>dukecon-server-springboot</artifactId>
@@ -106,6 +107,11 @@
     <dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-core</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-annotations-api</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
