@@ -75,7 +75,6 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
         }
     }
 
-    @Override
     String getBackupDir() {
         return configurationProperties['backup.dir']
     }

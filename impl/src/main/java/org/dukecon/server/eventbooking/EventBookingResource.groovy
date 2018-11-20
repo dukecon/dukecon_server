@@ -43,8 +43,11 @@ class EventBookingResource {
     @GET
     Response getBookingInformation(@PathParam("conferenceId") String conferenceId) {
         def allCapacities = bookingService.getAllCapacities(conferenceId)
+        Map<String, Integer> eventIdToNumberOfFavorites = preferencesService.getAllEventFavorites()
         def events = conferences[conferenceId]?.events?.collect { Event e ->
-            allCapacities*.eventId.contains(e.id) ? allCapacities.find {e.id == it.eventId}.withNumberOfFavoritesAndLocationCapacity((preferencesService.allEventFavorites[e.id] ?: 0) as int, e.location?.capacity ?: 0) : new EventBooking(conferenceId: conferenceId, eventId: e.id, locationCapacity: e.location?.capacity, numberOfFavorites: preferencesService.allEventFavorites[e.id] ?: 0)
+            allCapacities*.eventId.contains(e.id) ?
+                    allCapacities.find {e.id == it.eventId}.withNumberOfFavoritesAndLocationCapacity((eventIdToNumberOfFavorites[e.id] ?: 0) as int, e.location?.capacity ?: 0)
+                    : new EventBooking(conferenceId: conferenceId, eventId: e.id, locationCapacity: e.location?.capacity, numberOfFavorites: eventIdToNumberOfFavorites[e.id] ?: 0)
         }
         return Response.ok(events).build()
     }
