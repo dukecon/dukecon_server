@@ -59,7 +59,11 @@
                                             <JAVA_DEFAULT_OPTS>-Xms768M -Xmx1536M</JAVA_DEFAULT_OPTS>
                                         </env>
                                         <cmd>
-                                            <shell>java -Djava.security.egd=file:/dev/./urandom ${JAVA_DEFAULT_OPTS} ${JAVA_OPTS} -jar /opt/dukecon/dukecon.war ${DUKECON_ARGS}</shell>
+                                            <shell>java -Djava.security.egd=file:/dev/./urandom \
+                                                ${JAVA_DEFAULT_OPTS} ${JAVA_OPTS} \
+                                                -jar /opt/dukecon/dukecon.war \
+                                                ${DUKECON_ARGS}
+                                            </shell>
                                         </cmd>
                                         <healthCheck>
                                             <!-- 2 minutes should be sufficient to start up the container -->
