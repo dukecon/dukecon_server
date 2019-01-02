@@ -3,17 +3,14 @@ package org.dukecon.server.conference
 import groovy.util.logging.Slf4j
 import org.apache.commons.lang3.text.StrSubstitutor
 import org.dukecon.adapter.ResourceWrapper
-import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 import org.springframework.validation.annotation.Validated
 import org.yaml.snakeyaml.Yaml
 
 import javax.validation.*
-import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
 import java.time.LocalDate
 
-@ConfigurationProperties
 @Configuration
 @Slf4j
 @Validated
