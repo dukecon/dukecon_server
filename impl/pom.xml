@@ -17,10 +17,6 @@
     <properties>
         <start-class>org.dukecon.DukeConServerApplication</start-class>
 
-        <surefire.argline/>
-        <arquillian.config>arquillian-headless.xml</arquillian.config>
-
-        <swagger.input.directory>${project.basedir}/src/main/swagger</swagger.input.directory>
     </properties>
 
     <dependencies>
@@ -342,97 +338,20 @@
 
     <profiles>
         <profile>
-            <id>Unix Profile</id>
-            <activation>
-                <file>
-                    <exists>/dev/urandom</exists>
-                </file>
-            </activation>
-            <properties>
-                <surefire.argline>-Djava.security.egd=file:/dev/./urandom</surefire.argline>
-            </properties>
-        </profile>
-        <profile>
             <id>doc</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>com.github.kongchen</groupId>
                         <artifactId>swagger-maven-plugin</artifactId>
-                        <configuration>
-                            <apiSources>
-                                <apiSource>
-                                    <springmvc>false</springmvc>
-                                    <locations>org.dukecon.server.conference</locations>
-                                    <schemes>http,https</schemes>
-                                    <host>dukecon.org</host>
-                                    <basePath>/rest</basePath>
-                                    <info>
-                                        <title>DukeCon API</title>
-                                        <version>v1</version>
-                                        <description>Documentation of the DukeCon REST API.</description>
-                                        <termsOfService>https://dukecon.org/</termsOfService>
-                                    </info>
-                                    <!-- Support classpath or file absolute path here.
-                                        1) classpath e.g: "classpath:/markdown.hbs", "classpath:/templates/hello.html"
-                                        2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
-                                            "${basedir}/src/main/resources/template/hello.html"
-                                    -->
-                                    <!--
-                                        <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
-                                    -->
-                                    <outputPath>${project.build.directory}/generated/document.html</outputPath>
-                                    <swaggerDirectory>${project.build.directory}/swagger-ui</swaggerDirectory>
-                                    <attachSwaggerArtifact>true</attachSwaggerArtifact>
-                                </apiSource>
-                            </apiSources>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <phase>process-classes</phase>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>io.github.robwin</groupId>
                         <artifactId>swagger2markup-maven-plugin</artifactId>
-                        <configuration>
-                            <inputDirectory>${project.build.directory}/swagger-ui</inputDirectory>
-                            <outputDirectory>${generated.asciidoc.directory}</outputDirectory>
-                            <separateDefinitions>true</separateDefinitions>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <phase>process-classes</phase>
-                                <goals>
-                                    <goal>process-swagger</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                     <!-- Copy the static docs into build.outputDirectory to be included in the jar -->
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>copy-resources</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${project.build.directory}/docs</outputDirectory>
-                                    <resources>
-                                        <resource>
-                                            <directory>${asciidoctor.html.output.directory}</directory>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -444,103 +363,18 @@
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>revision</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>filter-git-ids</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>resources</goal>
-                        </goals>
-                        <configuration>
-                            <filters>
-                                <filter>${project.build.outputDirectory}/git.properties</filter>
-                            </filters>
-                            <delimiters>
-                                <delimiter>${*}</delimiter>
-                            </delimiters>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/resources-filtered</directory>
-                                    <filtering>true</filtering>
-                                    <includes>
-                                        <include>**/*.txt</include>
-                                        <include>**/*.html</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <!-- For now this makes the BlazeDS integration work in the tests -->
-                    <forkCount>1</forkCount>
-                    <argLine>${surefire.argline}</argLine>
-                    <useFile>false</useFile>
-                    <includes>
-                        <include>**/*Test*.java</include>
-                        <include>**/*Test*.groovy</include>
-                    </includes>
-                    <systemProperties>
-                        <!-- when you run the tests in the IDE, arquillian.xml is used
-                        with a firefox browser served by a remote selenium. -->
-                        <!-- when you run the tests from maven, use the arquillian-headless.xml
-                        instead that uses a phantom headless browser -->
-                        <property>
-                            <name>arquillian.xml</name>
-                            <value>${arquillian.config}</value>
-                        </property>
-                    </systemProperties>
-                </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <argLine>${surefire.argline}</argLine>
-                    <includes>
-                        <include>**/*Spec.java</include>
-                        <include>**/*Spec.groovy</include>
-                        <include>**/*IT.java</include>
-                        <include>**/*IT.groovy</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/Abstract*</exclude>
-                    </excludes>
-                    <systemProperties>
-                        <!-- when you run the tests in the IDE, arquillian.xml is used
-                        with a firefox browser served by a remote selenium. -->
-                        <!-- when you run the tests from maven, use the arquillian-headless.xml
-                        instead that uses a phantom headless browser -->
-                        <property>
-                            <name>arquillian.xml</name>
-                            <value>${arquillian.config}</value>
-                        </property>
-                    </systemProperties>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.flywaydb</groupId>
@@ -549,16 +383,6 @@
             <plugin>
                 <groupId>com.tngtech.jgiven</groupId>
                 <artifactId>jgiven-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <format>html5</format>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

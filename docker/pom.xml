@@ -142,4 +142,17 @@
         </profile>
     </profiles>
 
+    <build>
+        <plugins>
+            <!-- TODO remove this when root/parent does not contain anymore docs -->
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

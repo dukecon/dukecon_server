@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.18.RELEASE</version>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.18.RELEASE</version>
+    </parent>
 
-	<groupId>org.dukecon</groupId>
-	<artifactId>dukecon-server</artifactId>
-	<version>1.5-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <groupId>org.dukecon</groupId>
+    <artifactId>dukecon-server</artifactId>
+    <version>1.5-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <developers>
         <developer>
@@ -55,8 +56,8 @@
         <url>https://github.com/dukecon/dukecon_server.git</url>
         <connection>scm:git:git@github.com:dukecon/dukecon_server.git</connection>
     </scm>
-	<name>DukeCon Server</name>
-	<description>Reference server implementation for a conference planner</description>
+    <name>DukeCon Server</name>
+    <description>Reference server implementation for a conference planner</description>
     <licenses>
         <license>
             <name>MIT License</name>
@@ -64,7 +65,7 @@
         </license>
     </licenses>
 
-	<properties>
+    <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -72,14 +73,20 @@
         <!-- Set this to localhost if you would like to test upload server -->
         <nexus.repository.prot>https</nexus.repository.prot>
         <nexus.repository.host>dev.dukecon.org</nexus.repository.host>
-        <nexus.repository.port />
+        <nexus.repository.port/>
         <nexus.repository.base>/nexus</nexus.repository.base>
 
-        <base.generated.docs.dir>${project.build.directory}/generated-docs</base.generated.docs.dir>
-        <generated.asciidoc.directory>${base.generated.docs.dir}/asciidoc</generated.asciidoc.directory>
+        <surefire.argline/>
+
+        <arquillian.config>arquillian-headless.xml</arquillian.config>
+
         <asciidoctor.input.directory>${project.basedir}/src/docs/asciidoc</asciidoctor.input.directory>
         <asciidoctor.html.output.directory>${base.generated.docs.dir}/html</asciidoctor.html.output.directory>
         <asciidoctor.pdf.output.directory>${base.generated.docs.dir}/pdf</asciidoctor.pdf.output.directory>
+        <base.generated.docs.dir>${project.build.directory}/generated-docs</base.generated.docs.dir>
+        <generated.asciidoc.directory>${base.generated.docs.dir}/asciidoc</generated.asciidoc.directory>
+
+        <swagger.input.directory>${project.basedir}/src/main/swagger</swagger.input.directory>
 
         <!-- Please keep (version) properties in alphabetical order! -->
         <archaius-core.version>0.7.4</archaius-core.version>
@@ -146,11 +153,13 @@
 
         <!-- Check automatic versions from time to time! -->
     </properties>
-    
+
     <repositories>
         <repository>
             <id>dukecon</id>
-            <url>${nexus.repository.prot}://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/</url>
+            <url>
+                ${nexus.repository.prot}://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/
+            </url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -162,14 +171,18 @@
             <!-- Make the site plugin happy: It needs to find some information about GEMs -->
             <id>gemfire-repository</id>
             <name>Gemfire Repository</name>
-            <url>${nexus.repository.prot}://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/gemfire-release-proxy/</url>
+            <url>
+                ${nexus.repository.prot}://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/gemfire-release-proxy/
+            </url>
         </repository>
     </repositories>
-    
+
     <pluginRepositories>
         <pluginRepository>
             <id>dukecon</id>
-            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/</url>
+            <url>
+                http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/
+            </url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -183,17 +196,23 @@
         <snapshotRepository>
             <id>dukecon-snapshots</id>
             <name>DukeCon Snapshots</name>
-            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/snapshots</url>
+            <url>
+                http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/snapshots
+            </url>
         </snapshotRepository>
         <repository>
             <id>dukecon-releases</id>
             <name>DukeCon Snapshots</name>
-            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/releases</url>
+            <url>
+                http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/releases
+            </url>
         </repository>
         <site>
             <id>dukecon-site</id>
             <name>DukeCon Site</name>
-            <url>dav:http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/site/${project.groupId}/${project.artifactId}/${project.version}</url>
+            <url>
+                dav:http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/site/${project.groupId}/${project.artifactId}/${project.version}
+            </url>
         </site>
     </distributionManagement>
 
@@ -480,23 +499,23 @@
         </dependencies>
     </dependencyManagement>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-	</dependencies>
+    </dependencies>
 
-	<modules>
-		<module>api</module>
+    <modules>
+        <module>api</module>
         <module>repositories</module>
-		<module>impl</module>
+        <module>impl</module>
         <module>docker</module>
     </modules>
 
@@ -539,14 +558,68 @@
                     </dependencies>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <version>${maven-war-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${maven-dependency-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <argLine>${surefire.argline}</argLine>
+                        <includes>
+                            <include>**/*Spec.java</include>
+                            <include>**/*Spec.groovy</include>
+                            <include>**/*IT.java</include>
+                            <include>**/*IT.groovy</include>
+                        </includes>
+                        <excludes>
+                            <exclude>**/Abstract*</exclude>
+                        </excludes>
+                        <systemProperties>
+                            <!-- when you run the tests in the IDE, arquillian.xml is used
+                            with a firefox browser served by a remote selenium. -->
+                            <!-- when you run the tests from maven, use the arquillian-headless.xml
+                            instead that uses a phantom headless browser -->
+                            <property>
+                                <name>arquillian.xml</name>
+                                <value>${arquillian.config}</value>
+                            </property>
+                        </systemProperties>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <!-- For now this makes the BlazeDS integration work in the tests -->
+                        <forkCount>1</forkCount>
+                        <argLine>${surefire.argline}</argLine>
+                        <useFile>false</useFile>
+                        <includes>
+                            <include>**/*Test*.java</include>
+                            <include>**/*Test*.groovy</include>
+                        </includes>
+                        <systemProperties>
+                            <!-- when you run the tests in the IDE, arquillian.xml is used
+                            with a firefox browser served by a remote selenium. -->
+                            <!-- when you run the tests from maven, use the arquillian-headless.xml
+                            instead that uses a phantom headless browser -->
+                            <property>
+                                <name>arquillian.xml</name>
+                                <value>${arquillian.config}</value>
+                            </property>
+                        </systemProperties>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${maven-war-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -556,6 +629,33 @@
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${maven-resources-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>filter-git-ids</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>resources</goal>
+                            </goals>
+                            <configuration>
+                                <filters>
+                                    <filter>${project.build.outputDirectory}/git.properties</filter>
+                                </filters>
+                                <delimiters>
+                                    <delimiter>${*}</delimiter>
+                                </delimiters>
+                                <resources>
+                                    <resource>
+                                        <directory>src/main/resources-filtered</directory>
+                                        <filtering>true</filtering>
+                                        <includes>
+                                            <include>**/*.txt</include>
+                                            <include>**/*.html</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>io.fabric8</groupId>
@@ -650,7 +750,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore />
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -681,8 +781,32 @@
                     <groupId>com.tngtech.jgiven</groupId>
                     <artifactId>jgiven-maven-plugin</artifactId>
                     <version>${jgiven-core.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <format>html5</format>
+                    </configuration>
                 </plugin>
-
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>${git-commit-id-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <excludeProperties>tags</excludeProperties>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -730,10 +854,6 @@
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
-                <version>${git-commit-id-plugin.version}</version>
-                <configuration>
-                    <excludeProperties>tags</excludeProperties>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -766,6 +886,88 @@
         <profile>
             <id>doc</id>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.github.kongchen</groupId>
+                            <artifactId>swagger-maven-plugin</artifactId>
+                            <configuration>
+                                <apiSources>
+                                    <apiSource>
+                                        <springmvc>false</springmvc>
+                                        <locations>org.dukecon.server.conference</locations>
+                                        <schemes>http,https</schemes>
+                                        <host>dukecon.org</host>
+                                        <basePath>/rest</basePath>
+                                        <info>
+                                            <title>DukeCon API</title>
+                                            <version>v1</version>
+                                            <description>Documentation of the DukeCon REST API.</description>
+                                            <termsOfService>https://dukecon.org/</termsOfService>
+                                        </info>
+                                        <!-- Support classpath or file absolute path here.
+                                            1) classpath e.g: "classpath:/markdown.hbs", "classpath:/templates/hello.html"
+                                            2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
+                                                "${basedir}/src/main/resources/template/hello.html"
+                                        -->
+                                        <!--
+                                            <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>
+                                        -->
+                                        <outputPath>${project.build.directory}/generated/document.html</outputPath>
+                                        <swaggerDirectory>${project.build.directory}/swagger-ui</swaggerDirectory>
+                                        <attachSwaggerArtifact>true</attachSwaggerArtifact>
+                                    </apiSource>
+                                </apiSources>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <phase>process-classes</phase>
+                                    <goals>
+                                        <goal>generate</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>io.github.robwin</groupId>
+                            <artifactId>swagger2markup-maven-plugin</artifactId>
+                            <configuration>
+                                <inputDirectory>${project.build.directory}/swagger-ui</inputDirectory>
+                                <outputDirectory>${generated.asciidoc.directory}</outputDirectory>
+                                <separateDefinitions>true</separateDefinitions>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <phase>process-classes</phase>
+                                    <goals>
+                                        <goal>process-swagger</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <!-- Copy the static docs into build.outputDirectory to be included in the jar -->
+                        <plugin>
+                            <artifactId>maven-resources-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>copy-resources</id>
+                                    <phase>process-resources</phase>
+                                    <goals>
+                                        <goal>copy-resources</goal>
+                                    </goals>
+                                    <configuration>
+                                        <outputDirectory>${project.build.directory}/docs</outputDirectory>
+                                        <resources>
+                                            <resource>
+                                                <directory>${asciidoctor.html.output.directory}</directory>
+                                            </resource>
+                                        </resources>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
                 <plugins>
                     <plugin>
                         <groupId>org.asciidoctor</groupId>
@@ -773,6 +975,17 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>Unix Profile</id>
+            <activation>
+                <file>
+                    <exists>/dev/urandom</exists>
+                </file>
+            </activation>
+            <properties>
+                <surefire.argline>-Djava.security.egd=file:/dev/./urandom</surefire.argline>
+            </properties>
         </profile>
     </profiles>
 
