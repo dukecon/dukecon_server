@@ -57,9 +57,11 @@ class ConferencesConfiguration {
     }
 
     private static Object readYaml(String classpathName) {
+        def data = ResourceWrapper.of(classpathName).stream;
+        log.debug("Reading data stream from '{}'", data)
         try {
             return new Yaml(new YamlDateTimeConstructor())
-                    .load(ResourceWrapper.of(classpathName).stream)
+                    .load(data)
         } catch (Exception e) {
             log.error("Could not read conference configuration yaml file: {}", e, classpathName)
             throw new IllegalStateException("Could not read conference configuration yaml file: " + classpathName, e)
