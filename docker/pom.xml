@@ -106,7 +106,7 @@
                                         </wait>
                                         <log>
                                             <color>BLUE</color>
-                                            <file>docker.log</file>
+                                            <file>${project.build.directory}/docker.log</file>
                                         </log>
                                     </run>
                                 </image>
