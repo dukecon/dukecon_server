@@ -120,7 +120,7 @@
         <dependency>
             <groupId>com.timgroup</groupId>
             <artifactId>jgravatar</artifactId>
-            <version>1.1</version>
+            <version>${jgravatar.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -130,13 +130,13 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.3.6.Final</version>
+            <version>${hibernate-validator.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.el</artifactId>
-            <version>3.0.1-b08</version>
+            <version>${javax.el.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

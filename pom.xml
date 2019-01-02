@@ -65,6 +65,22 @@
     </licenses>
 
 	<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!-- Set this to localhost if you would like to test upload server -->
+        <nexus.repository.prot>https</nexus.repository.prot>
+        <nexus.repository.host>dev.dukecon.org</nexus.repository.host>
+        <nexus.repository.port />
+        <nexus.repository.base>/nexus</nexus.repository.base>
+
+        <base.generated.docs.dir>${project.build.directory}/generated-docs</base.generated.docs.dir>
+        <generated.asciidoc.directory>${base.generated.docs.dir}/asciidoc</generated.asciidoc.directory>
+        <asciidoctor.input.directory>${project.basedir}/src/docs/asciidoc</asciidoctor.input.directory>
+        <asciidoctor.html.output.directory>${base.generated.docs.dir}/html</asciidoctor.html.output.directory>
+        <asciidoctor.pdf.output.directory>${base.generated.docs.dir}/pdf</asciidoctor.pdf.output.directory>
+
         <!-- Please keep (version) properties in alphabetical order! -->
         <archaius-core.version>0.7.4</archaius-core.version>
         <arquillian-bom.version>1.1.11.Final</arquillian-bom.version>
@@ -73,6 +89,7 @@
         <asciidoctor-maven-plugin.version>1.5.3</asciidoctor-maven-plugin.version>
         <asciidoctorj.diagram.version>1.3.1</asciidoctorj.diagram.version>
         <assertj-core.version>3.4.1</assertj-core.version>
+        <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
         <docker-maven-plugin.version>0.28.0</docker-maven-plugin.version>
         <flyway-maven-plugin.version>4.0.1</flyway-maven-plugin.version>
         <freemarker.version>2.3.23</freemarker.version>
@@ -86,17 +103,23 @@
         <groovycsv.version>1.1</groovycsv.version>
         <hamcrest-library.version>1.3</hamcrest-library.version>
         <hibernate-jpa-2.1-api.version>1.0.0.Final</hibernate-jpa-2.1-api.version>
+        <hibernate-validator.version>5.3.6.Final</hibernate-validator.version>
         <hystrix-javanica.version>1.4.10</hystrix-javanica.version>
+        <jackson-annotations.version>2.8.0</jackson-annotations.version>
+        <jackson-dataformat-csv.version>2.9.4</jackson-dataformat-csv.version>
+        <javax.el.version>3.0.1-b08</javax.el.version>
         <javax.inject.version>1</javax.inject.version>
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <javax.validation-api.version>1.1.0.Final</javax.validation-api.version>
         <javax.ws.rs-api.version>2.0.1</javax.ws.rs-api.version>
         <jersey-server.version>2.22.2</jersey-server.version>
         <jgiven-core.version>0.11.3</jgiven-core.version>
+        <jgravatar.version>1.1</jgravatar.version>
         <jqassistant-maven-plugin.version>1.1.3</jqassistant-maven-plugin.version>
         <junit.version>4.12</junit.version>
         <keycloak.version>3.2.1.Final</keycloak.version>
         <lombok.version>1.16.16</lombok.version>
+        <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
         <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
@@ -120,21 +143,6 @@
         <wagon-webdav-jackrabbit.version>2.10</wagon-webdav-jackrabbit.version>
         <!-- Version 1.x >= 1.4.01 needed by arquillian / selenium? -->
         <xml-apis.version>1.4.01</xml-apis.version>
-
-        <base.generated.docs.dir>${project.build.directory}/generated-docs</base.generated.docs.dir>
-        <generated.asciidoc.directory>${base.generated.docs.dir}/asciidoc</generated.asciidoc.directory>
-        <asciidoctor.input.directory>${project.basedir}/src/docs/asciidoc</asciidoctor.input.directory>
-        <asciidoctor.html.output.directory>${base.generated.docs.dir}/html</asciidoctor.html.output.directory>
-        <asciidoctor.pdf.output.directory>${base.generated.docs.dir}/pdf</asciidoctor.pdf.output.directory>
-
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-        <!-- Set this to localhost if you would like to test upload server -->
-        <nexus.repository.prot>https</nexus.repository.prot>
-        <nexus.repository.host>dev.dukecon.org</nexus.repository.host>
-        <nexus.repository.port />
-        <nexus.repository.base>/nexus</nexus.repository.base>
 
         <!-- Check automatic versions from time to time! -->
     </properties>
@@ -533,7 +541,7 @@
                     <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
+                    <version>${lifecycle-mapping.version}</version>
                     <configuration>
                         <lifecycleMappingMetadata>
                             <pluginExecutions>
