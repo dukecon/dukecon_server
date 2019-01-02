@@ -484,35 +484,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <compilerId>groovy-eclipse-compiler</compilerId>
-          <fork>true</fork>
-          <compilerArguments>
-            <javaAgentClass>lombok.launch.Agent</javaAgentClass>
-          </compilerArguments>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-eclipse-compiler</artifactId>
-            <version>${groovy-eclipse-compiler.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-eclipse-batch</artifactId>
-            <version>${groovy-eclipse-batch.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.groovy</groupId>
-        <artifactId>groovy-eclipse-compiler</artifactId>
-        <extensions>true</extensions>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -592,25 +563,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>buildnumber-maven-plugin</artifactId>
-        <version>${buildnumber-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <phase>validate</phase>
-            <goals>
-              <goal>create</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <doCheck>false</doCheck>
-          <doUpdate>false</doUpdate>
-          <revisionOnScmFailure>_localbuild</revisionOnScmFailure>
-          <shortRevisionLength>8</shortRevisionLength>
-          <format>{0,date,yyyy-MM-dd_HH:mm:ss}</format>
-          <items>
-            <item>timestamp</item>
-          </items>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
