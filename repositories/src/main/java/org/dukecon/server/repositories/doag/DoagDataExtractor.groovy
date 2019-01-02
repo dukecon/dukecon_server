@@ -132,7 +132,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
         } catch (MissingPropertyException) {
             // Usually: "German & English
             iso = language.toLowerCase().replaceAll("[^a-z]", "");
-            log.debug("unknown language {}", language);
+            log.trace("unknown language {}", language);
         }
         return iso;
     }
@@ -196,7 +196,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
     private List<Speaker> getSpeakersWithEvents(List<Speaker> speakers, Map<String, List<Event>> talkLookup = getSpeakerIdToEvents()) {
         speakers.collect { Speaker s ->
             s.events = ([] + talkLookup[s.id]).flatten()
-            log.debug("Speaker '{}' has #{} events", s.name, s.events.size())
+            log.trace("Speaker '{}' has #{} events", s.name, s.events.size())
             s
         }
     }

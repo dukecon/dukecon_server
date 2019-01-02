@@ -22,7 +22,7 @@ class SpeakerImageServiceImpl implements SpeakerImageService {
 
     String addImage(String contentBase64, String filename = null) {
         // TODO: special case for JFS2017, externalize image reading (base64 + file based) to caller and just call with byte[]
-        log.debug ("Adding speaker image from file '{}' (starting with '{}')", filename, contentBase64?.substring(0, 10))
+        log.trace ("Adding speaker image from '{}')", filename ? "file >${filename}<" : "Image Data: >${contentBase64?.substring(0, 10)}<")
         byte[] content
         if (contentBase64.contains('.')) {
             content = ResourceWrapper.of("public/images/jfs/2017/speakers/${contentBase64}").stream?.bytes
