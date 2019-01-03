@@ -99,7 +99,7 @@ public class ResourceWrapperTests {
 
     @Test
     public void testWrapFromClasspathFile() throws Exception {
-        assertNotNull(ResourceWrapper.of("versioneye.properties").getStream());
-        assertEquals("Resource: versioneye.properties", ResourceWrapper.of("versioneye.properties").name());
+        assertNotNull(ResourceWrapper.of("dummy.resource").getStream());
+        assertEquals("Resource: dummy.resource", ResourceWrapper.of("dummy.resource").name());
     }
 }

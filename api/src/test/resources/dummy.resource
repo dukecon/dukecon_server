@@ -1,0 +1,1 @@
+Dummyfile for some resource wrapper test!
