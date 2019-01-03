@@ -7,7 +7,6 @@ import org.dukecon.model.Conference
 import org.dukecon.server.repositories.ConferenceDataProvider
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Component
 
 import javax.inject.Inject
 import java.time.Instant
@@ -22,7 +21,6 @@ import java.time.Instant
  * @author Christofer Dutz, christofer.dutz@codecentric.de, @ChristoferDutz
  */
 @Slf4j
-//@Component
 @TypeChecked
 @Deprecated
 class SchedDataProvider implements ConferenceDataProvider, InitializingBean {
