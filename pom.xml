@@ -97,6 +97,7 @@
         <asciidoctorj.diagram.version>1.5.11</asciidoctorj.diagram.version>
         <assertj-core.version>3.11.1</assertj-core.version>
         <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
+        <buildplan-maven-plugin.version>1.3</buildplan-maven-plugin.version>
         <docker-maven-plugin.version>0.28.0</docker-maven-plugin.version>
         <flyway-maven-plugin.version>5.2.4</flyway-maven-plugin.version>
         <freemarker.version>2.3.28</freemarker.version>
@@ -620,7 +621,6 @@
                     <version>${maven-war-plugin.version}</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>${maven-project-info-reports-plugin.version}</version>
                 </plugin>
@@ -654,6 +654,11 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>fr.jcgay.maven.plugins</groupId>
+                    <artifactId>buildplan-maven-plugin</artifactId>
+                    <version>${buildplan-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>io.fabric8</groupId>
