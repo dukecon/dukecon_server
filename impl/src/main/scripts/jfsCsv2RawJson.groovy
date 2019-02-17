@@ -1,4 +1,4 @@
-@Grab('com.xlson.groovycsv:groovycsv:1.1')
+@Grab('com.xlson.groovycsv:groovycsv:1.3')
 
 import com.xlson.groovycsv.PropertyMapper
 import groovy.json.JsonBuilder

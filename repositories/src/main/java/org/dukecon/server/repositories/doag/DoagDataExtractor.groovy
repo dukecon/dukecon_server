@@ -1,7 +1,6 @@
 package org.dukecon.server.repositories.doag
 
 import groovy.util.logging.Slf4j
-import org.apache.commons.lang3.StringUtils
 import org.dukecon.model.*
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.conference.SpeakerImageService

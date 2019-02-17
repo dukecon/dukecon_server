@@ -4,7 +4,7 @@ import groovy.util.logging.Slf4j
 
 import org.dukecon.DukeConServerApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder
-import org.springframework.boot.web.support.SpringBootServletInitializer
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 
 @Slf4j

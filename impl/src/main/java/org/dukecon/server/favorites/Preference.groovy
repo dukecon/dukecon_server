@@ -3,6 +3,7 @@ package org.dukecon.server.favorites
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.Table
 import javax.persistence.UniqueConstraint
@@ -14,7 +15,7 @@ import javax.persistence.UniqueConstraint
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = ['principal_id', 'event_id']))
 class Preference {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     long id
 
     @Column(name = "principal_id", nullable = false)

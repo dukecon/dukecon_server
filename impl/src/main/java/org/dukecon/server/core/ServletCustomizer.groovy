@@ -2,20 +2,20 @@ package org.dukecon.server.core
 
 import groovy.util.logging.Slf4j
 
-import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer
-import org.springframework.boot.context.embedded.MimeMappings
+import org.springframework.boot.web.server.MimeMappings
+import org.springframework.boot.web.server.WebServerFactoryCustomizer
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory
 import org.springframework.stereotype.Component
 
 @Component
 @Slf4j
-public class ServletCustomizer implements EmbeddedServletContainerCustomizer {
+public class ServletCustomizer implements WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> {
 
     @Override
-    public void customize(ConfigurableEmbeddedServletContainer container) {
+    public void customize(ConfigurableServletWebServerFactory factory) {
 		log.debug ("Adding manifest mime mapping!")
-        MimeMappings mappings = container.mimeMappings
+        MimeMappings mappings = factory.mimeMappings
         mappings.add("manifest","text/cache-manifest")
-        container.setMimeMappings(mappings)
+        factory.setMimeMappings(mappings)
     }
 }

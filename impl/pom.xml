@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.dukecon</groupId>
         <artifactId>dukecon-server</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>1.6-SNAPSHOT</version>
     </parent>
 
     <artifactId>dukecon-server-springboot</artifactId>
@@ -89,18 +89,19 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
+            <version>${groovy.version}</version>
         </dependency>
         <dependency>
             <groupId>org.dukecon</groupId>
             <artifactId>dukecon-server-api</artifactId>
             <!-- TODO: allow for usage of a version property -->
-            <version>1.5-SNAPSHOT</version>
+            <version>1.6-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.dukecon.server</groupId>
             <artifactId>dukecon-server-repositories</artifactId>
             <!-- TODO: allow for usage of a version property -->
-            <version>1.5-SNAPSHOT</version>
+            <version>1.6-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -223,11 +224,13 @@
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
+            <version>${spock.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-spring</artifactId>
+            <version>${spock.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

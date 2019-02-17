@@ -14,7 +14,7 @@ import javax.persistence.*
 class EventBooking {
     @JsonIgnore
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     long id
 
     @Column(name = "conference_id", nullable = false)

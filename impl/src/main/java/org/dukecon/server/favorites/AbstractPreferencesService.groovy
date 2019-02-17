@@ -66,7 +66,7 @@ abstract class AbstractPreferencesService implements PreferencesService {
             if (!userPreferencesByTalk.containsKey(p.eventId)) {
                 log.debug("Deleting talk {} from preferences of user {}", p.eventId, principalId)
                 preferences.remove(p.eventId)
-                preferencesRepository.delete(p.id)
+                preferencesRepository.deleteById(p.id)
             }
         }
 
@@ -122,7 +122,7 @@ abstract class AbstractPreferencesService implements PreferencesService {
                 principalId, userPreference.eventId)
         if ((preferences != null) && !preferences.empty) {
             preferences.each { Preference preference ->
-                preferencesRepository.delete(preference.id)
+                preferencesRepository.deleteById(preference.id)
             }
         } else {
             // If we try to remove something that wasn't found,

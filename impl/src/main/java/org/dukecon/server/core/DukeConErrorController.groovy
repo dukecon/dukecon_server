@@ -4,12 +4,11 @@ import groovy.transform.TypeChecked
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.ErrorController;
-import org.springframework.boot.autoconfigure.web.ErrorAttributes;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +38,7 @@ public class DukeConErrorController implements ErrorController {
     }
 
     @RequestMapping(DukeConErrorControllerConstants.PATH)
-    public Map<String, Object> error(HttpServletRequest request, HttpServletResponse response) {
+    public Map<String, Object> error(WebRequest request, HttpServletResponse response) {
         Map<String, Object> map = [:]
         map.put("status", response.getStatus())
         map.put("reason", getErrorAttributes(request, debug))
@@ -47,8 +46,7 @@ public class DukeConErrorController implements ErrorController {
         return map
     }
 
-    private Map<String, Object> getErrorAttributes(HttpServletRequest request, boolean includeStackTrace) {
-        RequestAttributes requestAttributes = new ServletRequestAttributes(request)
-        return errorAttributes.getErrorAttributes(requestAttributes, includeStackTrace)
+    private Map<String, Object> getErrorAttributes(WebRequest request, boolean includeStackTrace) {
+        return errorAttributes.getErrorAttributes(request, includeStackTrace)
     }
 }

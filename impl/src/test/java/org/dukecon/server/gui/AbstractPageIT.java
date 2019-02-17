@@ -10,7 +10,7 @@ import org.junit.Rule;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.net.URL;
 
@@ -33,7 +33,7 @@ public class AbstractPageIT<GIVEN, WHEN, THEN> extends ScenarioTest<GIVEN, WHEN,
     public WebDriver browser;
 
     @Autowired
-    private EmbeddedWebApplicationContext server;
+    private WebApplicationContext server;
 
     /**
      * Inject the URL to Arquillian so @Location annotations work as expected.
