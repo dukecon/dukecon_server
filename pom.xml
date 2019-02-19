@@ -103,11 +103,10 @@
         <freemarker.version>2.3.28</freemarker.version>
         <git-commit-id-plugin.version>2.2.5</git-commit-id-plugin.version>
         <gitlog-maven-plugin.version>1.13.15</gitlog-maven-plugin.version>
+        <gmavenplus-plugin.version>1.6.2</gmavenplus-plugin.version>
         <google-guava.version>27.0.1-jre</google-guava.version>
         <graphene-webdriver.version>2.0.3.Final</graphene-webdriver.version>
-        <groovy-eclipse-batch.version>2.5.6-01</groovy-eclipse-batch.version>
-        <groovy-eclipse-compiler.version>2.9.3-01</groovy-eclipse-compiler.version>
-        <groovy.version>2.4.16</groovy.version>
+        <groovy.version>2.5.6</groovy.version>
         <groovycsv.version>1.3</groovycsv.version>
         <hamcrest-library.version>1.3</hamcrest-library.version>
         <hibernate-jpa-2.1-api.version>1.0.2</hibernate-jpa-2.1-api.version>
@@ -555,30 +554,6 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
-                    <configuration>
-                        <compilerId>groovy-eclipse-compiler</compilerId>
-                        <!--fork>true</fork-->
-                        <compilerArguments>
-                            <javaAgentClass>lombok.launch.Agent</javaAgentClass>
-                        </compilerArguments>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.codehaus.groovy</groupId>
-                            <artifactId>groovy-eclipse-compiler</artifactId>
-                            <version>${groovy-eclipse-compiler.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.codehaus.groovy</groupId>
-                            <artifactId>groovy-eclipse-batch</artifactId>
-                            <version>${groovy-eclipse-batch.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
                 <plugin>
                     <artifactId>maven-dependency-plugin</artifactId>
@@ -731,6 +706,35 @@
                     </executions>
                 </plugin>
                 <plugin>
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>${gmavenplus-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>addSources</goal>
+                                <goal>addTestSources</goal>
+                                <goal>generateStubs</goal>
+                                <goal>compile</goal>
+                                <goal>generateTestStubs</goal>
+                                <goal>compileTests</goal>
+                                <goal>removeStubs</goal>
+                                <goal>removeTestStubs</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>
+                                        <directory>${project.basedir}/src/main/java</directory>
+                                        <includes>
+                                            <include>**/*.groovy</include>
+                                        </includes>
+                                    </source>
+                                </sources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildnumber-maven-plugin</artifactId>
                     <version>${buildnumber-maven-plugin.version}</version>
@@ -846,7 +850,9 @@
                             <failOnWarning>true</failOnWarning>
                             <ignoreNonCompile>true</ignoreNonCompile>
                             <!-- Most of the following dependencies are used in groovy code - so the plugin cannot detect it currently -->
+                            <!-- Groovy dependencies themselves are used via some magic from the POM only groovy-all -->
                             <ignoredUnusedDeclaredDependencies>
+                                <ignoredUnusedDeclaredDependency>org.codehaus.groovy:groovy-all</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>com.h2database:h2</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.keycloak:keycloak-spring-boot-starter</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-configuration-processor</ignoredUnusedDeclaredDependency>
@@ -857,6 +863,10 @@
                                 <ignoredUnusedDeclaredDependency>org.springframework.cloud:spring-cloud-starter-hystrix</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>org.springframework.security:spring-security-web</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
+                            <ignoredUsedUndeclaredDependencies>
+                                <ignoredUsedUndeclaredDependency>org.codehaus.groovy:groovy</ignoredUsedUndeclaredDependency>
+                                <ignoredUsedUndeclaredDependency>org.codehaus.groovy:groovy-json</ignoredUsedUndeclaredDependency>
+                            </ignoredUsedUndeclaredDependencies>
                         </configuration>
                     </execution>
                 </executions>
