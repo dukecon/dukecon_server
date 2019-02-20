@@ -132,7 +132,7 @@
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-surefire-report-plugin.version>2.19.1</maven-surefire-report-plugin.version>
         <maven-war-plugin.version>3.2.2</maven-war-plugin.version>
-        <postgresql.version>9.3-1103-jdbc41</postgresql.version>
+        <postgresql.version>42.2.5.jre7</postgresql.version>
         <selenium.version>3.13.0</selenium.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <commons-io.version>2.6</commons-io.version>
