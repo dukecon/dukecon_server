@@ -26,19 +26,22 @@ class ConferencesConfiguration {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory()
         Validator validator = factory.getValidator()
         def yaml = readYaml(classpathName)
-        if (yaml instanceof List) {
-            yaml = yaml.findAll{it}.collectEntries{[(it.id): it]}
-        }
-        def x = deepCopy(yaml).findAll {k, v -> k ==~ /^.*\d+$/}.findResults {k, v ->
-            def conferenceProperties = v << [id: k]
-            def conference = new Conference(substitutePlaceHolder(conferenceProperties ?: [:], allProperties))
-            Set<ConstraintViolation<Conference>> violations = validator.validate(conference)
-            for (ConstraintViolation<Conference> violation : violations) {
-                log.error("{}.{} {}", violation.getRootBeanClass().getSimpleName(), violation.propertyPath, violation.getMessage())
+        if (yaml) {
+            if (yaml instanceof List) {
+                yaml = yaml.findAll{it}.collectEntries{[(it.id): it]}
             }
-            violations?.isEmpty() ? conference : null
+            def conferences = deepCopy(yaml).findAll { k, v -> k ==~ /^.*\d+$/ }.findResults { k, v ->
+                def conferenceProperties = v << [id: k]
+                def conference = new Conference(substitutePlaceHolder(conferenceProperties ?: [:], allProperties))
+                Set<ConstraintViolation<Conference>> violations = validator.validate(conference)
+                for (ConstraintViolation<Conference> violation : violations) {
+                    log.error("{}.{} {}", violation.getRootBeanClass().getSimpleName(), violation.propertyPath, violation.getMessage())
+                }
+                violations?.isEmpty() ? conference : null
+            }
+            return conferences
         }
-        return x
+        return []
     }
 
     /**
