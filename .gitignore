@@ -6,6 +6,9 @@
 *.iml
 *.log
 *-backup.raw
+*.bak
+*.versionsBackup
+*.versionsNew
 backup/
 logs/
 target/
