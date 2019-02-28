@@ -511,6 +511,7 @@
         <module>repositories</module>
         <module>impl</module>
         <module>docker</module>
+        <module>converters</module>
     </modules>
 
     <build>

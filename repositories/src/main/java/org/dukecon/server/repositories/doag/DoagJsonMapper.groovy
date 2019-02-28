@@ -31,7 +31,14 @@ class DoagJsonMapper implements RawDataMapper {
     }
 
     private Map<String, List> parseResources(RawDataResources rawDataResources) {
-        return rawDataResources.get().collectEntries { k, v -> [(k): parseResource(v)] } as Map<String, List>
+        return rawDataResources.get().collectEntries {
+            k, v -> [(k): parseResource(v)]
+        } as Map<String, List>
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    private List parseResource(String resource) {
+        return parseResource(ResourceWrapper.of(resource))
     }
 
     /**
