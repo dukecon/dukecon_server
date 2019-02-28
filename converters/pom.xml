@@ -12,15 +12,19 @@
     <artifactId>converters</artifactId>
 
     <dependencies>
-        <!--<dependency>-->
-        <!--<groupId>org.dukecon</groupId>-->
-        <!--<artifactId>dukecon-server-api</artifactId>-->
-        <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.dukecon</groupId>
+            <artifactId>dukecon-server-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.dukecon.server</groupId>
             <artifactId>dukecon-server-repositories</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
     </dependencies>
 
