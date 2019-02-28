@@ -9,7 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>converters</artifactId>
+    <artifactId>dukecon-server-converters</artifactId>
+
+    <name>DukeCon Standalone Converters</name>
 
     <dependencies>
         <dependency>
