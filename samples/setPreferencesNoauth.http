@@ -1,0 +1,9 @@
+# Start server with 'noauth' Spring profile
+
+POST http://localhost:8080/rest/noauthpreferences
+Content-Type: application/json
+Accept: application/json
+
+[{"eventId":"548987","version":"1"},{"eventId":"548999","version":"1"},{"eventId":"549046","version":"1"},{"eventId":"549095","version":"1"},{"eventId":"549144","version":"1"},{"eventId":"569955","version":"1"},{"eventId":"570053","version":"1"}]
+
+###
