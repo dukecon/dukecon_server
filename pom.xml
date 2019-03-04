@@ -153,68 +153,6 @@
         <!-- Check automatic versions from time to time! -->
     </properties>
 
-    <repositories>
-        <repository>
-            <id>central</id>
-            <url>
-                https://dl.bintray.com/groovy/maven
-            </url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>dukecon</id>
-            <url>
-                ${nexus.repository.prot}://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/
-            </url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <!-- Make the site plugin happy: It needs to find some information about GEMs -->
-            <id>gemfire-repository</id>
-            <name>Gemfire Repository</name>
-            <url>
-                ${nexus.repository.prot}://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/gemfire-release-proxy/
-            </url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>central</id>
-            <url>
-                https://dl.bintray.com/groovy/maven
-            </url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>dukecon</id>
-            <url>
-                http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/
-            </url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
     <distributionManagement>
         <snapshotRepository>
             <id>dukecon-snapshots</id>
@@ -881,6 +819,45 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>dukecon</id>
+            <repositories>
+                <repository>
+                    <id>dukecon</id>
+                    <url>
+                        ${nexus.repository.prot}://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/
+                    </url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <!-- Make the site plugin happy: It needs to find some information about GEMs -->
+                    <id>gemfire-repository</id>
+                    <name>Gemfire Repository</name>
+                    <url>
+                        ${nexus.repository.prot}://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/gemfire-release-proxy/
+                    </url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>dukecon</id>
+                    <url>
+                        http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/
+                    </url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
         <profile>
             <id>jqa</id>
             <build>
