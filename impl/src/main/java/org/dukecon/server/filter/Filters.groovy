@@ -19,7 +19,7 @@ import javax.persistence.Id
 @Entity(name = "filters")
 class Filters {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue
     long id
 
     @Column(name = "principal_id", nullable = false, unique = true)

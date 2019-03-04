@@ -15,7 +15,7 @@ import javax.persistence.UniqueConstraint
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = ['principal_id', 'event_id']))
 class Preference {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue
     long id
 
     @Column(name = "principal_id", nullable = false)
