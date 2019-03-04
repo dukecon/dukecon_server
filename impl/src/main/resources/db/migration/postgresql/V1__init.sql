@@ -1,5 +1,5 @@
-create table favorites (id bigint, event_id varchar(255) not null, principal_id varchar(255) not null, version int4, primary key (id));
-create table filters (id bigint, only_favorites boolean, principal_id varchar(255) not null, primary key (id));
+create table favorites (id bigint not null, event_id varchar(255) not null, principal_id varchar(255) not null, version int4, primary key (id));
+create table filters (id bigint not null, only_favorites boolean, principal_id varchar(255) not null, primary key (id));
 create table filters_languages (filters_id bigint not null, languages varchar(255));
 create table filters_levels (filters_id bigint not null, levels varchar(255));
 create table filters_locations (filters_id bigint not null, locations varchar(255));
