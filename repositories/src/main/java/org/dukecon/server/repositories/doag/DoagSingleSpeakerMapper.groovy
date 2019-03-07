@@ -1,5 +1,6 @@
 package org.dukecon.server.repositories.doag
 
+import groovy.util.logging.Slf4j
 import org.dukecon.model.Speaker
 
 import java.security.MessageDigest
@@ -9,6 +10,7 @@ import java.security.MessageDigest
  *
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
+@Slf4j
 class DoagSingleSpeakerMapper {
     final Speaker speaker
 
@@ -41,6 +43,7 @@ class DoagSingleSpeakerMapper {
     }
 
     DoagSingleSpeakerMapper(input, Type type = Type.DEFAULT) {
+        log.debug ("Creating Last name from '{}' or '{}'", input[type.lastnameKey], input[type.nameKey])
         String lastName = input[type.lastnameKey] ?: input[type.nameKey]?.tokenize(' ')?.last() ?: ''
         String firstName = input[type.firstnameKey] ?: lastName
                 ? (input[type.nameKey] - lastName).trim()
