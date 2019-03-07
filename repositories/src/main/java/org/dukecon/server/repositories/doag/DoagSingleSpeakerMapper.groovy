@@ -42,9 +42,19 @@ class DoagSingleSpeakerMapper {
         String getCompanyKey() {"${this.namesSuffix}FIRMA"}
     }
 
+    private def lastName(String ln) {
+        if (ln) {
+            List tokens = ln.tokenize(' ')
+            if (tokens.size() > 0) {
+                return tokens.last()
+            }
+        }
+        return ln
+    }
+
     DoagSingleSpeakerMapper(input, Type type = Type.DEFAULT) {
         log.debug ("Creating Last name from '{}' or '{}'", input[type.lastnameKey], input[type.nameKey])
-        String lastName = input[type.lastnameKey] ?: input[type.nameKey]?.tokenize(' ')?.last() ?: ''
+        String lastName = input[type.lastnameKey] ?: lastName(input[type.nameKey]) ?: ''
         String firstName = input[type.firstnameKey] ?: lastName
                 ? (input[type.nameKey] - lastName).trim()
                 : input[type.nameKey]?.tokenize(' ')?.init()?.join(' ') ?: ''
