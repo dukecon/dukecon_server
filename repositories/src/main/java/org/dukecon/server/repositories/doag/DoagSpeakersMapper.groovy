@@ -2,12 +2,14 @@ package org.dukecon.server.repositories.doag
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
+import groovy.util.logging.Slf4j
 import org.dukecon.model.Speaker
 import org.dukecon.server.repositories.doag.DoagSingleSpeakerMapper.Type
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
+@Slf4j
 class DoagSpeakersMapper {
 
     final Map<String, Speaker> speakers = [:]
@@ -37,6 +39,10 @@ class DoagSpeakersMapper {
 
     DoagSpeakersMapper mergeSpeakers(speakerInput) {
         Map<String, Speaker> additionalSpeakerInput = fromSpeakerJson(speakerInput, Type.DEFAULT)
+        if (!additionalSpeakerInput) {
+            log.warn ("Additional speaker data is empty")
+            return this
+        }
         speakers.keySet().each {String key ->
             if (additionalSpeakerInput[key]) {
                 if (!speakers[key].name) { speakers[key].name = additionalSpeakerInput[key]?.name}
