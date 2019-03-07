@@ -40,16 +40,17 @@ class DoagSingleSpeakerMapper {
         String getCompanyKey() {"${this.namesSuffix}FIRMA"}
     }
 
-    DoagSingleSpeakerMapper(input) {
-        this(input, Type.DEFAULT)
-    }
-
-    DoagSingleSpeakerMapper(input, Type type) {
+    DoagSingleSpeakerMapper(input, Type type = Type.DEFAULT) {
+        String lastName = input[type.lastnameKey] ?: input[type.nameKey]?.tokenize(' ')?.last() ?: ''
+        String firstName = input[type.firstnameKey] ?: lastName
+                ? (input[type.nameKey] - lastName).trim()
+                : input[type.nameKey]?.tokenize(' ')?.init()?.join(' ') ?: ''
+        String fullName = input[type.nameKey] ?: "${firstName} ${lastName}".trim()
         this.speaker = input[type.idKey] ? Speaker.builder()
                 .id(input[type.idKey]?.toString())
-                .name(input[type.nameKey] ?: "${input.VORNAME ?: ''} ${input[type.lastnameKey] ?: ''}".trim())
-                .firstname(input.VORNAME ?: input[type.lastnameKey] ? (input[type.nameKey] - input[type.lastnameKey]).trim() : input[type.nameKey]?.tokenize(' ')?.init()?.join(' '))
-                .lastname(input[type.lastnameKey]  ?: input[type.nameKey]?.tokenize(' ')?.last())
+                .name(fullName)
+                .firstname(firstName)
+                .lastname(lastName)
                 .website(input.WEBSEITE)
                 .company(input[type.companyKey])
 //                .email(input.)

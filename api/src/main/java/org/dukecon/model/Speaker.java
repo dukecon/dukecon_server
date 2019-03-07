@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,15 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Speaker implements Identifyable {
+    @NonNull
     private String id;
+    @NonNull
     private String name;
+    @NonNull
     private String firstname;
+    @NonNull
     private String lastname;
+
     private String company;
     private String email;
     private String website;

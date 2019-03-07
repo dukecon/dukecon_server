@@ -75,7 +75,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
         this.speakersJson = this.rawDataMapper.asMap().speakersData
         this.additionalDataJson = this.rawDataMapper.asMap().additionalData
         DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(talksJson, speakersJson, parseTwitterHandles())
-        mapper.photos.each {
+        mapper?.photos.each {
             speakerImageService.addImage(it)
         }
         def events = this.getEvents()
@@ -182,7 +182,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
     @Deprecated
     private List<Speaker> getSpeakers() {
         DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(talksJson, speakersJson)
-        mapper.photos.each {
+        mapper?.photos.each {
             speakerImageService.addImage(it)
         }
         return mapper.speakers.values() as List

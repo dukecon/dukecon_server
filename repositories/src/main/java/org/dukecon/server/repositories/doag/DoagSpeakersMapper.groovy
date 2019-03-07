@@ -19,7 +19,7 @@ class DoagSpeakersMapper {
         new DoagSpeakersMapper(eventInput, DoagSingleSpeakerMapper.Type.REFERENT)
                 .addSpeakers(eventInput, DoagSingleSpeakerMapper.Type.COREFERENT)
                 .addSpeakers(eventInput, DoagSingleSpeakerMapper.Type.COCOREFERENT)
-                .addSpeakers(speakerInput)
+                .mergeSpeakers(speakerInput)
                 .mergeAdditionalTwitterHandles(twitterHandles)
     }
 
@@ -27,9 +27,32 @@ class DoagSpeakersMapper {
         addSpeakers(input, type)
     }
 
-    DoagSpeakersMapper addSpeakers(input, Type type = Type.DEFAULT) {
+    DoagSpeakersMapper addSpeakers(input, Type type) {
         this.photos.addAll input.findAll { it.PROFILFOTO }*.PROFILFOTO
-        this.speakers.putAll(fromSpeakerJson(input, type).findAll { k, v -> k && (type != Type.DEFAULT || speakers.keySet().contains(k) || eventIds2SpeakerIds.isEmpty()) })
+        this.speakers.putAll(fromSpeakerJson(input, type).findAll {
+            k, v -> k && (type != Type.DEFAULT || speakers.keySet().contains(k) || eventIds2SpeakerIds.isEmpty())
+        })
+        return this
+    }
+
+    DoagSpeakersMapper mergeSpeakers(speakerInput) {
+        Map<String, Speaker> additionalSpeakerInput = fromSpeakerJson(speakerInput, Type.DEFAULT)
+        speakers.keySet().each {String key ->
+            if (additionalSpeakerInput[key]) {
+                if (!speakers[key].name) { speakers[key].name = additionalSpeakerInput[key]?.name}
+                if (!speakers[key].firstname) { speakers[key].firstname = additionalSpeakerInput[key]?.firstname}
+                if (!speakers[key].lastname) { speakers[key].lastname = additionalSpeakerInput[key]?.lastname}
+                if (!speakers[key].company) { speakers[key].company = additionalSpeakerInput[key]?.company}
+                if (!speakers[key].email) { speakers[key].email = additionalSpeakerInput[key]?.email}
+                if (!speakers[key].website) { speakers[key].website = additionalSpeakerInput[key]?.website}
+                if (!speakers[key].gplus) { speakers[key].gplus = additionalSpeakerInput[key]?.gplus}
+                if (!speakers[key].facebook) { speakers[key].facebook = additionalSpeakerInput[key]?.facebook}
+                if (!speakers[key].xing) { speakers[key].xing = additionalSpeakerInput[key]?.xing}
+                if (!speakers[key].linkedin) { speakers[key].linkedin = additionalSpeakerInput[key]?.linkedin}
+                if (!speakers[key].bio) { speakers[key].bio = additionalSpeakerInput[key]?.bio}
+                if (!speakers[key].photoId) { speakers[key].photoId = additionalSpeakerInput[key]?.photoId }
+            }
+        }
         return this
     }
 

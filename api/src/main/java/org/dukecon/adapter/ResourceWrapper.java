@@ -61,7 +61,10 @@ public interface ResourceWrapper {
         return new ResourceWrapper() {
             @Override
             public InputStream getStream() throws IOException {
-                return resource.startsWith("http") ? ResourceWrapper.of(new URL(resource)).getStream() : resource.startsWith("file:") ? ResourceWrapper.of(new File(resource.split(":", 2)[1])).getStream() : ResourceWrapper.class.getClassLoader().getResourceAsStream(resource);
+                return resource.startsWith("http")
+                        ? ResourceWrapper.of(new URL(resource)).getStream()
+                        : resource.startsWith("file:") ? ResourceWrapper.of(new File(resource.split(":", 2)[1])).getStream()
+                        : ResourceWrapper.class.getClassLoader().getResourceAsStream(resource);
             }
 
             @Override

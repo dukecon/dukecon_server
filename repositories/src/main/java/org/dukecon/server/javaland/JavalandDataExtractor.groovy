@@ -1,15 +1,21 @@
 package org.dukecon.server.javaland
 
 import groovy.util.logging.Slf4j
-import org.dukecon.model.*
-import org.dukecon.server.repositories.ConferenceDataExtractor
+import org.dukecon.model.Audience
+import org.dukecon.model.Conference
+import org.dukecon.model.Event
+import org.dukecon.model.EventType
+import org.dukecon.model.Language
+import org.dukecon.model.Location
+import org.dukecon.model.MetaData
+import org.dukecon.model.Speaker
+import org.dukecon.model.Track
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 import static com.xlson.groovycsv.CsvParser.parseCsv
-
 /**
  * @deprecated will be removed in favor for DoagDataExtractor
  *
@@ -124,11 +130,11 @@ class  JavalandDataExtractor {
     private List<Speaker> getSpeakers() {
         def result = talksJson.findAll { it.ID_PERSON }.collect { t ->
 
-            Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME).lastname(t.REFERENT_NACHNAME).company(t.REFERENT_FIRMA).twitter(twitterHandle(t)).build()
+            Speaker.builder().id(t.ID_PERSON?.toString()).name(t.REFERENT_NAME ?: "").lastname(t.REFERENT_NACHNAME ?: "").company(t.REFERENT_FIRMA ?: "").twitter(twitterHandle(t)).build()
         } + talksJson.findAll { it.ID_PERSON_COREF }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME).lastname(t.COREFERENT_NACHNAME).company(t.COREFERENT_FIRMA).twitter(twitterHandle(t)).build()
+            Speaker.builder().id(t.ID_PERSON_COREF?.toString()).name(t.COREFERENT_NAME ?: "").lastname(t.COREFERENT_NACHNAME ?: "").company(t.COREFERENT_FIRMA ?: "").twitter(twitterHandle(t)).build()
         } + talksJson.findAll { it.ID_PERSON_COCOREF }.collect { t ->
-            Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME).lastname(t.COCOREFERENT_NACHNAME).company(t.COCOREFERENT_FIRMA).twitter(twitterHandle(t)).build()
+            Speaker.builder().id(t.ID_PERSON_COCOREF?.toString()).name(t.COCOREFERENT_NAME ?: "").lastname(t.COCOREFERENT_NACHNAME ?: "").company(t.COCOREFERENT_FIRMA ?: "").twitter(twitterHandle(t)).build()
         }
         result.flatten().unique { it.id }
 
