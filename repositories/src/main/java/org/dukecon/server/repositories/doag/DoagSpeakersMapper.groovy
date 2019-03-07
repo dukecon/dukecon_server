@@ -21,7 +21,7 @@ class DoagSpeakersMapper {
         new DoagSpeakersMapper(eventInput, DoagSingleSpeakerMapper.Type.REFERENT)
                 .addSpeakers(eventInput, DoagSingleSpeakerMapper.Type.COREFERENT)
                 .addSpeakers(eventInput, DoagSingleSpeakerMapper.Type.COCOREFERENT)
-                .mergeSpeakers(speakerInput)
+                .mergeAdditionalSpeakerInfos(speakerInput)
                 .mergeAdditionalTwitterHandles(twitterHandles)
     }
 
@@ -37,8 +37,9 @@ class DoagSpeakersMapper {
         return this
     }
 
-    DoagSpeakersMapper mergeSpeakers(speakerInput) {
+    DoagSpeakersMapper mergeAdditionalSpeakerInfos(speakerInput) {
         Map<String, Speaker> additionalSpeakerInput = fromSpeakerJson(speakerInput, Type.DEFAULT)
+        this.photos.addAll speakerInput.findAll { it.PROFILFOTO }*.PROFILFOTO
         if (!additionalSpeakerInput) {
             log.warn ("Additional speaker data is empty")
             return this

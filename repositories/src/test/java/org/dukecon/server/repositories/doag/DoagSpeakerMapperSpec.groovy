@@ -2,9 +2,6 @@ package org.dukecon.server.repositories.doag
 
 import groovy.json.JsonSlurper
 import org.dukecon.model.Speaker
-import org.dukecon.server.repositories.doag.DoagDataExtractor
-import org.dukecon.server.repositories.doag.DoagSingleSpeakerMapper
-import org.dukecon.server.repositories.doag.DoagSpeakersMapper
 import spock.lang.Specification
 
 /**
@@ -27,7 +24,7 @@ class DoagSpeakerMapperSpec extends Specification {
         def allIds = new HashSet()
         def duplicateSpeakerIds = new TreeSet()
         json.hits.hits._source.ID_PERSON.each {
-            if(allIds.contains(it)) {
+            if (allIds.contains(it)) {
                 duplicateSpeakerIds.add it
             }
             allIds.add it
@@ -40,10 +37,10 @@ class DoagSpeakerMapperSpec extends Specification {
         when:
         def mapper = DoagSpeakersMapper.createFrom([:], json.hits.hits._source)
         then:
-        assert mapper.speakers.size() == 112 : 'duplicate speakers are removed, 112 left over'
+        assert mapper.speakers.size() == 112: 'duplicate speakers are removed, 112 left over'
 
         when:
-        def niko = mapper.speakers.find {it.key == '359390'}.value
+        def niko = mapper.speakers.find { it.key == '359390' }.value
         then:
         niko.name == 'Niko Köbler'
         niko.bio.startsWith('Niko macht')
@@ -76,11 +73,11 @@ class DoagSpeakerMapperSpec extends Specification {
 
         then:
         println(mapperEventsOnly.speakers.keySet() - mapperSpeakersOnly.speakers.keySet())
-        assert jsonSpeaker.size() == 140 : "speaker input contains more speaker (140) than event input (128)"
+        assert jsonSpeaker.size() == 140: "speaker input contains more speaker (140) than event input (128)"
         mapper.speakers.size() == 117
-        println (jsonSpeaker.collect {"${it.VORNAME} ${it.NACHNAME}"})
-        println (mapper.speakers.values().name.sort())
-        println (jsonSpeaker.collect {"${it.VORNAME} ${it.NACHNAME}"} - mapper.speakers.values().name.sort())
+        println(jsonSpeaker.collect { "${it.VORNAME} ${it.NACHNAME}" })
+        println(mapper.speakers.values().name.sort())
+        println(jsonSpeaker.collect { "${it.VORNAME} ${it.NACHNAME}" } - mapper.speakers.values().name.sort())
         mapper.photos.size() == 7
 
         mapper.eventIds.size() == 111
@@ -103,7 +100,7 @@ class DoagSpeakerMapperSpec extends Specification {
 
         then:
         handles.size() == 117
-        handles.get('Maurice Naftalin') ==  'https://twitter.com/mauricenaftalin'
+        handles.get('Maurice Naftalin') == 'https://twitter.com/mauricenaftalin'
     }
 
     void "should merge additional twitter handles"() {
@@ -112,7 +109,7 @@ class DoagSpeakerMapperSpec extends Specification {
         def jsonSpeaker = new JsonSlurper().parse(this.class.getResourceAsStream("/javaland-speaker-2016.raw"), 'ISO-8859-1').hits.hits._source
 
         and:
-        DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(jsonEvents, jsonSpeaker, ['Reinier Zwitserloot':'https://twitter.com/foobar'])
+        DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(jsonEvents, jsonSpeaker, ['Reinier Zwitserloot': 'https://twitter.com/foobar'])
 
         then:
         mapper.speakers.'371991'.twitter == 'https://twitter.com/foobar'
@@ -121,7 +118,7 @@ class DoagSpeakerMapperSpec extends Specification {
         !mapper.speakers.'365616'.twitter
 
         and:
-        mapper.mergeAdditionalTwitterHandles(['Marc Sluiter':'https://twitter.com/foobar2'])
+        mapper.mergeAdditionalTwitterHandles(['Marc Sluiter': 'https://twitter.com/foobar2'])
 
         then:
         mapper.speakers.'365616'.twitter == 'https://twitter.com/foobar2'
@@ -140,5 +137,30 @@ class DoagSpeakerMapperSpec extends Specification {
         mapper.speakerIds2EventIds.size() == 124
         mapper.speakers.size() == 117
         mapper.forEventId("509570").name == 'Matthias Faix'
+    }
+
+    void "should not override speaker data with empty additional speaker infos"() {
+        given:
+        def eventInput = new JsonSlurper().parseText('''[{
+            "ID_PERSON":"1234",
+            "REFERENT_NAME":"Hans Hansen",
+            "REFERENT_NACHNAME":"Hansen",
+            "REFERENT_FIRMA" : "Firma"}]''')
+
+        def speakerInput = new JsonSlurper().parseText('''[{
+            "ID_PERSON":"1234",
+            "VORNAME":"Hans",
+            "NACHNAME":"Hansen",
+            "FIRMA" : "",
+            "PROFILFOTO" : "image-data"}]''')
+
+        when:
+        DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(eventInput, speakerInput)
+
+        then:
+        mapper.speakers["1234"].firstname == 'Hans'
+        mapper.speakers["1234"].lastname == 'Hansen'
+        mapper.speakers["1234"].company == 'Firma'
+        mapper.speakers["1234"].photoId == ''
     }
 }

@@ -2,10 +2,6 @@ package org.dukecon.server.repositories.doag
 
 import com.xlson.groovycsv.CsvParser
 import groovy.json.JsonSlurper
-import org.dukecon.model.Speaker
-import org.dukecon.server.repositories.doag.DoagDataExtractor
-import org.dukecon.server.repositories.doag.DoagSingleSpeakerMapper
-import org.dukecon.server.repositories.doag.DoagSpeakersMapper
 import spock.lang.Specification
 
 /**
@@ -89,7 +85,7 @@ class DoagSingleSpeakerMapperSpec extends Specification {
         def csv = new CsvParser().parse('''REFERENT_NAME,REFERENT_NACHNAME,ID_PERSON,ID_PERSON_COREF,COREFERENT_NAME
 Michael Plöd,Plöd,371278,,
 Michael Vögeli,Vögeli,373808,373810,Ulrich Vigenschow,,
-''').collect {line -> line.toMap()}
+''').collect { line -> line.toMap() }
 
         when:
         def firstReferent = new DoagSingleSpeakerMapper(csv.first(), DoagSingleSpeakerMapper.Type.REFERENT)
@@ -122,9 +118,9 @@ Michael Vögeli,Vögeli,373808,373810,Ulrich Vigenschow,,
         given:
         def json = new JsonSlurper().parseText('''{
             "ID_PERSON":"",
-            "REFERENT_NAME":""},
-            "REFERENT_NACHNAME":""},
-            "ID_PERSON_COREF":""},
+            "REFERENT_NAME":"",
+            "REFERENT_NACHNAME":"",
+            "ID_PERSON_COREF":"",
             "COREFERENT_NAME":""}''')
 
         when:
@@ -141,7 +137,7 @@ Michael Vögeli,Vögeli,373808,373810,Ulrich Vigenschow,,
 
     }
 
-        void "should split name in first and last"() {
+    void "should split name in first and last"() {
         when:
         def json = new JsonSlurper().parseText('''{
             "ID_PERSON":374172,
@@ -199,9 +195,8 @@ Michael Vögeli,Vögeli,373808,373810,Ulrich Vigenschow,,
             "ID_PERSON":374172}''')
         def singleSpeakerMapper = new DoagSingleSpeakerMapper(json)
         then:
-        !singleSpeakerMapper.speaker.firstname
-        !singleSpeakerMapper.speaker.lastname
-        !singleSpeakerMapper.speaker.name
+        NullPointerException ex = thrown()
+        ex.message.contains('name is marked @NonNull but is null')
     }
 
     void "should map first and lastname or split name from main referent"() {
@@ -253,4 +248,30 @@ Michael Vögeli,Vögeli,373808,373810,Ulrich Vigenschow,,
         singleSpeakerMapper.speaker.company == 'medipc.nl'
     }
 
+    void "should extract first and lastname from name correctly"() {
+        when:
+        def (firstName, lastName) = DoagSingleSpeakerMapper.extractNameParts("", "", "Michael Plöd")
+
+        then:
+        firstName == 'Michael'
+        lastName == 'Plöd'
+    }
+
+    void "should extract first from lastname and name correctly"() {
+        when:
+        def (firstName, lastName) = DoagSingleSpeakerMapper.extractNameParts("", "Plöd", "Michael Plöd")
+
+        then:
+        firstName == 'Michael'
+        lastName == 'Plöd'
+    }
+
+    void "should extract first and lastname correctly"() {
+        when:
+        def (firstName, lastName) = DoagSingleSpeakerMapper.extractNameParts("Michael", "Plöd", "")
+
+        then:
+        firstName == 'Michael'
+        lastName == 'Plöd'
+    }
 }

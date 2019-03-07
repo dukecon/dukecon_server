@@ -42,7 +42,7 @@ class DoagSingleSpeakerMapper {
         String getCompanyKey() {"${this.namesSuffix}FIRMA"}
     }
 
-    private String lastNameFromName(String name) {
+    private static String lastNameFromName(String name) {
         if (name) {
             List tokens = name.tokenize(' ')
             if (tokens.size() > 0) {
@@ -52,13 +52,15 @@ class DoagSingleSpeakerMapper {
         return name
     }
 
+    private static List extractNameParts(String first, String last, String name) {
+        if (!first && !last && !name) return []
+        String lastName = last ?: lastNameFromName(name)
+        String firstName = first ?: (name - lastName).trim()
+        return [firstName, lastName, name ?: "${firstName} ${lastName}"]
+    }
+
     DoagSingleSpeakerMapper(input, Type type = Type.DEFAULT) {
-        String lastName = input[type.lastnameKey] ?: lastNameFromName(input[type.nameKey]) ?: ''
-        String firstName = input[type.firstnameKey] ?: (input[type.nameKey] ?: '' - lastName).trim()
-//                .firstname(input.VORNAME ?: input[type.lastnameKey] ? (input[type.nameKey] - input[type.lastnameKey]).trim() : input[type.nameKey]?.tokenize(' ')?.init()?.join(' '))
-
-
-        String fullName = input[type.nameKey] ?: "${firstName} ${lastName}".trim()
+        def (firstName, lastName, fullName) = extractNameParts(input[type.firstnameKey], input[type.lastnameKey], input[type.nameKey])
         this.speaker = input[type.idKey] ? Speaker.builder()
                 .id(input[type.idKey]?.toString())
                 .name(fullName)
@@ -66,9 +68,7 @@ class DoagSingleSpeakerMapper {
                 .lastname(lastName)
                 .website(input.WEBSEITE)
                 .company(input[type.companyKey])
-//                .email(input.)
                 .twitter(input.LINKTWITTER)
-//                .gplus(input.)
                 .facebook(input.LINKFACEBOOK)
                 .xing(input.LINKXING)
                 .linkedin(input.LINKEDIN)
