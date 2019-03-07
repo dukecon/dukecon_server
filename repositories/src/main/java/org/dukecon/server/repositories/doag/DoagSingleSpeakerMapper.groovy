@@ -42,22 +42,22 @@ class DoagSingleSpeakerMapper {
         String getCompanyKey() {"${this.namesSuffix}FIRMA"}
     }
 
-    private def lastName(String ln) {
-        if (ln) {
-            List tokens = ln.tokenize(' ')
+    private String lastNameFromName(String name) {
+        if (name) {
+            List tokens = name.tokenize(' ')
             if (tokens.size() > 0) {
                 return tokens.last()
             }
         }
-        return ln
+        return name
     }
 
     DoagSingleSpeakerMapper(input, Type type = Type.DEFAULT) {
-        log.debug ("Creating Last name from '{}' or '{}'", input[type.lastnameKey], input[type.nameKey])
-        String lastName = input[type.lastnameKey] ?: lastName(input[type.nameKey]) ?: ''
-        String firstName = input[type.firstnameKey] ?: lastName
-                ? (input[type.nameKey] - lastName).trim()
-                : input[type.nameKey]?.tokenize(' ')?.init()?.join(' ') ?: ''
+        String lastName = input[type.lastnameKey] ?: lastNameFromName(input[type.nameKey]) ?: ''
+        String firstName = input[type.firstnameKey] ?: (input[type.nameKey] ?: '' - lastName).trim()
+//                .firstname(input.VORNAME ?: input[type.lastnameKey] ? (input[type.nameKey] - input[type.lastnameKey]).trim() : input[type.nameKey]?.tokenize(' ')?.init()?.join(' '))
+
+
         String fullName = input[type.nameKey] ?: "${firstName} ${lastName}".trim()
         this.speaker = input[type.idKey] ? Speaker.builder()
                 .id(input[type.idKey]?.toString())
