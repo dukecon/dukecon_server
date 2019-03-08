@@ -6,6 +6,7 @@ import org.dukecon.server.admin.AdminResource;
 import org.dukecon.server.conference.ConferencesResource;
 import org.dukecon.server.conference.CurrentConferenceResource;
 import org.dukecon.server.eventbooking.EventBookingResource;
+import org.dukecon.server.favorites.FavoritesResource;
 import org.dukecon.server.speaker.SpeakerImageResource;
 import org.dukecon.server.filter.FiltersService;
 import org.dukecon.server.security.KeycloakConfigService;
@@ -33,6 +34,7 @@ public class JerseyConfig extends ResourceConfig {
         register(SpeakerImageResource.class);
         register(AdminResource.class);
         register(EventBookingResource.class);
+        register(FavoritesResource.class);
 
         register(CorsFilter.class);
 
