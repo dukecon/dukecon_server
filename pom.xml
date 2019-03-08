@@ -668,6 +668,14 @@
                                         </includes>
                                     </source>
                                 </sources>
+                                <testSources>
+                                    <testSource>
+                                        <directory>${project.basedir}/src/test/java</directory>
+                                        <includes>
+                                            <include>**/*.groovy</include>
+                                        </includes>
+                                    </testSource>
+                                </testSources>
                             </configuration>
                         </execution>
                     </executions>
