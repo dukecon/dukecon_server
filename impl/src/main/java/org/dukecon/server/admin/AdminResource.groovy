@@ -2,15 +2,23 @@ package org.dukecon.server.admin
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
+import org.dukecon.model.Conference
+import org.dukecon.model.Event
 import org.dukecon.server.eventbooking.EventBookingResource
 import org.dukecon.server.eventbooking.EventBookingService
+import org.dukecon.server.favorites.EventFavorites
+import org.dukecon.server.favorites.FavoritesRepository
 import org.dukecon.server.repositories.ConferenceDataProvider
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
 import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 /**
  * Admin resource contains several endpoints for administration needs.
@@ -28,16 +36,18 @@ class AdminResource {
     private final EventBookingService service
     private final EventBookingResource resource
     private Map<String, ConferenceDataProvider> talkProviders = new HashMap<>()
+    private final FavoritesRepository favoritesRepository
 
     @Inject
     AdminResource(
             final EventBookingService service,
-            final EventBookingResource resource, final List<ConferenceDataProvider> talkProviders) {
+            final EventBookingResource resource, final List<ConferenceDataProvider> talkProviders, final FavoritesRepository favoritesRepository) {
         talkProviders.each {
             this.talkProviders[it.conferenceId] = it
         }
         this.service = service
         this.resource = resource
+        this.favoritesRepository = favoritesRepository
     }
 
     @GET
@@ -87,6 +97,23 @@ class AdminResource {
         } catch (RuntimeException e) {
             return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity([message: e.toString()]).build()
         }
+    }
+
+    @GET
+    @Path("favorites")
+    Response getFavorites(@PathParam("conferenceId") String id) {
+        def conference = talkProviders[id].conference
+        def eventIds = conference.events.id
+        def events = favoritesRepository.getAllFavoritesPerEvent(eventIds)
+        events.each { e ->
+            Event event = conference.events.find {it.id == e.eventId}
+            e.title = event?.title
+            e.speakers = event?.speakers?.name?.join(', ')
+            e.location = event?.location?.names['de']
+            e.locationCapacity = event?.location?.capacity
+            e.start = event.start
+        }
+        Response.ok().entity(events).build();
     }
 
 }

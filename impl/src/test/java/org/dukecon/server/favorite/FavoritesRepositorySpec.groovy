@@ -3,7 +3,7 @@ package org.dukecon.server.favorite
 import groovy.util.logging.Slf4j
 import org.dukecon.server.conference.AbstractDukeConSpec
 import org.dukecon.server.favorites.Preference
-import org.dukecon.server.favorites.PreferencesRepository
+import org.dukecon.server.favorites.FavoritesRepository
 import org.springframework.dao.DataIntegrityViolationException
 
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @Slf4j
 class FavoritesRepositorySpec extends AbstractDukeConSpec {
     @Inject
-    PreferencesRepository preferencesRepository
+    FavoritesRepository preferencesRepository
 
     void "test simple insert" () {
         when:
@@ -58,5 +58,23 @@ class FavoritesRepositorySpec extends AbstractDukeConSpec {
             assert events.find {it.first() == '004'}.first().class == String
             assert events.find {it.first() == '004'}.last().class == Long
             assert events.find {it.first() == '005'} == ['005', 2] as Object[]
+    }
+
+    void "test all favorites per event for one conference"() {
+        when:
+            preferencesRepository.save(new Preference (principalId : "0815", eventId: "004", version : 1))
+            preferencesRepository.save(new Preference (principalId : "0815", eventId: "005", version : 1))
+            preferencesRepository.save(new Preference (principalId : "4711", eventId: "005", version : 1))
+            preferencesRepository.save(new Preference (principalId : "0815", eventId: "006", version : 1))
+            preferencesRepository.save(new Preference (principalId : "4711", eventId: "006", version : 1))
+        and:
+            def events = preferencesRepository.getAllFavoritesPerEvent(["004", "005"])
+        then:
+            assert events.size() == 2
+            events.first().eventId == "005"
+            events.first().numberOfFavorites == 2
+
+            events.last().eventId == "004"
+            events.last().numberOfFavorites == 1
     }
 }

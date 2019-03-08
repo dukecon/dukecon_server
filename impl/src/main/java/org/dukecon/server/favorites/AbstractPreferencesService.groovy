@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 @TypeChecked
 abstract class AbstractPreferencesService implements PreferencesService {
     @Inject
-    PreferencesRepository preferencesRepository
+    FavoritesRepository preferencesRepository
 
     abstract protected String getAuthenticatedPrincipalId()
 
