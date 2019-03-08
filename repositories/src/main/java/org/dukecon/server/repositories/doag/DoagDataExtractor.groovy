@@ -38,9 +38,8 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
     private final String conferenceHomeUrl = 'http://javaland.eu'
     private final String conferenceName = 'DukeCon Conference'
 
-//    static DoagDataExtractor fromFile(String filename, ConferencesConfiguration.Conference config) {
-//        new DoagDataExtractor(config, new DoagJsonMapper(new RawDataResources(filename)), new SpeakerImageService())
-//    }
+    private Map<String, Speaker> speakers = [:]
+    private List<Event> events = []
 
     DoagDataExtractor(ConferencesConfiguration.Conference config, RawDataMapper rawDataMapper, SpeakerImageService speakerImageService) {
         log.debug ("Extracting data for '{}'", config)
@@ -75,17 +74,18 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
         this.speakersJson = this.rawDataMapper.asMap().speakersData
         this.additionalDataJson = this.rawDataMapper.asMap().additionalData
         DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(talksJson, speakersJson, parseTwitterHandles())
+        this.speakers = mapper.speakers
         mapper?.photos.each {
             speakerImageService.addImage(it)
         }
-        def events = this.getEvents()
+        this.events = this.getEvents(this.speakers)
         Conference conf = Conference.builder()
                 .id(conferenceId)
                 .name(conferenceName)
                 .url(conferenceUrl)
                 .homeUrl(conferenceHomeUrl)
                 .metaData(metaData)
-                .speakers(mapper.speakers.values() as List)
+                .speakers(speakers.values() as List)
                 .events(events)
                 .build()
         conf.speakers = getSpeakersWithEvents(conf.speakers)
@@ -179,15 +179,6 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
         }
     }
 
-    @Deprecated
-    private List<Speaker> getSpeakers() {
-        DoagSpeakersMapper mapper = DoagSpeakersMapper.createFrom(talksJson, speakersJson)
-        mapper?.photos.each {
-            speakerImageService.addImage(it)
-        }
-        return mapper.speakers.values() as List
-    }
-
     /**
      * @param talkLookup
      * @return list of speakers with their events assigned
@@ -216,8 +207,7 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
         }.findAll { k, v -> k }
     }
 
-    @Deprecated
-    private List<Event> getEvents(Map<String, Speaker> speakerLookup = speakers.collectEntries { [it.id, it] }) {
+    private List<Event> getEvents(Map<String, Speaker> speakerLookup) {
         Map<String, Integer> favoritesPerEvent = preferencesService?.allEventFavorites ?: [:]
         Map<Integer, Map<String, String>> additionalDataPerEvent = additionalDataJson?.collectEntries {[it.SEMINAR_ID, it]} ?: [:]
         List<Event> events = talksJson.collect {eventJson ->
