@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>dukecon-server-springboot</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>DukeCon Server Implementation</name>
 

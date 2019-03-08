@@ -24,7 +24,6 @@
             <groupId>org.dukecon</groupId>
             <artifactId>dukecon-server-springboot</artifactId>
             <version>${project.version}</version>
-            <type>war</type>
         </dependency>
     </dependencies>
 
@@ -61,7 +60,7 @@
                                         <cmd>
                                             <shell>java -Djava.security.egd=file:/dev/./urandom \
                                                 ${JAVA_DEFAULT_OPTS} ${JAVA_OPTS} \
-                                                -jar /opt/dukecon/dukecon.war \
+                                                -jar /opt/dukecon/dukecon.jar \
                                                 ${DUKECON_ARGS}
                                             </shell>
                                         </cmd>
@@ -86,7 +85,7 @@
                                                             <include>org.dukecon:dukecon-server-springboot</include>
                                                         </includes>
                                                         <outputDirectory>.</outputDirectory>
-                                                        <outputFileNameMapping>dukecon.war</outputFileNameMapping>
+                                                        <outputFileNameMapping>dukecon.jar</outputFileNameMapping>
                                                     </dependencySet>
                                                 </dependencySets>
                                             </inline>

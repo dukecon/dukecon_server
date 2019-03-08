@@ -94,7 +94,7 @@
         <arquillian-phantom-binary.version>2.1.1</arquillian-phantom-binary.version>
         <asciidoctor-maven-plugin.version>1.5.7.1</asciidoctor-maven-plugin.version>
         <asciidoctorj.diagram.version>1.5.11</asciidoctorj.diagram.version>
-        <assertj-core.version>3.11.1</assertj-core.version>
+        <assertj-core.version>3.12.1</assertj-core.version>
         <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
         <buildplan-maven-plugin.version>1.3</buildplan-maven-plugin.version>
         <docker-maven-plugin.version>0.28.0</docker-maven-plugin.version>
@@ -103,8 +103,8 @@
         <git-commit-id-plugin.version>2.2.5</git-commit-id-plugin.version>
         <gitlog-maven-plugin.version>1.13.15</gitlog-maven-plugin.version>
         <gmavenplus-plugin.version>1.6.2</gmavenplus-plugin.version>
-        <google-guava.version>27.0.1-jre</google-guava.version>
         <graphene-webdriver.version>2.0.3.Final</graphene-webdriver.version>
+        <google-guava.version>27.1-jre</google-guava.version>
         <groovy.version>2.5.6</groovy.version>
         <groovycsv.version>1.3</groovycsv.version>
         <hamcrest-library.version>1.3</hamcrest-library.version>
@@ -115,10 +115,12 @@
         <jackson-dataformat-csv.version>2.9.8</jackson-dataformat-csv.version>
         <javax.el.version>3.0.1-b11</javax.el.version>
         <javax.inject.version>1</javax.inject.version>
-        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.validation-api.version>2.0.1.Final</javax.validation-api.version>
         <javax.ws.rs-api.version>2.1.1</javax.ws.rs-api.version>
-        <jersey-server.version>2.26</jersey-server.version>
+        <!-- DO NOT UPGRADE TO 2.28 (and beyond?) - it is missing
+        "org.glassfish.jersey.internal.l10n.LocalizableMessageFactory$ResourceBundleSupplier" -->
+        <jersey-server.version>2.27</jersey-server.version>
         <jgiven-core.version>0.17.0</jgiven-core.version>
         <jgravatar.version>1.1</jgravatar.version>
         <jqassistant-maven-plugin.version>1.1.3</jqassistant-maven-plugin.version>
@@ -133,7 +135,7 @@
         <maven-surefire-report-plugin.version>2.19.1</maven-surefire-report-plugin.version>
         <maven-war-plugin.version>3.2.2</maven-war-plugin.version>
         <micrometer-core.version>1.1.3</micrometer-core.version>
-        <micrometer-registry-prometheus.version>1.0.7</micrometer-registry-prometheus.version>
+        <micrometer-registry-prometheus.version>1.1.3</micrometer-registry-prometheus.version>
         <postgresql.version>42.2.5.jre7</postgresql.version>
         <selenium.version>3.13.0</selenium.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
@@ -142,9 +144,9 @@
         <spock.version>1.0-groovy-2.4</spock.version>
         <spring-cloud-dependencies.version>Greenwich.RELEASE</spring-cloud-dependencies.version>
         <spring-cloud-starter-hystrix.version>1.4.6.RELEASE</spring-cloud-starter-hystrix.version>
-        <snakeyaml.version>1.19</snakeyaml.version>
         <swagger-annotations.version>1.5.8</swagger-annotations.version>
-        <swagger-maven-plugin.version>3.1.3</swagger-maven-plugin.version>
+        <snakeyaml.version>1.24</snakeyaml.version>
+        <swagger-maven-plugin.version>3.1.7</swagger-maven-plugin.version>
         <swagger2markup-maven-plugin.version>0.9.3</swagger2markup-maven-plugin.version>
         <wagon-webdav-jackrabbit.version>2.10</wagon-webdav-jackrabbit.version>
         <!-- Version 1.x >= 1.4.01 needed by arquillian / selenium? -->
@@ -333,7 +335,7 @@
                 <version>${hibernate-jpa-2.1-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.hibernate</groupId>
+                <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
             </dependency>
@@ -668,6 +670,14 @@
                                         </includes>
                                     </source>
                                 </sources>
+                                <testSources>
+                                    <testSource>
+                                        <directory>${project.basedir}/src/test/java</directory>
+                                        <includes>
+                                            <include>**/*.groovy</include>
+                                        </includes>
+                                    </testSource>
+                                </testSources>
                             </configuration>
                         </execution>
                     </executions>
