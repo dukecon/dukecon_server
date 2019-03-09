@@ -7,9 +7,14 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.validation.annotation.Validated
 import org.yaml.snakeyaml.Yaml
 
-import javax.validation.*
+import javax.validation.ConstraintViolation
+import javax.validation.Valid
+import javax.validation.Validation
+import javax.validation.Validator
+import javax.validation.ValidatorFactory
 import javax.validation.constraints.NotNull
 import java.time.LocalDate
+import java.time.ZonedDateTime
 
 @Configuration
 @Slf4j
@@ -70,15 +75,15 @@ class ConferencesConfiguration {
 
     private static Map substitutePlaceHolder(Map properties, Map allConfigProperties) {
         def substitutor = new StrSubstitutor(properties + allConfigProperties)
-        properties.each { k, v ->
+        properties.each { String k, Object v ->
             if (v instanceof String) {
-                properties[k] = substitutor.replace(v)
-            }
-            if (v instanceof Map) {
-                def substitutor2 = new StrSubstitutor(properties + allConfigProperties)
-                v.each { k1, v1 ->
-                    v[k1] = substitutor.replace(v1)
+                if (k.endsWith ('Date')) {
+                    properties[k] = ZonedDateTime.parse(v).toLocalDate()
+                } else {
+                    properties[k] = substitutor.replace(v)
                 }
+            } else if (v instanceof Map) {
+                properties[k] = substitutePlaceHolder(v, allConfigProperties)
             }
         }
         properties
