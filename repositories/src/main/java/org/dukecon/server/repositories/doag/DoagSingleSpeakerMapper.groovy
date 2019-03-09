@@ -79,6 +79,7 @@ class DoagSingleSpeakerMapper {
         } else {
             this.speaker = null
         }
+        log.debug("Found speaker '{}'", this.speaker)
     }
 
     private md5(String s) {
