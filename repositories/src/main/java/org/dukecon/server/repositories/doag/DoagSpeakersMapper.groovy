@@ -60,6 +60,7 @@ class DoagSpeakersMapper {
                 if (!speakers[key].facebook) { speakers[key].facebook = additionalSpeakerInput[key]?.facebook}
                 if (!speakers[key].xing) { speakers[key].xing = additionalSpeakerInput[key]?.xing}
                 if (!speakers[key].linkedin) { speakers[key].linkedin = additionalSpeakerInput[key]?.linkedin}
+                if (!speakers[key].twitter) { speakers[key].twitter = additionalSpeakerInput[key]?.twitter}
                 if (!speakers[key].bio) { speakers[key].bio = additionalSpeakerInput[key]?.bio}
                 if (!speakers[key].photoId) { speakers[key].photoId = additionalSpeakerInput[key]?.photoId }
             }
@@ -77,6 +78,7 @@ class DoagSpeakersMapper {
         speakers.values().each {Speaker s ->
             if (!s.twitter && twitterHandles.containsKey(s.name)) {
                 s.twitter = twitterHandles.get(s.name)
+                log.debug("Adding Twitter handle '{}' from local data for '{}'", s.twitter, s.name)
             }
         }
         return this
