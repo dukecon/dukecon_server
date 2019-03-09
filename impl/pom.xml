@@ -102,14 +102,12 @@
         <dependency>
             <groupId>org.dukecon</groupId>
             <artifactId>dukecon-server-api</artifactId>
-            <!-- TODO: allow for usage of a version property -->
-            <version>1.6-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.dukecon.server</groupId>
             <artifactId>dukecon-server-repositories</artifactId>
-            <!-- TODO: allow for usage of a version property -->
-            <version>1.6-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
