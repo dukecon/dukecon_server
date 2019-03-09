@@ -61,20 +61,24 @@ class DoagSingleSpeakerMapper {
 
     DoagSingleSpeakerMapper(input, Type type = Type.DEFAULT) {
         def (firstName, lastName, fullName) = extractNameParts(input[type.firstnameKey], input[type.lastnameKey], input[type.nameKey])
-        this.speaker = input[type.idKey] ? Speaker.builder()
-                .id(input[type.idKey]?.toString())
-                .name(fullName)
-                .firstname(firstName)
-                .lastname(lastName)
-                .website(input.WEBSEITE)
-                .company(input[type.companyKey])
-                .twitter(input.LINKTWITTER)
-                .facebook(input.LINKFACEBOOK)
-                .xing(input.LINKXING)
-                .linkedin(input.LINKEDIN)
-                .bio(input.PROFILTEXT)
-                .photoId(md5(input.PROFILFOTO))
-                .build() : null
+        if (lastName) {
+            this.speaker = input[type.idKey] ? Speaker.builder()
+                    .id(input[type.idKey]?.toString())
+                    .name(fullName)
+                    .firstname(firstName)
+                    .lastname(lastName)
+                    .website(input.WEBSEITE)
+                    .company(input[type.companyKey])
+                    .twitter(input.LINKTWITTER)
+                    .facebook(input.LINKFACEBOOK)
+                    .xing(input.LINKXING)
+                    .linkedin(input.LINKEDIN)
+                    .bio(input.PROFILTEXT)
+                    .photoId(md5(input.PROFILFOTO))
+                    .build() : null
+        } else {
+            this.speaker = null
+        }
     }
 
     private md5(String s) {
