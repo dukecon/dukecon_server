@@ -6,10 +6,9 @@ import org.dukecon.model.Conference
 import org.dukecon.model.Event
 import org.dukecon.model.Language
 import org.dukecon.model.Location
-import org.dukecon.server.repositories.ConferenceDataExtractor
-import org.dukecon.server.repositories.RawDataResources
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.javaland.JavalandDataExtractor
+import org.dukecon.server.repositories.RawDataResources
 import spock.lang.Ignore
 import spock.lang.Specification
 
@@ -21,7 +20,7 @@ import java.time.format.DateTimeFormatter
  */
 class DoagDataExtractorSpec extends Specification {
 
-    private static ConferenceDataExtractor extractor
+    private static DoagDataExtractor extractor
     private static Conference conference
 
 
@@ -195,16 +194,16 @@ class DoagDataExtractorSpec extends Specification {
 
     void "should get all speakers"() {
         when:
-        def speakers = extractor.speakers.sort { it.id }
+        def speakers = extractor.speakers.sort { it.value.name }
         then:
         assert speakers.size() >= 116
         when:
-        def speaker = speakers.find { it.name == 'Matthias Faix' }
+        def speaker = speakers.find { it.value.name == 'Matthias Faix' }
         then:
-        assert speaker.name == 'Matthias Faix'
-        assert speaker.company == 'IPM Köln'
-        assert speaker.id == '146723'
-        assert !speaker.events
+        assert speaker.value.name == 'Matthias Faix'
+        assert speaker.value.company == 'IPM Köln'
+        assert speaker.value.id == '146723'
+        assert speaker.value.events
     }
 
     void "should get all speakers with their events"() {

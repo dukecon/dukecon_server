@@ -17,7 +17,7 @@ class JavalandDataRemoteSpec extends Specification {
         dataProvider.backup = "javaland-2016-backup.raw";
     }
 
-    void "Should return 110 events (2016)"() {
+    void "Should have right number of locations, tracks, languages, audiences and default language (2016)"() {
         when:
         dataProvider.talksUri = "resource:/javaland-2016.raw"
 
@@ -32,24 +32,24 @@ class JavalandDataRemoteSpec extends Specification {
         assert conference.metaData.audiences.size() == 2
     }
 
-    void "Should return 110 events (2016) v2"() {
+    void "Should return 111 events (2016)"() {
         when:
         dataProvider.talksUri = "resource:/javaland-2016.raw"
         Collection<Event> events = dataProvider.readConferenceData().events
 
         then:
-        assert events.size() == 110
+        assert events.size() == 111
         assert events.location.order.unique().sort().join(', ') == (1..7).join(', ')
     }
 
-    void "Should return 110 events when using backup"() {
+    void "Should return 111 events when using backup"() {
         when:
         dataProvider.talksUri = "resource:/javaland-2016.raw"
         dataProvider.readConferenceData();
         Collection<Event> events = dataProvider.readConferenceDataFallback().events;
 
         then:
-        assert events.size() == 110
+        assert events.size() == 111
         assert dataProvider.backupActive
     }
 

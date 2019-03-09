@@ -380,7 +380,7 @@
       "_type" : "jdbc",
       "_id" : "AVcKQwDn2VxX7PzirIBr",
       "_score" : 1.0,
-      "_source":{"ID_PERSON":369887,"VORNAME":"Thorben","NACHNAME":"Janssen","WEBSEITE":null,"FIRMA":null,"PROFILFOTO":"","PROFILTEXT":null,"LINKFACEBOOK":null,"LINKTWITTER":null,"LINKXING":null,"LINKEDIN":null}
+      "_source":{"ID_PERSON":369887,"VORNAME":"Thorben","NACHNAME":"Janssen","WEBSEITE":null,"FIRMA":null,"PROFILFOTO":"","PROFILTEXT":"Thorben macht sch...","LINKFACEBOOK":null,"LINKTWITTER":null,"LINKXING":null,"LINKEDIN":null}
     }, {
       "_index" : "profilreferent",
       "_type" : "jdbc",

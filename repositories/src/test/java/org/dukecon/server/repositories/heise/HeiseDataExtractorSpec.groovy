@@ -6,17 +6,13 @@ import org.dukecon.server.repositories.RawDataResources
 import org.dukecon.server.repositories.heise.HeiseAudienceMapper
 import org.dukecon.server.repositories.heise.HeiseCsvInput
 import org.dukecon.server.repositories.heise.HeiseDataExtractor
-import org.dukecon.server.repositories.heise.HeiseEventMapper
 import org.dukecon.server.repositories.heise.HeiseEventTypeMapper
 import org.dukecon.server.repositories.heise.HeiseLanguageMapper
 import org.dukecon.server.repositories.heise.HeiseLocationMapper
-import org.dukecon.server.repositories.heise.HeiseSpeakerMapper
 import org.dukecon.server.repositories.heise.HeiseStreamMapper
-import org.dukecon.server.conference.SpeakerImageService
 import spock.lang.Specification
 
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 /**

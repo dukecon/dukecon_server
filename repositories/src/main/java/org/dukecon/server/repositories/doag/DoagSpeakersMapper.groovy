@@ -18,11 +18,15 @@ class DoagSpeakersMapper {
     final Multimap<String, String> speakerIds2EventIds = HashMultimap.create()
 
     static DoagSpeakersMapper createFrom(eventInput, speakerInput, twitterHandles = [:]) {
-        new DoagSpeakersMapper(eventInput, DoagSingleSpeakerMapper.Type.REFERENT)
+        log.debug("Create speakers from #{} events, #{} speakerextensions and #{} twitterhandles",
+            eventInput?.size(), speakerInput?.size(), twitterHandles?.size)
+        DoagSpeakersMapper result = new DoagSpeakersMapper(eventInput, DoagSingleSpeakerMapper.Type.REFERENT)
                 .addSpeakers(eventInput, DoagSingleSpeakerMapper.Type.COREFERENT)
                 .addSpeakers(eventInput, DoagSingleSpeakerMapper.Type.COCOREFERENT)
                 .mergeAdditionalSpeakerInfos(speakerInput)
                 .mergeAdditionalTwitterHandles(twitterHandles)
+        log.debug("Finally found #{} speakers", result?.speakers?.size())
+        return result
     }
 
     DoagSpeakersMapper(input, Type type = Type.DEFAULT) {
@@ -60,6 +64,12 @@ class DoagSpeakersMapper {
                 if (!speakers[key].photoId) { speakers[key].photoId = additionalSpeakerInput[key]?.photoId }
             }
         }
+//        additionalSpeakerInput.keySet().each {String key->
+//            if (!speakers.containsKey(key)) {
+//                log.debug ("Adding missing speaker '{}'", additionalSpeakerInput[key].name)
+//                speakers[key] = additionalSpeakerInput[key]
+//            }
+//        }
         return this
     }
 
@@ -81,6 +91,7 @@ class DoagSpeakersMapper {
     }
 
     private Map<String, Speaker> fromSpeakerJson(input, Type type) {
+        log.debug("Converting #{} additional speakers", input?.size())
         input?.collectEntries { row ->
             def speaker = new DoagSingleSpeakerMapper(row, type).speaker
             if (isEventData(row) && speaker) {
