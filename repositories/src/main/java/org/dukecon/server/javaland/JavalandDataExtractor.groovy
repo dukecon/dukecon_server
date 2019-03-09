@@ -57,7 +57,7 @@ class  JavalandDataExtractor {
                 log.debug("Speaker '{}' has TwitterHandle: '{}'", speakerName, line.TwitterHandle)
                 twitterHandleBySpeakerName[speakerName] = line.TwitterHandle
             } else {
-                log.error("Speaker '{}' has no valid TwitterHandle!", speakerName)
+                log.debug("Speaker '{}' has no valid TwitterHandle!", speakerName)
             }
         }
     }
