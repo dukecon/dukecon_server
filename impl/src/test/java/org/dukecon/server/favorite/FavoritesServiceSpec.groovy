@@ -16,7 +16,6 @@ import java.security.Principal
  * @author Gerd Aschemann, http://aschemann.net, @GerdAschemann
  */
 @Slf4j
-@TypeChecked
 class FavoritesServiceSpec extends AbstractDukeConSpec {
     @Inject
     PreferencesServiceImpl preferencesService

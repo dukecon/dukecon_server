@@ -18,7 +18,6 @@ import java.security.Principal
  */
 
 @Slf4j
-@TypeChecked
 class FiltersServiceSpec extends AbstractDukeConSpec {
 
     @Inject
