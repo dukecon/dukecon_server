@@ -1,11 +1,10 @@
 package org.dukecon
 
+import org.dukecon.server.conference.ConferencesConfigurationServiceImpl
 import org.dukecon.server.core.MyShallowEtagHeaderFilter
 import org.dukecon.server.repositories.DataProviderLoader
-import org.dukecon.server.conference.ConferencesConfigurationServiceImpl
 import org.flywaydb.core.Flyway
 import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker
