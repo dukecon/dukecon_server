@@ -315,6 +315,11 @@
                 <type>pom</type>
             </dependency>
             <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-dateutil</artifactId>
+                <version>${groovy.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
                 <version>${freemarker.version}</version>
@@ -817,6 +822,7 @@
                             <!-- Groovy dependencies themselves are used via some magic from the POM only groovy-all -->
                             <ignoredUnusedDeclaredDependencies>
                                 <ignoredUnusedDeclaredDependency>org.codehaus.groovy:groovy-all</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.codehaus.groovy:groovy-dateutil</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>com.h2database:h2</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>io.micrometer:micrometer-core</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>io.micrometer:micrometer-registry-prometheus</ignoredUnusedDeclaredDependency>

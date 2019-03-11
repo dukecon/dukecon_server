@@ -1,8 +1,8 @@
 package org.dukecon.server.favorites
 
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import groovy.util.logging.Slf4j
-import org.dukecon.model.Event
 import org.dukecon.services.ConferenceService
 import org.springframework.stereotype.Component
 
@@ -24,30 +24,32 @@ import javax.ws.rs.core.Response
 @Slf4j
 class FavoritesResource {
 
-    private FavoritesRepository favoritesRepository
     private ConferenceService conferenceService
+    private FavoritesService favoritesService
 
     @Inject
-    FavoritesResource(FavoritesRepository favoritesRepository, ConferenceService conferenceService) {
-        this.favoritesRepository = favoritesRepository
+    FavoritesResource(ConferenceService conferenceService, FavoritesService favoritesService) {
         this.conferenceService = conferenceService
+        this.favoritesService = favoritesService
     }
 
-
+    /**
+     * Renders favorites grouped by event per conference as CSV or alternatively as JSON data.
+     * @param id the conference id
+     * @return http response with csv or json content
+     */
     @GET
+    @Produces("text/csv, application/json")
     Response getFavorites(@PathParam("conferenceId") String id) {
         def conference = conferenceService.getConference(id)
-        def eventIds = conference.events.id
-        def events = favoritesRepository.getAllFavoritesPerEvent(eventIds)
-        events.each { e ->
-            Event event = conference.events.find {it.id == e.eventId}
-            e.title = event?.title
-            e.speakers = event?.speakers?.name?.join(', ')
-            e.location = event?.location?.names['de']
-            e.locationCapacity = event?.location?.capacity
-            e.start = event.start
-        }
-        Response.ok().entity(events).build();
+
+        def events = favoritesService.getAllFavoritesForConference(conference)
+
+        Response.ok().entity(events).header("Content-Disposition", "attachment; filename=${getCsvFileName(id)}").build()
     }
 
+    @TypeChecked(TypeCheckingMode.SKIP)
+    private String getCsvFileName(String id) {
+        "favorites-${id}-${new Date().format('yyyy-MM-dd')}.csv"
+    }
 }
