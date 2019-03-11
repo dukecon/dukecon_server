@@ -45,7 +45,9 @@ class FavoritesResource {
 
         def events = favoritesService.getAllFavoritesForConference(conference)
 
-        Response.ok().entity(events).header("Content-Disposition", "attachment; filename=${getCsvFileName(id)}").build()
+        Response.ok().entity(events)
+                .header("Content-Disposition", "attachment; filename=${getCsvFileName(id)}")
+                .build()
     }
 
     @TypeChecked(TypeCheckingMode.SKIP)

@@ -33,16 +33,14 @@ class FavoritesService {
         def eventIds = conference.events.id
         def events = favoritesRepository.getAllFavoritesPerEvent(eventIds)
 
-        events.each { e ->
-            Event event = conference.events.find { it.id == e.eventId }
+        return conference.events.collect { event ->
+            EventFavorites e = events.find { it.eventId == event.id} ?: new EventFavorites(event.id, 0L)
             e.title = event?.title
             e.speakers = event?.speakers?.name?.join(', ')
             e.location = event?.location?.names['de']
             e.locationCapacity = event?.location?.capacity
             e.start = Date.from(event.start.toInstant(ZoneOffset.UTC))
-        }
-        events.sort { e1, e2 -> e1.start <=> e2.start ?: e2.numberOfFavorites <=> e1.numberOfFavorites ?: e1.title <=> e2.title }
-
-        return events
+            return e
+        }.sort { e1, e2 -> e1.start <=> e2.start ?: e2.numberOfFavorites <=> e1.numberOfFavorites ?: e1.title <=> e2.title }
     }
 }
