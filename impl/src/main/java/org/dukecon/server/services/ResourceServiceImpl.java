@@ -6,18 +6,20 @@ import org.dukecon.model.*;
 import org.dukecon.server.conference.SpeakerImageService;
 import org.dukecon.services.ConferenceService;
 import org.dukecon.services.ResourceService;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.nio.file.Files;
+import java.util.*;
 
 /**
  * Created by christoferdutz on 24.08.16.
@@ -25,8 +27,7 @@ import java.util.Set;
 @Service("resourceService")
 public class ResourceServiceImpl implements ResourceService {
 
-    @Value("${servlet.resource.dir:/WEB-INF/classes/public/img/}")
-    private String resourceDir = "/WEB-INF/classes/public/img/";
+    Logger logger = LoggerFactory.getLogger(ResourceServiceImpl.class);
 
     @Inject
     private ServletContext servletContext;
@@ -105,53 +106,54 @@ public class ResourceServiceImpl implements ResourceService {
         CoreImages result = CoreImages.builder().build();
 
         Conference conference = conferenceService.read(conferenceId);
-        addCoreImages(conference, conferenceId, result, true);
+        try {
+            addCoreImages(conference, conferenceId, result, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return result;
 
     }
 
     private void addCoreImages(Conference conference, String conferenceId, AbstractCoreImages result) {
-        addCoreImages(conference, conferenceId, result, false);
+        try {
+            addCoreImages(conference, conferenceId, result, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void addCoreImages(Conference conference, String conferenceId, AbstractCoreImages result, boolean base64) {
-        // Logo
-        Set<String> imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/conference");
-        if ((imageResources != null) && !imageResources.isEmpty()) {
-            Map<String, byte[]> imageData = getImageData(imageResources);
-            result.setConferenceImage(imageData.get("logo"));
-        }
+    private void addCoreImages(Conference conference, String conferenceId, AbstractCoreImages result, boolean base64) throws IOException {
+        result.setConferenceImage(getImagesOrEmptyMap(conferenceId,"/conference").getOrDefault("logo",null));
+        result.setConferenceFavIcon(getImagesOrEmptyMap(conferenceId,"/favicon").getOrDefault("favicon", null));
+        result.setLocationImages(getImagesOrEmptyMap(conferenceId,"/locations"));
+        result.setLocationMapImages(getImagesOrEmptyMap(conferenceId,"/location-maps"));
+        result.setLanguageImages(getImagesOrEmptyMap(conferenceId,"/languages"));
+        result.setStreamImages(getImagesOrEmptyMap(conferenceId,"/streams"));
 
-        // FavIcon
-        imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/favicon");
-        if ((imageResources != null) && !imageResources.isEmpty()) {
-            Map<String, byte[]> imageData = getImageData(imageResources);
-            result.setConferenceFavIcon(imageData.get("favicon"));
-        }
+    }
 
-        // Locations
-        imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/locations");
-        if ((imageResources != null) && !imageResources.isEmpty()) {
-            result.setLocationImages(getImageData(imageResources));
+    private Map<String,byte[]> getImagesOrEmptyMap(String conferenceId, String locations) {
+        try {
+            String resourceDir = "public/img/";
+            File directory = ResourceUtils.getFile("classpath:" + resourceDir + conferenceId + locations);
+            if (directory.exists()) {
+                return getFilenameAsKeyToFilecontentBytesMap(directory);
+            }
+        } catch(IOException ioe) {
+            logger.info("getImages failed with", ioe);
         }
+        return new HashMap<>();
+    }
 
-        // Location Maps
-        imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/location-maps");
-        if ((imageResources != null) && !imageResources.isEmpty()) {
-            result.setLocationMapImages(getImageData(imageResources));
+    private Map<String, byte[]> getFilenameAsKeyToFilecontentBytesMap(File directory) throws IOException {
+        Map<String, byte[]> result = new HashMap<>();
+        for (String fileString : directory.list()) {
+            File file = ResourceUtils.getFile(directory.getPath() + "/" + fileString);
+            byte[] allBytes = Files.readAllBytes(file.toPath());
+            result.put(StringUtils.substringBefore(file.getName(), "."), allBytes);
         }
-
-        // Languages
-        imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/languages");
-        if ((imageResources != null) && !imageResources.isEmpty()) {
-            result.setLanguageImages(getImageData(imageResources));
-        }
-
-        // Streams
-        imageResources = servletContext.getResourcePaths(resourceDir + conferenceId + "/streams");
-        if ((imageResources != null) && !imageResources.isEmpty()) {
-            result.setStreamImages(getImageData(imageResources));
-        }
+        return result;
     }
 }
