@@ -1,6 +1,5 @@
 package org.dukecon.server.services;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dukecon.model.*;
 import org.dukecon.server.conference.SpeakerImageService;
@@ -12,12 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.util.*;
 
@@ -30,9 +25,6 @@ public class ResourceServiceImpl implements ResourceService {
     Logger logger = LoggerFactory.getLogger(ResourceServiceImpl.class);
 
     @Inject
-    private ServletContext servletContext;
-
-    @Inject
     private ConferenceService conferenceService;
 
     @Inject
@@ -41,15 +33,16 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public Map<String, byte[]> getLogosForConferences() {
         Map<String, byte[]> result = new HashMap<>();
-        Set<String> conferenceImageResources = servletContext.getResourcePaths("/public/img");
-        for (String conferenceResourcesRoot : conferenceImageResources) {
-            String conferenceId = StringUtils.substringAfterLast(
-                    StringUtils.substringBeforeLast(conferenceResourcesRoot, "/"), "/");
-            Set<String> conferenceResources = servletContext.getResourcePaths(conferenceResourcesRoot + "/conference");
-            Map<String, byte[]> confResources = getImageData(conferenceResources);
-            if (confResources.containsKey("logo")) {
-                result.put(conferenceId, confResources.get("logo"));
+        try {
+            File imageDir = ResourceUtils.getFile("classpath:public/img");
+            if (imageDir.exists()) {
+                for (String conferenceId : imageDir.list()) {
+                    byte[] logo = getImagesOrEmptyMap(conferenceId, "/conference").getOrDefault("logo", null);
+                    result.put(conferenceId,logo);
+                }
             }
+        } catch (Exception e) {
+            logger.error("",e);
         }
         return result;
     }
@@ -77,28 +70,6 @@ public class ResourceServiceImpl implements ResourceService {
         }
 
         return result;
-    }
-
-    private Map<String, byte[]> getImageData(Set<String> imageResources) {
-        Map<String, byte[]> images = new HashMap<>();
-        if (imageResources != null) {
-            for (String imageResource : imageResources) {
-                String id = StringUtils.substringBefore(StringUtils.substringAfterLast(imageResource, "/"), ".");
-                try {
-                    URL resourceUrl = servletContext.getResource(imageResource);
-                    InputStream resourceInputStream = resourceUrl.openStream();
-                    byte[] imageData = IOUtils.toByteArray(resourceInputStream);
-                    if (imageData != null) {
-                        images.put(id, imageData);
-                    }
-                } catch (MalformedURLException e) {
-                    // Not much we can do about this here ... simply ignore.
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return images;
     }
 
     @Override
