@@ -1,0 +1,20 @@
+{
+  "took" : 3,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 5,
+    "successful" : 5,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : 178,
+    "max_score" : 1.0,
+    "hits" : [ {
+      "_index" : "561658",
+      "_type" : "jdbc",
+      "_id" : "AWmHltQlfnASrHpTTC7C",
+      "_score" : 1.0,
+      "_source":{"ID_KONGRESS":561658,"ID":577825,"ID_SEMINAR":"577825","FARBCODE":338064,"TRACK":"Enterprise","TRACK_EN":"Enterprise","ORDERT":7,"AUDIENCE":"Fortgeschrittene","AUDIENCE_EN":"Advanced","DATUM":"2019-03-19T00:00:00.000+01:00","SIMULTAN":"0","AUSGEBUCHT":1,"DATUM_ES_EN":"2019-03-19","DATUM_ES":"19.03.2019","BEGINN":"11:00","ENDE":"11:40","TIMESTAMP":"0019-03-17T10:53:28.000+00:53:28","TIMESTAMP_ENDE":"0019-03-17T11:33:28.000+00:53:28","SEMINAR_NR":"165","RAUM_NR":"2","RAUMNAME":"Wintergarten","SITZPLATZ":"900","AREAID":"2/W","TITEL":"Diamond-Session: Community-Controlled Jakarta EE with JAX-RS and MVC","TITEL_ES":"Diamond-Session: Community-Controlled Jakarta EE with JAX-RS and MVC","TITEL_EN":null,"ABSTRACT_EN":null,"REFERENT_NAME":"Markus Karg","REFERENT_VORNAME":"Markus","COREFERENT_VORNAME":"Christian","COCOREFERENT_VORNAME":"Ivar","COREFERENT_NACHNAME":"Kaltepoth","COCOREFERENT_NACHNAME":"Grimstadt","KEYWORDS":",Java Enterprise Edition (Java EE),JAX-RS","REFERENT_NACHNAME":"Karg","REFERENT_FIRMA":"Markus Karg, Staatlich gepr�fter Informatiker","ID_PERSON":365399,"ID_PERSON_COREF":368392,"ID_PERSON_COCOREF":382707,"VORTRAGSTYP":"Diamond-Session","VORTRAGSTYP_EN":"diamond session","COREFERENT_NAME":"Christian Kaltepoth","COCOREFERENT_NAME":"Ivar Grimstadt","COREFERENT_FIRMA":"ingenit GmbH & Co. KG","COCOREFERENT_FIRMA":"(Attends privately)","ABSTRACT_TEXT":"More than a year ago Oracle migrated Java EE over to the Eclipse Foundation. The technology stack, now named Jakarta EE, is controlled by the community. What does that mean? What happened so far? How well do things run, what are the next steps, who is contributing, and how can everybody chime in? There certainly are lots of questions, and Ivar (PMC), Markus (JAX-RS) and Christian (MVC) gather here at Javaland to do their best to answer all of them! They will report about the history, the present, and the future of this huge international community effort, using the JAX-RS and MVC projects as blueprints for community-controlled Java standards. Bring all your questions with you into this session!\r\n\r\nIm Anschluss findet ein Panel zum Thema &quot;Jakarta EE und Micro Profile&quot; statt.\r\nhttps://programm.javaland.eu/2019/#/scheduledEvent/569343","SPRACHE":"Englisch","DEMO":"Nein","KEYWORDS_EN":",Java Enterprise Edition (Java EE),JAX-RS","SPRACHE_EN":"English","DEMO_EN":"no","BEGINN_EN":null,"ENDE_EN":null}
+    } ]
+  }
+}

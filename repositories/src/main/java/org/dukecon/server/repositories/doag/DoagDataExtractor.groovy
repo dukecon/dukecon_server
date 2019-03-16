@@ -195,10 +195,11 @@ class DoagDataExtractor implements ConferenceDataExtractor, ApplicationContextAw
      * @return map with speaker ids as key and a list all events of this speaker as value
      */
     private Map<String, List<Event>> getSpeakerIdToEvents() {
-        (events.findAll { it.speakers }.collect { [it.speakers.first().id, it] } + events.collect {
-            [it.speakers[1]?.id, it]
-        })
-                .inject([:]) { map, list ->
+        (events.findAll { it.speakers }
+                .collect { [it.speakers.first().id, it] }
+                + events.collect { [it.speakers[1]?.id, it] }
+                + events.collect { [it.speakers[2]?.id, it] }
+        ).inject([:]) { map, list ->
             if (!map[list.first()]) {
                 map[list.first()] = []
             }

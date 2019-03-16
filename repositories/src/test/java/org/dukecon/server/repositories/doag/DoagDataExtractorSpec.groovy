@@ -1,11 +1,7 @@
 package org.dukecon.server.repositories.doag
 
 import groovy.json.JsonSlurper
-import org.dukecon.model.Audience
-import org.dukecon.model.Conference
-import org.dukecon.model.Event
-import org.dukecon.model.Language
-import org.dukecon.model.Location
+import org.dukecon.model.*
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.javaland.JavalandDataExtractor
 import org.dukecon.server.repositories.RawDataResources
@@ -332,5 +328,21 @@ class DoagDataExtractorSpec extends Specification {
         conference.events.first().speakers.first().company == 'ING DiBa AG'
         conference.events.first().id == '569936'
         conference.events.first().title == 'Edit’n’P(r)ay? Oder vielleicht doch besser testen?'
+    }
+
+    void "events with three speakers: each speaker should have this event"() {
+        given:
+        def extractor = createExtractor('javaland2019-three-speakers.json')
+        when:
+        extractor.rawDataMapper.initMapper()
+        def conference = extractor.buildConference()
+        def talk = conference.events.find {it.id == '577825'}
+        def speaker = conference.speakers.find {it.id == '382707'}
+        then:
+        talk != null
+        talk.speakers.size() == 3
+        speaker != null
+        speaker.events.size() == 1
+        speaker.events.first().id == '577825'
     }
 }
