@@ -1,5 +1,6 @@
 package org.dukecon.server.services;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dukecon.model.*;
 import org.dukecon.server.conference.SpeakerImageService;
@@ -7,12 +8,14 @@ import org.dukecon.services.ConferenceService;
 import org.dukecon.services.ResourceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.*;
 
@@ -34,7 +37,7 @@ public class ResourceServiceImpl implements ResourceService {
     public Map<String, byte[]> getLogosForConferences() {
         Map<String, byte[]> result = new HashMap<>();
         try {
-            File imageDir = ResourceUtils.getFile("classpath:public/img");
+            File imageDir = new ClassPathResource("classpath:public/img").getFile();
             if (imageDir.exists()) {
                 for (String conferenceId : imageDir.list()) {
                     byte[] logo = getImagesOrEmptyMap(conferenceId, "/conference").getOrDefault("logo", null);
@@ -96,19 +99,19 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     private void addCoreImages(Conference conference, String conferenceId, AbstractCoreImages result, boolean base64) throws IOException {
-        result.setConferenceImage(getImagesOrEmptyMap(conferenceId,"/conference").getOrDefault("logo",null));
-        result.setConferenceFavIcon(getImagesOrEmptyMap(conferenceId,"/favicon").getOrDefault("favicon", null));
-        result.setLocationImages(getImagesOrEmptyMap(conferenceId,"/locations"));
-        result.setLocationMapImages(getImagesOrEmptyMap(conferenceId,"/location-maps"));
-        result.setLanguageImages(getImagesOrEmptyMap(conferenceId,"/languages"));
-        result.setStreamImages(getImagesOrEmptyMap(conferenceId,"/streams"));
+        result.setConferenceImage(readBytesFromFile("public/img/" + conferenceId + "/conference/logo.png"));
+        result.setConferenceFavIcon(readBytesFromFile("public/img/" + conferenceId + "/favicon/favicon.ico"));
+        //result.setLocationImages(getImagesOrEmptyMap(conferenceId,"/locations"));
+        //result.setLocationMapImages(getImagesOrEmptyMap(conferenceId,"/location-maps"));
+        //result.setLanguageImages(getImagesOrEmptyMap(conferenceId,"/languages"));
+        //result.setStreamImages(getImagesOrEmptyMap(conferenceId,"/streams"));
 
     }
 
     private Map<String,byte[]> getImagesOrEmptyMap(String conferenceId, String locations) {
         try {
             String resourceDir = "public/img/";
-            File directory = ResourceUtils.getFile("classpath:" + resourceDir + conferenceId + locations);
+            File directory = new ClassPathResource(("classpath:" + resourceDir + conferenceId + locations)).getFile();
             if (directory.exists()) {
                 return getFilenameAsKeyToFilecontentBytesMap(directory);
             }
@@ -121,10 +124,14 @@ public class ResourceServiceImpl implements ResourceService {
     private Map<String, byte[]> getFilenameAsKeyToFilecontentBytesMap(File directory) throws IOException {
         Map<String, byte[]> result = new HashMap<>();
         for (String fileString : directory.list()) {
-            File file = ResourceUtils.getFile(directory.getPath() + "/" + fileString);
-            byte[] allBytes = Files.readAllBytes(file.toPath());
-            result.put(StringUtils.substringBefore(file.getName(), "."), allBytes);
+            String path = directory.getPath() + "/" + fileString;
+            result.put(StringUtils.substringBefore(fileString, "."), readBytesFromFile(path));
         }
         return result;
+    }
+
+    private byte[] readBytesFromFile(String path) throws IOException {
+        URL fileURL = new ClassPathResource(path).getURL();
+        return IOUtils.toByteArray(fileURL);
     }
 }
