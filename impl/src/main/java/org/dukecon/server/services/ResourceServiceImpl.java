@@ -8,15 +8,17 @@ import org.dukecon.services.ConferenceService;
 import org.dukecon.services.ResourceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.ResourcePatternUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.*;
 
 /**
@@ -32,6 +34,9 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Inject
     private SpeakerImageService speakerImageService;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @Override
     public Map<String, byte[]> getLogosForConferences() {
@@ -101,31 +106,26 @@ public class ResourceServiceImpl implements ResourceService {
     private void addCoreImages(Conference conference, String conferenceId, AbstractCoreImages result, boolean base64) throws IOException {
         result.setConferenceImage(readBytesFromFile("public/img/" + conferenceId + "/conference/logo.png"));
         result.setConferenceFavIcon(readBytesFromFile("public/img/" + conferenceId + "/favicon/favicon.ico"));
-        //result.setLocationImages(getImagesOrEmptyMap(conferenceId,"/locations"));
-        //result.setLocationMapImages(getImagesOrEmptyMap(conferenceId,"/location-maps"));
-        //result.setLanguageImages(getImagesOrEmptyMap(conferenceId,"/languages"));
-        //result.setStreamImages(getImagesOrEmptyMap(conferenceId,"/streams"));
-
+        result.setLocationImages(getImagesOrEmptyMap(conferenceId,"/locations"));
+        result.setLocationMapImages(getImagesOrEmptyMap(conferenceId,"/location-maps"));
+        result.setLanguageImages(getImagesOrEmptyMap(conferenceId,"/languages"));
+        result.setStreamImages(getImagesOrEmptyMap(conferenceId,"/streams"));
     }
 
-    private Map<String,byte[]> getImagesOrEmptyMap(String conferenceId, String locations) {
-        try {
-            String resourceDir = "public/img/";
-            File directory = new ClassPathResource(("classpath:" + resourceDir + conferenceId + locations)).getFile();
-            if (directory.exists()) {
-                return getFilenameAsKeyToFilecontentBytesMap(directory);
-            }
-        } catch(IOException ioe) {
-            logger.info("getImages failed with", ioe);
-        }
-        return new HashMap<>();
-    }
-
-    private Map<String, byte[]> getFilenameAsKeyToFilecontentBytesMap(File directory) throws IOException {
+    private Map<String, byte[]> getImagesOrEmptyMap(String conferenceId, String path) {
         Map<String, byte[]> result = new HashMap<>();
-        for (String fileString : directory.list()) {
-            String path = directory.getPath() + "/" + fileString;
-            result.put(StringUtils.substringBefore(fileString, "."), readBytesFromFile(path));
+        String resourceDir = "public/img/";
+        try {
+            Resource[] resources = ResourcePatternUtils.getResourcePatternResolver(resourceLoader)
+                    .getResources("classpath:" + resourceDir + conferenceId + path + "/*.*");
+            for (int i = 0; i < resources.length; i++) {
+                URL url = resources[i].getURL();
+                String fileName = resources[i].getFilename();
+                byte[] byteArray = IOUtils.toByteArray(url);
+                result.put(StringUtils.substringBefore(fileName, "."), byteArray);
+            }
+        } catch(IOException e) {
+            //
         }
         return result;
     }
