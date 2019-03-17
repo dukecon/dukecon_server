@@ -3,7 +3,6 @@ package org.dukecon.server.favorites
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
-import org.dukecon.model.Event
 import org.springframework.stereotype.Service
 
 import javax.inject.Inject
@@ -40,7 +39,8 @@ class FavoritesService {
             e.location = event?.location?.names['de']
             e.locationCapacity = event?.location?.capacity
             e.start = Date.from(event.start.toInstant(ZoneOffset.UTC))
+            e.type = event?.type?.names?.get('de') ?: ''
             return e
-        }.sort { e1, e2 -> e1.start <=> e2.start ?: e2.numberOfFavorites <=> e1.numberOfFavorites ?: e1.title <=> e2.title }
+        }.sort { e1, e2 -> e1.start <=> e2.start ?: e1.type <=> e2.type ?: e2.numberOfFavorites <=> e1.numberOfFavorites ?: e1.title <=> e2.title }
     }
 }
