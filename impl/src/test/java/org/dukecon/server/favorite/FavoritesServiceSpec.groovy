@@ -4,7 +4,10 @@ import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.user.UserPreference
 import org.dukecon.server.conference.AbstractDukeConSpec
+import org.dukecon.server.favorites.EventFavorites
+import org.dukecon.server.favorites.FavoritesService
 import org.dukecon.server.favorites.PreferencesServiceImpl
+import org.dukecon.services.ConferenceService
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 
@@ -19,6 +22,12 @@ import java.security.Principal
 class FavoritesServiceSpec extends AbstractDukeConSpec {
     @Inject
     PreferencesServiceImpl preferencesService
+
+    @Inject
+    private FavoritesService favoritesService
+
+    @Inject
+    private ConferenceService conferenceService
 
     void "test get without authorization" () {
         SecurityContextHolder.getContext().authentication = null
@@ -129,5 +138,21 @@ class FavoritesServiceSpec extends AbstractDukeConSpec {
         assert Response.Status.OK == responseGet.getStatusInfo()
         List<UserPreference> result = (List<UserPreference>)responseGet.entity
         assert 2 == result.size()
+    }
+
+    void "get all favorites for conference"() {
+        when:
+        def eventFavorites = favoritesService.getAllFavoritesForConference(conferenceService.getConference('javaland2017'))
+        then:
+        eventFavorites.size() > 0
+        eventFavorites.first().track
+        eventFavorites.first().type
+        eventFavorites.first().speakers
+        eventFavorites.first().eventId
+        eventFavorites.first().location
+        eventFavorites.first().locationCapacity >= 0
+        eventFavorites.first().numberOfFavorites >= 0
+        eventFavorites.first().start
+        eventFavorites.first().title
     }
 }

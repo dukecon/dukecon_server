@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
  *
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
-@JsonPropertyOrder(['eventId', 'type', 'start', 'speakers', 'title', 'location', 'locationCapacity', 'numberOfFavorites'])
+@JsonPropertyOrder(['eventId', 'track', 'type', 'start', 'speakers', 'title', 'location', 'locationCapacity', 'numberOfFavorites'])
 class EventFavorites {
     final String eventId
     final Long numberOfFavorites
@@ -20,6 +20,7 @@ class EventFavorites {
     String location
     Integer locationCapacity
     String type
+    String track
 
     EventFavorites(String eventId, Long numberOfFavorites) {
         this.eventId = eventId
