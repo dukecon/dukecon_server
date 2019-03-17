@@ -9,14 +9,12 @@ import org.dukecon.services.ResourceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternUtils;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -27,7 +25,9 @@ import java.util.*;
 @Service("resourceService")
 public class ResourceServiceImpl implements ResourceService {
 
-    Logger logger = LoggerFactory.getLogger(ResourceServiceImpl.class);
+    private static final String CLASSPATH_PUBLIC_IMG = "classpath:public/img";
+
+    private final Logger logger = LoggerFactory.getLogger(ResourceServiceImpl.class);
 
     @Inject
     private ConferenceService conferenceService;
@@ -42,16 +42,17 @@ public class ResourceServiceImpl implements ResourceService {
     public Map<String, byte[]> getLogosForConferences() {
         Map<String, byte[]> result = new HashMap<>();
         try {
-            File imageDir = new ClassPathResource("classpath:public/img").getFile();
-            if (imageDir.exists()) {
-                for (String conferenceId : imageDir.list()) {
-                    byte[] logo = getImagesOrEmptyMap(conferenceId, "/conference").getOrDefault("logo", null);
-                    result.put(conferenceId,logo);
-                }
+            Resource[] resources = ResourcePatternUtils.getResourcePatternResolver(resourceLoader)
+                    .getResources(CLASSPATH_PUBLIC_IMG + "/*");
+            for (Resource resource : resources) {
+                String conferenceId = resource.getFilename();
+                byte[] logo = getImagesOrEmptyMap(conferenceId, "/conference").getOrDefault("logo", null);
+                result.put(conferenceId,logo);
             }
-        } catch (Exception e) {
-            logger.error("",e);
+        } catch (IOException e) {
+            logger.info("No " + CLASSPATH_PUBLIC_IMG + " folder found. (" + e.getMessage() + ").");
         }
+
         return result;
     }
 
@@ -66,7 +67,7 @@ public class ResourceServiceImpl implements ResourceService {
         }
 
         Conference conference = conferenceService.read(conferenceId);
-        addCoreImages(conference, conferenceId, result);
+        addCoreImages(conferenceId, result);
 
         // Speakers
         result.setSpeakerImages(new HashMap<>());
@@ -84,28 +85,15 @@ public class ResourceServiceImpl implements ResourceService {
     public CoreImages getCoreImagesForConference(String conferenceId) {
         CoreImages result = CoreImages.builder().build();
 
-        Conference conference = conferenceService.read(conferenceId);
-        try {
-            addCoreImages(conference, conferenceId, result, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        addCoreImages(conferenceId, result);
 
         return result;
 
     }
 
-    private void addCoreImages(Conference conference, String conferenceId, AbstractCoreImages result) {
-        try {
-            addCoreImages(conference, conferenceId, result, false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void addCoreImages(Conference conference, String conferenceId, AbstractCoreImages result, boolean base64) throws IOException {
-        result.setConferenceImage(readBytesFromFile("public/img/" + conferenceId + "/conference/logo.png"));
-        result.setConferenceFavIcon(readBytesFromFile("public/img/" + conferenceId + "/favicon/favicon.ico"));
+    private void addCoreImages(String conferenceId, AbstractCoreImages result) {
+        result.setConferenceImage(getImagesOrEmptyMap(conferenceId,"/conference").getOrDefault("logo",null));
+        result.setConferenceFavIcon(getImagesOrEmptyMap(conferenceId,"/favicon").getOrDefault("favicon", null));
         result.setLocationImages(getImagesOrEmptyMap(conferenceId,"/locations"));
         result.setLocationMapImages(getImagesOrEmptyMap(conferenceId,"/location-maps"));
         result.setLanguageImages(getImagesOrEmptyMap(conferenceId,"/languages"));
@@ -114,24 +102,20 @@ public class ResourceServiceImpl implements ResourceService {
 
     private Map<String, byte[]> getImagesOrEmptyMap(String conferenceId, String path) {
         Map<String, byte[]> result = new HashMap<>();
-        String resourceDir = "public/img/";
         try {
             Resource[] resources = ResourcePatternUtils.getResourcePatternResolver(resourceLoader)
-                    .getResources("classpath:" + resourceDir + conferenceId + path + "/*.*");
-            for (int i = 0; i < resources.length; i++) {
-                URL url = resources[i].getURL();
-                String fileName = resources[i].getFilename();
+                    .getResources(CLASSPATH_PUBLIC_IMG + "/" + conferenceId + path + "/*.*");
+            for (Resource resource : resources) {
+                URL url = resource.getURL();
+                String fileName = resource.getFilename();
                 byte[] byteArray = IOUtils.toByteArray(url);
-                result.put(StringUtils.substringBefore(fileName, "."), byteArray);
+                String nameAsKey = StringUtils.substringBefore(fileName, ".");
+                result.put(nameAsKey, byteArray);
             }
         } catch(IOException e) {
-            //
+            logger.info("No path " + path + " for conference " + conferenceId + " found. (" + e.getMessage() + ").");
         }
         return result;
     }
 
-    private byte[] readBytesFromFile(String path) throws IOException {
-        URL fileURL = new ClassPathResource(path).getURL();
-        return IOUtils.toByteArray(fileURL);
-    }
 }
