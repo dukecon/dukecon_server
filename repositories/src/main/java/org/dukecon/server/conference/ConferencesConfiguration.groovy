@@ -21,28 +21,44 @@ import java.time.ZonedDateTime
 @Validated
 class ConferencesConfiguration {
 
-    static ConferencesConfiguration fromFile(String classpathName, Map<String, Object> allProperties) {
+    static ConferencesConfiguration fromFile(String classpathName, Map<String, Object> allProperties, boolean
+            validate = true) {
         log.debug("Loading configuration data from '{}'", classpathName)
         new ConferencesConfiguration(conferences:
-                readConferences(classpathName, allProperties))
+                readConferences(classpathName, allProperties, validate))
     }
 
-    private static List<Conference> readConferences(String classpathName, Map<String, Object> allProperties) {
+    private static List<Conference> validated (List<Conference> conferences) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory()
         Validator validator = factory.getValidator()
+        return conferences.findResult { conference ->
+            Set<ConstraintViolation<Conference>> violations = validator.validate(conference)
+            for (ConstraintViolation<Conference> violation : violations) {
+                log.error("{}.{} {}", violation.getRootBeanClass().getSimpleName(), violation.propertyPath, violation.getMessage())
+            }
+            violations?.isEmpty() ? conference : null
+        }
+
+    }
+
+    private static List<Conference> convert (Map conferences, Map allProperties) {
+        return conferences.findResults { k, v ->
+            def conferenceProperties = v << [id: k]
+            def conference = new Conference(substitutePlaceHolder(conferenceProperties ?: [:], allProperties))
+            return conference
+        }
+    }
+
+    private static List<Conference> readConferences(String classpathName, Map<String, Object> allProperties, boolean
+            validate) {
         def yaml = readYaml(classpathName)
         if (yaml) {
             if (yaml instanceof List) {
                 yaml = yaml.findAll{it}.collectEntries{[(it.id): it]}
             }
-            def conferences = deepCopy(yaml).findAll { k, v -> k ==~ /^.*\d+$/ }.findResults { k, v ->
-                def conferenceProperties = v << [id: k]
-                def conference = new Conference(substitutePlaceHolder(conferenceProperties ?: [:], allProperties))
-                Set<ConstraintViolation<Conference>> violations = validator.validate(conference)
-                for (ConstraintViolation<Conference> violation : violations) {
-                    log.error("{}.{} {}", violation.getRootBeanClass().getSimpleName(), violation.propertyPath, violation.getMessage())
-                }
-                violations?.isEmpty() ? conference : null
+            List<Conference> conferences = convert(deepCopy(yaml).findAll { k, v -> k ==~ /^.*\d+$/ }, allProperties)
+            if (validate) {
+                return validated(conferences)
             }
             return conferences
         }
