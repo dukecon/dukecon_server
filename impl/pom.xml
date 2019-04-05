@@ -359,12 +359,16 @@
                         <artifactId>swagger-maven-plugin</artifactId>
                     </plugin>
                     <plugin>
-                        <groupId>io.github.robwin</groupId>
+                        <groupId>io.github.swagger2markup</groupId>
                         <artifactId>swagger2markup-maven-plugin</artifactId>
                     </plugin>
                     <!-- Copy the static docs into build.outputDirectory to be included in the jar -->
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctor-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
