@@ -31,7 +31,7 @@ class ConferencesConfiguration {
     private static List<Conference> validated (List<Conference> conferences) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory()
         Validator validator = factory.getValidator()
-        return conferences.findResult { conference ->
+        return conferences.findAll { conference ->
             Set<ConstraintViolation<Conference>> violations = validator.validate(conference)
             for (ConstraintViolation<Conference> violation : violations) {
                 log.error("{}.{} {}", violation.getRootBeanClass().getSimpleName(), violation.propertyPath, violation.getMessage())
