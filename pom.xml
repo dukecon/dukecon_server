@@ -953,7 +953,7 @@
                                     <goal>analyze</goal>
                                 </goals>
                                 <configuration>
-                                    <failOnViolations>true</failOnViolations>
+                                    <failOnSeverity>MAJOR</failOnSeverity>
                                 </configuration>
                             </execution>
                         </executions>
