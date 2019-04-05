@@ -18,7 +18,7 @@ pipeline {
                 withMaven {
                     script {
                         if (env.BRANCH_NAME == "develop") {
-                            sh 'mvn -Pdocker clean deploy'
+                            sh 'mvn -Pdocker,doc clean deploy'
                         } else {
                             sh 'mvn clean verify'
                         }
