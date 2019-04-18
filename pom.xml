@@ -988,7 +988,7 @@
                                 <apiSources>
                                     <apiSource>
                                         <springmvc>false</springmvc>
-                                        <locations>org.dukecon.server.conference</locations>
+                                        <locations>org.dukecon.server</locations>
                                         <schemes>http,https</schemes>
                                         <host>dukecon.org</host>
                                         <basePath>/rest</basePath>
