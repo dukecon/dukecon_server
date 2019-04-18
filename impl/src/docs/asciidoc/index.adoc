@@ -1,3 +1,5 @@
+:generated: ../../../target/generated-docs/asciidoc
+
 include::{generated}/overview.adoc[]
 include::manual_rest_doc.adoc[]
 include::{generated}/paths.adoc[]
