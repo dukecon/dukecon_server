@@ -1,0 +1,14 @@
+# Start server with 'preferences.noauth.enableIdParam=true'
+
+POST http://localhost:8080/rest/preferences/1234
+Content-Type: application/json
+Accept: application/json
+
+[{"eventId":"548987","version":"1"},{"eventId":"548999","version":"1"},{"eventId":"549046","version":"1"},{"eventId":"549095","version":"1"},{"eventId":"549144","version":"1"},{"eventId":"569955","version":"1"},{"eventId":"570053","version":"1"}]
+
+###
+
+GET http://localhost:8080/rest/preferences/1234
+Accept: application/json
+
+###

@@ -3,13 +3,17 @@ package org.dukecon.server.favorites
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.user.UserPreference
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject
 import javax.ws.rs.Consumes
 import javax.ws.rs.DELETE
+import javax.ws.rs.GET
 import javax.ws.rs.POST
 import javax.ws.rs.PUT
+import javax.ws.rs.Path
+import javax.ws.rs.PathParam
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response;
 
@@ -20,15 +24,32 @@ import javax.ws.rs.core.Response;
 @Slf4j
 @TypeChecked
 abstract class AbstractPreferencesService implements PreferencesService {
+
+    @Value("\${preferences.noauth.enableIdParam:false}")
+    private boolean enableIdParam
+
     @Inject
     FavoritesRepository preferencesRepository
 
     abstract protected String getAuthenticatedPrincipalId()
 
+    @GET
     public Response getPreferences() {
+        return getPreferences(null)
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getPreferences(@PathParam("id") String id) {
         String principalId = getAuthenticatedPrincipalId()
         if (!principalId) {
-            return Response.status(Response.Status.NOT_FOUND).build()
+            if (!enableIdParam) {
+                return Response.status(Response.Status.NOT_FOUND).build()
+            } else if (!id) {
+                return Response.status(Response.Status.BAD_REQUEST).build()
+            } else {
+                principalId = id
+            }
         }
 
         log.debug("Retrieving preferences for '{}'", principalId)
@@ -46,9 +67,24 @@ abstract class AbstractPreferencesService implements PreferencesService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response setPreferences(List<UserPreference> userPreferences) {
+        return setPreferences(null, userPreferences)
+
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public Response setPreferences(@PathParam("id") String id, List<UserPreference> userPreferences) {
         String principalId = getAuthenticatedPrincipalId()
         if (!principalId) {
-            return Response.status(Response.Status.NOT_FOUND).build()
+            if (!enableIdParam) {
+                return Response.status(Response.Status.NOT_FOUND).build()
+            } else if (!id) {
+                return Response.status(Response.Status.BAD_REQUEST).build()
+            } else {
+                principalId = id
+            }
+
         }
 
         // Retrieve existing preferences from DB
@@ -82,9 +118,22 @@ abstract class AbstractPreferencesService implements PreferencesService {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addPreference(UserPreference userPreference) {
+        return addPreference(null, userPreference)
+    }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public Response addPreference(@PathParam("id") String id, UserPreference userPreference) {
         String principalId = getAuthenticatedPrincipalId()
         if (!principalId) {
-            return Response.status(Response.Status.NOT_FOUND).build()
+            if (!enableIdParam) {
+                return Response.status(Response.Status.NOT_FOUND).build()
+            } else if (!id) {
+                return Response.status(Response.Status.BAD_REQUEST).build()
+            } else {
+                principalId = id
+            }
         }
 
         log.debug("Adding preferences for '{}'", principalId)
@@ -109,9 +158,22 @@ abstract class AbstractPreferencesService implements PreferencesService {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     public Response removePreference(UserPreference userPreference) {
+        return removePreference(null, userPreference)
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public Response removePreference(@PathParam("id") String id, UserPreference userPreference) {
         String principalId = getAuthenticatedPrincipalId()
         if (!principalId) {
-            return Response.status(Response.Status.NOT_FOUND).build()
+            if (!enableIdParam) {
+                return Response.status(Response.Status.NOT_FOUND).build()
+            } else if (!id) {
+                return Response.status(Response.Status.BAD_REQUEST).build()
+            } else {
+                principalId = id
+            }
         }
 
         log.debug("Removing preferences for '{}'", principalId)
