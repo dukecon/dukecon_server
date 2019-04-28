@@ -26,7 +26,7 @@ pipeline {
                 }
             }
         }
-        stage('Docker Push') {
+        stage('Docker Push and Restart "latest"') {
             steps {
                 withMaven {
                     script {
@@ -38,6 +38,16 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+        stage('Publish documentation') {
+            steps {
+                publishHTML target: [allowMissing         : false,
+                                     alwaysLinkToLastBuild: false,
+                                     keepAll              : true,
+                                     reportDir            : 'impl/target/generated-docs/html/',
+                                     reportFiles          : 'index.html',
+                                     reportName           : 'SwaggerDocumentation']
             }
         }
     }
