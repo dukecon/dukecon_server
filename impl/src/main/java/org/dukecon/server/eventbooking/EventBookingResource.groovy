@@ -4,8 +4,8 @@ import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
 import org.dukecon.model.Event
-import org.dukecon.server.repositories.ConferenceDataProvider
 import org.dukecon.server.favorites.PreferencesService
+import org.dukecon.server.repositories.ConferenceDataProvider
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject
@@ -22,7 +22,8 @@ import javax.ws.rs.core.Response
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Component
-@Path("eventsBooking/{conferenceId}")
+@Path("/eventsBooking/{conferenceId}")
+// @Api(value = "/eventsBooking/{conferenceId}", description = "Conference EventBooking endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 @Slf4j
@@ -41,6 +42,9 @@ class EventBookingResource {
     }
 
     @GET
+//     @ApiOperation(value = "Get total and used capacity of all conference events",
+//             response = EventBooking.class,
+//             responseContainer = "List")
     Response getBookingInformation(@PathParam("conferenceId") String conferenceId) {
         def allCapacities = bookingService.getAllCapacities(conferenceId)
         Map<String, Integer> eventIdToNumberOfFavorites = preferencesService.getAllEventFavorites()
@@ -54,6 +58,7 @@ class EventBookingResource {
 
     @GET
     @Path("{eventId}")
+//     @ApiOperation(value = "Get total and used capacity of conference event", response = EventBooking.class)
     EventBooking getBookInformation(@PathParam("conferenceId") String conferenceId, @PathParam("eventId") String eventId) {
         Event event = getEvent(conferenceId, eventId)
         bookingService.getCapacity(conferenceId, eventId) ?: new EventBooking(conferenceId: conferenceId, eventId: eventId, locationCapacity: event.location?.capacity, numberOfFavorites: preferencesService.allEventFavorites[eventId] ?: 0)
@@ -80,7 +85,9 @@ class EventBookingResource {
      * @return response
      */
     @POST
+    // TODO: This should be a PUT operation
     @Path("{eventId}")
+//     @ApiOperation(value = "Update used capacity of conference event")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response setCapacity(@PathParam("conferenceId") String conferenceId, @PathParam("eventId") String eventId, EventCapacityInput capacity) {
         return Response.status(this.bookingService.setCapacity(conferenceId, eventId, capacity) ? Response.Status.NO_CONTENT : Response.Status.CREATED).entity(capacity).build()

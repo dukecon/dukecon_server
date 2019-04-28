@@ -15,7 +15,6 @@ import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import java.time.format.DateTimeFormatter
-
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
@@ -28,6 +27,7 @@ class CurrentConferenceResourceConstants {
 
 @Component
 @Path("/")
+// @Api(value = "/", description = "Current conference endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 @Slf4j
@@ -50,12 +50,14 @@ class CurrentConferenceResource {
 
     @GET
     @Path("init.json")
+//     @ApiOperation(value = "Get configuration of default conference")
     public Response defaultConferenceForLocalDevelopment() {
         return getCurrentConference(defaultConferenceName, defaultConferenceYear)
     }
 
     @GET
     @Path(CurrentConferenceResourceConstants.INIT_TEMPLATE)
+//     @ApiOperation ("Get configuration of given conference")
     public Response getCurrentConference(@PathParam("conference") String conference, @PathParam("year") String year) {
         def c = configurationService.getConference(conference, year)
         if (c) {
@@ -92,6 +94,7 @@ class CurrentConferenceResource {
 
     @GET
     @Path("image-resources.json")
+//     @ApiOperation(value = "Get image resources of default conference")
     @Produces(MediaType.APPLICATION_JSON)
     public Response defaultImageResourcesForLocalDevelopment() {
         return getCurrentImageResources(defaultConferenceName, defaultConferenceYear)
@@ -99,6 +102,7 @@ class CurrentConferenceResource {
 
     @GET
     @Path(CurrentConferenceResourceConstants.IMAGE_RESOURCES_TEMPLATE)
+//     @ApiOperation(value = "Get image resources of given conference")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCurrentImageResources(
             @PathParam("conference") String conference, @PathParam("year") String year) {

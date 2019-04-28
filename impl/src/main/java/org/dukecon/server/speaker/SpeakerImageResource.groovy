@@ -12,12 +12,12 @@ import javax.ws.rs.PathParam
 import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
-
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Component
-@Path("speaker/images")
+@Path("/speaker/images")
+// @Api(value = "/speaker/images", description = "Speaker images endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 @Slf4j

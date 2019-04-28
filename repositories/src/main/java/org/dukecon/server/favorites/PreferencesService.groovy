@@ -9,7 +9,8 @@ import javax.ws.rs.core.Response
 /**
  * Created by ascheman on 17.06.17.
  */
-@Path("preferences")
+@Path("/preferences")
+// TODO Move this to "impl" or even "api" and add @Api for OpenAPI
 public interface PreferencesService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)

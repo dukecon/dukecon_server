@@ -12,7 +12,8 @@ import javax.ws.rs.Path
  * @author Gerd Aschemann <gerd@aschemann.net>
  */
 @Component
-@Path("noauthpreferences")
+@Path("/noauthpreferences")
+// @Api(value = "/noauthpreferences", description = "Conditional unauthorized preferences endpoint")
 @Slf4j
 @TypeChecked
 @ConditionalOnProperty(name="preferences.noauth.enable", havingValue="true", matchIfMissing = false)

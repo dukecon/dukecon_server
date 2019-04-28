@@ -5,9 +5,6 @@ import freemarker.template.Template
 import freemarker.template.TemplateException
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
-import io.swagger.annotations.Api
-import io.swagger.annotations.ApiOperation
-import org.dukecon.model.Conference
 import org.dukecon.model.Styles
 import org.dukecon.server.repositories.ConferenceDataProvider
 import org.dukecon.services.ConferenceService
@@ -15,7 +12,11 @@ import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.ResponseBody
 
 import javax.inject.Inject
-import javax.ws.rs.*
+import javax.ws.rs.GET
+import javax.ws.rs.Path
+import javax.ws.rs.PathParam
+import javax.ws.rs.Produces
+import javax.ws.rs.WebApplicationException
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import java.time.format.DateTimeFormatter
@@ -24,8 +25,8 @@ import java.time.format.DateTimeFormatter
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Component
-@Path("conferences")
-@Api(value = "/", description = "Conferences endpoint")
+@Path("/conferences")
+// @Api(value = "/conferences", description = "All Conferences endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 @Slf4j
@@ -44,9 +45,9 @@ class ConferencesResource {
     }
 
     @GET
-    @ApiOperation(value = "returns list of conferences",
-            response = Conference.class,
-            responseContainer = "List")
+//     @ApiOperation(value = "Get list of conferences",
+//             response = Conference.class,
+//             responseContainer = "List")
     Response getAllConferences() {
         def conferences = configurationService.conferences.collect { c -> [id: c.id, name: c.name, year: c.year, url: c.url, homeUrl: c.homeUrl, homeTitle: c.homeTitle, startDate: dtf.format(c.startDate), endDate: dtf.format(c.endDate)] }
         return Response.ok().entity(conferences).build()
@@ -60,6 +61,7 @@ class ConferencesResource {
      */
     @GET
     @Path("update/{id}")
+//     @ApiOperation(value = "Trigger update of conference data (re-read from resource)")
     Response updateConference(@PathParam("id") String id) {
         try {
             if (conferenceService.getConference(id) == null)
@@ -80,7 +82,7 @@ class ConferencesResource {
     }
 
     @Path("{id}")
-    @ApiOperation(value = "Conference details")
+//     @ApiOperation(value = "Get conference details")
     ConferenceDetailResource getConferenceDetails(@PathParam("id") String id) {
         def conference = conferenceService.read(id.replace(".json", ""))
         if (conference == null) {
@@ -93,7 +95,7 @@ class ConferencesResource {
     @ResponseBody
     @Produces("text/css")
     @Path("{id}/styles.css")
-    @ApiOperation(value = "Conference styles")
+//     @ApiOperation(value = "Get conference CSS styles")
     String getConferenceStyles(@PathParam("id") String id) {
         Styles styles = conferenceService.getConferenceStyles(id)
         if (styles == null) {

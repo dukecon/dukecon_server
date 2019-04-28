@@ -2,19 +2,17 @@ package org.dukecon.server.security
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
-
-import java.security.Principal
-
-import javax.servlet.http.HttpServletRequest
-
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 
+import javax.servlet.http.HttpServletRequest
+import java.security.Principal
+
 /**
  * Wrapper for Spring authentication for keycloak data
- * 
+ *
  * Taken from https://github.com/iuliazidaru/keycloak-spring-boot-rest-angular-demo
- * 
+ *
  * @author iulia
  */
 @Slf4j
@@ -34,8 +32,6 @@ public class KeycloakAuthentication implements Authentication {
 		super()
 		this.authenticated = authenticated
 	}
-
-
 
 	@Override
 	public Object getCredentials() {

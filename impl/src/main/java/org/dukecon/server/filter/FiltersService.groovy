@@ -20,7 +20,8 @@ import javax.ws.rs.core.Response
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Component
-@Path("filters")
+@Path("/filters")
+// @Api(value = "/filters", description = "Filters endpoint")
 @Slf4j
 @TypeChecked
 @Transactional

@@ -1,11 +1,8 @@
 package org.dukecon.server.conference
 
-import io.swagger.annotations.Api
-import io.swagger.annotations.ApiOperation
+
 import org.dukecon.model.Conference
 import org.dukecon.model.Event
-import org.dukecon.model.MetaData
-import org.dukecon.model.Speaker
 
 import javax.ws.rs.GET
 import javax.ws.rs.Path
@@ -17,7 +14,7 @@ import java.time.temporal.ChronoField
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
-@Api(hidden = true, value = "/conferences", description = "Conferences endpoint")
+// @Api(hidden = true, value = "/conferences", description = "Conference detail endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 class ConferenceDetailResource {
     Conference conference
@@ -27,8 +24,8 @@ class ConferenceDetailResource {
     }
 
     @GET
-    @ApiOperation(value = "returns full conference data",
-            response = Conference.class)
+//     @ApiOperation(value = "Get complete conference data",
+//             response = Conference.class)
     public Response getConference() {
         return Response.ok().entity(conference).build();
     }
@@ -81,7 +78,10 @@ class ConferenceDetailResource {
      */
     @GET
     @Path("events/short")
-    @Produces("text/csv, application/json")
+//     @ApiOperation(value = "Get event short list as CSV (for Canoo Voting Machines)",
+//             response = ShortEvent.class,
+//             responseContainer = "List")
+    @Produces("text/csv")
     Response shortEvents() {
         def conf = this.conference
         Response.ok()
@@ -94,26 +94,26 @@ class ConferenceDetailResource {
 
     @GET
     @Path("speakers")
-    @ApiOperation(value = "returns list of conference speakers",
-            response = Speaker.class,
-            responseContainer = "List")
+//     @ApiOperation(value = "Get list of conference speakers",
+//             response = Speaker.class,
+//             responseContainer = "List")
     public Response getSpeakers() {
         return Response.ok().entity(conference.speakers).build();
     }
 
     @GET
     @Path("events")
-    @ApiOperation(value = "returns list of conference events",
-            response = Event.class,
-            responseContainer = "List")
+//     @ApiOperation(value = "Get list of conference events",
+//             response = Event.class,
+//             responseContainer = "List")
     public Response getEvents() {
         return Response.ok().entity(conference.events).build();
     }
 
     @GET
     @Path("metadata")
-    @ApiOperation(value = "returns list of conference meta data",
-            response = MetaData.class)
+//     @ApiOperation(value = "Get conference meta data",
+//             response = MetaData.class)
     public Response getMeta() {
         return Response.ok().entity(conference.metaData).build();
     }

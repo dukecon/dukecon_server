@@ -8,7 +8,12 @@ import org.dukecon.server.repositories.ConferenceDataProvider
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject
-import javax.ws.rs.*
+import javax.ws.rs.DELETE
+import javax.ws.rs.GET
+import javax.ws.rs.POST
+import javax.ws.rs.Path
+import javax.ws.rs.PathParam
+import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
@@ -19,7 +24,8 @@ import javax.ws.rs.core.Response
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Component
-@Path("admin/{conferenceId}")
+@Path("/admin/{conferenceId}")
+// @Api(value = "/admin/{conferenceId}", description = "DukeCon administration endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 @Slf4j
@@ -41,6 +47,9 @@ class AdminResource {
     }
 
     @GET
+//     @ApiOperation(value = "Get full status of all events",
+//             response = EventBooking.class,
+//             responseContainer = "Collection")
     Response getAllCapacities(@PathParam("conferenceId") String conferenceId) {
         return Response.ok().entity(service.getAllCapacities(conferenceId)).build()
     }
@@ -52,6 +61,7 @@ class AdminResource {
      */
     @POST
     @Path("{eventId}")
+//     @ApiOperation(value = "Set event to full (Deprecated)")
     @Deprecated
     public Response setFull(@PathParam("conferenceId") String conferenceId, @PathParam("eventId") String eventId) {
         return resource.setCapacity(conferenceId, eventId, new EventBookingResource.EventCapacityInput(fullyBooked: true))
@@ -64,6 +74,7 @@ class AdminResource {
      */
     @DELETE
     @Path("{eventId}")
+//     @ApiOperation(value = "Set event to NOT ful (Deprecated)")
     @Deprecated
     public Response removeFull(@PathParam("conferenceId") String conferenceId, @PathParam("eventId") String eventId) {
         return resource.setCapacity(conferenceId, eventId, new EventBookingResource.EventCapacityInput(fullyBooked: false))
@@ -71,6 +82,7 @@ class AdminResource {
 
     @GET
     @Path("update")
+//     @ApiOperation(value = "Get update status of the talk provider for this conference")
     Response updateConference(@PathParam("conferenceId") String id) {
         try {
             if (talkProviders[id] == null)

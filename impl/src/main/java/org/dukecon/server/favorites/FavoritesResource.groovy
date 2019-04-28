@@ -18,7 +18,8 @@ import javax.ws.rs.core.Response
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 @Component
-@Path("favorites/{conferenceId}")
+@Path("/favorites/{conferenceId}")
+// @Api(value = "/favorites/{conferenceId}", description = "Favorites endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 @TypeChecked
 @Slf4j

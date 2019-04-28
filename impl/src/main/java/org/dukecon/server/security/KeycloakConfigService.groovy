@@ -1,6 +1,8 @@
 package org.dukecon.server.security
 
 import groovy.util.logging.Slf4j
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
 
 import javax.ws.rs.GET
 import javax.ws.rs.Path
@@ -8,14 +10,12 @@ import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Component
-
 /**
  * @author Gerd Aschemann, gerd@aschemann.net, @GerdAschemann
  */
 @Component
-@Path("keycloak.json")
+@Path("/keycloak.json")
+// @Api(value = "/keycloak.json", description = "KeyCloak configuration endpoint")
 @Produces(MediaType.APPLICATION_JSON)
 @Slf4j
 class KeycloakConfigService {
@@ -24,16 +24,16 @@ class KeycloakConfigService {
 
 	@Value("\${keycloak.auth-server-url}")
 	private String authServerUrl
-	
+
 	@Value("\${keycloak.ssl-required:none}")
 	private String sslRequired
-	
+
 	@Value("\${keycloak.resource:dukecon}")
 	private String resource
 
 	@Value("\${keycloak.useAccountManagement:false}")
     private boolean useAccountManagement
-	
+
 	// TODO: Check if we could parameterize this?
 	@Value("\${preferences.rest.path}")
 	private String redirectUri
@@ -50,7 +50,7 @@ class KeycloakConfigService {
             'useAccountManagement': useAccountManagement.toString()
         ]
 		log.debug ("keycloak.json = '{}'", keyCloakConfig)
-		
+
         return Response.ok().entity(keyCloakConfig).build()
 	}
 
