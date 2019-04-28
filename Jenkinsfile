@@ -19,6 +19,12 @@ pipeline {
                     script {
                         if (env.BRANCH_NAME == "develop") {
                             sh 'mvn -Pdocker,doc clean deploy'
+                            publishHTML target: [allowMissing         : false,
+                                                 alwaysLinkToLastBuild: false,
+                                                 keepAll              : true,
+                                                 reportDir            : 'impl/target/generated-docs/html/',
+                                                 reportFiles          : 'index.html',
+                                                 reportName           : 'SwaggerDocumentation']
                         } else {
                             sh 'mvn clean verify'
                         }
@@ -38,16 +44,6 @@ pipeline {
                         }
                     }
                 }
-            }
-        }
-        stage('Publish documentation') {
-            steps {
-                publishHTML target: [allowMissing         : false,
-                                     alwaysLinkToLastBuild: false,
-                                     keepAll              : true,
-                                     reportDir            : 'impl/target/generated-docs/html/',
-                                     reportFiles          : 'index.html',
-                                     reportName           : 'SwaggerDocumentation']
             }
         }
     }
