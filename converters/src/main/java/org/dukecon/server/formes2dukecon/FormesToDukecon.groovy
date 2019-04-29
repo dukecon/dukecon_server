@@ -15,8 +15,7 @@ class FormesToDukecon {
     public static void main(String[] args) {
         ConferencesConfiguration conferencesConfiguration = ConferencesConfiguration.fromFile(args[0], [:], false)
         conferencesConfiguration.conferences.each { ConferencesConfiguration.Conference conferenceConfig ->
-            RawDataResources rawDataResources = new RawDataResources([eventsData: conferenceConfig.talksUri
-                    .eventsData])
+            RawDataResources rawDataResources = RawDataResources.of(conferenceConfig)
             Class rawDataMapperClass = conferenceConfig.rawDataMapperClass as Class
             RawDataMapper rawDataMapper =
                     rawDataMapperClass.getConstructor(RawDataResources.class)
