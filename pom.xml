@@ -509,9 +509,9 @@
     <modules>
         <module>api</module>
         <module>repositories</module>
+        <module>converters</module>
         <module>impl</module>
         <module>docker</module>
-        <module>converters</module>
     </modules>
 
     <build>
