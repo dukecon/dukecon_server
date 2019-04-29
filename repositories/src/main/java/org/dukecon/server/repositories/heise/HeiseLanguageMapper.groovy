@@ -1,6 +1,6 @@
 package org.dukecon.server.repositories.heise
 
-import com.xlson.groovycsv.CsvIterator
+
 import org.dukecon.model.Language
 
 /**

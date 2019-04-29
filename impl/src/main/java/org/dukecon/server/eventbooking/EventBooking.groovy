@@ -2,7 +2,13 @@ package org.dukecon.server.eventbooking
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
+import javax.persistence.Table
+import javax.persistence.Transient
+import javax.persistence.UniqueConstraint
 
 /**
  * Database entity for storing location utilization for a concrete event/talk.

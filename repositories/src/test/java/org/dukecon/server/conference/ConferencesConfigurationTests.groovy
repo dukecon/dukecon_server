@@ -3,7 +3,6 @@ package org.dukecon.server.conference
 import org.dukecon.adapter.ResourceWrapper
 import org.junit.Before
 import org.junit.Test
-import sun.reflect.annotation.ExceptionProxy
 
 import java.time.LocalDate
 

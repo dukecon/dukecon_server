@@ -1,10 +1,9 @@
 package org.dukecon.server.favorite
 
-import groovy.transform.TypeChecked
+
 import groovy.util.logging.Slf4j
 import org.dukecon.model.user.UserPreference
 import org.dukecon.server.conference.AbstractDukeConSpec
-import org.dukecon.server.favorites.EventFavorites
 import org.dukecon.server.favorites.FavoritesService
 import org.dukecon.server.favorites.PreferencesServiceImpl
 import org.dukecon.services.ConferenceService

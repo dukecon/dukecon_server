@@ -2,13 +2,12 @@
 
 import com.xlson.groovycsv.PropertyMapper
 import groovy.json.JsonBuilder
-import groovy.json.JsonOutput
+
+import static com.xlson.groovycsv.CsvParser.parseCsv
 
 /**
  * Created by ascheman on 28.05.17.
  */
-import static com.xlson.groovycsv.CsvParser.parseCsv
-
 FileReader csvFile = new FileReader('src/main/resources/jfs-2017-formes-dump.csv')
 hits = []
 for(PropertyMapper line in parseCsv(csvFile, separator: ',')) {

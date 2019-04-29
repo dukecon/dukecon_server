@@ -2,7 +2,12 @@ package org.dukecon.server.services;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.dukecon.model.*;
+import org.dukecon.model.AbstractCoreImages;
+import org.dukecon.model.Conference;
+import org.dukecon.model.CoreImages;
+import org.dukecon.model.Resources;
+import org.dukecon.model.Speaker;
+import org.dukecon.model.Styles;
 import org.dukecon.server.conference.SpeakerImageService;
 import org.dukecon.services.ConferenceService;
 import org.dukecon.services.ResourceService;
@@ -17,7 +22,8 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by christoferdutz on 24.08.16.

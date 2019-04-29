@@ -1,7 +1,15 @@
 package org.dukecon.server.repositories.sched
 
 import groovy.util.logging.Slf4j
-import org.dukecon.model.*
+import org.dukecon.model.Audience
+import org.dukecon.model.Conference
+import org.dukecon.model.Event
+import org.dukecon.model.EventType
+import org.dukecon.model.Language
+import org.dukecon.model.Location
+import org.dukecon.model.MetaData
+import org.dukecon.model.Speaker
+import org.dukecon.model.Track
 import org.dukecon.server.repositories.ConferenceDataExtractor
 import org.dukecon.server.repositories.RawDataMapper
 

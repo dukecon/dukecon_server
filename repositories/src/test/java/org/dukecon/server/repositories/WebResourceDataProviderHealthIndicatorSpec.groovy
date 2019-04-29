@@ -1,8 +1,8 @@
 package org.dukecon.server.conference.adpater
 
-import org.dukecon.server.repositories.WebResourceDataProviderHealthIndicator
 import org.dukecon.server.javaland.JavalandDataProvider
 import org.dukecon.server.javaland.JavalandDataRemote
+import org.dukecon.server.repositories.WebResourceDataProviderHealthIndicator
 import org.springframework.boot.actuate.health.Status
 import spock.lang.Ignore
 import spock.lang.Specification

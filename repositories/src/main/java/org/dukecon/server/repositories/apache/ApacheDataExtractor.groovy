@@ -5,7 +5,15 @@ import com.timgroup.jgravatar.GravatarDefaultImage
 import com.timgroup.jgravatar.GravatarRating
 import groovy.util.logging.Slf4j
 import org.apache.commons.lang3.text.WordUtils
-import org.dukecon.model.*
+import org.dukecon.model.Audience
+import org.dukecon.model.Conference
+import org.dukecon.model.Event
+import org.dukecon.model.EventType
+import org.dukecon.model.Language
+import org.dukecon.model.Location
+import org.dukecon.model.MetaData
+import org.dukecon.model.Speaker
+import org.dukecon.model.Track
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.conference.SpeakerImageService
 import org.dukecon.server.favorites.PreferencesService

@@ -2,7 +2,6 @@ package org.dukecon.server.conference.adpater
 
 import org.dukecon.adapter.ResourceWrapper
 import org.dukecon.server.repositories.RawDataResources
-
 import org.junit.Test
 
 /**

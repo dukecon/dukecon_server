@@ -1,6 +1,6 @@
 package org.dukecon.server.admin
 
-import org.dukecon.server.eventbooking.EventBookingService
+
 import spock.lang.Specification
 
 /**

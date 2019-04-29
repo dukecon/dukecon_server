@@ -2,13 +2,8 @@ package org.dukecon.server.repositories
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
-import org.dukecon.server.javaland.JavalandDataProvider
-import org.dukecon.server.javaland.JavalandDataRemote
 import org.springframework.boot.actuate.health.Health
 import org.springframework.boot.actuate.health.HealthIndicator
-import org.springframework.stereotype.Component
-
-import javax.inject.Inject
 
 /**
  * @author Alexander Schwartz, alexander.schwartz@gmx.net, @ahus1de

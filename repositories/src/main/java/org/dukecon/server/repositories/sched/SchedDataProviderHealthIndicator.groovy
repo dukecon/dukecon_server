@@ -4,7 +4,6 @@ import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
 import org.springframework.boot.actuate.health.Health
 import org.springframework.boot.actuate.health.HealthIndicator
-import org.springframework.stereotype.Component
 
 import javax.inject.Inject
 

@@ -2,8 +2,8 @@ package org.dukecon.server.favorite
 
 import groovy.util.logging.Slf4j
 import org.dukecon.server.conference.AbstractDukeConSpec
-import org.dukecon.server.favorites.Preference
 import org.dukecon.server.favorites.FavoritesRepository
+import org.dukecon.server.favorites.Preference
 import org.springframework.dao.DataIntegrityViolationException
 
 import javax.inject.Inject

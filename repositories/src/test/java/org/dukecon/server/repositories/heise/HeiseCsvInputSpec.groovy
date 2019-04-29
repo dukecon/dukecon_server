@@ -1,7 +1,6 @@
 package org.dukecon.server.conference.adpater.heise
 
-import org.dukecon.adapter.ResourceWrapper
-import org.dukecon.server.repositories.RawDataMapper
+
 import org.dukecon.server.repositories.RawDataResources
 import org.dukecon.server.repositories.heise.HeiseCsvInput
 import spock.lang.Specification

@@ -1,7 +1,11 @@
 package org.dukecon.server.repositories.doag
 
 import groovy.json.JsonSlurper
-import org.dukecon.model.*
+import org.dukecon.model.Audience
+import org.dukecon.model.Conference
+import org.dukecon.model.Event
+import org.dukecon.model.Language
+import org.dukecon.model.Location
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.javaland.JavalandDataExtractor
 import org.dukecon.server.repositories.RawDataResources

@@ -4,9 +4,6 @@ import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
 import org.dukecon.server.repositories.ConferenceDataProvider
 
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */

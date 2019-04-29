@@ -1,6 +1,14 @@
 package org.dukecon.server.services;
 
-import org.dukecon.model.*;
+import org.dukecon.model.Audience;
+import org.dukecon.model.Conference;
+import org.dukecon.model.Event;
+import org.dukecon.model.EventType;
+import org.dukecon.model.Language;
+import org.dukecon.model.Location;
+import org.dukecon.model.Speaker;
+import org.dukecon.model.Styles;
+import org.dukecon.model.Track;
 import org.dukecon.server.conference.ConferencesConfiguration;
 import org.dukecon.server.conference.ConferencesConfigurationService;
 import org.dukecon.server.repositories.ConferenceDataProvider;
@@ -12,7 +20,11 @@ import org.springframework.web.context.ServletContextAware;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**

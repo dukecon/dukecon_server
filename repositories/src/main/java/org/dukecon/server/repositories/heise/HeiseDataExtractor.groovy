@@ -2,10 +2,10 @@ package org.dukecon.server.repositories.heise
 
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
-import org.dukecon.server.repositories.ConferenceDataExtractor
-import org.dukecon.server.repositories.RawDataMapper
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.conference.SpeakerImageService
+import org.dukecon.server.repositories.ConferenceDataExtractor
+import org.dukecon.server.repositories.RawDataMapper
 
 import java.time.LocalDate
 

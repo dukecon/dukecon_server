@@ -2,6 +2,7 @@ package org.dukecon.server.core
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
+import org.springframework.stereotype.Component
 
 import javax.servlet.Filter
 import javax.servlet.FilterChain
@@ -11,8 +12,6 @@ import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-
-import org.springframework.stereotype.Component
 
 @Component
 @Slf4j
