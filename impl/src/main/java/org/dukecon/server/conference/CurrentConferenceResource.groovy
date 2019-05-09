@@ -82,6 +82,7 @@ class CurrentConferenceResource {
                     conferences : "../rest/conferences/${c.id}".toString(),
                     events      : "../rest/eventsBooking/${c.id}".toString(),
                     keycloak    : "../rest/keycloak.json",
+                    favoritesExport: "../rest/favorites/${c.id}".toString(),
                     feedbackServer: [
                             active: Boolean.valueOf(c.feedbackServer.active),
                             timeSlotVisible: c.feedbackServer.timeSlotVisible as int
