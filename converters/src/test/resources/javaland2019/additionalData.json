@@ -1,0 +1,32 @@
+{
+  "took" : 21,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 5,
+    "successful" : 5,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : 1614,
+    "max_score" : 1.0,
+    "hits" : [ {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AWqdhRUnGFJ9kSIFZ7Gf",
+      "_score" : 1.0,
+      "_source":{"ID":11140712,"SEMINAR_ID":569905,"TITLE":"Progessive Web Apps - Portable Webanwendungen statt nativer Apps","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/11140712/2019-nn-loris_bachert-progessive_web_apps_-_portable_webanwendungen_statt_nativer_apps-praesentation.pdf","AUTHOR":"Loris Bachert, Orientation in Objects GmbH","PID":363284,"CHANGED_D":"2019-03-21T09:05:08.000+01:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"JavaScript (JS); Mobile; Progressive Web Applications; Web-Technologien"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AWqdhRUnGFJ9kSIFZ7HJ",
+      "_score" : 1.0,
+      "_source":{"ID":11122326,"SEMINAR_ID":569776,"TITLE":"Container vs. Serverless - the Good, the Bad & the Ugly","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/11122326/2019-nn-niko_koebler-container_vs_serverless_-_the_good_the_bad__the_ugly-praesentation.pdf","AUTHOR":"Niko Köbler, www.n-k.de","PID":359390,"CHANGED_D":"2019-03-20T09:05:13.000+01:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Deployment; Docker; Konfiguration; Kubernetes; Management; Monitoring; Orchestrierung"}
+    }, {
+      "_index" : "docdukecon",
+      "_type" : "jdbc",
+      "_id" : "AWqdhRUnGFJ9kSIFZ7Gw",
+      "_score" : 1.0,
+      "_source":{"ID":11143472,"SEMINAR_ID":569771,"TITLE":"Jenkins X – Continuously Driving the Kloud","PRESENTATION":"https://www.javaland.eu/formes/pubfiles/11143472/2019-nn-gerd_aschemann-jenkins_x__continuously_driving_the_kloud-praesentation.pdf","AUTHOR":"Gerd Aschemann, Gerd Aschemann","PID":363283,"CHANGED_D":"2019-03-23T09:05:08.000+01:00","MANUSCRIPT":null,"OTHER":null,"KEYWORDS":"Build; CI/CD; Deployment; Konfiguration; Kubernetes"}
+    } ]
+  }
+}

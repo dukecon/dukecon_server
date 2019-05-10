@@ -1,0 +1,41 @@
+# THIS IS AN AUTOMATICALLY GENERATED FILE - DO NOT EDIT!!!
+# DukeCon conference configuration for JavaLand - please leave them in chronological order
+-
+  id: javaland2019
+  internalId: 561658
+  conference: javaland
+  year: 2019
+  talksUri:
+    eventsData: 'javaland2019/eventsData.json'
+    speakersData: 'javaland2019/speakersData.json'
+    additionalData: 'javaland2019/additionalData.json'
+  backupUri: javaland-2019-backup.raw
+  url: 'http://${conference}.dukecon.org/${year}'
+  homeUrl: 'http://www.javaland.eu'
+  imprint:
+    de: 'https://www.javaland.eu/de/impressum/'
+    en: 'https://www.javaland.eu/en/imprint/'
+  termsOfUse:
+    de: 'https://www.javaland.eu/de/nutzungsbedingungen/'
+    en: 'https://www.javaland.eu/en/term-of-use/'
+  privacy:
+    de: 'https://www.javaland.eu/de/datenschutz/'
+    en: 'https://www.javaland.eu/en/privacy/'
+  name: JavaLand 2019
+  startDate: 2019-03-19
+  endDate: 2019-03-21
+  authEnabled: true
+  extractorClass: org.dukecon.server.repositories.doag.DoagDataExtractor
+  rawDataMapperClass: org.dukecon.server.repositories.doag.DoagJsonMapper
+  styles:
+    dark: '#1aa3b1'
+    darkLink: '#1aa3b1'
+    hover: '#00c3d7'
+    hoverLink: '#00c3d7'
+    reverse: '#fff'
+    highlight: '#ddee55'
+    alternate: '#bf5a00'
+  feedbackServer:
+    active: true
+    timeSlotVisible: 10080
+

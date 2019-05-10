@@ -4,12 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
+import org.dukecon.model.CoreImages
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.conference.SpeakerImageService
 import org.dukecon.server.repositories.ConferenceDataExtractor
 import org.dukecon.server.repositories.RawDataMapper
 import org.dukecon.server.repositories.RawDataResources
+import org.dukecon.server.util.ResourcesFinder
 
+import java.nio.file.Files
 import java.time.format.DateTimeFormatter
 
 
@@ -54,34 +57,64 @@ class FormesToDukecon {
             File initJson = new File("static/${conferenceConfig.conference}/${conferenceConfig.year}/init.json")
             objectMapper.writeValue(initJson, getInitJsonContent(conferenceConfig))
             log.info("Created {}", initJson.absolutePath)
+
+            File imageResourcesJson = new File("static/${conferenceConfig.conference}/${conferenceConfig.year}/image-resources.json")
+            objectMapper.writeValue(imageResourcesJson, getImageResourcesJsonContent(conferenceConfig))
+            log.info("Created {}", imageResourcesJson.absolutePath)
+        }
+    }
+
+    private static CoreImages getImageResourcesJsonContent(ConferencesConfiguration.Conference c) {
+        def images = CoreImages.builder().build()
+        def resourceDir = "img/${c.id}"
+
+        setFilesAsByteArray("${resourceDir}/conference", images.&setConferenceImage, "logo")
+        setFilesAsByteArray("${resourceDir}/favicon", images.&setConferenceFavIcon, "favicon")
+
+        setFilesAsByteArray("${resourceDir}/locations", images.&setLocationImages)
+        setFilesAsByteArray("${resourceDir}/location-maps", images.&setLocationMapImages)
+        setFilesAsByteArray("${resourceDir}/languages", images.&setLanguageImages)
+        setFilesAsByteArray("${resourceDir}/streams", images.&setStreamImages)
+
+        images
+    }
+
+    private static void setFilesAsByteArray(String folder, Closure c, String nameOfSingleFile = null) {
+        new ResourcesFinder(folder).fileList.ifPresent { files ->
+            if (nameOfSingleFile) {
+                c.call(Files.readAllBytes(files.get(nameOfSingleFile)?.toPath()))
+            } else {
+                c.call((Map<String, byte[]>) files.collectEntries { k, v -> [k, Files.readAllBytes(v.toPath())] })
+            }
         }
     }
 
     private static Map<String, Object> getInitJsonContent(ConferencesConfiguration.Conference c) {
         final DateTimeFormatter dtf = DateTimeFormatter.ISO_LOCAL_DATE
         [
-                id          : c.id,
-                name        : c.name,
-                year        : c.year,
-                url         : c.url,
-                homeUrl     : c.homeUrl,
-                homeTitle   : c.homeTitle,
-                imprint     : [
-                        de      : c.imprint.de,
-                        en      : c.imprint.en
+                id             : c.id,
+                name           : c.name,
+                year           : c.year,
+                url            : c.url,
+                homeUrl        : c.homeUrl,
+                homeTitle      : c.homeTitle,
+                imprint        : [
+                        de: c.imprint.de,
+                        en: c.imprint.en
                 ],
-                termsOfUse  : c.termsOfUse,
-                privacy     : c.privacy,
-                startDate   : dtf.format(c.startDate),
-                endDate     : dtf.format(c.endDate),
-                authEnabled : c.authEnabled,
-                admin       : "../rest/admin/${c.id}".toString(),
-                forceUpdate : "../rest/conferences/update/${c.id}".toString(),
-                conferences : "../rest/conferences/${c.id}".toString(),
-                events      : "../rest/eventsBooking/${c.id}".toString(),
-                keycloak    : "../rest/keycloak.json",
-                feedbackServer: [
-                        active: Boolean.valueOf(c.feedbackServer.active),
+                termsOfUse     : c.termsOfUse,
+                privacy        : c.privacy,
+                startDate      : dtf.format(c.startDate),
+                endDate        : dtf.format(c.endDate),
+                authEnabled    : c.authEnabled,
+                admin          : "../rest/admin/${c.id}".toString(),
+                forceUpdate    : "../rest/conferences/update/${c.id}".toString(),
+                conferences    : "../rest/conferences/${c.id}".toString(),
+                events         : "../rest/eventsBooking/${c.id}".toString(),
+                keycloak       : "../rest/keycloak.json",
+                favoritesExport: "../rest/favorites/${c.id}".toString(),
+                feedbackServer : [
+                        active         : Boolean.valueOf(c.feedbackServer.active),
                         timeSlotVisible: c.feedbackServer.timeSlotVisible as int
                 ]
         ]
