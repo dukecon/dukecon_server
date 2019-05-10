@@ -48,6 +48,7 @@
 }
 .alternateBack {
     background-color: ${styles.alternate};
+    fill: ${styles.alternate};
 }
 a {
     color: ${styles.darkLink};
