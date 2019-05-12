@@ -1,4 +1,4 @@
-package org.dukecon.server.formes2dukecon
+package org.dukecon.server.convert
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.transform.CompileStatic
@@ -18,13 +18,13 @@ import java.time.format.DateTimeFormatter
 
 @CompileStatic
 @Slf4j
-class FormesToDukecon {
+class GenerateDukecon {
 
     private static void usage(String msg = null, int exitCode = 0) {
         if (msg) {
-            log.error("Error calling '{}': {}", FormesToDukecon.class, msg)
+            log.error("Error calling '{}': {}", GenerateDukecon.class, msg)
         }
-        log.info("Usage: {} <conferenceUrl>", FormesToDukecon.class)
+        log.info("Usage: {} <conferenceUrl>", GenerateDukecon.class)
         if (exitCode) {
             System.exit(exitCode)
         }

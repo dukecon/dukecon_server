@@ -1,4 +1,4 @@
-package org.dukecon.server.formes2dukecon
+package org.dukecon.server.convert
 
 import org.dukecon.server.conference.SpeakerImageService
 

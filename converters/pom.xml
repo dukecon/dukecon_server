@@ -73,7 +73,7 @@
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.dukecon.server.formes2dukecon.FormesToDukecon</mainClass>
+                                    <mainClass>org.dukecon.server.convert.GenerateDukecon</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
