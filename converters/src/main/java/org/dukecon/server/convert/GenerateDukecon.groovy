@@ -49,16 +49,17 @@ class GenerateDukecon {
                             .newInstance(conferenceConfig, rawDataMapper, new DummySpeakerImageService())
             Conference conference = conferenceDataExtractor.conference
             ObjectMapper objectMapper = new ObjectMapper()
-            File conferenceJson = new File("static/${conferenceConfig.conference}/${conferenceConfig.year}/${conferenceConfig.id}.json")
+            String conferenceStartDirectoryName = "htdocs/rest/${conferenceConfig.conference}/${conferenceConfig.year}/rest"
+            File conferenceJson = new File("${conferenceStartDirectoryName}/conferences/${conferenceConfig.id}.json")
             conferenceJson.getParentFile().mkdirs()
             objectMapper.writeValue(conferenceJson, conference)
             log.info("Created {}", conferenceJson.absolutePath)
 
-            File initJson = new File("static/${conferenceConfig.conference}/${conferenceConfig.year}/init.json")
+            File initJson = new File("${conferenceStartDirectoryName}/init.json")
             objectMapper.writeValue(initJson, getInitJsonContent(conferenceConfig))
             log.info("Created {}", initJson.absolutePath)
 
-            File imageResourcesJson = new File("static/${conferenceConfig.conference}/${conferenceConfig.year}/image-resources.json")
+            File imageResourcesJson = new File("${conferenceStartDirectoryName}/image-resources.json")
             objectMapper.writeValue(imageResourcesJson, getImageResourcesJsonContent(conferenceConfig))
             log.info("Created {}", imageResourcesJson.absolutePath)
         }
