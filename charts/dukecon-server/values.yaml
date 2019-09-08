@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: draft
-  tag: dev
+  repository: 10.55.246.43:5000/dukecon-1068/dukecon-server
+  tag: 1.6.7
   pullPolicy: IfNotPresent
 
 # define environment variables here as a map of key: value
