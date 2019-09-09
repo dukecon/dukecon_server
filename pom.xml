@@ -164,6 +164,7 @@
         <xml-apis.version>1.4.01</xml-apis.version>
 
         <!-- Check automatic versions from time to time! -->
+        <jib-maven-plugin.version>1.5.1</jib-maven-plugin.version>
     </properties>
 
     <distributionManagement>
@@ -643,6 +644,11 @@
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${maven-resources-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>fr.jcgay.maven.plugins</groupId>

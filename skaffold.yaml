@@ -2,7 +2,9 @@ apiVersion: skaffold/v1beta2
 kind: Config
 build:
   artifacts:
-  - image: jxtest-199909/dukecon-server
+  - image:
+      envTemplate:
+        template: '{{.DOCKER_REGISTRY_ORG}}/dukecon-server'
     context: .
     docker: {}
   tagPolicy:

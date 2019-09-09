@@ -422,6 +422,39 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>jib</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <configuration>
+                            <from>
+                                <image>openjdk:8-jre-alpine</image>
+                            </from>
+                            <to>
+                                <image>dukecon/dukecon-server</image>
+                                <tags>
+                                    <tag>jx</tag>
+                                </tags>
+                            </to>
+                            <container>
+                                <appRoot>/opt/dukecon</appRoot>
+                                <entrypoint>
+                                    java
+                                </entrypoint>
+                                <args>-Djava.security.egd=file:/dev/./urandom \
+                                    ${JAVA_DEFAULT_OPTS} ${JAVA_OPTS} \
+                                    -jar /opt/dukecon/dukecon.jar \
+                                    ${DUKECON_ARGS}
+                                </args>
+                            </container>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <build>
