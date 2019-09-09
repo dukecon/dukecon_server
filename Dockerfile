@@ -1,14 +1,16 @@
 FROM openjdk:8-jdk-slim
 ENV PORT 8080
-ENV CLASSPATH /opt/lib
 EXPOSE 8080
 
-# copy pom.xml and wildcards to avoid this command failing if there's no target/lib directory
-COPY pom.xml target/lib* /opt/lib/
+ENV JAVA_DEFAULT_OPTS "-Xms768M -Xmx1536M"
 
-# NOTE we assume there's only 1 jar in the target dir
-# but at least this means we don't have to guess the name
-# we could do with a better way to know the name - or to always create an app.jar or something
-COPY impl/target/*.jar /opt/app.jar
-WORKDIR /opt
-CMD ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-jar", "app.jar"]
+COPY impl/target/*.jar /opt/dukecon/dukecon.jar
+WORKDIR /opt/dukecon
+CMD java \
+    -XX:+UnlockExperimentalVMOptions \
+    -XX:+UseCGroupMemoryLimitForHeap \
+    -Djava.security.egd=file:/dev/./urandom \
+    ${JAVA_DEFAULT_OPTS} \
+    ${JAVA_OPTS} \
+    -jar dukecon.jar \
+    ${DUKECON_ARGS}
