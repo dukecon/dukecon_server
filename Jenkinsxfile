@@ -75,7 +75,7 @@ pipeline {
     }
   }
   post {
-        always {
+        cleanup {
           cleanWs()
         }
         failure {
