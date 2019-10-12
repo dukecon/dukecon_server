@@ -10,6 +10,9 @@ class FileBackuperSpec extends Specification {
         def random = new Random()
         destDirName = "target/testoutput/FileBackuperSpec_${random.nextInt(1000)}"
         File destDir = new File(destDirName)
+        if (destDir.exists()) {
+            destDir.delete()
+        }
         destDir.mkdirs()
         assert destDir.exists()
     }
@@ -26,12 +29,12 @@ class FileBackuperSpec extends Specification {
 
     void "Backup web url in a file"() {
         when:
-        File file = FileBackuper.of('https://www.dukecon.org'.toURL(), destDirName, 'dukecon.org.html')
+        File file = FileBackuper.of('https://www.javaland.eu/de/home/'.toURL(), destDirName, 'dukecon.org.html')
 
         then:
         assert file.exists()
         assert file.getAbsolutePath().contains(destDirName.tokenize('/').last())
-        assert file.text.contains('DukeCon Project')
+        assert file.text.contains('Javaland')
     }
 
     void "Invalid web url won't backup a file"() {
