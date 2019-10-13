@@ -1,6 +1,6 @@
 package org.dukecon.server.util
 
-import org.dukecon.model.Resources
+
 import org.junit.Test
 
 /**

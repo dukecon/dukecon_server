@@ -1,7 +1,7 @@
 package org.dukecon.server.convert
 
 import org.dukecon.server.convert.impl.StylesCssResource
-import org.junit.jupiter.api.Test
+import org.junit.Test
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
