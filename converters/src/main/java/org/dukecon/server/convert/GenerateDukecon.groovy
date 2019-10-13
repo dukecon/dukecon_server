@@ -7,6 +7,7 @@ import org.dukecon.model.Conference
 import org.dukecon.model.CoreImages
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.conference.SpeakerImageService
+import org.dukecon.server.convert.impl.StylesCssResource
 import org.dukecon.server.repositories.ConferenceDataExtractor
 import org.dukecon.server.repositories.RawDataMapper
 import org.dukecon.server.repositories.RawDataResources
@@ -62,6 +63,11 @@ class GenerateDukecon {
             File imageResourcesJson = new File("${conferenceStartDirectoryName}/image-resources.json")
             objectMapper.writeValue(imageResourcesJson, getImageResourcesJsonContent(conferenceConfig))
             log.info("Created {}", imageResourcesJson.absolutePath)
+
+            ResourceFileProvider<String> stylesCssResource = new StylesCssResource(conferenceConfig.id, conferenceConfig.styles, '/templates/styles.ftl')
+            File stylesCssFile = new File("${conferenceStartDirectoryName}/${stylesCssResource.fileName}")
+            objectMapper.writeValue(stylesCssFile, stylesCssResource.getContent())
+            log.info("Created {}", stylesCssFile.absolutePath)
         }
     }
 

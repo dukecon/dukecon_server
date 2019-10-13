@@ -16,7 +16,6 @@
 
     <properties>
         <start-class>org.dukecon.DukeConServerApplication</start-class>
-
     </properties>
 
     <dependencies>
