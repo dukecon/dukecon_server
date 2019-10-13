@@ -66,7 +66,8 @@ class GenerateDukecon {
 
             ResourceFileProvider<String> stylesCssResource = new StylesCssResource(conferenceConfig.id, conferenceConfig.styles, '/templates/styles.ftl')
             File stylesCssFile = new File("${conferenceStartDirectoryName}/${stylesCssResource.fileName}")
-            objectMapper.writeValue(stylesCssFile, stylesCssResource.getContent())
+            stylesCssFile.getParentFile().mkdirs()
+            stylesCssFile.write(stylesCssResource.getContent())
             log.info("Created {}", stylesCssFile.absolutePath)
         }
     }
