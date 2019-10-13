@@ -14,20 +14,6 @@
 .darkLinkBack {
     background-color: ${styles.darkLink};
 }
-.hover {
-    color: ${styles.hover};
-    fill: ${styles.hover};
-}
-.hoverBack {
-    background-color: ${styles.hover};
-}
-.hoverLink {
-    color: ${styles.hoverLink};
-    fill: ${styles.hoverLink};
-}
-.hoverLinkBack {
-    background-color: ${styles.hoverLink};
-}
 .reverse {
     color: ${styles.reverse};
     fill: ${styles.reverse};
@@ -54,17 +40,17 @@ a {
     color: ${styles.darkLink};
     fill: ${styles.darkLink};
 }
-a:hover {
+a:hover, a:focus {
     color: ${styles.hoverLink};
 }
-h1 a:hover {
+h1 a:hover, h1 a:focus {
     background-color: ${styles.hover};
 }
-h1 a.active:hover {
+h1 a.active:hover, h1 a.active:focus {
     background-color:${styles.reverse};
     color: ${styles.dark};
     fill: ${styles.dark};
 }
-button.highlightBack:hover {
+button.highlightBack:hover, button.highlightBack:focus {
     background-color: ${styles.highlight};
 }
