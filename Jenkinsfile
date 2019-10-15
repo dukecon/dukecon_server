@@ -46,6 +46,9 @@ pipeline {
                         if (env.BRANCH_NAME == "develop") {
                             sh 'mvn -Pdocker docker:push'
                             build 'docker_restart_develop_latest'
+                        } else if (env.BRANCH_NAME == "feature/102-static-data") {
+                            sh 'mvn -Pdocker docker:build'
+                            build 'docker_restart_latest-static'
                         } else {
                             echo 'No Docker action required'
                         }
