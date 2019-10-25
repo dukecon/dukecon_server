@@ -43,6 +43,11 @@ a {
 a:hover, a:focus {
     color: ${styles.hoverLink};
 }
+h1 a:hover, h1 a:focus {
+    background-color:${styles.reverse};
+    color: ${styles.dark};
+    fill: ${styles.dark};
+}
 h1 a.active:hover, h1 a.active:focus {
     background-color:${styles.reverse};
     color: ${styles.dark};
