@@ -35,6 +35,7 @@ pipeline {
                         }
                     }
                 }
+                findBuildScans()
             }
         }
         stage('Docker Push and Restart "latest"') {
@@ -49,6 +50,7 @@ pipeline {
                         }
                     }
                 }
+                findBuildScans()
             }
         }
     }
