@@ -1,6 +1,7 @@
 .asciidoctor
 .classpath
 .idea
+.mvn/.gradle-enterprise/
 .project
 .settings
 *.iml
