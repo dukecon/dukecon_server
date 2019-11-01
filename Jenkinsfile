@@ -23,7 +23,7 @@ pipeline {
                 withMaven {
                     script {
                         if (env.BRANCH_NAME == "develop") {
-                            sh 'mvn -Pdocker,doc clean deploy'
+                            sh './mvnw -Pdocker,doc clean deploy'
                             publishHTML target: [allowMissing         : false,
                                                  alwaysLinkToLastBuild: false,
                                                  keepAll              : true,
@@ -31,7 +31,7 @@ pipeline {
                                                  reportFiles          : 'index.html',
                                                  reportName           : 'SwaggerDocumentation']
                         } else {
-                            sh 'mvn clean verify'
+                            sh './mvnw clean verify'
                         }
                     }
                 }
@@ -43,7 +43,7 @@ pipeline {
                 withMaven {
                     script {
                         if (env.BRANCH_NAME == "develop") {
-                            sh 'mvn -Pdocker docker:push'
+                            sh './mvnw -Pdocker docker:push'
                             build 'docker_restart_develop_latest'
                         } else {
                             echo 'No Docker action required'
