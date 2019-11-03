@@ -1,0 +1,19 @@
+<gradleEnterprise
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.gradle.com/gradle-enterprise-maven">
+    <server>
+        <url>https://gradle.dukecon.org</url>
+        <allowUntrusted>true</allowUntrusted>
+    </server>
+    <buildScan>
+        <publish>ALWAYS</publish>
+        <captureGoalInputFiles>true</captureGoalInputFiles>
+    </buildScan>
+    <buildCache>
+        <remote>
+            <enabled>false</enabled>
+        </remote>
+        <local>
+            <enabled>false</enabled>
+        </local>
+    </buildCache>
+</gradleEnterprise>

@@ -109,6 +109,7 @@
         <google-guava.version>27.1-jre</google-guava.version>
         <groovy.version>2.5.6</groovy.version>
         <groovycsv.version>1.3</groovycsv.version>
+        <groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
         <hamcrest-library.version>1.3</hamcrest-library.version>
         <hibernate-jpa-2.1-api.version>1.0.2</hibernate-jpa-2.1-api.version>
         <hibernate-validator.version>6.0.14.Final</hibernate-validator.version>
@@ -900,6 +901,32 @@
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>groovy-maven-plugin</artifactId>
+                <version>${groovy-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>build-scan-custom-data</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>file:///${maven.multiModuleProjectDirectory}/customData.groovy</source>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                        <version>${groovy.version}</version>
+                        <type>pom</type>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
