@@ -687,15 +687,6 @@
                                     </ignoredFiles>
                                 </runtimeClassPath>
                             </normalization>
-                            <plugins>
-                                <plugin>
-                                    <groupId>pl.project13.maven</groupId>
-                                    <artifactId>git-commit-id-plugin</artifactId>
-                                    <outputs>
-                                        <notCacheableBecause>Git creates unique properties file per Run</notCacheableBecause>
-                                    </outputs>
-                                </plugin>
-                            </plugins>
                         </gradleEnterprise>
                     </configuration>
                 </plugin>
