@@ -1,6 +1,7 @@
 <gradleEnterprise
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.gradle.com/gradle-enterprise-maven">
     <server>
+        <id>dukecon</id>
         <url>https://gradle.dukecon.org</url>
         <allowUntrusted>true</allowUntrusted>
     </server>
@@ -10,7 +11,7 @@
     </buildScan>
     <buildCache>
         <remote>
-            <enabled>false</enabled>
+            <enabled>true</enabled>
         </remote>
         <local>
             <enabled>true</enabled>

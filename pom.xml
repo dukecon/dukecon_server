@@ -94,7 +94,7 @@
         <arquillian-bom.version>1.4.1.Final</arquillian-bom.version>
         <arquillian-drone-bom.version>2.5.1</arquillian-drone-bom.version>
         <arquillian-phantom-binary.version>2.1.1</arquillian-phantom-binary.version>
-        <asciidoctor-maven-plugin.version>1.5.7.1</asciidoctor-maven-plugin.version>
+        <asciidoctor-maven-plugin.version>1.5.8</asciidoctor-maven-plugin.version>
         <asciidoctorj.diagram.version>1.5.18</asciidoctorj.diagram.version>
         <assertj-core.version>3.14.0</assertj-core.version>
         <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
@@ -104,11 +104,11 @@
         <freemarker.version>2.3.29</freemarker.version>
         <git-commit-id-plugin.version>2.2.5</git-commit-id-plugin.version>
         <gitlog-maven-plugin.version>1.13.15</gitlog-maven-plugin.version>
-        <gmavenplus-plugin.version>1.6.3</gmavenplus-plugin.version>
+        <gmavenplus-plugin.version>1.8.0</gmavenplus-plugin.version>
         <gradle-enterprise-maven-extension.version>1.2.8</gradle-enterprise-maven-extension.version>
         <graphene-webdriver.version>2.0.3.Final</graphene-webdriver.version>
         <google-guava.version>28.1-jre</google-guava.version>
-        <groovy.version>2.5.6</groovy.version>
+        <groovy.version>2.5.8</groovy.version>
         <groovycsv.version>1.3</groovycsv.version>
         <groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
         <hamcrest-library.version>1.3</hamcrest-library.version>
@@ -155,6 +155,7 @@
         <commons-io.version>2.6</commons-io.version>
         <commons-lang.version>3.9</commons-lang.version>
         <spock.version>1.3-groovy-2.5</spock.version>
+        <spring-boot.version>2.1.9.RELEASE</spring-boot.version>
         <spring-cloud-dependencies.version>Greenwich.RELEASE</spring-cloud-dependencies.version>
         <spring-cloud-starter-hystrix.version>1.4.6.RELEASE</spring-cloud-starter-hystrix.version>
         <swagger-annotations.version>1.5.8</swagger-annotations.version>
@@ -538,6 +539,20 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-configuration-processor</artifactId>
+                                <version>${spring-boot.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-dependency-plugin</artifactId>
@@ -689,18 +704,10 @@
                                     <ignoredFiles>
                                         <ignoredFile>git.properties</ignoredFile>
                                         <ignoredFile>**/*version.txt</ignoredFile>
+                                        <ignoredFile>META-INF/MANIFEST.MF</ignoredFile>
                                     </ignoredFiles>
                                 </runtimeClassPath>
                             </normalization>
-                            <plugins>
-                                <plugin>
-                                    <groupId>pl.project13.maven</groupId>
-                                    <artifactId>git-commit-id-plugin</artifactId>
-                                    <outputs>
-                                        <notCacheableBecause>Git creates unique properties file per Run</notCacheableBecause>
-                                    </outputs>
-                                </plugin>
-                            </plugins>
                         </gradleEnterprise>
                     </configuration>
                 </plugin>
@@ -961,6 +968,9 @@
     <profiles>
         <profile>
             <id>dukecon</id>
+            <properties>
+                <gmavenplus-plugin.version>1.8.1-DukeCon</gmavenplus-plugin.version>
+            </properties>
             <repositories>
                 <repository>
                     <id>dukecon</id>
