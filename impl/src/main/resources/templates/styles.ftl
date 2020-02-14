@@ -56,6 +56,6 @@ h1 a.active:hover, h1 a.active:focus {
 button.highlightBack:hover, button.highlightBack:focus {
     background-color: ${styles.highlight};
 }
-#login-area a.button:hover svg path, #login-area a.button:focus svg path {
+#login-area a.button:hover svg path.line, #login-area a.button:focus svg path.line {
   fill: ${styles.dark};
 }
