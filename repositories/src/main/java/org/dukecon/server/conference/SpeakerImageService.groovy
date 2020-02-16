@@ -1,5 +1,6 @@
 package org.dukecon.server.conference
 
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream
 import org.springframework.stereotype.Service
 
 /**
@@ -14,6 +15,21 @@ interface SpeakerImageService {
         ImageWithName(String filename, byte[] content) {
             this.filename = filename
             this.content = content
+        }
+
+        void writeToDisk(String path) {
+            FileOutputStream outputStream
+            String fileWithPath = path + File.separator + this.filename
+            try {
+                outputStream = new FileOutputStream(fileWithPath)
+                outputStream.write(this.content)
+                outputStream.flush()
+            } catch(Exception e) {
+                throw new RuntimeException("could not write file: $fileWithPath ", e)
+            } finally {
+                if(outputStream)
+                    outputStream.close()
+            }
         }
     }
 
