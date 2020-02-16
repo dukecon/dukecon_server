@@ -44,6 +44,10 @@ class GenerateDukecon {
                     rawDataMapperClass.getConstructor(RawDataResources.class)
                             .newInstance(rawDataResources)
             rawDataMapper.initMapper()
+            if (rawDataMapper.isEmpty()) {
+                log.error("Could not read input data")
+                System.exit(-1)
+            }
             Class conferenceDataExtractorClass = conferenceConfig.extractorClass as Class
             ConferenceDataExtractor conferenceDataExtractor =
                     conferenceDataExtractorClass.getConstructor(ConferencesConfiguration.Conference.class,

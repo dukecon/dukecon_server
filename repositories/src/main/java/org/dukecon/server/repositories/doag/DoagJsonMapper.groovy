@@ -69,4 +69,12 @@ class DoagJsonMapper implements RawDataMapper {
     Map<String, Object> asMap() {
         return rawData
     }
+
+    @Override
+    @TypeChecked(TypeCheckingMode.SKIP)
+    boolean isEmpty() {
+        return asMap().values().any {
+            !it || it.isEmpty()
+        }
+    }
 }
