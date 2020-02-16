@@ -1,10 +1,12 @@
 package org.dukecon.server.convert
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import groovy.text.SimpleTemplateEngine
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
 import org.dukecon.model.CoreImages
+import org.dukecon.model.Styles
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.conference.SpeakerImageService
 import org.dukecon.server.convert.impl.StylesCssResource
@@ -15,7 +17,6 @@ import org.dukecon.server.util.ResourcesFinder
 
 import java.nio.file.Files
 import java.time.format.DateTimeFormatter
-
 
 @CompileStatic
 @Slf4j
@@ -64,13 +65,19 @@ class GenerateDukecon {
             objectMapper.writeValue(imageResourcesJson, getImageResourcesJsonContent(conferenceConfig))
             log.info("Created {}", imageResourcesJson.absolutePath)
 
-            ResourceFileProvider<String> stylesCssResource = new StylesCssResource(conferenceConfig.id, conferenceConfig.styles, '/templates/styles.ftl')
-            File stylesCssFile = new File("${conferenceStartDirectoryName}/${stylesCssResource.fileName}")
-            stylesCssFile.getParentFile().mkdirs()
-            stylesCssFile.write(stylesCssResource.getContent())
-            log.info("Created {}", stylesCssFile.absolutePath)
-
+            def cssStyles = generateStylesCssContent(conferenceConfig)
+            File stylesCss = new File("${conferenceStartDirectoryName}/styles.css")
+            stylesCss.write(cssStyles)
+            log.info("Created {}", stylesCss.absolutePath)
         }
+    }
+
+    private static String generateStylesCssContent(ConferencesConfiguration.Conference conference) {
+        Styles styles = new Styles(conference.getStyles())
+
+        def templateEngine = new SimpleTemplateEngine()
+        def template = templateEngine.createTemplate(new File('C:\\03-projects\\dukecon\\dukecon_server_stable\\converters\\src\\main\\resources\\templates\\styles.gtl').text);
+        return template.make([styles: styles])
     }
 
     private static CoreImages getImageResourcesJsonContent(ConferencesConfiguration.Conference c) {
