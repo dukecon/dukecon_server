@@ -13,4 +13,6 @@ class GenerateDukeconTest {
     public void testMain() {
         GenerateDukecon.main(['conferences-javaland.yml'] as String[])
     }
+
+
 }

@@ -9,7 +9,6 @@ import org.dukecon.model.CoreImages
 import org.dukecon.model.Styles
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.conference.SpeakerImageService
-import org.dukecon.server.convert.impl.StylesCssResource
 import org.dukecon.server.repositories.ConferenceDataExtractor
 import org.dukecon.server.repositories.RawDataMapper
 import org.dukecon.server.repositories.RawDataResources
@@ -78,9 +77,8 @@ class GenerateDukecon {
 
     private static String generateStylesCssContent(ConferencesConfiguration.Conference conference) {
         Styles styles = new Styles(conference.getStyles())
-
         def templateEngine = new SimpleTemplateEngine()
-        def template = templateEngine.createTemplate(new File('C:\\03-projects\\dukecon\\dukecon_server_stable\\converters\\src\\main\\resources\\templates\\styles.gtl').text);
+        def template = templateEngine.createTemplate(this.class.getResource('/templates/styles.gtl').newReader());
         return template.make([styles: styles])
     }
 

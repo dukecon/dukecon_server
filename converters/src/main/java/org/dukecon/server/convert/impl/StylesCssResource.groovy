@@ -2,7 +2,6 @@ package org.dukecon.server.convert.impl
 
 import groovy.text.SimpleTemplateEngine
 import groovy.text.TemplateEngine
-import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.convert.ResourceFileProvider
 
 /**
