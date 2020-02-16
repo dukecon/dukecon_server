@@ -8,16 +8,20 @@ import org.dukecon.adapter.ResourceWrapper
  *
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
-interface RawDataMapper {
+trait RawDataMapper {
 
-    void initMapper()
+    abstract void initMapper()
 
-    void useBackup(ResourceWrapper resourceWrapper)
+    abstract void useBackup(ResourceWrapper resourceWrapper)
 
     /**
      * Concrete subclasses implements this method and return input data as map converted from input resources (JSON, CSV, ...)
      *
      * @return raw data from input resources as Map
      */
-    Map<String, Object> asMap()
+    abstract Map<String, Object> asMap()
+
+    boolean isEmpty() {
+        false
+    }
 }
