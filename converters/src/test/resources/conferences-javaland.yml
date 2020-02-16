@@ -6,9 +6,9 @@
   conference: javaland
   year: 2019
   talksUri:
-    eventsData: 'javaland2019/eventsData.json'
-    speakersData: 'javaland2019/speakersData.json'
-    additionalData: 'javaland2019/additionalData.json'
+    eventsData: 'file:javaland2019/eventsData.json'
+    speakersData: 'file:javaland2019/speakersData.json'
+    additionalData: 'file:javaland2019/additionalData.json'
   backupUri: javaland-2019-backup.raw
   url: 'http://${conference}.dukecon.org/${year}'
   homeUrl: 'http://www.javaland.eu'

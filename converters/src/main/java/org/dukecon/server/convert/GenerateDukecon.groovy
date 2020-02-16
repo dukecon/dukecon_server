@@ -47,7 +47,7 @@ class GenerateDukecon {
             ConferenceDataExtractor conferenceDataExtractor =
                     conferenceDataExtractorClass.getConstructor(ConferencesConfiguration.Conference.class,
                             RawDataMapper.class, SpeakerImageService.class)
-                            .newInstance(conferenceConfig, rawDataMapper, new DummySpeakerImageService())
+                            .newInstance(conferenceConfig, rawDataMapper, new DoagSpeakerImageService('images'))
             Conference conference = conferenceDataExtractor.conference
             ObjectMapper objectMapper = new ObjectMapper()
             String conferenceStartDirectoryName = "htdocs/rest/${conferenceConfig.conference}/${conferenceConfig.year}/rest"
@@ -69,6 +69,7 @@ class GenerateDukecon {
             stylesCssFile.getParentFile().mkdirs()
             stylesCssFile.write(stylesCssResource.getContent())
             log.info("Created {}", stylesCssFile.absolutePath)
+
         }
     }
 
