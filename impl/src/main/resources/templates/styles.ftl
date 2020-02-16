@@ -59,3 +59,6 @@ button.highlightBack:hover, button.highlightBack:focus {
 #login-area a.button:hover svg path.line, #login-area a.button:focus svg path.line {
   fill: ${styles.dark};
 }
+h1 #mainmenu-button svg:hover, h1 #mainmenu-button svg:focus {
+    fill: ${styles.dark};
+}
