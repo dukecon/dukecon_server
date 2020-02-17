@@ -24,7 +24,7 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.dukecon.server</groupId>
+            <groupId>org.dukecon</groupId>
             <artifactId>dukecon-server-repositories</artifactId>
             <version>${project.version}</version>
         </dependency>
