@@ -516,6 +516,7 @@
 
     <modules>
         <module>api</module>
+        <module>resources</module>
         <module>repositories</module>
         <module>converters</module>
         <module>impl</module>
