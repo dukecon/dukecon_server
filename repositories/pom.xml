@@ -10,7 +10,6 @@
         <version>1.6-static-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.dukecon.server</groupId>
     <artifactId>dukecon-server-repositories</artifactId>
 
     <name>DukeCon Server Repositories</name>
