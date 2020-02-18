@@ -1,0 +1,57 @@
+== Context
+This (*dukecon_converters*) contains jobs to generate conference-files in dukecon conference format.
+The conference-files will be served statically by a web-server.
+Beside the conference data in dukecon format, images for speakers are extracted.
+
+Example use:
+-----
+java -jar dukecon-server-converters-1.6-static-SNAPSHOT.jar file:conferences-javaland.yml ./img
+-----
+
+=== Input
+[%header,cols=2]
+|=======
+|Input
+ |Description
+|configuration and
+
+|The base to generate conference-Files is a configuration per conference.
+The project *dukecon_resources* contains all configurations.
+
+|image-data for icons, etc.
+| image-data: folder with base-images per conference
+|=======
+
+=== Output
+[%header,cols=2]
+|=======
+|Output
+ |Description
+|htdocs/rest/<conference>/<year>/rest/init.json
+ |Initialization-file for pwa-dukecon-client
+|htdocs/rest/<conference>/<year>/rest/image-resources.json
+ |Image data for core images for a conference (e.g. logo, etc.)
+|htdocs/rest/<conference>/<year>/rest/styles.css
+ |Styledefinitions for a conference
+|htdocs/rest/<conference>/<year>/rest/conferences/<conferenceId>.json
+ |Conference Data in Dukecon-format
+|images/<md5>.<type>
+ |List of images relevant for at least one conference
+|tempbackupdir/<conferenceId>/<resource>.json
+ |Backup of resources given in given conferences.xml as input
+|=======
+
+== TODO: Runtime
+Übergang auf dem SERVER - Quelle für die configurations-files
+/data/dukecon/latest-static
+/data/dukecon/latest
+
+Manuell:
+-
+
+Ziel:
+Testing/Prod:
+cronjob - converters starten + config als parameter.
+
+Latest:
+Jenkins-Job
