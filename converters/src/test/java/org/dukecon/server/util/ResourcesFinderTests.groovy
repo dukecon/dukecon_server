@@ -1,21 +1,32 @@
 package org.dukecon.server.util
 
-import org.junit.Ignore
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
 class ResourcesFinderTests {
 
-    @Test
-    @Ignore
-    public void listFilesInClasspathFolder() {
-        // given
-        def folder = 'src/test/resources/img/javaland2019/streams'
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
+    def filesToTest = ['1.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg']
+
+    @Before
+    void init() {
+        folder.newFolder("streams")
+        filesToTest.forEach { file ->
+            folder.newFile("streams/"+ file)
+        }
+    }
+
+    @Test
+    public void listFilesInClasspathFolder() {
         // when
-        def resourcesFinder = new ResourcesFinder(folder)
+        def resourcesFinder = new ResourcesFinder(folder.root.getAbsolutePath() + "/streams")
 
         // and
         def listOfFiles = resourcesFinder.getFileList()
@@ -30,20 +41,16 @@ class ResourcesFinderTests {
         assert listOfFiles.get().size() == 15
 
         // and
-        assert listOfFiles.get().values().name.sort() == ['1.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg']
+        assert listOfFiles.get().values().name.sort() == filesToTest
 
         // and
         assert category == 'streams'
     }
 
     @Test
-    @Ignore
     public void listFilesInNotExistingClasspathFolder() {
-        // given
-        def classpathFolder = 'img/javaland2019/nil'
-
         // when
-        def resourcesFinder = new ResourcesFinder(classpathFolder)
+        def resourcesFinder = new ResourcesFinder(folder.root.getAbsolutePath()+"/whatever")
 
         // and
         def listOfFiles = resourcesFinder.getFileList()
@@ -55,6 +62,6 @@ class ResourcesFinderTests {
         assert !listOfFiles.isPresent()
 
         // and
-        assert category == 'nil'
+        assert category == 'whatever'
     }
 }
