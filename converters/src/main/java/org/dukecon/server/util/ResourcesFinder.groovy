@@ -10,7 +10,7 @@ class ResourcesFinder {
     final File folder
 
     ResourcesFinder(String folder) {
-        this.folder = new File(Thread.currentThread().getContextClassLoader().getResource(folder)?.path ?: folder)
+        this.folder = new File(folder)
     }
 
     Optional<Map<String, File>> getFileList() {

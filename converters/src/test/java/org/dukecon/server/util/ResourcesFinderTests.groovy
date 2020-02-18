@@ -11,10 +11,10 @@ class ResourcesFinderTests {
     @Test
     public void listFilesInClasspathFolder() {
         // given
-        def classpathFolder = 'img/javaland2019/streams'
+        def folder = 'src/test/resources/img/javaland2019/streams'
 
         // when
-        def resourcesFinder = new ResourcesFinder(classpathFolder)
+        def resourcesFinder = new ResourcesFinder(folder)
 
         // and
         def listOfFiles = resourcesFinder.getFileList()

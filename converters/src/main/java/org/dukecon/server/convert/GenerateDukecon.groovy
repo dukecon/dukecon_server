@@ -23,16 +23,17 @@ class GenerateDukecon {
 
     private static void usage(String msg = null, int exitCode = 0) {
         if (msg) {
-            log.error("Error calling '{}': {}", GenerateDukecon.class, msg)
+            log.error("Error calling '{}': {} {}", GenerateDukecon.class, msg)
         }
-        log.info("Usage: {} <conferenceUrl>", GenerateDukecon.class)
+        log.info("Usage: {} <conferenceUrl> <conferenceImageFolder>", GenerateDukecon.class)
+        log.info("Example: {} file:conferences.yml ./img", GenerateDukecon.class)
         if (exitCode) {
             System.exit(exitCode)
         }
     }
 
     public static void main(String[] args) {
-        if (args.length != 1) {
+        if (args.length != 2) {
             usage("Wrong number of arguments", 1)
         }
         ConferencesConfiguration conferencesConfiguration = ConferencesConfiguration.fromFile(args[0], [:], false)
@@ -65,7 +66,7 @@ class GenerateDukecon {
             log.info("Created {}", initJson.absolutePath)
 
             File imageResourcesJson = new File("${conferenceStartDirectoryName}/image-resources.json")
-            objectMapper.writeValue(imageResourcesJson, getImageResourcesJsonContent(conferenceConfig))
+            objectMapper.writeValue(imageResourcesJson, getImageResourcesJsonContent(args[1], conferenceConfig))
             log.info("Created {}", imageResourcesJson.absolutePath)
 
             def cssStyles = generateStylesCssContent(conferenceConfig)
@@ -78,13 +79,13 @@ class GenerateDukecon {
     private static String generateStylesCssContent(ConferencesConfiguration.Conference conference) {
         Styles styles = new Styles(conference.getStyles())
         def templateEngine = new SimpleTemplateEngine()
-        def template = templateEngine.createTemplate(this.class.getResource('/templates/styles.gtl').newReader());
+        def template = templateEngine.createTemplate(ClassLoader.getSystemResource('templates/styles.gtl').newReader());
         return template.make([styles: styles])
     }
 
-    private static CoreImages getImageResourcesJsonContent(ConferencesConfiguration.Conference c) {
+    private static CoreImages getImageResourcesJsonContent(String imagePath, ConferencesConfiguration.Conference c) {
         def images = CoreImages.builder().build()
-        def resourceDir = "img/${c.id}"
+        def resourceDir = "${imagePath}/${c.id}"
 
         setFilesAsByteArray("${resourceDir}/conference", images.&setConferenceImage, "logo")
         setFilesAsByteArray("${resourceDir}/favicon", images.&setConferenceFavIcon, "favicon")
@@ -102,7 +103,11 @@ class GenerateDukecon {
             if (nameOfSingleFile) {
                 c.call(Files.readAllBytes(files.get(nameOfSingleFile)?.toPath()))
             } else {
-                c.call((Map<String, byte[]>) files.collectEntries { k, v -> [k, Files.readAllBytes(v.toPath())] })
+                c.call((Map<String, byte[]>)
+                    files.collectEntries {
+                        k, v -> [k, Files.readAllBytes(v.toPath())]
+                    }
+                )
             }
         }
     }
