@@ -22,6 +22,11 @@
     <dependencies>
         <dependency>
             <groupId>org.dukecon</groupId>
+            <artifactId>dukecon-server-resources</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dukecon</groupId>
             <artifactId>dukecon-server-springboot</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -98,6 +103,18 @@
                                                         </includes>
                                                         <outputDirectory>.</outputDirectory>
                                                         <outputFileNameMapping>dukecon-server-converters.jar</outputFileNameMapping>
+                                                    </dependencySet>
+                                                    <dependencySet>
+                                                        <includes>
+                                                            <include>org.dukecon:dukecon-server-resources</include>
+                                                        </includes>
+                                                        <outputDirectory>.</outputDirectory>
+                                                        <unpack>true</unpack>
+                                                        <unpackOptions>
+                                                            <includes>
+                                                                <include>public/**</include>
+                                                            </includes>
+                                                        </unpackOptions>
                                                     </dependencySet>
                                                 </dependencySets>
                                             </inline>
