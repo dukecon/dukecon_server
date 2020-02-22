@@ -5,7 +5,7 @@ Beside the conference data in dukecon format, images for speakers are extracted.
 
 Example use:
 -----
-java -jar dukecon-server-converters-1.6-static-SNAPSHOT.jar file:conferences-javaland.yml ./img
+java -jar dukecon-server-converters-1.6-static-SNAPSHOT.jar file:conferences-javaland.yml ./resources
 -----
 
 === Input
@@ -21,8 +21,8 @@ java -jar dukecon-server-converters-1.6-static-SNAPSHOT.jar file:conferences-jav
 The project *dukecon_resources* contains all configurations.
 
 |2
-|resources-path
-|In this path the listed input is taken as given
+|resources-folder
+|In this folder the listed input is taken as given
 [%header,cols="1,1"]
 !=======
 !name
@@ -43,12 +43,14 @@ The project *dukecon_resources* contains all configurations.
  |Initialization-file for pwa-dukecon-client
 |htdocs/rest/<conference>/<year>/rest/image-resources.json
  |Image data for core images for a conference (e.g. logo, etc.)
-|htdocs/rest/<conference>/<year>/rest/styles.css
- |Styledefinitions for a conference
 |htdocs/rest/<conference>/<year>/rest/conferences/<conferenceId>.json
  |Conference Data in Dukecon-format
-|htdocs/rest/<conference>/<year>/rest/speaker/images/<md5>.<type>
- |List of images relevant for at least one conference
+|htdocs/rest/<conference>/<year>/rest/speaker/images/<md5>
+ |Images of speakers, each image is relevant for at least one conference
+|htdocs/rest/<conference>/<year>/styles.css
+|Styledefinitions for a conference
+|htdocs/rest/<conference>/<year>/img/favicon.ico
+ |favicon.ico für den Browser
 |tempbackupdir/<conferenceId>/<resource>.json
  |Backup of resources given in given conferences.xml as input
 |=======

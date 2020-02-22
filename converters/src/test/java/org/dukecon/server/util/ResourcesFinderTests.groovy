@@ -11,7 +11,7 @@ import org.junit.rules.TemporaryFolder
 class ResourcesFinderTests {
 
     @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    public TemporaryFolder folder = new TemporaryFolder()
 
     def filesToTest = ['1.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg']
 
@@ -19,14 +19,14 @@ class ResourcesFinderTests {
     void init() {
         folder.newFolder("streams")
         filesToTest.forEach { file ->
-            folder.newFile("streams/"+ file)
+            folder.newFile("streams"+ File.separator + file)
         }
     }
 
     @Test
     public void listFilesInClasspathFolder() {
         // when
-        def resourcesFinder = new ResourcesFinder(folder.root.getAbsolutePath() + "/streams")
+        def resourcesFinder = new ResourcesFinder(folder.root.getAbsolutePath() + File.separator + "streams")
 
         // and
         def listOfFiles = resourcesFinder.getFileList()

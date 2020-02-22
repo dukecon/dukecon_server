@@ -28,7 +28,7 @@ class GenerateDukecon {
             log.error("Error calling '{}': {} {}", GenerateDukecon.class, msg)
         }
         log.info("Usage: {} <conferenceUrl> <resourcesFolder>", GenerateDukecon.class)
-        log.info("Example: {} file:conferences.yml ./resources", GenerateDukecon.class)
+        log.info("Example: {} file:conferences.yml .${File.separator}resources", GenerateDukecon.class)
         if (exitCode) {
             System.exit(exitCode)
         }
@@ -40,13 +40,13 @@ class GenerateDukecon {
         }
 
         String inputUrlConferenceConfigFile = args[0]
-        String inputPathForImageResourcesJson = "${args[1]}/public/img"
-        String inputTemplateFileForStyleCss = "${args[1]}/templates/styles.gtl"
+        String inputPathForImageResourcesJson = "${args[1]}${File.separator}public${File.separator}img"
+        String inputTemplateFileForStyleCss = "${args[1]}${File.separator}templates${File.separator}styles.gtl"
 
         ConferencesConfiguration conferencesConfiguration = ConferencesConfiguration.fromFile(inputUrlConferenceConfigFile, [:], false)
         conferencesConfiguration.conferences.each { ConferencesConfiguration.Conference conferenceConfig ->
 
-            String outputConferenceStartDirectoryName = "htdocs/rest/${conferenceConfig.conference}/${conferenceConfig.year}/rest"
+            String outputConferenceStartDirectoryName = "htdocs${File.separator}rest${File.separator}${conferenceConfig.conference}${File.separator}${conferenceConfig.year}"
 
             RawDataResources rawDataResources = RawDataResources.of(conferenceConfig)
             Class rawDataMapperClass = conferenceConfig.rawDataMapperClass as Class
@@ -68,30 +68,45 @@ class GenerateDukecon {
 
             Conference conference = conferenceDataExtractor.conference
 
-            String outputFileConferenceJson = "${outputConferenceStartDirectoryName}/conferences/${conferenceConfig.id}.json"
+            String outputFileConferenceJson = "${outputConferenceStartDirectoryName}${File.separator}rest${File.separator}conferences${File.separator}${conferenceConfig.id}.json"
             ObjectMapper objectMapper = new ObjectMapper()
             File conferenceJson = new File(outputFileConferenceJson)
             conferenceJson.getParentFile().mkdirs()
             objectMapper.writeValue(conferenceJson, conference)
             log.info("Created {}", conferenceJson.absolutePath)
 
-            File initJson = new File("${outputConferenceStartDirectoryName}/init.json")
+            File initJson = new File("${outputConferenceStartDirectoryName}${File.separator}rest${File.separator}init.json")
             objectMapper.writeValue(initJson, getInitJsonContent(conferenceConfig))
             log.info("Created {}", initJson.absolutePath)
 
-            File imageResourcesJson = new File("${outputConferenceStartDirectoryName}/image-resources.json")
-            objectMapper.writeValue(imageResourcesJson, getImageResourcesJsonContent(inputPathForImageResourcesJson, conferenceConfig.id))
+            File imageResourcesJson = new File("${outputConferenceStartDirectoryName}${File.separator}rest${File.separator}image-resources.json")
+            def imageResourcesJsonContent = getImageResourcesJsonContent(inputPathForImageResourcesJson, conferenceConfig.id)
+            objectMapper.writeValue(imageResourcesJson, imageResourcesJsonContent)
             log.info("Created {}", imageResourcesJson.absolutePath)
 
-            def cssStyles = generateStylesCssContent(conferenceConfig, inputTemplateFileForStyleCss)
-            File stylesCss = new File("${outputConferenceStartDirectoryName}/styles.css")
-            stylesCss.write(cssStyles)
-            log.info("Created {}", stylesCss.absolutePath)
-
-            String outputPathSpeakerImages = "${outputConferenceStartDirectoryName}/speaker/images"
+            String outputPathSpeakerImages = "${outputConferenceStartDirectoryName}${File.separator}rest${File.separator}speaker${File.separator}images"
             def speakerImageExporter = new SpeakerImageServiceFileExporter(speakerImageServiceImpl, outputPathSpeakerImages)
             String outputDir = speakerImageExporter.export()
             log.info("Created {} with {} images", outputDir, speakerImageServiceImpl.images.size())
+
+            def cssStylesOld = generateStylesCssContent(conferenceConfig, inputTemplateFileForStyleCss)
+            File cssStylesFileOld = new File("${outputConferenceStartDirectoryName}${File.separator}rest${File.separator}styles.css")
+            cssStylesFileOld.write(cssStylesOld)
+            log.info("Created DEPRICATED {}", cssStylesFileOld.absolutePath)
+
+            def cssStyles = generateStylesCssContent(conferenceConfig, inputTemplateFileForStyleCss)
+            File cssStylesFile = new File("${outputConferenceStartDirectoryName}${File.separator}styles.css")
+            cssStylesFile.write(cssStyles)
+            log.info("Created {}", cssStylesFile.absolutePath)
+
+            def faviconBytes = imageResourcesJsonContent.getConferenceFavIcon()
+            if(faviconBytes) {
+                File faviconFolder = new File("${outputConferenceStartDirectoryName}${File.separator}img")
+                File faviconFile = new File("${faviconFolder.absolutePath}${File.separator}favicon.ico")
+                faviconFolder.mkdirs()
+                faviconFile.append(faviconBytes)
+                log.info("Created {}", faviconFile.absolutePath)
+            }
         }
     }
 
@@ -112,15 +127,19 @@ class GenerateDukecon {
 
     private static CoreImages getImageResourcesJsonContent(String imagePath, String conferenceId) {
         def images = CoreImages.builder().build()
-        def resourceDir = "${imagePath}/${conferenceId}"
+        def resourceDir = "${imagePath}${File.separator}${conferenceId}"
 
-        setFilesAsByteArray("${resourceDir}/conference", images.&setConferenceImage, "logo")
-        setFilesAsByteArray("${resourceDir}/favicon", images.&setConferenceFavIcon, "favicon")
+        if(!new File(resourceDir).exists()) {
+            log.warn("resource {} for image-resources.json does not exist", resourceDir)
+        }
 
-        setFilesAsByteArray("${resourceDir}/locations", images.&setLocationImages)
-        setFilesAsByteArray("${resourceDir}/location-maps", images.&setLocationMapImages)
-        setFilesAsByteArray("${resourceDir}/languages", images.&setLanguageImages)
-        setFilesAsByteArray("${resourceDir}/streams", images.&setStreamImages)
+        setFilesAsByteArray("${resourceDir}${File.separator}conference", images.&setConferenceImage, "logo")
+        setFilesAsByteArray("${resourceDir}${File.separator}favicon", images.&setConferenceFavIcon, "favicon")
+
+        setFilesAsByteArray("${resourceDir}${File.separator}locations", images.&setLocationImages)
+        setFilesAsByteArray("${resourceDir}${File.separator}location-maps", images.&setLocationMapImages)
+        setFilesAsByteArray("${resourceDir}${File.separator}languages", images.&setLanguageImages)
+        setFilesAsByteArray("${resourceDir}${File.separator}streams", images.&setStreamImages)
 
         images
     }

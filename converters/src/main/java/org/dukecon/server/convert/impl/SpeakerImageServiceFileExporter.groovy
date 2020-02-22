@@ -18,24 +18,14 @@ class SpeakerImageServiceFileExporter {
         def pathInFilesystem = new File(this.path)
         if(!pathInFilesystem.exists())
             pathInFilesystem.mkdirs()
-        this.service.images.forEach{ md5,image -> writeToDisk(image, this.path) }
+
+        this.service.images.forEach{ md5,image -> writeToDisk(image) }
 
         return pathInFilesystem.absolutePath
     }
 
-    void writeToDisk(SpeakerImageService.ImageWithName image, String path) {
-        FileOutputStream outputStream
-        String fileWithPath = path + File.separator + image.filename
-        try {
-            outputStream = new FileOutputStream(fileWithPath)
-            outputStream.write(image.content)
-            outputStream.flush()
-        } catch(Exception e) {
-            throw new RuntimeException("could not write file: $fileWithPath ", e)
-        } finally {
-            if(outputStream)
-                outputStream.close()
-        }
+    private void writeToDisk(SpeakerImageService.ImageWithName image) {
+        new File(this.path + File.separator + image.filename).append(image.content)
     }
 }
 
