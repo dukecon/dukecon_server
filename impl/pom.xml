@@ -113,6 +113,12 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.dukecon</groupId>
+            <artifactId>dukecon-server-resources</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
