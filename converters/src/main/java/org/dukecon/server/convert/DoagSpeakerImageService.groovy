@@ -30,7 +30,7 @@ class DoagSpeakerImageService implements SpeakerImageService {
         //write image resource to file
         def pathInFilesystem = new File(this.path)
         if(!pathInFilesystem.exists())
-           pathInFilesystem.mkdir()
+           pathInFilesystem.mkdirs()
         image.writeToDisk(this.path)
 
         return md5Hash
