@@ -15,6 +15,7 @@ interface SpeakerImageService {
             this.filename = filename
             this.content = content
         }
+
     }
 
     Map<String, SpeakerImageService.ImageWithName> getImages()

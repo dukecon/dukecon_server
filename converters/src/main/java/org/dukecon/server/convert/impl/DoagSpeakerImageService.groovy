@@ -17,7 +17,7 @@ class DoagSpeakerImageService implements SpeakerImageService {
 	String addImage(String contentBase64, String filename = null) {
 		log.trace ("Adding speaker image from '{}')", filename ? "file >${filename}<" : "Image Data: >${contentBase64?.substring(0, 10)}<")
 		String md5Hash = md5(contentBase64)
-		images[md5Hash] = new ImageWithName("${md5Hash}.${fileEnding(contentBase64)}", Base64.decoder.decode(contentBase64))
+		images[md5Hash] = new ImageWithName("${md5Hash}", Base64.decoder.decode(contentBase64))
 		return md5Hash
 	}
 
