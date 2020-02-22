@@ -35,7 +35,7 @@ The project *dukecon_resources* contains all configurations.
  |Styledefinitions for a conference
 |htdocs/rest/<conference>/<year>/rest/conferences/<conferenceId>.json
  |Conference Data in Dukecon-format
-|images/<md5>.<type>
+|htdocs/rest/<conference>/<year>/rest/speaker/images/<md5>.<type>
  |List of images relevant for at least one conference
 |tempbackupdir/<conferenceId>/<resource>.json
  |Backup of resources given in given conferences.xml as input

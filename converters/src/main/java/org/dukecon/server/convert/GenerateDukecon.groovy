@@ -48,14 +48,17 @@ class GenerateDukecon {
                 log.error("Could not read input data")
                 System.exit(-1)
             }
+
+            String conferenceStartDirectoryName = "htdocs/rest/${conferenceConfig.conference}/${conferenceConfig.year}/rest"
+
             Class conferenceDataExtractorClass = conferenceConfig.extractorClass as Class
             ConferenceDataExtractor conferenceDataExtractor =
                     conferenceDataExtractorClass.getConstructor(ConferencesConfiguration.Conference.class,
                             RawDataMapper.class, SpeakerImageService.class)
-                            .newInstance(conferenceConfig, rawDataMapper, new DoagSpeakerImageService('images'))
+                            .newInstance(conferenceConfig, rawDataMapper, new DoagSpeakerImageService("${conferenceStartDirectoryName}/speaker/images"))
+
             Conference conference = conferenceDataExtractor.conference
             ObjectMapper objectMapper = new ObjectMapper()
-            String conferenceStartDirectoryName = "htdocs/rest/${conferenceConfig.conference}/${conferenceConfig.year}/rest"
             File conferenceJson = new File("${conferenceStartDirectoryName}/conferences/${conferenceConfig.id}.json")
             conferenceJson.getParentFile().mkdirs()
             objectMapper.writeValue(conferenceJson, conference)
