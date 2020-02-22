@@ -112,7 +112,10 @@
                                                         <unpack>true</unpack>
                                                         <unpackOptions>
                                                             <includes>
-                                                                <include>public/**</include>
+                                                                <include>public</include>
+                                                            </includes>
+                                                            <includes>
+                                                                <include>templates</include>
                                                             </includes>
                                                         </unpackOptions>
                                                     </dependencySet>
