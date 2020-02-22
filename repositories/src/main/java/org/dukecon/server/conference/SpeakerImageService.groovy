@@ -15,21 +15,6 @@ interface SpeakerImageService {
             this.filename = filename
             this.content = content
         }
-
-        void writeToDisk(String path) {
-            FileOutputStream outputStream
-            String fileWithPath = path + File.separator + this.filename
-            try {
-                outputStream = new FileOutputStream(fileWithPath)
-                outputStream.write(this.content)
-                outputStream.flush()
-            } catch(Exception e) {
-                throw new RuntimeException("could not write file: $fileWithPath ", e)
-            } finally {
-                if(outputStream)
-                    outputStream.close()
-            }
-        }
     }
 
     Map<String, SpeakerImageService.ImageWithName> getImages()

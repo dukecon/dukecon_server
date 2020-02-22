@@ -9,6 +9,8 @@ import org.dukecon.model.CoreImages
 import org.dukecon.model.Styles
 import org.dukecon.server.conference.ConferencesConfiguration
 import org.dukecon.server.conference.SpeakerImageService
+import org.dukecon.server.convert.impl.SpeakerImageServiceFileExporter
+import org.dukecon.server.convert.impl.DoagSpeakerImageService
 import org.dukecon.server.repositories.ConferenceDataExtractor
 import org.dukecon.server.repositories.RawDataMapper
 import org.dukecon.server.repositories.RawDataResources
@@ -25,8 +27,8 @@ class GenerateDukecon {
         if (msg) {
             log.error("Error calling '{}': {} {}", GenerateDukecon.class, msg)
         }
-        log.info("Usage: {} <conferenceUrl> <conferenceImageFolder>", GenerateDukecon.class)
-        log.info("Example: {} file:conferences.yml ./img", GenerateDukecon.class)
+        log.info("Usage: {} <conferenceUrl> <resourcesFolder>", GenerateDukecon.class)
+        log.info("Example: {} file:conferences.yml ./resources", GenerateDukecon.class)
         if (exitCode) {
             System.exit(exitCode)
         }
@@ -36,8 +38,16 @@ class GenerateDukecon {
         if (args.length != 2) {
             usage("Wrong number of arguments", 1)
         }
-        ConferencesConfiguration conferencesConfiguration = ConferencesConfiguration.fromFile(args[0], [:], false)
+
+        String inputUrlConferenceConfigFile = args[0]
+        String inputPathForImageResourcesJson = "${args[1]}/public/img"
+        String inputTemplateFileForStyleCss = "${args[1]}/templates/styles.gtl"
+
+        ConferencesConfiguration conferencesConfiguration = ConferencesConfiguration.fromFile(inputUrlConferenceConfigFile, [:], false)
         conferencesConfiguration.conferences.each { ConferencesConfiguration.Conference conferenceConfig ->
+
+            String outputConferenceStartDirectoryName = "htdocs/rest/${conferenceConfig.conference}/${conferenceConfig.year}/rest"
+
             RawDataResources rawDataResources = RawDataResources.of(conferenceConfig)
             Class rawDataMapperClass = conferenceConfig.rawDataMapperClass as Class
             RawDataMapper rawDataMapper =
@@ -49,46 +59,60 @@ class GenerateDukecon {
                 System.exit(-1)
             }
 
-            String conferenceStartDirectoryName = "htdocs/rest/${conferenceConfig.conference}/${conferenceConfig.year}/rest"
-
             Class conferenceDataExtractorClass = conferenceConfig.extractorClass as Class
+            SpeakerImageService speakerImageServiceImpl = new DoagSpeakerImageService()
             ConferenceDataExtractor conferenceDataExtractor =
                     conferenceDataExtractorClass.getConstructor(ConferencesConfiguration.Conference.class,
                             RawDataMapper.class, SpeakerImageService.class)
-                            .newInstance(conferenceConfig, rawDataMapper, new DoagSpeakerImageService("${conferenceStartDirectoryName}/speaker/images"))
+                            .newInstance(conferenceConfig, rawDataMapper, speakerImageServiceImpl)
 
             Conference conference = conferenceDataExtractor.conference
+
+            String outputFileConferenceJson = "${outputConferenceStartDirectoryName}/conferences/${conferenceConfig.id}.json"
             ObjectMapper objectMapper = new ObjectMapper()
-            File conferenceJson = new File("${conferenceStartDirectoryName}/conferences/${conferenceConfig.id}.json")
+            File conferenceJson = new File(outputFileConferenceJson)
             conferenceJson.getParentFile().mkdirs()
             objectMapper.writeValue(conferenceJson, conference)
             log.info("Created {}", conferenceJson.absolutePath)
 
-            File initJson = new File("${conferenceStartDirectoryName}/init.json")
+            File initJson = new File("${outputConferenceStartDirectoryName}/init.json")
             objectMapper.writeValue(initJson, getInitJsonContent(conferenceConfig))
             log.info("Created {}", initJson.absolutePath)
 
-            File imageResourcesJson = new File("${conferenceStartDirectoryName}/image-resources.json")
-            objectMapper.writeValue(imageResourcesJson, getImageResourcesJsonContent(args[1], conferenceConfig))
+            File imageResourcesJson = new File("${outputConferenceStartDirectoryName}/image-resources.json")
+            objectMapper.writeValue(imageResourcesJson, getImageResourcesJsonContent(inputPathForImageResourcesJson, conferenceConfig.id))
             log.info("Created {}", imageResourcesJson.absolutePath)
 
-            def cssStyles = generateStylesCssContent(conferenceConfig)
-            File stylesCss = new File("${conferenceStartDirectoryName}/styles.css")
+            def cssStyles = generateStylesCssContent(conferenceConfig, inputTemplateFileForStyleCss)
+            File stylesCss = new File("${outputConferenceStartDirectoryName}/styles.css")
             stylesCss.write(cssStyles)
             log.info("Created {}", stylesCss.absolutePath)
+
+            String outputPathSpeakerImages = "${outputConferenceStartDirectoryName}/speaker/images"
+            def speakerImageExporter = new SpeakerImageServiceFileExporter(speakerImageServiceImpl, outputPathSpeakerImages)
+            String outputDir = speakerImageExporter.export()
+            log.info("Created {} with {} images", outputDir, speakerImageServiceImpl.images.size())
         }
     }
 
-    private static String generateStylesCssContent(ConferencesConfiguration.Conference conference) {
+    private static String generateStylesCssContent(ConferencesConfiguration.Conference conference, String templateFileString) {
         Styles styles = new Styles(conference.getStyles())
         def templateEngine = new SimpleTemplateEngine()
-        def template = templateEngine.createTemplate(ClassLoader.getSystemResource('templates/styles.gtl').newReader());
-        return template.make([styles: styles])
+
+        def templateFile = new File(templateFileString)
+
+        if (templateFile.exists()) {
+            def template = templateEngine.createTemplate(templateFile)
+            return template.make([styles: styles])
+        } else {
+            log.error("${templateFileString} does not exist, styles.css will be empty!")
+            return ""
+        }
     }
 
-    private static CoreImages getImageResourcesJsonContent(String imagePath, ConferencesConfiguration.Conference c) {
+    private static CoreImages getImageResourcesJsonContent(String imagePath, String conferenceId) {
         def images = CoreImages.builder().build()
-        def resourceDir = "${imagePath}/${c.id}"
+        def resourceDir = "${imagePath}/${conferenceId}"
 
         setFilesAsByteArray("${resourceDir}/conference", images.&setConferenceImage, "logo")
         setFilesAsByteArray("${resourceDir}/favicon", images.&setConferenceFavIcon, "favicon")
@@ -107,9 +131,9 @@ class GenerateDukecon {
                 c.call(Files.readAllBytes(files.get(nameOfSingleFile)?.toPath()))
             } else {
                 c.call((Map<String, byte[]>)
-                    files.collectEntries {
-                        k, v -> [k, Files.readAllBytes(v.toPath())]
-                    }
+                        files.collectEntries {
+                            k, v -> [k, Files.readAllBytes(v.toPath())]
+                        }
                 )
             }
         }

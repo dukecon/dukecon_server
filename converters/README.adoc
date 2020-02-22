@@ -9,17 +9,29 @@ java -jar dukecon-server-converters-1.6-static-SNAPSHOT.jar file:conferences-jav
 -----
 
 === Input
-[%header,cols=2]
+[%header,cols="1,1,1a"]
 |=======
-|Input
+|#
+|Input-parameter
  |Description
-|configuration and
+|1
+|configuration-file
 
 |The base to generate conference-Files is a configuration per conference.
 The project *dukecon_resources* contains all configurations.
 
-|image-data for icons, etc.
-| image-data: folder with base-images per conference
+|2
+|resources-path
+|In this path the listed input is taken as given
+[%header,cols="1,1"]
+!=======
+!name
+!description
+!public/img
+! folder with base-images per conference to generate image-resources.json per conference
+!templates/styles.gtl
+! templates folder with styles.gtl to generate styles.css per conference.
+!=======
 |=======
 
 === Output
