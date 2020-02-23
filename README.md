@@ -1,5 +1,29 @@
 # DukeCon Server
 
+## Modules
+
+### api
+
+Domain model, used by **repositories**, **converters** and **impl**.
+
+### resources
+
+Static resources as images (logo, favicon, track/stream images) and templates needed for different conferences. 
+Used by **converters**, was used by **impl**.
+
+### repositories
+
+Contains logic to convert conference input to internal data structure to be served to client applications. 
+
+### impl
+
+Server implementation with dynamic features as favorites, preferences and keycloak configuration.
+
+### converters
+
+Parameterizable standalone java application for reading conference input and saving json files and images to serve from edge server statically. 
+This content was generated dynamically in **impl** lately and was moved to **converters**. 
+
 ## Build & Dependency Status
 
 * [![Build Status](https://travis-ci.org/dukecon/dukecon_server.svg?branch=master)](https://travis-ci.org/dukecon/dukecon_server)

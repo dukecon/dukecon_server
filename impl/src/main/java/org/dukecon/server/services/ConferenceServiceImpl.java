@@ -100,14 +100,18 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
 
     private Map<String, Conference> initializeConferences(List<ConferenceDataProvider> talkProviders) {
         Map<String, Conference> conferences = new HashMap<>();
-        for (ConferenceDataProvider provider : talkProviders) {
-            Conference conference = provider.getConference();
-            if (conference == null) {
-                continue;
-            }
-            initializeConference(conference);
+        if (!Boolean.getBoolean("readConferences")) {
+            log.info("Reading conferences disabled, run application with '-DreadConferences=true' to enable!");
+        } else {
+            for (ConferenceDataProvider provider : talkProviders) {
+                Conference conference = provider.getConference();
+                if (conference == null) {
+                    continue;
+                }
+                initializeConference(conference);
 
-            conferences.put(conference.getId(), conference);
+                conferences.put(conference.getId(), conference);
+            }
         }
         this.conferences = conferences;
         return conferences;

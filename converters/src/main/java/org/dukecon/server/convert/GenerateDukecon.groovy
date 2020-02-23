@@ -92,7 +92,7 @@ class GenerateDukecon {
             def cssStylesOld = generateStylesCssContent(conferenceConfig, inputTemplateFileForStyleCss)
             File cssStylesFileOld = new File("${outputConferenceStartDirectoryName}${File.separator}rest${File.separator}styles.css")
             cssStylesFileOld.write(cssStylesOld)
-            log.info("Created DEPRICATED {}", cssStylesFileOld.absolutePath)
+            log.info("Created DEPRECATED {}", cssStylesFileOld.absolutePath)
 
             def cssStyles = generateStylesCssContent(conferenceConfig, inputTemplateFileForStyleCss)
             File cssStylesFile = new File("${outputConferenceStartDirectoryName}${File.separator}styles.css")
