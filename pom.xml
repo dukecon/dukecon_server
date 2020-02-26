@@ -514,7 +514,6 @@
         <module>repositories</module>
         <module>converters</module>
         <module>impl</module>
-        <module>docker</module>
     </modules>
 
     <build>
@@ -961,6 +960,12 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>docker</id>
+            <modules>
+                <module>docker</module>
+            </modules>
+        </profile>
         <profile>
             <id>dukecon</id>
             <repositories>
