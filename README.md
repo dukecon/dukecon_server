@@ -20,7 +20,7 @@ Contains logic to convert conference input to internal data structure to be serv
 Server implementation with dynamic features as favorites, preferences and keycloak configuration.
 
 Formerly it also contained dynamically served conference data which was now moved to **converters** where it will be generated as files which will be served as static content from edge service.
-For testing purposes this feature was disabled by default but can be deactivated as system property at startup with `-DreadConferences=true`. 
+This feature is enabled by default but can be deactivated as Spring Boot configuration value `conferences.read`, e.g., at startup with `--conferences.read=false`. 
 
 ### converters
 

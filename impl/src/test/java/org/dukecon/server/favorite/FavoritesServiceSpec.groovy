@@ -141,7 +141,7 @@ class FavoritesServiceSpec extends AbstractDukeConSpec {
 
     void "get all favorites for conference"() {
         when:
-        def eventFavorites = favoritesService.getAllFavoritesForConference(conferenceService.getConference('javaland2017'))
+        def eventFavorites = favoritesService?.getAllFavoritesForConference(conferenceService?.getConference('javaland2017'))
         then:
         eventFavorites.size() > 0
         eventFavorites.first().track

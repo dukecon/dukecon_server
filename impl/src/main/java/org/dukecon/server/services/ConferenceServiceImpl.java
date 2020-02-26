@@ -15,6 +15,7 @@ import org.dukecon.server.repositories.ConferenceDataProvider;
 import org.dukecon.services.ConferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.ServletContextAware;
 
@@ -42,6 +43,12 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
     private Map<String, ConferenceDataProvider> talkProviders = new HashMap<>();
 
     private Map<String, Conference> conferences;
+
+    @Value("${conferences.read:true}")
+    // TODO check for the explicit default value!
+    // This should be covered by the default in the annotation.
+    // For some reason this does not work when running the test isolated in the IDE, e.g., IntelliJ
+    private boolean readConferences = true;
 
     @Inject
     public ConferenceServiceImpl(ConferencesConfigurationService conferenceConfigurationService, List<ConferenceDataProvider> talkProviders) {
@@ -100,9 +107,8 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
 
     private Map<String, Conference> initializeConferences(List<ConferenceDataProvider> talkProviders) {
         Map<String, Conference> conferences = new HashMap<>();
-        if (!Boolean.getBoolean("readConferences")) {
-            log.info("Reading conferences disabled, run application with '-DreadConferences=true' to enable!");
-        } else {
+        if (readConferences) {
+            log.info("Reading conferences enabled, run application with '--conferences.read=false' to disable!");
             for (ConferenceDataProvider provider : talkProviders) {
                 Conference conference = provider.getConference();
                 if (conference == null) {
@@ -112,6 +118,8 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
 
                 conferences.put(conference.getId(), conference);
             }
+        } else {
+            log.info("Reading conferences disabled, run application with '--conferences.read=true' to enable!");
         }
         this.conferences = conferences;
         return conferences;
