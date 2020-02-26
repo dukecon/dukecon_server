@@ -6,12 +6,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.9.RELEASE</version>
+        <version>2.1.12.RELEASE</version>
     </parent>
 
     <groupId>org.dukecon</groupId>
     <artifactId>dukecon-server</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.7-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <developers>
@@ -130,7 +130,7 @@
         <jqassistant-maven-plugin.version>1.7.0-MS3</jqassistant-maven-plugin.version>
         <jqassistant.plugin.git.version>1.6.1</jqassistant.plugin.git.version>
         <junit.version>4.12</junit.version>
-        <keycloak.version>4.8.3.Final</keycloak.version>
+        <keycloak.version>8.0.1</keycloak.version>
         <lombok.version>1.18.10</lombok.version>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
