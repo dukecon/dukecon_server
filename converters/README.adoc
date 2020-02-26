@@ -5,7 +5,7 @@ Beside the conference data in dukecon format, images for speakers are extracted.
 
 Example use:
 -----
-java -jar dukecon-server-converters-1.6-static-SNAPSHOT.jar file:conferences-javaland.yml ./resources
+java -jar dukecon-server-converters-1.7-SNAPSHOT.jar file:conferences-javaland.yml ./resources
 -----
 
 === Input

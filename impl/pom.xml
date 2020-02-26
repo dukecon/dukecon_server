@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.dukecon</groupId>
         <artifactId>dukecon-server</artifactId>
-        <version>1.6-static-SNAPSHOT</version>
+        <version>1.7-SNAPSHOT</version>
     </parent>
 
     <artifactId>dukecon-server-springboot</artifactId>
@@ -16,6 +16,7 @@
 
     <properties>
         <start-class>org.dukecon.DukeConServerApplication</start-class>
+
     </properties>
 
     <dependencies>
@@ -189,6 +190,11 @@
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-spring-boot-adapter-core</artifactId>
+            <version>${keycloak.version}</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
