@@ -15,17 +15,13 @@ import org.dukecon.server.repositories.ConferenceDataProvider;
 import org.dukecon.services.ConferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.ServletContextAware;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -44,15 +40,12 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
 
     private Map<String, Conference> conferences;
 
-    @Value("${conferences.read:true}")
-    // TODO check for the explicit default value!
-    // This should be covered by the default in the annotation.
-    // For some reason this does not work when running the test isolated in the IDE, e.g., IntelliJ
-    private boolean readConferences = true;
+    private boolean readConferences;
 
     @Inject
-    public ConferenceServiceImpl(ConferencesConfigurationService conferenceConfigurationService, List<ConferenceDataProvider> talkProviders) {
-        this.conferenceConfigurationService = conferenceConfigurationService;
+    public ConferenceServiceImpl(ConferencesConfigurationService conferenceConfigurationService, List<ConferenceDataProvider> talkProviders, ConfigurableEnvironment env) {
+    	this.conferenceConfigurationService = conferenceConfigurationService;
+	    this.readConferences = !(Arrays.asList(env.getActiveProfiles()).contains("noconferences"));
         Map<String, Conference> conferences = initializeConferences(talkProviders);
         talkProviders.forEach(tp -> {
             this.talkProviders.put(tp.getConferenceId(), tp);
@@ -108,7 +101,7 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
     private Map<String, Conference> initializeConferences(List<ConferenceDataProvider> talkProviders) {
         Map<String, Conference> conferences = new HashMap<>();
         if (readConferences) {
-            log.info("Reading conferences enabled, run application with '--conferences.read=false' to disable!");
+            log.info("Reading conferences enabled, run application with profile 'noconferences' to disable!");
             for (ConferenceDataProvider provider : talkProviders) {
                 Conference conference = provider.getConference();
                 if (conference == null) {
@@ -119,7 +112,7 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
                 conferences.put(conference.getId(), conference);
             }
         } else {
-            log.info("Reading conferences disabled, run application with '--conferences.read=true' to enable!");
+            log.info("Reading conferences disabled, run application without profile 'noconferences' to enable!");
         }
         this.conferences = conferences;
         return conferences;

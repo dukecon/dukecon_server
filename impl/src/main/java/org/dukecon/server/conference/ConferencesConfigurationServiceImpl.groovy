@@ -22,9 +22,12 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
     private String conferencesConfigurationFile
     Map<String, Object> configurationProperties = [:]
 
+    private boolean readConferences = true
+
     @Inject
     ConferencesConfigurationServiceImpl(ConfigurableEnvironment env) {
         this.env = env
+        this.readConferences = !env.getActiveProfiles().contains("noconferences")
     }
 
     // TODO Clean up - it is called twice!
@@ -38,10 +41,15 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
     void init() {
         this.configurationProperties = getAllKnownConfigurationProperties(env)
         conferencesConfigurationFile = configurationProperties["conferences.file"] ?: "conferences-dev.yml"
-        log.debug ("Loading conferences file '{}'", conferencesConfigurationFile)
-        configuration.conferences.addAll(
-                ConferencesConfiguration.fromFile(conferencesConfigurationFile,
-                        configurationProperties)?.conferences)
+        if (readConferences) {
+            log.info("Loading conferences enabled, run application with profile 'noconferences' to disable!");
+            log.debug("Loading conferences file '{}'", conferencesConfigurationFile)
+            configuration.conferences.addAll(
+                    ConferencesConfiguration.fromFile(conferencesConfigurationFile,
+                            configurationProperties)?.conferences)
+        } else {
+            log.info("Loading conferences disabled, run application without profile 'noconferences' to enable!");
+        }
     }
 
     private static Map<String, Object> getAllKnownConfigurationProperties(ConfigurableEnvironment env) {
