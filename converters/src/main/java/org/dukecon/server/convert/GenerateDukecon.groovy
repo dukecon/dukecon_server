@@ -17,6 +17,7 @@ import org.dukecon.server.repositories.RawDataResources
 import org.dukecon.server.util.ResourcesFinder
 
 import java.nio.file.Files
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @CompileStatic
@@ -67,7 +68,8 @@ class GenerateDukecon {
                             .newInstance(conferenceConfig, rawDataMapper, speakerImageServiceImpl)
 
             Conference conference = conferenceDataExtractor.conference
-
+            conference.created = LocalDateTime.now()
+            
             String outputFileConferenceJson = "${outputConferenceStartDirectoryName}${File.separator}rest${File.separator}conferences${File.separator}${conferenceConfig.id}.json"
             ObjectMapper objectMapper = new ObjectMapper()
             File conferenceJson = new File(outputFileConferenceJson)
