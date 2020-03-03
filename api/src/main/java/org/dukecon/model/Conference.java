@@ -29,6 +29,7 @@ public class Conference implements Identifyable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime created = LocalDateTime.now();
+    private String appVersion;
 
     private MetaData metaData;
     private List<Event> events;

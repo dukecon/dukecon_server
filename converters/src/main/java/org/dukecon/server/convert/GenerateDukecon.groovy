@@ -3,6 +3,8 @@ package org.dukecon.server.convert
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.text.SimpleTemplateEngine
 import groovy.transform.CompileStatic
+import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import groovy.util.logging.Slf4j
 import org.dukecon.model.Conference
 import org.dukecon.model.CoreImages
@@ -40,6 +42,8 @@ class GenerateDukecon {
             usage("Wrong number of arguments", 1)
         }
 
+        def start = System.currentTimeMillis()
+
         String inputUrlConferenceConfigFile = args[0]
         String inputPathForImageResourcesJson = "${args[1]}${File.separator}public${File.separator}img"
         String inputTemplateFileForStyleCss = "${args[1]}${File.separator}templates${File.separator}styles.gtl"
@@ -69,7 +73,8 @@ class GenerateDukecon {
 
             Conference conference = conferenceDataExtractor.conference
             conference.created = LocalDateTime.now()
-            
+            conference.appVersion = gitProperties.'git.commit.id'
+
             String outputFileConferenceJson = "${outputConferenceStartDirectoryName}${File.separator}rest${File.separator}conferences${File.separator}${conferenceConfig.id}.json"
             ObjectMapper objectMapper = new ObjectMapper()
             File conferenceJson = new File(outputFileConferenceJson)
@@ -110,6 +115,19 @@ class GenerateDukecon {
                 log.info("Created {}", faviconFile.absolutePath)
             }
         }
+
+        def duration = (System.currentTimeMillis() - start) / 1000
+        log.info("Generation finished, duration: {} min, {} s", (duration as int) / 60 as int, (duration as int) % 60, "")
+        log.info("{} with version: {}", GenerateDukecon.simpleName, gitProperties.'git.commit.id')
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    private static Properties getGitProperties() {
+        def gitProperties = new Properties()
+        this.getClass().getResource('/git.properties').withInputStream {
+            gitProperties.load(it)
+        }
+        gitProperties
     }
 
     private static String generateStylesCssContent(ConferencesConfiguration.Conference conference, String templateFileString) {
