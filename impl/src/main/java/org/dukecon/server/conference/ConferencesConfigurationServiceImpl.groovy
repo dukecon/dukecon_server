@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 
 import javax.annotation.PostConstruct
 import javax.inject.Inject
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -94,7 +95,7 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
         if (!readConferences) {
             // TODO implement reloading of cached eventsData.json
             log.info("""${file.toAbsolutePath()}
-${file.text}""")
+${file.getText(StandardCharsets.ISO_8859_1.name())}""")
         }
     }
 }

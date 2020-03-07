@@ -31,13 +31,14 @@ public class FileWatcherService implements Runnable {
 
     private void registerDirectoryAndSubDirectories(final Path start) throws IOException {
         if (!Files.isDirectory(start)) {
-            System.out.println("Directory does not exist: " + start.toAbsolutePath());
+            log.info("Directory does not exist: " + start.toAbsolutePath());
             return;
         }
         Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
                     throws IOException {
+                log.info("Register file watcher for " + dir.toAbsolutePath());
                 dir.register(watcher, ENTRY_MODIFY);
                 return FileVisitResult.CONTINUE;
             }
