@@ -113,6 +113,9 @@ public class ConferenceServiceImpl implements ConferenceService, ServletContextA
             }
         } else {
             log.info("Reading conferences disabled, run application without profile 'noconferences' to enable!");
+            // read static json files from /data/dukecon/latest-static/edge/htdocs/rest/javaland/2020/rest/conferences
+            //  "/data/dukecon/latest-static/edge/htdocs:/opt/dukecon/htdocs"
+            // oder cache/javaland2020/eventsData.json
         }
         this.conferences = conferences;
         return conferences;

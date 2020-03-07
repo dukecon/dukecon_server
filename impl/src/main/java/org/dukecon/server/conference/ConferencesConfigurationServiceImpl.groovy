@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service
 
 import javax.annotation.PostConstruct
 import javax.inject.Inject
+import java.nio.file.Files
+import java.nio.file.Path
 
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
@@ -85,5 +87,14 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
 
     String getBackupDir() {
         return configurationProperties['backup.dir']
+    }
+
+    @Override
+    void reloadInputFile(Path file) {
+        if (!readConferences) {
+            // TODO implement reloading of cached eventsData.json
+            log.info("""${file.toAbsolutePath()}
+${file.text}""")
+        }
     }
 }
