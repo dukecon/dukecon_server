@@ -30,6 +30,10 @@ public class FileWatcherService implements Runnable {
     }
 
     private void registerDirectoryAndSubDirectories(final Path start) throws IOException {
+        if (!Files.isDirectory(start)) {
+            System.out.println("Directory does not exist: " + start.toAbsolutePath());
+            return;
+        }
         Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
