@@ -859,6 +859,11 @@
                     <version>${flyway-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                </plugin>
+                <plugin>
                     <groupId>com.tngtech.jgiven</groupId>
                     <artifactId>jgiven-maven-plugin</artifactId>
                     <version>${jgiven-core.version}</version>
