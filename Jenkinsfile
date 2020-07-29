@@ -23,7 +23,7 @@ pipeline {
                 withMaven {
                     script {
                         if (env.BRANCH_NAME == "develop") {
-                            sh './mvnw -Pdocker,doc clean install'
+                            sh './mvnw -Pdocker,doc,check-plugins clean install'
                             publishHTML target: [allowMissing         : false,
                                                  alwaysLinkToLastBuild: false,
                                                  keepAll              : true,
