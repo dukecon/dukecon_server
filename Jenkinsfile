@@ -30,8 +30,6 @@ pipeline {
                                                  reportDir            : 'impl/target/generated-docs/html/',
                                                  reportFiles          : 'index.html',
                                                  reportName           : 'SwaggerDocumentation']
-                        } else if (env.BRANCH_NAME == "feature/102-static-data") {
-                            sh 'mvn clean install'
                         } else {
                             sh './mvnw clean verify'
                         }
