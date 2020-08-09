@@ -45,7 +45,7 @@ pipeline {
                 withMaven {
                     script {
                         if (env.BRANCH_NAME == "develop") {
-                            sh './mvnw -Pdocker docker:push'
+                            sh './mvnw -Pdocker docker:push -Dscan=false'
                             build 'docker_restart_develop_latest'
                             build 'docker_restart_latest-static'
                         } else {
