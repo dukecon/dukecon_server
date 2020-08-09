@@ -541,6 +541,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
+                        <skip>true</skip>
                         <annotationProcessorPaths>
                             <path>
                                 <groupId>org.projectlombok</groupId>
