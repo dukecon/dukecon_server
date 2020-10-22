@@ -103,7 +103,7 @@
         <flyway-maven-plugin.version>5.2.4</flyway-maven-plugin.version>
         <freemarker.version>2.3.29</freemarker.version>
         <git-commit-id-plugin.version>2.2.5</git-commit-id-plugin.version>
-        <gitlog-maven-plugin.version>1.13.15</gitlog-maven-plugin.version>
+        <gitlog-maven-plugin.version>1.13.17</gitlog-maven-plugin.version>
         <gmavenplus-plugin.version>1.8.1</gmavenplus-plugin.version>
         <gradle-enterprise-maven-extension.version>1.6.1</gradle-enterprise-maven-extension.version>
         <graphene-webdriver.version>2.0.3.Final</graphene-webdriver.version>
