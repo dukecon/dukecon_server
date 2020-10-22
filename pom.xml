@@ -107,7 +107,7 @@
         <gmavenplus-plugin.version>1.8.1</gmavenplus-plugin.version>
         <gradle-enterprise-maven-extension.version>1.6.8</gradle-enterprise-maven-extension.version>
         <graphene-webdriver.version>2.0.3.Final</graphene-webdriver.version>
-        <google-guava.version>28.1-jre</google-guava.version>
+        <google-guava.version>28.2-jre</google-guava.version>
         <groovy.version>2.5.8</groovy.version>
         <groovycsv.version>1.3</groovycsv.version>
         <groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
