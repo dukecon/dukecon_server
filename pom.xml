@@ -96,7 +96,7 @@
         <arquillian-phantom-binary.version>2.1.1</arquillian-phantom-binary.version>
         <asciidoctor-maven-plugin.version>1.6.0</asciidoctor-maven-plugin.version>
         <asciidoctorj.diagram.version>1.5.18</asciidoctorj.diagram.version>
-        <assertj-core.version>3.14.0</assertj-core.version>
+        <assertj-core.version>3.17.2</assertj-core.version>
         <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
         <buildplan-maven-plugin.version>1.4</buildplan-maven-plugin.version>
         <docker-maven-plugin.version>0.34.1</docker-maven-plugin.version>
