@@ -147,7 +147,7 @@
         <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
         <maven-surefire-plugin.version>${maven-failsafe-plugin.version}</maven-surefire-plugin.version>
         <maven-surefire-report-plugin.version>${maven-failsafe-plugin.version}</maven-surefire-report-plugin.version>
-        <maven-war-plugin.version>3.2.2</maven-war-plugin.version>
+        <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
         <micrometer-core.version>1.5.5</micrometer-core.version>
         <micrometer-registry-prometheus.version>1.5.5</micrometer-registry-prometheus.version>
         <postgresql.version>42.2.8.jre7</postgresql.version>
