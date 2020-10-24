@@ -102,7 +102,7 @@
         <docker-maven-plugin.version>0.34.1</docker-maven-plugin.version>
         <flyway-maven-plugin.version>5.2.4</flyway-maven-plugin.version>
         <freemarker.version>2.3.30</freemarker.version>
-        <git-commit-id-plugin.version>2.2.6</git-commit-id-plugin.version>
+        <git-commit-id-plugin.version>4.0.2</git-commit-id-plugin.version>
         <gitlog-maven-plugin.version>1.13.17</gitlog-maven-plugin.version>
         <gmavenplus-plugin.version>1.11.0</gmavenplus-plugin.version>
         <gradle-enterprise-maven-extension.version>1.6.8</gradle-enterprise-maven-extension.version>
