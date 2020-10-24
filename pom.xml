@@ -99,7 +99,7 @@
         <assertj-core.version>3.14.0</assertj-core.version>
         <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
         <buildplan-maven-plugin.version>1.4</buildplan-maven-plugin.version>
-        <docker-maven-plugin.version>0.28.0</docker-maven-plugin.version>
+        <docker-maven-plugin.version>0.34.1</docker-maven-plugin.version>
         <flyway-maven-plugin.version>5.2.4</flyway-maven-plugin.version>
         <freemarker.version>2.3.29</freemarker.version>
         <git-commit-id-plugin.version>2.2.5</git-commit-id-plugin.version>
