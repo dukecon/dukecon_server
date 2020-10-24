@@ -94,7 +94,7 @@
         <arquillian-bom.version>1.6.0.Final</arquillian-bom.version>
         <arquillian-drone-bom.version>2.5.1</arquillian-drone-bom.version>
         <arquillian-phantom-binary.version>2.1.1</arquillian-phantom-binary.version>
-        <asciidoctor-maven-plugin.version>1.5.8</asciidoctor-maven-plugin.version>
+        <asciidoctor-maven-plugin.version>1.6.0</asciidoctor-maven-plugin.version>
         <asciidoctorj.diagram.version>1.5.18</asciidoctorj.diagram.version>
         <assertj-core.version>3.14.0</assertj-core.version>
         <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
