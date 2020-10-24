@@ -126,7 +126,7 @@
         "org.glassfish.jersey.internal.l10n.LocalizableMessageFactory$ResourceBundleSupplier" -->
         <jersey-server.version>2.27</jersey-server.version>
         <jgiven-core.version>0.17.0</jgiven-core.version>
-        <jgravatar.version>1.1</jgravatar.version>
+        <jgravatar.version>1.2</jgravatar.version>
         <jqassistant-maven-plugin.version>1.8.0</jqassistant-maven-plugin.version>
         <jqassistant.plugin.git.version>1.8.0</jqassistant.plugin.git.version>
         <junit.version>4.13.1</junit.version>
