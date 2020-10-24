@@ -117,7 +117,7 @@
         <hystrix-javanica.version>1.5.18</hystrix-javanica.version>
         <jackson-annotations.version>2.11.3</jackson-annotations.version>
         <jackson-dataformat-csv.version>2.11.3</jackson-dataformat-csv.version>
-        <javax.el.version>3.0.1-b11</javax.el.version>
+        <javax.el.version>3.0.1-b12</javax.el.version>
         <javax.inject.version>1</javax.inject.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.validation-api.version>2.0.1.Final</javax.validation-api.version>
