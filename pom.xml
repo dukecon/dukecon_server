@@ -111,7 +111,7 @@
         <groovy.version>2.5.13</groovy.version>
         <groovycsv.version>1.3</groovycsv.version>
         <groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
-        <hamcrest-library.version>1.3</hamcrest-library.version>
+        <hamcrest-library.version>2.2</hamcrest-library.version>
         <hibernate-jpa-2.1-api.version>1.0.2</hibernate-jpa-2.1-api.version>
         <hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
         <hystrix-javanica.version>1.5.18</hystrix-javanica.version>
