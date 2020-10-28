@@ -94,19 +94,19 @@
         <arquillian-bom.version>1.6.0.Final</arquillian-bom.version>
         <arquillian-drone-bom.version>2.5.1</arquillian-drone-bom.version>
         <arquillian-phantom-binary.version>2.1.1</arquillian-phantom-binary.version>
-        <asciidoctor-maven-plugin.version>1.6.0</asciidoctor-maven-plugin.version>
+        <asciidoctor-maven-plugin.version>2.1.0</asciidoctor-maven-plugin.version>
         <asciidoctorj.diagram.version>2.0.5</asciidoctorj.diagram.version>
         <assertj-core.version>3.17.2</assertj-core.version>
         <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
         <buildplan-maven-plugin.version>1.4</buildplan-maven-plugin.version>
         <docker-maven-plugin.version>0.34.1</docker-maven-plugin.version>
-        <flyway-maven-plugin.version>5.2.4</flyway-maven-plugin.version>
+        <flyway-maven-plugin.version>7.1.0</flyway-maven-plugin.version>
         <freemarker.version>2.3.30</freemarker.version>
         <git-commit-id-plugin.version>4.0.2</git-commit-id-plugin.version>
         <gitlog-maven-plugin.version>1.13.17</gitlog-maven-plugin.version>
         <gmavenplus-plugin.version>1.11.0</gmavenplus-plugin.version>
         <gradle-enterprise-maven-extension.version>1.7.0</gradle-enterprise-maven-extension.version>
-        <graphene-webdriver.version>2.2.0</graphene-webdriver.version>
+        <graphene-webdriver.version>2.3.2</graphene-webdriver.version>
         <google-guava.version>30.0-jre</google-guava.version>
         <groovy.version>2.5.13</groovy.version>
         <groovycsv.version>1.3</groovycsv.version>
@@ -136,10 +136,10 @@
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
-        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-        <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
-        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
+        <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-project-info-reports-plugin.version>3.1.1</maven-project-info-reports-plugin.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
@@ -148,9 +148,9 @@
         <maven-surefire-plugin.version>${maven-failsafe-plugin.version}</maven-surefire-plugin.version>
         <maven-surefire-report-plugin.version>${maven-failsafe-plugin.version}</maven-surefire-report-plugin.version>
         <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
-        <micrometer-core.version>1.5.5</micrometer-core.version>
-        <micrometer-registry-prometheus.version>1.5.5</micrometer-registry-prometheus.version>
-        <postgresql.version>42.2.18</postgresql.version>
+        <micrometer-core.version>1.5.6</micrometer-core.version>
+        <micrometer-registry-prometheus.version>1.5.6</micrometer-registry-prometheus.version>
+        <postgresql.version>42.2.18.jre7</postgresql.version>
         <selenium.version>3.13.0</selenium.version>
         <slf4j-api.version>1.7.30</slf4j-api.version>
         <commons-io.version>2.8.0</commons-io.version>
@@ -165,7 +165,7 @@
         <swagger2markup-maven-plugin.version>1.3.7</swagger2markup-maven-plugin.version>
         <wagon-webdav-jackrabbit.version>3.4.0</wagon-webdav-jackrabbit.version>
         <!-- Version 1.x >= 1.4.01 needed by arquillian / selenium? -->
-        <xml-apis.version>1.4.01</xml-apis.version>
+        <xml-apis.version>2.0.2</xml-apis.version>
 
         <!-- Check automatic versions from time to time! -->
     </properties>
