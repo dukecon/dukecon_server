@@ -125,7 +125,7 @@
         <!-- DO NOT UPGRADE TO 2.28 (and beyond?) - it is missing
         "org.glassfish.jersey.internal.l10n.LocalizableMessageFactory$ResourceBundleSupplier" -->
         <jersey-server.version>2.32</jersey-server.version>
-        <jgiven-core.version>0.17.0</jgiven-core.version>
+        <jgiven-core.version>0.18.2</jgiven-core.version>
         <jgravatar.version>1.2</jgravatar.version>
         <jqassistant-maven-plugin.version>1.8.0</jqassistant-maven-plugin.version>
         <jqassistant.plugin.git.version>1.8.0</jqassistant.plugin.git.version>
