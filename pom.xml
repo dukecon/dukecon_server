@@ -105,7 +105,7 @@
         <git-commit-id-plugin.version>4.0.2</git-commit-id-plugin.version>
         <gitlog-maven-plugin.version>1.13.17</gitlog-maven-plugin.version>
         <gmavenplus-plugin.version>1.11.0</gmavenplus-plugin.version>
-        <gradle-enterprise-maven-extension.version>1.6.8</gradle-enterprise-maven-extension.version>
+        <gradle-enterprise-maven-extension.version>1.7.0</gradle-enterprise-maven-extension.version>
         <graphene-webdriver.version>2.2.0</graphene-webdriver.version>
         <google-guava.version>30.0-jre</google-guava.version>
         <groovy.version>2.5.13</groovy.version>
