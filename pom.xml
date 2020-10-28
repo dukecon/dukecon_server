@@ -165,7 +165,7 @@
         <swagger2markup-maven-plugin.version>1.3.7</swagger2markup-maven-plugin.version>
         <wagon-webdav-jackrabbit.version>3.4.0</wagon-webdav-jackrabbit.version>
         <!-- Version 1.x >= 1.4.01 needed by arquillian / selenium? -->
-        <xml-apis.version>1.4.01</xml-apis.version>
+        <xml-apis.version>2.0.2</xml-apis.version>
 
         <!-- Check automatic versions from time to time! -->
     </properties>
