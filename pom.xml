@@ -127,8 +127,8 @@
         <jersey-server.version>2.27</jersey-server.version>
         <jgiven-core.version>0.17.0</jgiven-core.version>
         <jgravatar.version>1.1</jgravatar.version>
-        <jqassistant-maven-plugin.version>1.7.0-MS3</jqassistant-maven-plugin.version>
-        <jqassistant.plugin.git.version>1.6.1</jqassistant.plugin.git.version>
+        <jqassistant-maven-plugin.version>1.9.1</jqassistant-maven-plugin.version>
+        <jqassistant.plugin.git.version>1.8.0</jqassistant.plugin.git.version>
         <junit.version>4.12</junit.version>
         <keycloak.version>4.8.3.Final</keycloak.version>
         <lombok.version>1.18.10</lombok.version>
@@ -706,6 +706,36 @@
                     </executions>
                 </plugin>
                 <plugin>
+                    <groupId>com.buschmais.jqassistant</groupId>
+                    <artifactId>jqassistant-maven-plugin</artifactId>
+                    <version>${jqassistant-maven-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>scan</goal>
+                                <goal>analyze</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <failOnSeverity>MAJOR</failOnSeverity>
+                        <useExecutionRootAsProjectRoot>true</useExecutionRootAsProjectRoot>
+                        <scanIncludes>
+                            <scanInclude>
+                                <path>${project.basedir}/.git</path>
+                            </scanInclude>
+                        </scanIncludes>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>de.kontext-e.jqassistant.plugin</groupId>
+                            <artifactId>jqassistant.plugin.git</artifactId>
+                            <version>${jqassistant.plugin.git.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
                     <groupId>com.gradle</groupId>
                     <artifactId>gradle-enterprise-maven-extension</artifactId>
                     <version>${gradle-enterprise-maven-extension.version}</version>
@@ -1012,32 +1042,6 @@
                     <plugin>
                         <groupId>com.buschmais.jqassistant</groupId>
                         <artifactId>jqassistant-maven-plugin</artifactId>
-                        <version>${jqassistant-maven-plugin.version}</version>
-                        <extensions>true</extensions>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>scan</goal>
-                                    <goal>analyze</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <failOnSeverity>MAJOR</failOnSeverity>
-							<useExecutionRootAsProjectRoot>true</useExecutionRootAsProjectRoot>
-                            <scanIncludes>
-                                <scanInclude>
-                                    <path>${project.basedir}/.git</path>
-                                </scanInclude>
-                            </scanIncludes>
-						</configuration>
-                        <dependencies>
-                            <dependency>
-                                <groupId>de.kontext-e.jqassistant.plugin</groupId>
-                                <artifactId>jqassistant.plugin.git</artifactId>
-                                <version>${jqassistant.plugin.git.version}</version>
-                            </dependency>
-                        </dependencies>
                     </plugin>
                 </plugins>
             </build>
