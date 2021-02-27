@@ -7,7 +7,7 @@
     <parent>
         <artifactId>dukecon-server</artifactId>
         <groupId>org.dukecon</groupId>
-        <version>1.6-static-SNAPSHOT</version>
+        <version>1.6-SNAPSHOT</version>
     </parent>
 
     <packaging>pom</packaging>
