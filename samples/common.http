@@ -9,3 +9,6 @@
 GET {{rest}}/conferences
 
 ###
+GET {{mgmt}}/versions/dukecon_server-version.txt
+
+###
