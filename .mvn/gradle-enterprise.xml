@@ -8,6 +8,7 @@
     <buildScan>
         <publish>ALWAYS</publish>
         <captureGoalInputFiles>true</captureGoalInputFiles>
+        <backgroundBuildScanUpload>#{isFalse(env["DOCKER"])}</backgroundBuildScanUpload>
     </buildScan>
     <buildCache>
         <remote>
