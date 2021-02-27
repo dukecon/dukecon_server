@@ -22,7 +22,7 @@ pipeline {
             steps {
                 withMaven {
                     script {
-                        if (env.BRANCH_NAME == "develop") {
+                        if (env.BRANCH_NAME == "javaland2021") {
                             sh './mvnw -Pdocker,doc,check-plugins clean install'
                             publishHTML target: [allowMissing         : false,
                                                  alwaysLinkToLastBuild: false,
@@ -42,10 +42,9 @@ pipeline {
             steps {
                 withMaven {
                     script {
-                        if (env.BRANCH_NAME == "develop") {
+                        if (env.BRANCH_NAME == "javaland2021") {
                             sh './mvnw -Pdocker docker:push -Dscan=false'
                             build 'docker_restart_develop_latest'
-                            build 'docker_restart_latest-static'
                         } else {
                             echo 'No Docker action required'
                         }
