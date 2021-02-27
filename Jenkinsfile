@@ -23,15 +23,13 @@ pipeline {
                 withMaven {
                     script {
                         if (env.BRANCH_NAME == "javaland2021") {
-                            sh './mvnw -Pdocker,doc clean install'
+                            sh './mvnw -Pdocker,doc,check-plugins clean install'
                             publishHTML target: [allowMissing         : false,
                                                  alwaysLinkToLastBuild: false,
                                                  keepAll              : true,
                                                  reportDir            : 'impl/target/generated-docs/html/',
                                                  reportFiles          : 'index.html',
                                                  reportName           : 'SwaggerDocumentation']
-                        } else if (env.BRANCH_NAME == "feature/102-static-data") {
-                            sh 'mvn clean install'
                         } else {
                             sh './mvnw clean verify'
                         }
@@ -45,11 +43,8 @@ pipeline {
                 withMaven {
                     script {
                         if (env.BRANCH_NAME == "javaland2021") {
-                            sh './mvnw -Pdocker docker:push'
+                            sh './mvnw -Pdocker docker:push -Dscan=false'
                             build 'docker_restart_develop_latest'
-                        } else if (env.BRANCH_NAME == "feature/102-static-data") {
-                            sh 'mvn -Pdocker docker:build'
-                            build 'docker_restart_latest-static'
                         } else {
                             echo 'No Docker action required'
                         }
