@@ -945,18 +945,6 @@
                 <groupId>org.codehaus.gmaven</groupId>
                 <artifactId>groovy-maven-plugin</artifactId>
                 <version>${groovy-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>build-scan-custom-data</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <source>file:///${maven.multiModuleProjectDirectory}/customData.groovy</source>
-                        </configuration>
-                    </execution>
-                </executions>
                 <dependencies>
                     <dependency>
                         <groupId>org.codehaus.groovy</groupId>
