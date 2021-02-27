@@ -22,7 +22,7 @@ pipeline {
             steps {
                 withMaven {
                     script {
-                        if (env.BRANCH_NAME == "develop") {
+                        if (env.BRANCH_NAME == "javaland2021") {
                             sh './mvnw -Pdocker,doc clean install'
                             publishHTML target: [allowMissing         : false,
                                                  alwaysLinkToLastBuild: false,
@@ -44,7 +44,7 @@ pipeline {
             steps {
                 withMaven {
                     script {
-                        if (env.BRANCH_NAME == "develop") {
+                        if (env.BRANCH_NAME == "javaland2021") {
                             sh './mvnw -Pdocker docker:push'
                             build 'docker_restart_develop_latest'
                         } else if (env.BRANCH_NAME == "feature/102-static-data") {
