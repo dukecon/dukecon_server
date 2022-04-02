@@ -124,7 +124,7 @@
         <!-- DO NOT UPGRADE TO 2.28 (and beyond?) - it is missing
         "org.glassfish.jersey.internal.l10n.LocalizableMessageFactory$ResourceBundleSupplier" -->
         <jersey-server.version>2.27</jersey-server.version>
-        <jgiven-core.version>0.18.2</jgiven-core.version>
+        <jgiven.version>1.2.0</jgiven.version>
         <jgravatar.version>1.2</jgravatar.version>
         <jqassistant-maven-plugin.version>1.9.1</jqassistant-maven-plugin.version>
         <jqassistant.plugin.git.version>1.8.0</jqassistant.plugin.git.version>
@@ -268,12 +268,12 @@
             <dependency>
                 <groupId>com.tngtech.jgiven</groupId>
                 <artifactId>jgiven-core</artifactId>
-                <version>${jgiven-core.version}</version>
+                <version>${jgiven.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.tngtech.jgiven</groupId>
                 <artifactId>jgiven-junit</artifactId>
-                <version>${jgiven-core.version}</version>
+                <version>${jgiven.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.xlson.groovycsv</groupId>
@@ -917,7 +917,7 @@
                 <plugin>
                     <groupId>com.tngtech.jgiven</groupId>
                     <artifactId>jgiven-maven-plugin</artifactId>
-                    <version>${jgiven-core.version}</version>
+                    <version>${jgiven.version}</version>
                     <executions>
                         <execution>
                             <goals>
