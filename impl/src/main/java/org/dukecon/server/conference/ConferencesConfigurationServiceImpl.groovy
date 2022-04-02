@@ -2,6 +2,7 @@ package org.dukecon.server.conference
 
 import groovy.transform.TypeChecked
 import groovy.util.logging.Slf4j
+import org.codehaus.groovy.runtime.NioGroovyMethods
 import org.springframework.core.env.ConfigurableEnvironment
 import org.springframework.core.env.EnumerablePropertySource
 import org.springframework.core.env.PropertySource
@@ -10,9 +11,7 @@ import org.springframework.stereotype.Service
 import javax.annotation.PostConstruct
 import javax.inject.Inject
 import java.nio.charset.StandardCharsets
-import java.nio.file.Files
 import java.nio.file.Path
-
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack
  */
@@ -94,8 +93,8 @@ class ConferencesConfigurationServiceImpl implements ConferencesConfigurationSer
     void reloadInputFile(Path file) {
         if (!readConferences) {
             // TODO implement reloading of cached eventsData.json
-            log.info("""${file.toAbsolutePath()}
-${file.getText(StandardCharsets.ISO_8859_1.name())}""")
+            log.info("""Reloading event data from '{}':
+{}""", file.toAbsolutePath(), NioGroovyMethods.getText(file, StandardCharsets.ISO_8859_1.name()))
         }
     }
 }
