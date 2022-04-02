@@ -1,4 +1,4 @@
-package org.dukecon.server.conference.adpater.heise
+package org.dukecon.server.repositories.heise
 
 import org.dukecon.model.Audience
 import org.dukecon.model.Conference
