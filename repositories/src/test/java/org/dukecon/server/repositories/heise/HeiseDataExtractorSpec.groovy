@@ -2,39 +2,43 @@ package org.dukecon.server.repositories.heise
 
 import org.dukecon.model.Audience
 import org.dukecon.model.Conference
+import org.dukecon.server.conference.ConferencesConfiguration
+import org.dukecon.server.repositories.RawDataMapper
 import org.dukecon.server.repositories.RawDataResources
-import org.dukecon.server.repositories.heise.HeiseAudienceMapper
-import org.dukecon.server.repositories.heise.HeiseCsvInput
-import org.dukecon.server.repositories.heise.HeiseDataExtractor
-import org.dukecon.server.repositories.heise.HeiseEventTypeMapper
-import org.dukecon.server.repositories.heise.HeiseLanguageMapper
-import org.dukecon.server.repositories.heise.HeiseLocationMapper
-import org.dukecon.server.repositories.heise.HeiseStreamMapper
+import spock.lang.Ignore
 import spock.lang.Specification
-
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-
 /**
  * @author Falk Sippach, falk@jug-da.de, @sippsack.
  */
+@Ignore
 class HeiseDataExtractorSpec extends Specification {
-    private static HeiseDataExtractor extractor = new HeiseDataExtractor('hc16', readCsv(), LocalDate.parse('2016-08-30', DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+    private static HeiseDataExtractor extractor = new HeiseDataExtractor(
+                ConferencesConfiguration.Conference.of(
+                        id: 'hc16',
+//                        conference: "Herbstcampus",
+//                        year: "2016",
+                        name: "Herbstcampus",
+                        url: "https://conferences.dukecon.org",
+                        homeUrl: "https://herbstcampus.de",
+//                        startDate: LocalDate.parse('2016-08-30', DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                ),
+                readCsv()
+    )
     private Conference conference
 
     void setup() {
         conference = extractor.conference
     }
 
-    private static readCsv() {
+    private static RawDataMapper readCsv() {
         new HeiseCsvInput(RawDataResources.of('herbstcampus-2016/herbstcampus_2016_veranstaltungen_20160826.csv'))
     }
 
     void "should contain metadata"() {
         expect:
         conference.id == 'hc16'
-        conference.name == 'DukeCon Conference'
-        conference.url == 'http://dukecon.org'
+        conference.name == 'Herbstcampus'
+        conference.url == 'https://conferences.dukecon.org'
         conference.metaData
     }
 

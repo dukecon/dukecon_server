@@ -20,7 +20,7 @@ class HeiseDataExtractor implements ConferenceDataExtractor {
     final Conference conference
     private SpeakerImageService speakerImageService
 
-    HeiseDataExtractor(ConferencesConfiguration.Conference config, RawDataMapper rawDataMapper, SpeakerImageService speakerImageService) {
+    HeiseDataExtractor(ConferencesConfiguration.Conference config, RawDataMapper rawDataMapper, SpeakerImageService speakerImageService = null) {
         log.debug ("Extracting data for '{}'", config)
         this.speakerImageService = speakerImageService
         this.conference = fromInput(getInput(rawDataMapper), config.startDate, config.id, config.name, config.url)
