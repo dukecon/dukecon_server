@@ -136,6 +136,8 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+        <!-- DO NOT UPGRADE TO 1.11.2 and beyond - it leads to "analyze failed: Unsupported api 524288" -->
+        <maven-dependency-analyzer.version>1.11.1</maven-dependency-analyzer.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
         <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
@@ -514,11 +516,6 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
 
     <modules>
@@ -565,6 +562,36 @@
                 <plugin>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${maven-dependency-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>analyze</id>
+                            <goals>
+                                <goal>analyze-only</goal>
+                            </goals>
+                            <configuration>
+                                <failOnWarning>true</failOnWarning>
+                                <ignoreNonCompile>true</ignoreNonCompile>
+                                <verbose>true</verbose>
+                                <!-- Most of the following dependencies are used during runtime - so the plugin cannot detect it currently -->
+                                <ignoredUnusedDeclaredDependencies>
+                                    <ignoredUnusedDeclaredDependency>com.h2database:h2</ignoredUnusedDeclaredDependency>
+                                    <ignoredUnusedDeclaredDependency>org.hibernate.validator:hibernate-validator</ignoredUnusedDeclaredDependency>
+                                    <ignoredUnusedDeclaredDependency>org.keycloak:keycloak-spring-boot-starter</ignoredUnusedDeclaredDependency>
+                                    <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-actuator</ignoredUnusedDeclaredDependency>
+                                    <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-data-jpa</ignoredUnusedDeclaredDependency>
+                                    <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-web</ignoredUnusedDeclaredDependency>
+                                    <ignoredUnusedDeclaredDependency>org.springframework.cloud:spring-cloud-starter-hystrix</ignoredUnusedDeclaredDependency>
+                                </ignoredUnusedDeclaredDependencies>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.shared</groupId>
+                            <artifactId>maven-dependency-analyzer</artifactId>
+                            <version>${maven-dependency-analyzer.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
@@ -923,40 +950,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>${maven-dependency-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>analyze</id>
-                        <goals>
-                            <goal>analyze-only</goal>
-                        </goals>
-                        <configuration>
-                            <failOnWarning>true</failOnWarning>
-                            <ignoreNonCompile>true</ignoreNonCompile>
-                            <!-- Most of the following dependencies are used in groovy code - so the plugin cannot detect it currently -->
-                            <!-- Groovy dependencies themselves are used via some magic from the POM only groovy-all -->
-                            <ignoredUnusedDeclaredDependencies>
-                                <ignoredUnusedDeclaredDependency>org.codehaus.groovy:groovy-all</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.codehaus.groovy:groovy-dateutil</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>com.h2database:h2</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.micrometer:micrometer-core</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.micrometer:micrometer-registry-prometheus</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.keycloak:keycloak-spring-boot-starter</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-configuration-processor</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-actuator</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-data-jpa</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-jersey</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.springframework.boot:spring-boot-starter-web</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.springframework.cloud:spring-cloud-starter-hystrix</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>org.springframework.security:spring-security-web</ignoredUnusedDeclaredDependency>
-                            </ignoredUnusedDeclaredDependencies>
-                            <ignoredUsedUndeclaredDependencies>
-                                <ignoredUsedUndeclaredDependency>org.codehaus.groovy:groovy</ignoredUsedUndeclaredDependency>
-                                <ignoredUsedUndeclaredDependency>org.codehaus.groovy:groovy-json</ignoredUsedUndeclaredDependency>
-                            </ignoredUsedUndeclaredDependencies>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
