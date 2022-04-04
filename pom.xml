@@ -104,7 +104,7 @@
         <freemarker.version>2.3.30</freemarker.version>
         <git-commit-id-plugin.version>4.0.3</git-commit-id-plugin.version>
         <gitlog-maven-plugin.version>1.13.17</gitlog-maven-plugin.version>
-        <gmavenplus-plugin.version>1.12.1</gmavenplus-plugin.version>
+        <gmavenplus-plugin.version>1.13.1</gmavenplus-plugin.version>
         <graphene-webdriver.version>2.3.2</graphene-webdriver.version>
         <google-guava.version>30.0-jre</google-guava.version>
         <groovy.version>2.5.8</groovy.version>
