@@ -100,7 +100,7 @@
         <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
         <buildplan-maven-plugin.version>1.4</buildplan-maven-plugin.version>
         <docker-maven-plugin.version>0.39.1</docker-maven-plugin.version>
-        <flyway-maven-plugin.version>7.1.0</flyway-maven-plugin.version>
+        <flyway-maven-plugin.version>7.15.0</flyway-maven-plugin.version>
         <freemarker.version>2.3.30</freemarker.version>
         <git-commit-id-plugin.version>4.0.3</git-commit-id-plugin.version>
         <gitlog-maven-plugin.version>1.13.17</gitlog-maven-plugin.version>
