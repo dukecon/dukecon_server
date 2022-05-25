@@ -92,7 +92,7 @@
 
         <!-- Please keep (version) properties in alphabetical order! -->
         <arquillian-bom.version>1.6.0.Final</arquillian-bom.version>
-        <arquillian-drone-bom.version>2.5.1</arquillian-drone-bom.version>
+        <arquillian-drone-bom.version>2.5.5</arquillian-drone-bom.version>
         <arquillian-phantom-binary.version>2.1.1</arquillian-phantom-binary.version>
         <asciidoctor-maven-plugin.version>2.1.0</asciidoctor-maven-plugin.version>
         <asciidoctorj.diagram.version>${asciidoctor-maven-plugin.version}</asciidoctorj.diagram.version>
