@@ -126,7 +126,7 @@
         <jersey-server.version>2.27</jersey-server.version>
         <jgiven.version>1.2.0</jgiven.version>
         <jgravatar.version>1.2</jgravatar.version>
-        <jqassistant-maven-plugin.version>1.9.1</jqassistant-maven-plugin.version>
+        <jqassistant-maven-plugin.version>1.12.2</jqassistant-maven-plugin.version>
         <jqassistant.plugin.git.version>1.8.0</jqassistant.plugin.git.version>
         <junit.version>4.13.1</junit.version>
         <keycloak.version>11.0.3</keycloak.version>
