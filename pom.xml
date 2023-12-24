@@ -114,7 +114,7 @@
         <hibernate-jpa-2.1-api.version>1.0.2</hibernate-jpa-2.1-api.version>
         <hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
         <hystrix-javanica.version>1.5.18</hystrix-javanica.version>
-        <jackson-annotations.version>2.11.3</jackson-annotations.version>
+        <jackson-annotations.version>2.16.1</jackson-annotations.version>
         <jackson-dataformat-csv.version>2.11.3</jackson-dataformat-csv.version>
         <javax.el.version>3.0.1-b12</javax.el.version>
         <javax.inject.version>1</javax.inject.version>
